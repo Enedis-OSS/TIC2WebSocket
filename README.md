@@ -97,8 +97,6 @@ Add `--help` option to get basic information on how to use the launcher.
 
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
 
-See the [Getting started](GETTING_STARTED.md), which document how to install and setup the required environment for developing
-
 You don't need to be a developer to contribute, nor do much, you can simply:
 * Enhance documentation,
 * Correct a spelling,
