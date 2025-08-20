@@ -97,8 +97,6 @@ Ajoutez l'option `--help` pour obtenir des informations de base sur l'utilisatio
 
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
 
-Consultez le guide [Getting started](GETTING_STARTED.md), qui documente comment installer et configurer l'environnement requis pour le développement
-
 Vous n'avez pas besoin d'être développeur pour contribuer, ni de faire beaucoup, vous pouvez simplement :
 * Améliorer la documentation,
 * Corriger une faute d'orthographe,
