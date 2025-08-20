@@ -1,0 +1,30 @@
+{
+  "package" : "enedis.tic.core",
+  "name": "TICCoreFrame",
+  "type": "DataDictionaryBase",
+  "attributes": [
+    {
+      "name": "identifier",
+      "mandatory": true,
+      "type": "DataDictionary",
+      "dataDictionaryType": "TICIdentifier"
+    },
+    {
+      "name": "mode",
+      "mandatory": true,
+      "type": "Enum",
+      "enumType": "TICMode"
+    },
+    {
+      "name": "captureDateTime",
+      "mandatory": true,
+      "type": "LocalDateTime"
+    },
+	{
+      "name": "content",
+      "mandatory": true,
+      "type": "DataDictionary",
+      "dataDictionaryType": "DataDictionaryBase"
+    }
+  ]
+}

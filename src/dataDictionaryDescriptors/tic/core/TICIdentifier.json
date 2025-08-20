@@ -1,0 +1,25 @@
+{
+  "package" : "enedis.tic.core",
+  "name": "TICIdentifier",
+  "type": "DataDictionaryBase",
+  "attributes": [
+    {
+      "name": "portId",
+      "mandatory": false,
+      "type": "String",
+      "emptyAllow": false
+    },
+    {
+      "name": "portName",
+      "mandatory": false,
+      "type": "String",
+      "emptyAllow": false
+    },
+	{
+      "name": "serialNumber",
+      "mandatory": false,
+      "type": "String",
+      "emptyAllow": false
+    }
+  ]
+}
