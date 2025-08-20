@@ -1,0 +1,34 @@
+{
+  "package": "enedis.tic.service.message",
+  "name": "ResponseGetAvailableTICs",
+  "extends" : "Response",
+  "type": "DataDictionaryBase",
+  "superAttributes": [
+    {
+      "name": "name",
+      "type": "String",
+      "acceptedValues": "\"GetAvailableTICs\"",
+      "removeFromConstructor" : true
+    },
+    {
+      "name": "dateTime",
+      "type": "LocalDateTime"
+    },
+    {
+      "name": "errorCode",
+      "type": "Number"
+    },
+    {
+      "name": "errorMessage",
+      "type": "String"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "data",
+      "mandatory" : false,
+      "type": "List",
+      "listType": "TICIdentifier"
+    }
+  ]
+}
