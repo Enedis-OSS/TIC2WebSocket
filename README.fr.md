@@ -59,12 +59,12 @@ Décompressez le fichier .zip dans le dossier de votre choix.
 
 Extraire le zip
 ```bash 
-unzip target/TIC2WebSocket-*-bin -d /chemin/vers/votre/dossier
+unzip target/TIC2WebSocket-VERSION-bin -d /chemin/vers/votre/dossier
 ```
 
 💻 **Windows**
 
-Extrayez `target/TIC2WebSocket-*-bin` dans le dossier de votre choix.
+Extrayez `target/TIC2WebSocket-VERSION-bin` dans le dossier de votre choix.
 
 ### Démarrage de l'Application
 
