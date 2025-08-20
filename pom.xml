@@ -1,0 +1,338 @@
+<!--
+Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
+
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+<!-- Project Information -->
+  <groupId>fr.enedis</groupId>
+  <artifactId>TIC2WebSocket</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+  <name>${project.artifactId}</name>
+  <description>
+	Tele Information Client (TIC) WebSocket Interface
+  </description>
+  <organization>
+    <name>Enedis</name>
+    <url>http://www.enedis.fr/</url>
+  </organization>
+
+<!-- Project Licenses -->
+  <licenses>
+    <license>
+      <name>Apache-2.0</name>
+      <url>LICENCES/Apache-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>Licence Apache 2.0.</comments>
+    </license>
+  </licenses>
+
+<!-- Project Developers -->
+  <developers>
+    <developer>
+      <name>Jehan BOUSCH</name>
+      <email>jehan-externe.bousch@enedis.fr</email>
+      <roles>
+        <role>Spécifieur</role>
+        <role>Architecte</role>
+        <role>Développeur</role>
+        <role>Testeur</role>
+      </roles>
+      <timezone>Europe/Paris</timezone>
+    </developer>
+    <developer>
+      <name>Mathieu SABARTHES</name>
+      <email>matthieu-externe.sabarthes@enedis.fr</email>
+      <roles>
+        <role>Spécifieur</role>
+        <role>Architecte</role>
+        <role>Développeur</role>
+        <role>Testeur</role>
+      </roles>
+      <timezone>Europe/Paris</timezone>
+    </developer>
+  </developers>
+
+<!-- Project Contributors -->
+  <contributors/>
+
+<!-- Project Mailing Lists -->
+  <mailingLists/>
+
+<!-- Project Source Control Management -->
+  <scm/>
+
+<!-- Project Issue Management -->
+  <issueManagement/>
+
+<!-- Project Continuous Integration Management -->
+  <ciManagement/>
+
+<!-- Project Distribution Management -->
+  <distributionManagement/>
+
+<!-- Project Properties -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <project_basedir>${project.basedir}</project_basedir>
+    <project_groupId>${project.groupId}</project_groupId>
+    <project_artifactId>${project.artifactId}</project_artifactId>
+    <project_name>${project.name}</project_name>
+    <project_version>${project.version}</project_version>
+    <project_description>${project.description}</project_description>
+	<team_pics_dir>./images/team</team_pics_dir>
+  </properties>
+
+<!-- Project Dependencies -->
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20231013</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.17.2</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.java-native</groupId>
+      <artifactId>jssc</artifactId>
+      <version>2.9.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.18.0</version>
+    </dependency>
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna-platform</artifactId>
+      <version>5.17.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.usb4java</groupId>
+      <artifactId>usb4java</artifactId>
+      <version>1.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+      <version>4.7.7</version>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>4.2.2.Final</version>
+    </dependency>
+  </dependencies>
+
+<!-- Project Build -->
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.7.1</version>
+        <configuration>
+          <locales>fr</locales>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.0.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <executions>
+          <execution>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>write-project-properties</goal>
+            </goals>
+            <configuration>
+              <outputFile>${project.basedir}/src/main/resources/${project.artifactId}.properties</outputFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <id>make-bin-package</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>${project.basedir}/src/assembly/bin.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+          <execution>
+            <id>make-src-package</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>${project.basedir}/src/assembly/src.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+          <execution>
+            <id>make-doc-package</id>
+            <phase>site</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>${project.basedir}/src/assembly/doc.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+          <execution>
+            <id>make-complete-package</id>
+            <phase>site</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>${project.basedir}/src/assembly/all.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.github.jeluard</groupId>
+        <artifactId>plantuml-maven-plugin</artifactId>
+        <version>1.2</version>
+        <executions>
+          <execution>
+            <id>manuel_utilisateur-uml</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <phase>pre-site</phase>
+            <configuration>
+              <charset>UTF-8</charset>
+              <sourceFiles>
+                <directory>${project.basedir}/src/site/manuel_utilisateur/resources/uml</directory>
+                <includes>
+                  <include>**/*.plantuml</include>
+                </includes>
+              </sourceFiles>
+              <outputDirectory>${project.basedir}/src/site/manuel_utilisateur/resources/images/uml</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>architecture-uml</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <phase>pre-site</phase>
+            <configuration>
+              <charset>UTF-8</charset>
+              <sourceFiles>
+                <directory>${project.basedir}/src/site/architecture/resources/uml</directory>
+                <includes>
+                  <include>**/*.plantuml</include>
+                </includes>
+              </sourceFiles>
+              <outputDirectory>${project.basedir}/src/site/architecture/resources/images/uml</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pdf-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <id>manuel_utilisateur-pdf</id>
+            <phase>pre-site</phase>
+            <goals>
+              <goal>pdf</goal>
+            </goals>
+            <configuration>
+              <siteDirectory>${project.basedir}/src/site/manuel_utilisateur</siteDirectory>
+              <docDescriptor>${project.basedir}/src/site/manuel_utilisateur/pdf.xml</docDescriptor>
+              <outputDirectory>${project.reporting.outputDirectory}/manuel_utilisateur</outputDirectory>
+              <includeReports>false</includeReports>
+            </configuration>
+          </execution>
+          <execution>
+            <id>architecture-pdf</id>
+            <phase>pre-site</phase>
+            <goals>
+              <goal>pdf</goal>
+            </goals>
+            <configuration>
+              <siteDirectory>${project.basedir}/src/site/architecture</siteDirectory>
+              <docDescriptor>${project.basedir}/src/site/architecture/pdf.xml</docDescriptor>
+              <outputDirectory>${project.reporting.outputDirectory}/architecture</outputDirectory>
+              <includeReports>false</includeReports>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+<!-- Project Profiles -->
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.3.0</version>
+      </plugin>
+    </plugins>
+  </reporting>
+
+<!-- Project Profiles -->
+  <profiles/>
+
+<!-- Project Repositories -->
+  <repositories/>
+
+<!-- Project Plugin Repositories -->
+  <pluginRepositories/>
+
+</project>

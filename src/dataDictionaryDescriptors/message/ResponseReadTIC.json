@@ -1,0 +1,34 @@
+{
+  "package": "enedis.tic.service.message",
+  "name": "ResponseReadTIC",
+  "extends" : "Response",
+  "type": "DataDictionaryBase",
+  "superAttributes": [
+    {
+      "name": "name",
+      "type": "String",
+      "acceptedValues": "\"ReadTIC\"",
+      "removeFromConstructor" : true
+    },
+    {
+      "name": "dateTime",
+      "type": "LocalDateTime"
+    },
+    {
+      "name": "errorCode",
+      "type": "Number"
+    },
+    {
+      "name": "errorMessage",
+      "type": "String"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "data",
+      "mandatory" : false,
+      "type": "DataDictionary",
+      "dataDictionaryType": "TICCoreFrame"
+    }
+  ]
+}
