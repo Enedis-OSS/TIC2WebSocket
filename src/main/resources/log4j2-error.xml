@@ -1,0 +1,45 @@
+<!--
+Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
+
+SPDX-FileContributor: Jehan BOUSCH
+SPDX-FileContributor: Mathieu SABARTHES
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
+<Configuration status="INFO">
+
+  <Properties>
+    <Property name="logDir">${sys:logDir:-var/log}</Property>
+    <Property name="logFile">${sys:logFile:-TIC2WebSocket}</Property>
+  </Properties>
+
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%msg%n"/>
+      <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="ACCEPT" />
+    </Console>
+    <Console name="ConsoleError" target="SYSTEM_ERR">
+      <PatternLayout pattern="%msg%n"/>
+    </Console>
+    <RollingFile name="ApplicationLog" fileName="${logDir}/${logFile}.log.zip" filePattern="${logDir}/${logFile}-%i.log.zip" >
+	  <PatternLayout pattern="%d{dd/MM/yyyy HH:mm:ss.SSS} %-5level %logger{36}(%L) - %msg%n"/>
+	  <Policies>
+	    <SizeBasedTriggeringPolicy size="100 MB" />
+	  </Policies>
+	  <DefaultRolloverStrategy max="10" compressionLevel="9"/>
+    </RollingFile>
+  </Appenders>
+
+  <Loggers>
+    <Logger name="enedis" level="trace" additivity="false">
+       <AppenderRef ref="ApplicationLog" level="error"/>
+       <AppenderRef ref="Console" level="error" />
+       <AppenderRef ref="ConsoleError" level="error" />
+    </Logger>
+    <Root level="error">
+      <AppenderRef ref="ConsoleError"/>
+    </Root>
+  </Loggers>
+
+</Configuration>

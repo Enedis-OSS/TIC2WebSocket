@@ -1,0 +1,14 @@
+{
+  "package": "enedis.tic.service.message",
+  "name": "RequestGetAvailableTICs",
+  "extends" : "Request",
+  "type": "DataDictionaryBase",
+  "superAttributes": [
+    {
+      "name": "name",
+      "type": "String",
+      "acceptedValues": "\"GetAvailableTICs\"",
+      "removeFromConstructor" : true
+    }
+  ]
+}
