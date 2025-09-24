@@ -6,3 +6,4 @@
 # SPDX-License-Identifier: Apache-2.0
 
 src/main/resources/TIC2WebSocket.properties
+target/
