@@ -14,8 +14,8 @@ package enedis.lab.codec;
  * @param <K>
  *
  */
-public interface Codec<T, K>
-{
+public interface Codec<T, K> {
+
 	/**
 	 * Decode type K to type T
 	 *
@@ -33,4 +33,5 @@ public interface Codec<T, K>
 	 * @throws CodecException
 	 */
 	public K encode(T object) throws CodecException;
+
 }

@@ -8,162 +8,105 @@
 package enedis.lab.codec;
 
 /**
- * Codec exception
+ * Exception thrown during codec operations
+ * 
+ * This exception is used to signal errors occurring
+ * during data encoding and decoding processes.
  */
-public class CodecException extends Exception
-{
+public class CodecException extends Exception {
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	private static final long serialVersionUID = 6029680699870915485L;
 
-	private static final long	serialVersionUID	= 6029680699870915485L;
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private Object				data;
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	private Object data;
 
 	/**
-	 * Default constructor
+	 * Creates a new CodecException with no detail message
 	 */
-	public CodecException()
-	{
+	public CodecException() {
 		super();
 	}
 
 	/**
-	 * Constructor
+	 * Creates a new CodecException with the specified detail message and cause
 	 *
-	 * @param message
-	 * @param cause
+	 * @param message the detail message (which is saved for later retrieval
+	 *                by the {@link Throwable#getMessage()} method)
+	 * @param cause   the cause (which is saved for later retrieval by the
+	 *                {@link Throwable#getCause()} method)
 	 */
-	public CodecException(String message, Throwable cause)
-	{
+	public CodecException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
 	/**
-	 * Constructor
+	 * Creates a new CodecException with the specified detail message
 	 *
-	 * @param message
+	 * @param message the detail message (which is saved for later retrieval
+	 *                by the {@link Throwable#getMessage()} method)
 	 */
-	public CodecException(String message)
-	{
+	public CodecException(String message) {
 		super(message);
 	}
 
 	/**
-	 * Constructor
+	 * Creates a new CodecException with the specified detail message and data
 	 *
-	 * @param message
-	 * @param data
+	 * @param message the detail message (which is saved for later retrieval
+	 *                by the {@link Throwable#getMessage()} method)
+	 * @param data    additional data object associated with this exception
 	 */
-	public CodecException(String message, Object data)
-	{
+	public CodecException(String message, Object data) {
 		super(message);
 		this.data = data;
 	}
 
 	/**
-	 * Constructor
+	 * Creates a new CodecException with the specified cause
 	 *
-	 * @param cause
+	 * @param cause the cause (which is saved for later retrieval by the
+	 *              {@link Throwable#getCause()} method)
 	 */
-	public CodecException(Throwable cause)
-	{
+	public CodecException(Throwable cause) {
 		super(cause);
 	}
 
 	/**
-	 * Raise CodecException invalid value
+	 * Creates and throws a CodecException for invalid value scenarios
 	 *
-	 * @param info
-	 * @throws CodecException
+	 * @param info additional information about the invalid value
+	 * @throws CodecException always thrown with message "Invalid value : " + info
 	 */
-	public static void raiseInvalidValue(String info) throws CodecException
-	{
+	public static void raiseInvalidValue(String info) throws CodecException {
 		throw new CodecException("Invalid value : " + info);
 	}
 
 	/**
-	 * Raise CodecException missing value
+	 * Creates and throws a CodecException for missing value scenarios
 	 *
-	 * @param value
-	 * @throws CodecException
+	 * @param value the name or identifier of the missing value
+	 * @throws CodecException always thrown with message "Missing value : " + value
 	 */
-	public static void raiseMissingValue(String value) throws CodecException
-	{
+	public static void raiseMissingValue(String value) throws CodecException {
 		throw new CodecException("Missing value : " + value);
 	}
 
 	/**
-	 * Raise CodecException inconsistency
+	 * Creates and throws a CodecException for data inconsistency scenarios
 	 *
-	 * @param info
-	 * @throws CodecException
+	 * @param info additional information about the inconsistency
+	 * @throws CodecException always thrown with message "Inconsistency : " + info
 	 */
-	public static void raiseInconsistency(String info) throws CodecException
-	{
+	public static void raiseInconsistency(String info) throws CodecException {
 		throw new CodecException("Inconsistency : " + info);
 	}
 
 	/**
-	 * Get data
+	 * Returns the additional data object associated with this exception
 	 *
-	 * @return data
+	 * @return the data object, or null if no data was provided
 	 */
-	public Object getData()
-	{
+	public Object getData() {
 		return this.data;
 	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE
-	/// interfaceName
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
