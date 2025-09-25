@@ -12,7 +12,7 @@ package enedis.lab.codec;
  *
  * @param <T>
  * @param <K>
- *
+ * @author Enedis Smarties team
  */
 public interface Codec<T, K> {
 

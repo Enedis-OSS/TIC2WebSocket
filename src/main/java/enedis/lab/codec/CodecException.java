@@ -8,10 +8,12 @@
 package enedis.lab.codec;
 
 /**
- * Exception thrown during codec operations
+ * Exception thrown during codec operations.
  * 
  * This exception is used to signal errors occurring
  * during data encoding and decoding processes.
+ * 
+ * @author Enedis Smarties team
  */
 public class CodecException extends Exception {
 
@@ -20,14 +22,14 @@ public class CodecException extends Exception {
 	private Object data;
 
 	/**
-	 * Creates a new CodecException with no detail message
+	 * Creates a new CodecException with no detail message.
 	 */
 	public CodecException() {
 		super();
 	}
 
 	/**
-	 * Creates a new CodecException with the specified detail message and cause
+	 * Creates a new CodecException with the specified detail message and cause.
 	 *
 	 * @param message the detail message (which is saved for later retrieval
 	 *                by the {@link Throwable#getMessage()} method)
@@ -39,7 +41,7 @@ public class CodecException extends Exception {
 	}
 
 	/**
-	 * Creates a new CodecException with the specified detail message
+	 * Creates a new CodecException with the specified detail message.
 	 *
 	 * @param message the detail message (which is saved for later retrieval
 	 *                by the {@link Throwable#getMessage()} method)
@@ -49,7 +51,7 @@ public class CodecException extends Exception {
 	}
 
 	/**
-	 * Creates a new CodecException with the specified detail message and data
+	 * Creates a new CodecException with the specified detail message and data.
 	 *
 	 * @param message the detail message (which is saved for later retrieval
 	 *                by the {@link Throwable#getMessage()} method)
@@ -61,7 +63,7 @@ public class CodecException extends Exception {
 	}
 
 	/**
-	 * Creates a new CodecException with the specified cause
+	 * Creates a new CodecException with the specified cause.
 	 *
 	 * @param cause the cause (which is saved for later retrieval by the
 	 *              {@link Throwable#getCause()} method)
@@ -71,7 +73,7 @@ public class CodecException extends Exception {
 	}
 
 	/**
-	 * Creates and throws a CodecException for invalid value scenarios
+	 * Creates and throws a CodecException for invalid value scenarios.
 	 *
 	 * @param info additional information about the invalid value
 	 * @throws CodecException always thrown with message "Invalid value : " + info
@@ -81,7 +83,7 @@ public class CodecException extends Exception {
 	}
 
 	/**
-	 * Creates and throws a CodecException for missing value scenarios
+	 * Creates and throws a CodecException for missing value scenarios.
 	 *
 	 * @param value the name or identifier of the missing value
 	 * @throws CodecException always thrown with message "Missing value : " + value
@@ -91,7 +93,7 @@ public class CodecException extends Exception {
 	}
 
 	/**
-	 * Creates and throws a CodecException for data inconsistency scenarios
+	 * Creates and throws a CodecException for data inconsistency scenarios.
 	 *
 	 * @param info additional information about the inconsistency
 	 * @throws CodecException always thrown with message "Inconsistency : " + info
@@ -101,7 +103,7 @@ public class CodecException extends Exception {
 	}
 
 	/**
-	 * Returns the additional data object associated with this exception
+	 * Returns the additional data object associated with this exception.
 	 *
 	 * @return the data object, or null if no data was provided
 	 */
