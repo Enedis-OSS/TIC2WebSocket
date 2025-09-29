@@ -9,14 +9,12 @@ package enedis.lab.io.channels;
 
 /**
  * Enumeration representing different types of communication channel protocols that can be used for
- * data transmission in the TIC (Télé Information Client) system.
+ * data transmission.
  *
  * <p>This enum defines the various communication protocols supported by the system, ranging from
  * file-based operations to network protocols and industrial communication standards like Modbus.
  *
- * @author Jehan BOUSCH
- * @author Mathieu SABARTHES
- * @since 1.0
+ * @author Enedis Smarties team
  */
 public enum ChannelProtocol {
 

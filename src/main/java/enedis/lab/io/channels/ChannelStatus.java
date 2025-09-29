@@ -8,16 +8,13 @@
 package enedis.lab.io.channels;
 
 /**
- * Enumeration representing the operational status of a communication channel in the TIC (Télé
- * Information Client) system.
+ * Enumeration representing the operational status of a communication channel.
  *
  * <p>This enum defines the possible states that a channel can be in during its lifecycle, from
  * initialization through operation to error conditions. The status is used to monitor and manage
  * the health and availability of communication channels.
  *
- * @author Jehan BOUSCH
- * @author Mathieu SABARTHES
- * @since 1.0
+ * @author Enedis Smarties team
  */
 public enum ChannelStatus {
   /**
