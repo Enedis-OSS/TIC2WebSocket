@@ -12,23 +12,22 @@ import java.util.Collection;
 
 /**
  * Abstract base class for physical communication channels.
- * <p>
- * This class extends {@link ChannelBase} and provides the foundation for all
- * physical communication channel implementations. It handles the common functionality
- * for physical channels including status management, listener notification, and
- * event propagation.
- * <p>
- * Physical channels represent actual communication endpoints such as serial ports,
- * network sockets, or other hardware interfaces. This class provides the
- * infrastructure for managing channel state and notifying registered listeners
- * about channel events.
- * <p>
- * Key features provided by this class:
+ *
+ * <p>This class extends {@link ChannelBase} and provides the foundation for all physical
+ * communication channel implementations. It handles the common functionality for physical channels
+ * including status management, listener notification, and event propagation.
+ *
+ * <p>Physical channels represent actual communication endpoints such as serial ports, network
+ * sockets, or other hardware interfaces. This class provides the infrastructure for managing
+ * channel state and notifying registered listeners about channel events.
+ *
+ * <p>Key features provided by this class:
+ *
  * <ul>
- * <li>Status management with automatic listener notification</li>
- * <li>Event notification system for data read/write operations</li>
- * <li>Error detection and reporting</li>
- * <li>Listener subscription management</li>
+ *   <li>Status management with automatic listener notification
+ *   <li>Event notification system for data read/write operations
+ *   <li>Error detection and reporting
+ *   <li>Listener subscription management
  * </ul>
  *
  * @author Enedis Smarties team
@@ -41,19 +40,20 @@ public abstract class ChannelPhysical extends ChannelBase {
 
   /** Notifier for managing channel event listeners. */
   private NotifierBase<ChannelListener> notifier;
+
   /** Current status of the physical channel. */
   protected ChannelStatus status;
 
   /**
    * Constructs a new physical channel with the specified configuration.
-   * <p>
-   * This constructor initializes the physical channel with the provided
-   * configuration and sets up the internal notification system. The channel
-   * starts in a STOPPED status and is ready for setup operations.
+   *
+   * <p>This constructor initializes the physical channel with the provided configuration and sets
+   * up the internal notification system. The channel starts in a STOPPED status and is ready for
+   * setup operations.
    *
    * @param configuration the configuration to use for setting up the channel
-   * @throws ChannelException if the configuration is invalid or the channel
-   *         cannot be properly initialized
+   * @throws ChannelException if the configuration is invalid or the channel cannot be properly
+   *     initialized
    */
   protected ChannelPhysical(ChannelConfiguration configuration) throws ChannelException {
     super(configuration);
@@ -107,9 +107,9 @@ public abstract class ChannelPhysical extends ChannelBase {
 
   /**
    * Sets the channel status and notifies all registered listeners.
-   * <p>
-   * This method updates the channel status and automatically notifies
-   * all registered listeners about the status change.
+   *
+   * <p>This method updates the channel status and automatically notifies all registered listeners
+   * about the status change.
    *
    * @param status the new status for the channel
    */
@@ -119,14 +119,13 @@ public abstract class ChannelPhysical extends ChannelBase {
 
   /**
    * Sets the channel status with optional listener notification.
-   * <p>
-   * This method updates the channel status and optionally notifies
-   * registered listeners about the status change. This allows for
-   * controlled status updates without triggering notifications.
+   *
+   * <p>This method updates the channel status and optionally notifies registered listeners about
+   * the status change. This allows for controlled status updates without triggering notifications.
    *
    * @param status the new status for the channel
-   * @param notify if true, listeners will be notified of the status change;
-   *               if false, no notifications will be sent
+   * @param notify if true, listeners will be notified of the status change; if false, no
+   *     notifications will be sent
    */
   protected void setStatus(ChannelStatus status, boolean notify) {
     if (status != this.status) {
@@ -144,10 +143,9 @@ public abstract class ChannelPhysical extends ChannelBase {
 
   /**
    * Notifies all registered listeners about data that was read from the channel.
-   * <p>
-   * This method is called internally when data is successfully read from
-   * the physical channel. It notifies all registered listeners with the
-   * channel name and the raw data that was read.
+   *
+   * <p>This method is called internally when data is successfully read from the physical channel.
+   * It notifies all registered listeners with the channel name and the raw data that was read.
    *
    * @param data the raw bytes that were read from the channel
    */
@@ -161,10 +159,9 @@ public abstract class ChannelPhysical extends ChannelBase {
 
   /**
    * Notifies all registered listeners about data that was written to the channel.
-   * <p>
-   * This method is called internally when data is successfully written to
-   * the physical channel. It notifies all registered listeners with the
-   * channel name and the raw data that was written.
+   *
+   * <p>This method is called internally when data is successfully written to the physical channel.
+   * It notifies all registered listeners with the channel name and the raw data that was written.
    *
    * @param data the raw bytes that were written to the channel
    */
@@ -178,10 +175,9 @@ public abstract class ChannelPhysical extends ChannelBase {
 
   /**
    * Notifies all registered listeners about a status change.
-   * <p>
-   * This method is called internally when the channel status changes.
-   * It notifies all registered listeners with the channel name and
-   * the new status.
+   *
+   * <p>This method is called internally when the channel status changes. It notifies all registered
+   * listeners with the channel name and the new status.
    */
   protected void notifyOnStatusChanged() {
     for (ChannelListener subscriber : this.notifier.getSubscribers()) {
@@ -191,10 +187,9 @@ public abstract class ChannelPhysical extends ChannelBase {
 
   /**
    * Notifies all registered listeners about an error that was detected.
-   * <p>
-   * This method is called internally when an error occurs during channel
-   * operations. It notifies all registered listeners with the channel name,
-   * error code, and error message.
+   *
+   * <p>This method is called internally when an error occurs during channel operations. It notifies
+   * all registered listeners with the channel name, error code, and error message.
    *
    * @param errorCode the numeric error code identifying the type of error
    * @param errorMessage a descriptive message explaining the error
@@ -207,10 +202,9 @@ public abstract class ChannelPhysical extends ChannelBase {
 
   /**
    * Initializes the physical channel with default values.
-   * <p>
-   * This method sets up the initial state of the physical channel,
-   * including setting the status to STOPPED and initializing the
-   * notification system for managing listeners.
+   *
+   * <p>This method sets up the initial state of the physical channel, including setting the status
+   * to STOPPED and initializing the notification system for managing listeners.
    */
   private void init() {
     this.status = ChannelStatus.STOPPED;
