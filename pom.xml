@@ -318,6 +318,11 @@ SPDX-License-Identifier: Apache-2.0
         <version>2.43.0</version>
         <configuration>
           <java>
+            <includes>
+              <include>src/main/java/enedis/lab/io/*.java</include>
+              <include>src/main/java/enedis/lab/io/*/*.java</include>
+              <include>src/main/java/enedis/lab/io/channels/serialport/*.java</include>
+            </includes>
             <googleJavaFormat/>
           </java>
         </configuration>
