@@ -12,18 +12,16 @@ import jssc.SerialPortException;
 /**
  * Enumeration of error codes for TIC frame and serial port operations.
  *
- * <p>
- * This enum defines error codes for serial port issues and TIC frame processing
- * errors. It provides
- * a mapping from {@link SerialPortException} types to TIC error codes for
- * unified error handling.
+ * <p>This enum defines error codes for serial port issues and TIC frame processing errors. It
+ * provides a mapping from {@link SerialPortException} types to TIC error codes for unified error
+ * handling.
  *
- * <p>
- * Key features:
+ * <p>Key features:
+ *
  * <ul>
- * <li>Defines error codes for serial port and TIC frame errors</li>
- * <li>Provides a method to map {@link SerialPortException} to TICError</li>
- * <li>Each error code has an associated integer value</li>
+ *   <li>Defines error codes for serial port and TIC frame errors
+ *   <li>Provides a method to map {@link SerialPortException} to TICError
+ *   <li>Each error code has an associated integer value
  * </ul>
  *
  * @author Enedis Smarties team
@@ -56,9 +54,7 @@ public enum TICError {
   TIC_READER_READ_FRAME_CHECKSUM_INVALID(27),
   ;
 
-  /**
-   * Integer value associated with the error code.
-   */
+  /** Integer value associated with the error code. */
   private int value;
 
   /**
@@ -80,8 +76,7 @@ public enum TICError {
   }
 
   /**
-   * Maps a {@link SerialPortException} to the corresponding {@link TICError}
-   * code.
+   * Maps a {@link SerialPortException} to the corresponding {@link TICError} code.
    *
    * @param serialPortException the serial port exception to map
    * @return the corresponding {@link TICError}, or null if not recognized

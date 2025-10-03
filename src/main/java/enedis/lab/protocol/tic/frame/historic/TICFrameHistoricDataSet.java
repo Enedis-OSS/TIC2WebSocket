@@ -15,19 +15,16 @@ import org.json.JSONObject;
 /**
  * Data set representation for historic TIC frames.
  *
- * <p>
- * This class extends {@link TICFrameDataSet} to provide checksum calculation,
- * byte serialization,
- * and JSON conversion for historic TIC data sets. It defines the separator and
- * implements the
- * protocol-specific checksum logic.
+ * <p>This class extends {@link TICFrameDataSet} to provide checksum calculation, byte
+ * serialization, and JSON conversion for historic TIC data sets. It defines the separator and
+ * implements the protocol-specific checksum logic.
  *
- * <p>
- * Key features:
+ * <p>Key features:
+ *
  * <ul>
- * <li>Defines the separator for historic TIC data sets</li>
- * <li>Implements checksum calculation for label and data</li>
- * <li>Serializes the data set to bytes and JSON</li>
+ *   <li>Defines the separator for historic TIC data sets
+ *   <li>Implements checksum calculation for label and data
+ *   <li>Serializes the data set to bytes and JSON
  * </ul>
  *
  * @author Enedis Smarties team
@@ -35,24 +32,18 @@ import org.json.JSONObject;
  * @see TICFrame
  */
 public class TICFrameHistoricDataSet extends TICFrameDataSet {
-  /**
-   * Separator character (space, 0x20) used in historic TIC data sets.
-   */
+  /** Separator character (space, 0x20) used in historic TIC data sets. */
   public static final byte SEPARATOR = 0x20; // SP
 
-  /**
-   * Constructs an empty historic TIC data set.
-   */
+  /** Constructs an empty historic TIC data set. */
   public TICFrameHistoricDataSet() {
     super();
   }
 
   /**
-   * Computes the consistent checksum for this data set according to the historic
-   * TIC protocol.
+   * Computes the consistent checksum for this data set according to the historic TIC protocol.
    *
-   * <p>
-   * The checksum is calculated over the label, separator, and data fields.
+   * <p>The checksum is calculated over the label, separator, and data fields.
    *
    * @return the computed checksum, or null if label or data is missing
    */
@@ -83,7 +74,7 @@ public class TICFrameHistoricDataSet extends TICFrameDataSet {
   /**
    * Updates the checksum value with the given byte.
    *
-   * @param crc   the current checksum value
+   * @param crc the current checksum value
    * @param octet the byte to add
    * @return the updated checksum value
    */
@@ -102,8 +93,7 @@ public class TICFrameHistoricDataSet extends TICFrameDataSet {
   }
 
   /**
-   * Serializes this data set to a byte array according to the historic TIC
-   * protocol.
+   * Serializes this data set to a byte array according to the historic TIC protocol.
    *
    * @return the byte array representation of the data set
    */

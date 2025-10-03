@@ -20,21 +20,18 @@ import org.json.JSONObject;
 /**
  * Abstract base class for TIC frames.
  *
- * <p>
- * This class provides the structure and common operations for TIC frames,
- * including data set
- * management, byte serialization, and data dictionary conversion. Subclasses
- * implement protocol-specific
- * details for standard and historic TIC formats.
+ * <p>This class provides the structure and common operations for TIC frames, including data set
+ * management, byte serialization, and data dictionary conversion. Subclasses implement
+ * protocol-specific details for standard and historic TIC formats.
  *
- * <p>
- * Key features:
+ * <p>Key features:
+ *
  * <ul>
- * <li>Defines constants for frame delimiters and options</li>
- * <li>Manages a list of labeled data sets</li>
- * <li>Provides methods for adding, removing, and retrieving data sets</li>
- * <li>Supports conversion to byte arrays and data dictionaries</li>
- * <li>Abstract methods for protocol-specific data set and mode handling</li>
+ *   <li>Defines constants for frame delimiters and options
+ *   <li>Manages a list of labeled data sets
+ *   <li>Provides methods for adding, removing, and retrieving data sets
+ *   <li>Supports conversion to byte arrays and data dictionaries
+ *   <li>Abstract methods for protocol-specific data set and mode handling
  * </ul>
  *
  * @author Enedis Smarties team
@@ -42,55 +39,56 @@ import org.json.JSONObject;
  * @see TICMode
  */
 public abstract class TICFrame {
-  /**
-   * Frame start delimiter (STX, 0x02).
-   */
+  /** Frame start delimiter (STX, 0x02). */
   public static final byte BEGINNING_PATTERN = 0x02; // STX
 
-  /**
-   * Frame end delimiter (ETX, 0x03).
-   */
+  /** Frame end delimiter (ETX, 0x03). */
   public static final byte END_PATTERN = 0x03; // ETX
 
-  /**
-   * End of transmission delimiter (EOT, 0x04).
-   */
+  /** End of transmission delimiter (EOT, 0x04). */
   public static final byte EOT = 0x04; // EOT
 
   // Frame options and keys
   /** No specific options. */
   public static final int EXPLICIT = 0x0000;
+
   /** Hide checksums in data dictionary. */
   public static final int NOCHECKSUM = 0x0001;
+
   /** Hide date/time fields in data dictionary. */
   public static final int NODATETIME = 0x0002;
+
   /** Hide TIC mode in data dictionary. */
   public static final int NOTICMODE = 0x0004;
+
   /** Filter invalid data sets in data dictionary. */
   public static final int NOINVALID = 0x0008;
+
   /** Trimmed options: hide checksum, date/time, and invalid data sets. */
   public static final int TRIMMED = NOCHECKSUM | NODATETIME | NOINVALID;
+
   /** Key for TIC frame in data dictionary. */
   public static final String KEY_TICFRAME = "ticFrame";
+
   /** Key for TIC mode in data dictionary. */
   public static final String KEY_TICMODE = "ticMode";
+
   /** Key for label in data dictionary. */
   public static final String KEY_LABEL = "label";
+
   /** Key for data in data dictionary. */
   public static final String KEY_DATA = "data";
+
   /** Key for checksum in data dictionary. */
   public static final String KEY_CHECKSUM = "checksum";
+
   /** Key for date/time in data dictionary. */
   public static final String KEY_DATETIME = "dateTime";
 
-  /**
-   * List of data sets contained in this TIC frame.
-   */
+  /** List of data sets contained in this TIC frame. */
   protected List<TICFrameDataSet> DataSetList;
 
-  /**
-   * Constructs an empty TIC frame with an empty data set list.
-   */
+  /** Constructs an empty TIC frame with an empty data set list. */
   public TICFrame() {
     this.DataSetList = new ArrayList<TICFrameDataSet>();
   }
@@ -102,12 +100,9 @@ public abstract class TICFrame {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (this.getClass() != obj.getClass())
-      return false;
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (this.getClass() != obj.getClass()) return false;
     TICFrame other = (TICFrame) obj;
     return Objects.equals(this.DataSetList, other.DataSetList);
   }
@@ -169,8 +164,7 @@ public abstract class TICFrame {
   }
 
   /**
-   * Returns the data value for the data set with the given label, or null if not
-   * found.
+   * Returns the data value for the data set with the given label, or null if not found.
    *
    * @param label the label of the data set
    * @return the data value, or null if not found
@@ -186,9 +180,8 @@ public abstract class TICFrame {
   }
 
   /**
-   * Adds the given data set to the end of the list. If a data set with the same
-   * label exists,
-   * its data and checksum are updated.
+   * Adds the given data set to the end of the list. If a data set with the same label exists, its
+   * data and checksum are updated.
    *
    * @param dataSet the data set to add or update
    */
@@ -204,11 +197,10 @@ public abstract class TICFrame {
   }
 
   /**
-   * Adds the given data set at the specified index. If a data set with the same
-   * label exists,
-   * its data and checksum are updated and it is moved to the new index.
+   * Adds the given data set at the specified index. If a data set with the same label exists, its
+   * data and checksum are updated and it is moved to the new index.
    *
-   * @param index   the position to insert the data set
+   * @param index the position to insert the data set
    * @param dataSet the data set to add or update
    */
   public void addDataSet(int index, TICFrameDataSet dataSet) {
@@ -231,18 +223,17 @@ public abstract class TICFrame {
    * Adds a new data set with the given label and data to the frame.
    *
    * @param label the label for the data set
-   * @param data  the data value
+   * @param data the data value
    * @return the created or updated data set
    */
   public abstract TICFrameDataSet addDataSet(String label, String data);
 
   /**
-   * Adds a new data set with the given label and data at the specified index in
-   * the frame.
+   * Adds a new data set with the given label and data at the specified index in the frame.
    *
    * @param index the position to insert the data set
    * @param label the label for the data set
-   * @param data  the data value
+   * @param data the data value
    * @return the created or updated data set
    */
   public abstract TICFrameDataSet addDataSet(int index, String label, String data);
@@ -286,7 +277,7 @@ public abstract class TICFrame {
    * Sets the data value for the data set with the given label.
    *
    * @param label the label of the data set
-   * @param data  the new data value
+   * @param data the new data value
    * @return true if the data set was found and updated, false otherwise
    */
   public boolean setDataSet(String label, String data) {
@@ -305,8 +296,8 @@ public abstract class TICFrame {
   /**
    * Sets the data value and checksum for the data set with the given label.
    *
-   * @param label    the label of the data set
-   * @param data     the new data value
+   * @param label the label of the data set
+   * @param data the new data value
    * @param checksum the new checksum value
    * @return true if the data set was found and updated, false otherwise
    */
@@ -387,16 +378,12 @@ public abstract class TICFrame {
   }
 
   /**
-   * Returns a data dictionary representation of this frame with the specified
-   * options.
+   * Returns a data dictionary representation of this frame with the specified options.
    *
-   * @param options options to DataDictionary render (use like bits fields) : -
-   *                EXPLICIT : frame is
-   *                detailed - NOCHECKSUM : DataSet checksum are hidden -
-   *                NODATETIME : DataSet dateTime fields
-   *                are hidden - NOTICMODE : Tic mode is hidden; - TRIMMED :
-   *                NOCHECKSUM | NODATETIME -
-   *                FILTER_INVALID : Invalid DataSet are filtered
+   * @param options options to DataDictionary render (use like bits fields) : - EXPLICIT : frame is
+   *     detailed - NOCHECKSUM : DataSet checksum are hidden - NODATETIME : DataSet dateTime fields
+   *     are hidden - NOTICMODE : Tic mode is hidden; - TRIMMED : NOCHECKSUM | NODATETIME -
+   *     FILTER_INVALID : Invalid DataSet are filtered
    * @return data dictionary
    * @throws DataDictionaryException
    */

@@ -17,25 +17,20 @@ import java.util.List;
 /**
  * Codec for encoding and decoding TIC historic frame data sets.
  *
- * <p>
- * This class implements the {@link Codec} interface to provide serialization
- * and deserialization
- * of {@link TICFrameHistoricDataSet} objects to and from their byte array
- * representation, according
- * to the historic TIC protocol format. It ensures the correct structure,
- * delimiters, and checksum
+ * <p>This class implements the {@link Codec} interface to provide serialization and deserialization
+ * of {@link TICFrameHistoricDataSet} objects to and from their byte array representation, according
+ * to the historic TIC protocol format. It ensures the correct structure, delimiters, and checksum
  * validation for each data set.
  *
- * <p>
- * Main features:
+ * <p>Main features:
+ *
  * <ul>
- * <li>Encodes a {@link TICFrameHistoricDataSet} into a byte array with proper
- * delimiters, separators, and checksum.</li>
- * <li>Decodes a byte array into a {@link TICFrameHistoricDataSet}, validating
- * structure and checksum.</li>
- * <li>Handles TIC historic data set format:
- * <code>LF LABEL SP DATA SP CHECKSUM CR</code>.</li>
- * <li>Throws {@link CodecException} on invalid format or checksum.</li>
+ *   <li>Encodes a {@link TICFrameHistoricDataSet} into a byte array with proper delimiters,
+ *       separators, and checksum.
+ *   <li>Decodes a byte array into a {@link TICFrameHistoricDataSet}, validating structure and
+ *       checksum.
+ *   <li>Handles TIC historic data set format: <code>LF LABEL SP DATA SP CHECKSUM CR</code>.
+ *   <li>Throws {@link CodecException} on invalid format or checksum.
  * </ul>
  *
  * @author Enedis Smarties team
@@ -49,8 +44,7 @@ public class CodecTICFrameHistoricDataSet implements Codec<TICFrameHistoricDataS
   /**
    * Encode a TICFrameHistoricDataSet into its byte array representation.
    *
-   * <p>
-   * Format: LF LABEL SP DATA SP CHECKSUM CR
+   * <p>Format: LF LABEL SP DATA SP CHECKSUM CR
    *
    * @param ticFrameHistoricDataSet the data set to encode
    * @return the encoded byte array
@@ -83,8 +77,7 @@ public class CodecTICFrameHistoricDataSet implements Codec<TICFrameHistoricDataS
   /**
    * Decode a byte array into a TICFrameHistoricDataSet.
    *
-   * <p>
-   * Validates delimiters, structure, and checksum.
+   * <p>Validates delimiters, structure, and checksum.
    *
    * @param bytes the byte array to decode
    * @return the decoded TICFrameHistoricDataSet
@@ -150,7 +143,7 @@ public class CodecTICFrameHistoricDataSet implements Codec<TICFrameHistoricDataS
   /**
    * Initializes a TICFrameHistoricDataSet from label, data, and checksum parts.
    *
-   * @param parts   the list of BytesArray: label, data, checksum
+   * @param parts the list of BytesArray: label, data, checksum
    * @param dataSet the data set to initialize
    * @return the initialized TICFrameHistoricDataSet
    */
@@ -183,8 +176,7 @@ public class CodecTICFrameHistoricDataSet implements Codec<TICFrameHistoricDataS
   }
 
   /**
-   * Splits the frame into its parts (label, data, checksum) using the TIC
-   * separator.
+   * Splits the frame into its parts (label, data, checksum) using the TIC separator.
    *
    * @param bytesArray the byte array to split
    * @return a list of BytesArray: label, data, checksum
@@ -203,7 +195,7 @@ public class CodecTICFrameHistoricDataSet implements Codec<TICFrameHistoricDataS
         throw new CodecException("Invalid format of TICFrameHistoricDataSet");
       }
       BytesArray checksum = parts.get(parts.size() - 1);
-      checksum.addAll(new byte[] { TICFrameHistoricDataSet.SEPARATOR });
+      checksum.addAll(new byte[] {TICFrameHistoricDataSet.SEPARATOR});
     } else {
       parts = bytesArray.split(TICFrameHistoricDataSet.SEPARATOR);
     }

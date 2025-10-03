@@ -17,23 +17,19 @@ import java.util.List;
 /**
  * Codec for encoding and decoding TIC standard frame data sets.
  *
- * <p>
- * This class implements the {@link Codec} interface to provide serialization
- * and deserialization
- * of {@link TICFrameStandardDataSet} objects to and from their byte array
- * representation, according
+ * <p>This class implements the {@link Codec} interface to provide serialization and deserialization
+ * of {@link TICFrameStandardDataSet} objects to and from their byte array representation, according
  * to the standard TIC protocol format.
  *
- * <p>
- * Main features:
+ * <p>Main features:
+ *
  * <ul>
- * <li>Encodes a {@link TICFrameStandardDataSet} into a byte array with proper
- * delimiters, separators, and checksum.</li>
- * <li>Decodes a byte array into a {@link TICFrameStandardDataSet}, validating
- * structure and checksum.</li>
- * <li>Handles both "LABEL/DATA/CHECKSUM" and "LABEL/DATETIME/DATA/CHECKSUM"
- * formats.</li>
- * <li>Throws {@link CodecException} on invalid format or checksum.</li>
+ *   <li>Encodes a {@link TICFrameStandardDataSet} into a byte array with proper delimiters,
+ *       separators, and checksum.
+ *   <li>Decodes a byte array into a {@link TICFrameStandardDataSet}, validating structure and
+ *       checksum.
+ *   <li>Handles both "LABEL/DATA/CHECKSUM" and "LABEL/DATETIME/DATA/CHECKSUM" formats.
+ *   <li>Throws {@link CodecException} on invalid format or checksum.
  * </ul>
  *
  * @author Enedis Smarties team
@@ -82,9 +78,8 @@ public class CodecTICFrameStandardDataSet implements Codec<TICFrameStandardDataS
   /**
    * Decode a byte array into a TICFrameStandardDataSet.
    *
-   * <p>
-   * Supports both classic and datetime-extended formats. Validates delimiters,
-   * structure, and checksum.
+   * <p>Supports both classic and datetime-extended formats. Validates delimiters, structure, and
+   * checksum.
    *
    * @param bytes the byte array to decode
    * @return the decoded TICFrameStandardDataSet
@@ -134,8 +129,7 @@ public class CodecTICFrameStandardDataSet implements Codec<TICFrameStandardDataS
   }
 
   /**
-   * Checks if the split frame has the expected structure: label, datetime, data,
-   * checksum.
+   * Checks if the split frame has the expected structure: label, datetime, data, checksum.
    *
    * @param parts the list of BytesArray
    * @return true if the structure matches, false otherwise
@@ -188,7 +182,7 @@ public class CodecTICFrameStandardDataSet implements Codec<TICFrameStandardDataS
   /**
    * Initializes a TICFrameStandardDataSet from label, data, and checksum parts.
    *
-   * @param parts   the list of BytesArray: label, data, checksum
+   * @param parts the list of BytesArray: label, data, checksum
    * @param dataSet the data set to initialize
    * @return the initialized TICFrameStandardDataSet
    */
@@ -200,10 +194,9 @@ public class CodecTICFrameStandardDataSet implements Codec<TICFrameStandardDataS
   }
 
   /**
-   * Initializes a TICFrameStandardDataSet from label, datetime, data, and
-   * checksum parts.
+   * Initializes a TICFrameStandardDataSet from label, datetime, data, and checksum parts.
    *
-   * @param parts   the list of BytesArray: label, datetime, data, checksum
+   * @param parts the list of BytesArray: label, datetime, data, checksum
    * @param dataSet the data set to initialize
    * @return the initialized TICFrameStandardDataSet
    */

@@ -13,19 +13,16 @@ import enedis.lab.protocol.tic.frame.TICFrame;
 /**
  * TIC frame representation for historic TIC protocol.
  *
- * <p>
- * This class extends {@link TICFrame} to provide support for historic TIC
- * frames, including
- * separator definition and data set management. It allows adding labeled data
- * sets to the frame
- * and always reports its mode as {@link TICMode#HISTORIC}.
+ * <p>This class extends {@link TICFrame} to provide support for historic TIC frames, including
+ * separator definition and data set management. It allows adding labeled data sets to the frame and
+ * always reports its mode as {@link TICMode#HISTORIC}.
  *
- * <p>
- * Key features:
+ * <p>Key features:
+ *
  * <ul>
- * <li>Defines the separator for historic TIC frames</li>
- * <li>Supports adding labeled data sets at specific positions</li>
- * <li>Always returns HISTORIC as the TIC mode</li>
+ *   <li>Defines the separator for historic TIC frames
+ *   <li>Supports adding labeled data sets at specific positions
+ *   <li>Always returns HISTORIC as the TIC mode
  * </ul>
  *
  * @author Enedis Smarties team
@@ -34,14 +31,10 @@ import enedis.lab.protocol.tic.frame.TICFrame;
  * @see TICMode
  */
 public class TICFrameHistoric extends TICFrame {
-  /**
-   * Separator character (space, 0x20) used in historic TIC frames.
-   */
+  /** Separator character (space, 0x20) used in historic TIC frames. */
   public static final byte SEPARATOR = 0x20; // SP
 
-  /**
-   * Constructs an empty historic TIC frame.
-   */
+  /** Constructs an empty historic TIC frame. */
   public TICFrameHistoric() {
     super();
   }
@@ -50,7 +43,7 @@ public class TICFrameHistoric extends TICFrame {
    * Adds a new data set with the given label and data to the end of the frame.
    *
    * @param label the label for the data set
-   * @param data  the data value
+   * @param data the data value
    * @return the created or updated {@link TICFrameHistoricDataSet}
    */
   @Override
@@ -59,16 +52,13 @@ public class TICFrameHistoric extends TICFrame {
   }
 
   /**
-   * Adds a new data set with the given label and data at the specified index in
-   * the frame.
+   * Adds a new data set with the given label and data at the specified index in the frame.
    *
-   * <p>
-   * If a data set with the same label exists, it is updated and moved to the new
-   * index.
+   * <p>If a data set with the same label exists, it is updated and moved to the new index.
    *
    * @param index the position to insert the data set
    * @param label the label for the data set
-   * @param data  the data value
+   * @param data the data value
    * @return the created or updated {@link TICFrameHistoricDataSet}
    */
   @Override

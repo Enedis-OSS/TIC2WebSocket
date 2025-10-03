@@ -14,52 +14,39 @@ import org.json.JSONObject;
 /**
  * Abstract base class for data sets in TIC frames.
  *
- * <p>
- * This class provides the structure and common operations for TIC frame data
- * sets, including
- * label/data management, checksum calculation, and serialization. Subclasses
- * implement protocol-specific
- * details for standard and historic TIC formats.
+ * <p>This class provides the structure and common operations for TIC frame data sets, including
+ * label/data management, checksum calculation, and serialization. Subclasses implement
+ * protocol-specific details for standard and historic TIC formats.
  *
- * <p>
- * Key features:
+ * <p>Key features:
+ *
  * <ul>
- * <li>Defines constants for data set delimiters</li>
- * <li>Manages label, data, and checksum fields</li>
- * <li>Provides methods for setting and validating fields</li>
- * <li>Abstract methods for protocol-specific serialization and checksum</li>
+ *   <li>Defines constants for data set delimiters
+ *   <li>Manages label, data, and checksum fields
+ *   <li>Provides methods for setting and validating fields
+ *   <li>Abstract methods for protocol-specific serialization and checksum
  * </ul>
  *
  * @author Enedis Smarties team
  * @see BytesArray
  */
 public abstract class TICFrameDataSet {
-  /**
-   * Data set start delimiter (LF, 0x0A).
-   */
+  /** Data set start delimiter (LF, 0x0A). */
   public static final byte BEGINNING_PATTERN = 0x0A; // LF
 
-  /**
-   * Data set end delimiter (CR, 0x0D).
-   */
+  /** Data set end delimiter (CR, 0x0D). */
   public static final byte END_PATTERN = 0x0D; // CR
 
-  /**
-   * Label field for the data set.
-   */
+  /** Label field for the data set. */
   protected BytesArray label = null;
-  /**
-   * Data field for the data set.
-   */
+
+  /** Data field for the data set. */
   protected BytesArray data = null;
-  /**
-   * Checksum value for the data set.
-   */
+
+  /** Checksum value for the data set. */
   protected byte checksum;
 
-  /**
-   * Constructs an empty TIC frame data set.
-   */
+  /** Constructs an empty TIC frame data set. */
   public TICFrameDataSet() {
     this.init();
   }
@@ -71,12 +58,9 @@ public abstract class TICFrameDataSet {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (this.getClass() != obj.getClass())
-      return false;
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (this.getClass() != obj.getClass()) return false;
     TICFrameDataSet other = (TICFrameDataSet) obj;
     return this.checksum == other.checksum
         && Objects.equals(this.data, other.data)
@@ -87,7 +71,7 @@ public abstract class TICFrameDataSet {
    * Sets up the data set with the given label and data strings.
    *
    * @param label the label string
-   * @param data  the data string
+   * @param data the data string
    */
   public void setup(String label, String data) {
     this.setup(label.getBytes(), data.getBytes());
@@ -97,7 +81,7 @@ public abstract class TICFrameDataSet {
    * Sets up the data set with the given label and data byte arrays.
    *
    * @param label the label bytes
-   * @param data  the data bytes
+   * @param data the data bytes
    */
   public void setup(byte[] label, byte[] data) {
     this.label = new BytesArray(label);
@@ -132,8 +116,7 @@ public abstract class TICFrameDataSet {
   }
 
   /**
-   * Sets the label field from a {@link BytesArray} value and updates the
-   * checksum.
+   * Sets the label field from a {@link BytesArray} value and updates the checksum.
    *
    * @param label the label as a {@link BytesArray}
    */
@@ -189,8 +172,7 @@ public abstract class TICFrameDataSet {
   }
 
   /**
-   * Computes and sets the checksum for this data set (label and data must be
-   * set).
+   * Computes and sets the checksum for this data set (label and data must be set).
    *
    * @return true if the operation succeeds, false otherwise
    */
@@ -259,9 +241,7 @@ public abstract class TICFrameDataSet {
    */
   protected abstract Byte getConsistentChecksum();
 
-  /**
-   * Initializes the data set, clearing label, data, and checksum fields.
-   */
+  /** Initializes the data set, clearing label, data, and checksum fields. */
   private void init() {
     this.label = null;
     this.data = null;

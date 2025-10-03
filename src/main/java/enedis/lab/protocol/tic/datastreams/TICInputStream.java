@@ -23,23 +23,19 @@ import enedis.lab.types.datadictionary.DataDictionaryBase;
 /**
  * Data input stream for TIC (Teleinformation Client) frames.
  *
- * <p>
- * This class extends {@link DataInputStream} to provide decoding and event
- * handling for TIC frames
- * received from a configured channel. It uses a {@link TICCodec} to decode raw
- * byte arrays into
- * {@link TICFrame} objects and exposes them as {@link DataDictionary}
- * instances. The stream supports
- * error handling, event notification, and mode management for both standard and
- * historic TIC protocols.
+ * <p>This class extends {@link DataInputStream} to provide decoding and event handling for TIC
+ * frames received from a configured channel. It uses a {@link TICCodec} to decode raw byte arrays
+ * into {@link TICFrame} objects and exposes them as {@link DataDictionary} instances. The stream
+ * supports error handling, event notification, and mode management for both standard and historic
+ * TIC protocols.
  *
- * <p>
- * Key features:
+ * <p>Key features:
+ *
  * <ul>
- * <li>Decodes incoming TIC frames using {@link TICCodec}</li>
- * <li>Notifies subscribers on new data or errors</li>
- * <li>Supports both standard and historic TIC modes</li>
- * <li>Provides access to the current TIC mode</li>
+ *   <li>Decodes incoming TIC frames using {@link TICCodec}
+ *   <li>Notifies subscribers on new data or errors
+ *   <li>Supports both standard and historic TIC modes
+ *   <li>Provides access to the current TIC mode
  * </ul>
  *
  * @author Enedis Smarties team
@@ -49,31 +45,22 @@ import enedis.lab.types.datadictionary.DataDictionaryBase;
  * @see DataDictionary
  */
 public class TICInputStream extends DataInputStream {
-  /**
-   * Key for the timestamp field in the decoded data dictionary.
-   */
+  /** Key for the timestamp field in the decoded data dictionary. */
   public static final String KEY_TIMESTAMP = "timestamp";
 
-  /**
-   * Key for the channel name field in the decoded data dictionary.
-   */
+  /** Key for the channel name field in the decoded data dictionary. */
   public static final String KEY_CHANNEL = "channel";
 
-  /**
-   * Key for the TIC frame data field in the decoded data dictionary.
-   */
+  /** Key for the TIC frame data field in the decoded data dictionary. */
   public static final String KEY_DATA = "data";
 
-  /**
-   * Codec used to decode TIC frames from byte arrays.
-   */
+  /** Codec used to decode TIC frames from byte arrays. */
   protected TICCodec codec;
 
   /**
    * Constructs a new TICInputStream with the specified configuration.
    *
-   * <p>
-   * Initializes the codec and sets the TIC mode according to the configuration.
+   * <p>Initializes the codec and sets the TIC mode according to the configuration.
    *
    * @param configuration the TIC stream configuration
    * @throws DataStreamException if the configuration is invalid
@@ -85,15 +72,11 @@ public class TICInputStream extends DataInputStream {
   }
 
   /**
-   * Reads a TIC frame from the input stream and returns it as a
-   * {@link DataDictionary}.
+   * Reads a TIC frame from the input stream and returns it as a {@link DataDictionary}.
    *
-   * <p>
-   * This method should be implemented to provide actual reading logic. Currently
-   * returns null.
+   * <p>This method should be implemented to provide actual reading logic. Currently returns null.
    *
-   * @return the decoded TIC frame as a {@link DataDictionary}, or null if not
-   *         implemented
+   * @return the decoded TIC frame as a {@link DataDictionary}, or null if not implemented
    * @throws DataStreamException if a read error occurs
    */
   @Override
@@ -114,12 +97,11 @@ public class TICInputStream extends DataInputStream {
   /**
    * Handles incoming data read from the channel.
    *
-   * <p>
-   * Decodes the TIC frame and notifies subscribers. If decoding fails, notifies
-   * error subscribers.
+   * <p>Decodes the TIC frame and notifies subscribers. If decoding fails, notifies error
+   * subscribers.
    *
    * @param channelName the name of the channel
-   * @param data        the raw byte array received
+   * @param data the raw byte array received
    */
   @Override
   public void onDataRead(String channelName, byte[] data) {
@@ -179,7 +161,7 @@ public class TICInputStream extends DataInputStream {
    * Not used. TICInputStream does not handle data written events.
    *
    * @param channelName the name of the channel
-   * @param data        the data written
+   * @param data the data written
    */
   @Override
   public void onDataWritten(String channelName, byte[] data) {
@@ -189,8 +171,8 @@ public class TICInputStream extends DataInputStream {
   /**
    * Handles error events detected on the channel (without error data).
    *
-   * @param channelName  the name of the channel
-   * @param errorCode    the error code
+   * @param channelName the name of the channel
+   * @param errorCode the error code
    * @param errorMessage the error message
    */
   @Override
@@ -201,10 +183,10 @@ public class TICInputStream extends DataInputStream {
   /**
    * Handles error events detected on the channel (with error data).
    *
-   * @param channelName  the name of the channel
-   * @param errorCode    the error code
+   * @param channelName the name of the channel
+   * @param errorCode the error code
    * @param errorMessage the error message
-   * @param errorData    additional error data
+   * @param errorData additional error data
    */
   @Override
   public void onErrorDetected(
@@ -225,15 +207,12 @@ public class TICInputStream extends DataInputStream {
   /**
    * Decodes a raw TIC frame byte array into a {@link DataDictionary}.
    *
-   * <p>
-   * Uses the internal {@link TICCodec} to decode the frame, adds timestamp and
-   * channel info.
+   * <p>Uses the internal {@link TICCodec} to decode the frame, adds timestamp and channel info.
    *
    * @param data the raw TIC frame bytes
-   * @return a {@link DataDictionary} containing the decoded frame, timestamp, and
-   *         channel name
+   * @return a {@link DataDictionary} containing the decoded frame, timestamp, and channel name
    * @throws DataDictionaryException if the data dictionary cannot be created
-   * @throws CodecException          if decoding fails
+   * @throws CodecException if decoding fails
    */
   protected DataDictionary decodeTICFrame(byte[] data)
       throws DataDictionaryException, CodecException {

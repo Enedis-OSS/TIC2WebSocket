@@ -19,25 +19,20 @@ import java.util.List;
 /**
  * Codec for encoding and decoding TIC standard frame data sets.
  *
- * <p>
- * This class implements the {@link Codec} interface to provide serialization
- * and deserialization
- * of {@link TICFrameStandard} objects to and from their byte array
- * representation, according
- * to the standard TIC protocol format. It ensures the correct structure,
- * delimiters, and checksum
+ * <p>This class implements the {@link Codec} interface to provide serialization and deserialization
+ * of {@link TICFrameStandard} objects to and from their byte array representation, according to the
+ * standard TIC protocol format. It ensures the correct structure, delimiters, and checksum
  * validation for each data set in a frame.
  *
- * <p>
- * Main features:
+ * <p>Main features:
+ *
  * <ul>
- * <li>Encodes a {@link TICFrameStandard} into a byte array with proper
- * delimiters, separators, and checksum.</li>
- * <li>Decodes a byte array into a {@link TICFrameStandard}, validating
- * structure and checksum of each data set.</li>
- * <li>Handles TIC standard data set format, including support for multiple data
- * sets per frame.</li>
- * <li>Throws {@link CodecException} on invalid format or checksum.</li>
+ *   <li>Encodes a {@link TICFrameStandard} into a byte array with proper delimiters, separators,
+ *       and checksum.
+ *   <li>Decodes a byte array into a {@link TICFrameStandard}, validating structure and checksum of
+ *       each data set.
+ *   <li>Handles TIC standard data set format, including support for multiple data sets per frame.
+ *   <li>Throws {@link CodecException} on invalid format or checksum.
  * </ul>
  *
  * @author Enedis Smarties team
@@ -51,8 +46,7 @@ public class CodecTICFrameStandard implements Codec<TICFrameStandard, byte[]> {
   /**
    * Decode a byte array into a TICFrameStandard.
    *
-   * <p>
-   * Validates delimiters, structure, and checksum of each data set.
+   * <p>Validates delimiters, structure, and checksum of each data set.
    *
    * @param bytes the byte array to decode
    * @return the decoded TICFrameStandard
@@ -79,10 +73,11 @@ public class CodecTICFrameStandard implements Codec<TICFrameStandard, byte[]> {
 
       // Isolate each memory area supposed to correspond to an Information Group
       // (DataSet)
-      List<BytesArray> datasetList = bytesArray.slice(
-          TICFrameDataSet.BEGINNING_PATTERN,
-          TICFrameDataSet.END_PATTERN,
-          BytesArray.CONTIGUOUS);
+      List<BytesArray> datasetList =
+          bytesArray.slice(
+              TICFrameDataSet.BEGINNING_PATTERN,
+              TICFrameDataSet.END_PATTERN,
+              BytesArray.CONTIGUOUS);
 
       // Analyze each memory area to extract the controls of the Group of information
       // If the format of a zone is invalid, then the browse is interrupted and the
@@ -98,7 +93,8 @@ public class CodecTICFrameStandard implements Codec<TICFrameStandard, byte[]> {
             dataSet = codecTICFrameStandardDataSet.decode(rawDataSetByte);
             ticFrame.addDataSet(dataSet);
           } catch (CodecException exception) {
-            errorMessage += exception.getMessage() + " : " + new String(rawDataSet.getBytes()) + "\n";
+            errorMessage +=
+                exception.getMessage() + " : " + new String(rawDataSet.getBytes()) + "\n";
           }
         }
       }
@@ -114,8 +110,7 @@ public class CodecTICFrameStandard implements Codec<TICFrameStandard, byte[]> {
   /**
    * Encode a TICFrameStandard into its byte array representation.
    *
-   * <p>
-   * Format: LF [DataSet1] ... [DataSetN] CR
+   * <p>Format: LF [DataSet1] ... [DataSetN] CR
    *
    * @param ticFrameStandard the frame to encode
    * @return the encoded byte array, or null if the frame is empty
