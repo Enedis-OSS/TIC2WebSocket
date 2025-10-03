@@ -7,10 +7,5 @@
 
 package enedis.lab.util.task;
 
-/**
- * Subscriber interface
- */
-public interface Subscriber
-{
-
-}
+/** Subscriber interface */
+public interface Subscriber {}

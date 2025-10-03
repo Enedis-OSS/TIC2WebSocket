@@ -7,15 +7,12 @@
 
 package enedis.lab.util.message;
 
-/**
- * Message type
- */
-public enum MessageType
-{
-	/** Event */
-	EVENT,
-	/** Request */
-	REQUEST,
-	/** Response */
-	RESPONSE;
+/** Message type */
+public enum MessageType {
+  /** Event */
+  EVENT,
+  /** Request */
+  REQUEST,
+  /** Response */
+  RESPONSE;
 }

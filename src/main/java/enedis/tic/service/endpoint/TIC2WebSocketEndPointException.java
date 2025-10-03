@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -9,77 +9,65 @@ package enedis.tic.service.endpoint;
 
 /**
  * @author Antoine
- *
  */
-/**
- * TIC2WebSocket end point Exception
- */
-public class TIC2WebSocketEndPointException extends Exception
-{
+/** TIC2WebSocket end point Exception */
+public class TIC2WebSocketEndPointException extends Exception {
 
-	private static final long			serialVersionUID	= -2263755971102386572L;
+  private static final long serialVersionUID = -2263755971102386572L;
 
-	private TIC2WebSocketEndPointErrorCode	code;
+  private TIC2WebSocketEndPointErrorCode code;
 
-	/**
-	 * Default constructor
-	 * 
-	 * @param code
-	 */
-	public TIC2WebSocketEndPointException(TIC2WebSocketEndPointErrorCode code)
-	{
-		super();
-		this.code = code;
-	}
+  /**
+   * Default constructor
+   *
+   * @param code
+   */
+  public TIC2WebSocketEndPointException(TIC2WebSocketEndPointErrorCode code) {
+    super();
+    this.code = code;
+  }
 
-	/**
-	 * Constructor using message and cause
-	 * 
-	 * @param code
-	 * 
-	 * @param message
-	 * @param cause
-	 */
-	public TIC2WebSocketEndPointException(TIC2WebSocketEndPointErrorCode code, String message, Throwable cause)
-	{
-		super(message, cause);
-		this.code = code;
-	}
+  /**
+   * Constructor using message and cause
+   *
+   * @param code
+   * @param message
+   * @param cause
+   */
+  public TIC2WebSocketEndPointException(
+      TIC2WebSocketEndPointErrorCode code, String message, Throwable cause) {
+    super(message, cause);
+    this.code = code;
+  }
 
-	/**
-	 * Constructor using message
-	 * 
-	 * @param code
-	 * 
-	 * @param message
-	 */
-	public TIC2WebSocketEndPointException(TIC2WebSocketEndPointErrorCode code, String message)
-	{
-		super(message);
-		this.code = code;
-	}
+  /**
+   * Constructor using message
+   *
+   * @param code
+   * @param message
+   */
+  public TIC2WebSocketEndPointException(TIC2WebSocketEndPointErrorCode code, String message) {
+    super(message);
+    this.code = code;
+  }
 
-	/**
-	 * Constructor using cause
-	 * 
-	 * @param code
-	 * 
-	 * @param cause
-	 */
-	public TIC2WebSocketEndPointException(TIC2WebSocketEndPointErrorCode code, Throwable cause)
-	{
-		super(cause);
-		this.code = code;
-	}
+  /**
+   * Constructor using cause
+   *
+   * @param code
+   * @param cause
+   */
+  public TIC2WebSocketEndPointException(TIC2WebSocketEndPointErrorCode code, Throwable cause) {
+    super(cause);
+    this.code = code;
+  }
 
-	/**
-	 * Get error code
-	 * 
-	 * @return error code
-	 */
-	public TIC2WebSocketEndPointErrorCode getCode()
-	{
-		return this.code;
-	}
-
+  /**
+   * Get error code
+   *
+   * @return error code
+   */
+  public TIC2WebSocketEndPointErrorCode getCode() {
+    return this.code;
+  }
 }

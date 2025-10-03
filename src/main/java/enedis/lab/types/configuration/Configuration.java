@@ -7,45 +7,37 @@
 
 package enedis.lab.types.configuration;
 
+import enedis.lab.types.DataDictionary;
 import java.io.File;
 
-import enedis.lab.types.DataDictionary;
+/** Interface used to handle any configuration */
+public interface Configuration extends DataDictionary {
 
-/**
- * Interface used to handle any configuration
- */
-public interface Configuration extends DataDictionary
-{
+  /**
+   * Load configuration from file
+   *
+   * @throws ConfigurationException load file failed
+   */
+  public void load() throws ConfigurationException;
 
-	/**
-	 * Load configuration from file
-	 *
-	 * @throws ConfigurationException
-	 *             load file failed
-	 */
-	public void load() throws ConfigurationException;
+  /**
+   * Save configuration to file
+   *
+   * @throws ConfigurationException save file failed
+   */
+  public void save() throws ConfigurationException;
 
-	/**
-	 * Save configuration to file
-	 *
-	 * @throws ConfigurationException
-	 *             save file failed
-	 */
-	public void save() throws ConfigurationException;
+  /**
+   * Get config name
+   *
+   * @return configuration name
+   */
+  public String getConfigName();
 
-	/**
-	 * Get config name
-	 * 
-	 * @return configuration name
-	 */
-	public String getConfigName();
-
-	/**
-	 * Get config file
-	 * 
-	 * @return configuration file reference
-	 */
-	public File getConfigFile();
-
-
+  /**
+   * Get config file
+   *
+   * @return configuration file reference
+   */
+  public File getConfigFile();
 }

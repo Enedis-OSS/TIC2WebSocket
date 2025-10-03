@@ -7,79 +7,63 @@
 
 package enedis.tic.service.client;
 
+import enedis.tic.service.endpoint.EventSender;
+import io.netty.channel.Channel;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import io.netty.channel.Channel;
+/** Client pool */
+public class TIC2WebSocketClientPoolBase implements TIC2WebSocketClientPool {
+  private Set<TIC2WebSocketClient> clients;
 
-import enedis.tic.service.endpoint.EventSender;
+  /** Default constructor */
+  public TIC2WebSocketClientPoolBase() {
+    super();
+    this.clients = new CopyOnWriteArraySet<TIC2WebSocketClient>();
+  }
 
-/**
- * Client pool
- */
-public class TIC2WebSocketClientPoolBase implements TIC2WebSocketClientPool
-{
-	private Set<TIC2WebSocketClient> clients;
+  @Override
+  public Optional<TIC2WebSocketClient> getClient(String channelId) {
+    // @formatter:off
+    return this.clients.stream()
+        .filter(c -> c.getChannel().id().asLongText().equals(channelId))
+        .findAny();
+    // @formatter:on
+  }
 
-	/**
-	 * Default constructor
-	 */
-	public TIC2WebSocketClientPoolBase()
-	{
-		super();
-		this.clients = new CopyOnWriteArraySet<TIC2WebSocketClient>();
-	}
+  @Override
+  public boolean exists(String channelId) {
+    return this.getClient(channelId).isPresent();
+  }
 
-	@Override
-	public Optional<TIC2WebSocketClient> getClient(String channelId)
-	{
-		// @formatter:off
-		return this.clients.stream()
-						   .filter(c -> c.getChannel().id().asLongText().equals(channelId))
-						   .findAny();
-		// @formatter:on
-	}
+  @Override
+  public TIC2WebSocketClient createClient(Channel channel, EventSender sender) {
+    this.checkArguments(channel, sender);
 
-	@Override
-	public boolean exists(String channelId)
-	{
-		return this.getClient(channelId).isPresent();
-	}
+    String channelId = channel.id().asLongText();
+    Optional<TIC2WebSocketClient> client = this.getClient(channelId);
+    if (!client.isPresent()) {
+      TIC2WebSocketClient newClient = new TIC2WebSocketClient(channel, sender);
+      this.clients.add(newClient);
+      return newClient;
+    } else {
+      return client.get();
+    }
+  }
 
-	@Override
-	public TIC2WebSocketClient createClient(Channel channel, EventSender sender)
-	{
-		this.checkArguments(channel, sender);
+  @Override
+  public void remove(String channelId) {
+    Optional<TIC2WebSocketClient> client = this.getClient(channelId);
+    if (client.isPresent()) {
+      this.clients.remove(client.get());
+    }
+  }
 
-		String channelId = channel.id().asLongText();
-		Optional<TIC2WebSocketClient> client = this.getClient(channelId);
-		if (!client.isPresent())
-		{
-			TIC2WebSocketClient newClient = new TIC2WebSocketClient(channel, sender);
-			this.clients.add(newClient);
-			return newClient;
-		}
-		else
-		{
-			return client.get();
-		}
-	}
-
-	@Override
-	public void remove(String channelId)
-	{
-		Optional<TIC2WebSocketClient> client = this.getClient(channelId);
-		if (client.isPresent())
-		{
-			this.clients.remove(client.get());
-		}
-	}
-
-	private void checkArguments(Channel channel, EventSender sender)
-	{
-		if (channel == null || sender == null) {
-			throw new IllegalArgumentException("Cannot create client with a null Channel or null EventSender");
-		}
-	}
+  private void checkArguments(Channel channel, EventSender sender) {
+    if (channel == null || sender == null) {
+      throw new IllegalArgumentException(
+          "Cannot create client with a null Channel or null EventSender");
+    }
+  }
 }

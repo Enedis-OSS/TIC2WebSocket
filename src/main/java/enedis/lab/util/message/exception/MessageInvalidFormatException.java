@@ -7,51 +7,41 @@
 
 package enedis.lab.util.message.exception;
 
-/**
- * Unvalid message format exception
- */
-public class MessageInvalidFormatException extends MessageException
-{
+/** Unvalid message format exception */
+public class MessageInvalidFormatException extends MessageException {
 
-	private static final long serialVersionUID = -2263755971102386572L;
+  private static final long serialVersionUID = -2263755971102386572L;
 
-	/**
-	 * Default constructor
-	 */
-	public MessageInvalidFormatException()
-	{
-		super();
-	}
+  /** Default constructor */
+  public MessageInvalidFormatException() {
+    super();
+  }
 
-	/**
-	 * Constructor using message and cause
-	 * 
-	 * @param message
-	 * @param cause
-	 */
-	public MessageInvalidFormatException(String message, Throwable cause)
-	{
-		super(message, cause);
-	}
+  /**
+   * Constructor using message and cause
+   *
+   * @param message
+   * @param cause
+   */
+  public MessageInvalidFormatException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-	/**
-	 * Constructor using message
-	 * 
-	 * @param message
-	 */
-	public MessageInvalidFormatException(String message)
-	{
-		super(message);
-	}
+  /**
+   * Constructor using message
+   *
+   * @param message
+   */
+  public MessageInvalidFormatException(String message) {
+    super(message);
+  }
 
-	/**
-	 * Constructor using cause
-	 * 
-	 * @param cause
-	 */
-	public MessageInvalidFormatException(Throwable cause)
-	{
-		super(cause);
-	}
-
+  /**
+   * Constructor using cause
+   *
+   * @param cause
+   */
+  public MessageInvalidFormatException(Throwable cause) {
+    super(cause);
+  }
 }

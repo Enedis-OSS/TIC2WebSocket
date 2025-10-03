@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -14,50 +14,38 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * Notifier with subscribers basic implementation
  *
- * @param <T>
- *            the subscriber type
+ * @param <T> the subscriber type
  */
-public class NotifierBase<T extends Subscriber> implements Notifier<T>
-{
-	protected Set<T> subscribers;
+public class NotifierBase<T extends Subscriber> implements Notifier<T> {
+  protected Set<T> subscribers;
 
-	/**
-	 * Default constructor
-	 */
-	public NotifierBase()
-	{
-		super();
-		this.subscribers = new CopyOnWriteArraySet<T>();
-	}
+  /** Default constructor */
+  public NotifierBase() {
+    super();
+    this.subscribers = new CopyOnWriteArraySet<T>();
+  }
 
-	@Override
-	public void subscribe(T listener)
-	{
-		if (listener != null && !this.subscribers.contains(listener))
-		{
-			this.subscribers.add(listener);
-		}
-	}
+  @Override
+  public void subscribe(T listener) {
+    if (listener != null && !this.subscribers.contains(listener)) {
+      this.subscribers.add(listener);
+    }
+  }
 
-	@Override
-	public void unsubscribe(T listener)
-	{
-		if (listener != null && this.subscribers.contains(listener))
-		{
-			this.subscribers.remove(listener);
-		}
-	}
+  @Override
+  public void unsubscribe(T listener) {
+    if (listener != null && this.subscribers.contains(listener)) {
+      this.subscribers.remove(listener);
+    }
+  }
 
-	@Override
-	public boolean hasSubscriber(T listener)
-	{
-		return this.subscribers.contains(listener);
-	}
+  @Override
+  public boolean hasSubscriber(T listener) {
+    return this.subscribers.contains(listener);
+  }
 
-	@Override
-	public Collection<T> getSubscribers()
-	{
-		return this.subscribers;
-	}
-
+  @Override
+  public Collection<T> getSubscribers() {
+    return this.subscribers;
+  }
 }

@@ -9,16 +9,10 @@ package enedis.lab.util.message.factory;
 
 import enedis.lab.util.message.Request;
 
-/**
- * Request factory
- */
-public class RequestFactory extends AbstractMessageFactory<Request>
-{
-	/**
-	 * Default constructor
-	 */
-	public RequestFactory()
-	{
-		super(Request.class);
-	}
+/** Request factory */
+public class RequestFactory extends AbstractMessageFactory<Request> {
+  /** Default constructor */
+  public RequestFactory() {
+    super(Request.class);
+  }
 }

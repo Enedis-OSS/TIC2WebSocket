@@ -14,34 +14,33 @@ import java.util.Collection;
  *
  * @param <T>
  */
-public interface Notifier<T extends Subscriber>
-{
-	/**
-	 * Add a subscriber
-	 *
-	 * @param subscriber
-	 */
-	public void subscribe(T subscriber);
+public interface Notifier<T extends Subscriber> {
+  /**
+   * Add a subscriber
+   *
+   * @param subscriber
+   */
+  public void subscribe(T subscriber);
 
-	/**
-	 * Remove a subscriber
-	 *
-	 * @param subscriber
-	 */
-	public void unsubscribe(T subscriber);
+  /**
+   * Remove a subscriber
+   *
+   * @param subscriber
+   */
+  public void unsubscribe(T subscriber);
 
-	/**
-	 * Check if the given subscriber has been added
-	 *
-	 * @param subscriber
-	 * @return true if the given subscriber has been added
-	 */
-	public boolean hasSubscriber(T subscriber);
+  /**
+   * Check if the given subscriber has been added
+   *
+   * @param subscriber
+   * @return true if the given subscriber has been added
+   */
+  public boolean hasSubscriber(T subscriber);
 
-	/**
-	 * Get subscribers
-	 *
-	 * @return The subscribers collection
-	 */
-	public Collection<T> getSubscribers();
+  /**
+   * Get subscribers
+   *
+   * @return The subscribers collection
+   */
+  public Collection<T> getSubscribers();
 }

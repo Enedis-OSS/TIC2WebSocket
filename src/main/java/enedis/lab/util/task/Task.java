@@ -7,25 +7,18 @@
 
 package enedis.lab.util.task;
 
-/**
- * Task interface
- */
-public interface Task
-{
-	/**
-	 * Start task
-	 */
-	public void start();
+/** Task interface */
+public interface Task {
+  /** Start task */
+  public void start();
 
-	/**
-	 * Stop task
-	 */
-	public void stop();
+  /** Stop task */
+  public void stop();
 
-	/**
-	 * Get the task running state
-	 * 
-	 * @return true if the task running
-	 */
-	public boolean isRunning();
+  /**
+   * Get the task running state
+   *
+   * @return true if the task running
+   */
+  public boolean isRunning();
 }

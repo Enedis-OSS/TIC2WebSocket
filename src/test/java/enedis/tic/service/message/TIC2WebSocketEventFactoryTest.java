@@ -7,9 +7,6 @@
 
 package enedis.tic.service.message;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import enedis.lab.util.message.Message;
 import enedis.lab.util.message.MessageType;
 import enedis.lab.util.message.exception.MessageInvalidContentException;
@@ -19,57 +16,74 @@ import enedis.lab.util.message.exception.MessageKeyNameDoesntExistException;
 import enedis.lab.util.message.exception.MessageKeyTypeDoesntExistException;
 import enedis.lab.util.message.exception.UnsupportedMessageException;
 import enedis.tic.service.message.factory.TIC2WebSocketEventFactory;
+import org.junit.Assert;
+import org.junit.Test;
 
 @SuppressWarnings("javadoc")
-public class TIC2WebSocketEventFactoryTest
-{
-	@Test
-	public void testGetMessage_EventOnTICData() throws MessageInvalidFormatException, MessageKeyTypeDoesntExistException, MessageKeyNameDoesntExistException,
-			MessageInvalidTypeException, UnsupportedMessageException, MessageInvalidContentException
-	{
-		TIC2WebSocketEventFactory factory = new TIC2WebSocketEventFactory();
+public class TIC2WebSocketEventFactoryTest {
+  @Test
+  public void testGetMessage_EventOnTICData()
+      throws MessageInvalidFormatException,
+          MessageKeyTypeDoesntExistException,
+          MessageKeyNameDoesntExistException,
+          MessageInvalidTypeException,
+          UnsupportedMessageException,
+          MessageInvalidContentException {
+    TIC2WebSocketEventFactory factory = new TIC2WebSocketEventFactory();
 
-		String text = "{\"type\":\"" + MessageType.EVENT.name() + "\",\"name\":\"" + EventOnTICData.NAME
-				+ "\",\"dateTime\":\"01/01/2000 00:00:00\",\"data\":{\"captureDateTime\":\"01/01/2000 00:00:00\",\"mode\":\"STANDARD\",\"identifier\":{\"serialNumber\":\"010203040506\"},\"content\":{\"URMS\":230}}}";
+    String text =
+        "{\"type\":\""
+            + MessageType.EVENT.name()
+            + "\",\"name\":\""
+            + EventOnTICData.NAME
+            + "\",\"dateTime\":\"01/01/2000 00:00:00\",\"data\":{\"captureDateTime\":\"01/01/2000 00:00:00\",\"mode\":\"STANDARD\",\"identifier\":{\"serialNumber\":\"010203040506\"},\"content\":{\"URMS\":230}}}";
 
-		Message message = factory.getMessage(text, EventOnTICData.NAME);
+    Message message = factory.getMessage(text, EventOnTICData.NAME);
 
-		Assert.assertNotNull(message);
-		Assert.assertTrue(message instanceof EventOnTICData);
+    Assert.assertNotNull(message);
+    Assert.assertTrue(message instanceof EventOnTICData);
 
-		EventOnTICData event = (EventOnTICData) message;
+    EventOnTICData event = (EventOnTICData) message;
 
-		Assert.assertEquals(MessageType.EVENT, event.getType());
-		Assert.assertEquals(EventOnTICData.NAME, event.getName());
-		Assert.assertNotNull(event.getData());
+    Assert.assertEquals(MessageType.EVENT, event.getType());
+    Assert.assertEquals(EventOnTICData.NAME, event.getName());
+    Assert.assertNotNull(event.getData());
 
-		Message messageDecoded = factory.getMessage(event.toString(), EventOnTICData.NAME);
-		Assert.assertNotNull(message);
-		Assert.assertTrue(messageDecoded.equals(event));
-	}
+    Message messageDecoded = factory.getMessage(event.toString(), EventOnTICData.NAME);
+    Assert.assertNotNull(message);
+    Assert.assertTrue(messageDecoded.equals(event));
+  }
 
-	@Test
-	public void testGetMessage_EventOnError() throws MessageInvalidFormatException, MessageKeyTypeDoesntExistException, MessageKeyNameDoesntExistException,
-			MessageInvalidTypeException, UnsupportedMessageException, MessageInvalidContentException
-	{
-		TIC2WebSocketEventFactory factory = new TIC2WebSocketEventFactory();
+  @Test
+  public void testGetMessage_EventOnError()
+      throws MessageInvalidFormatException,
+          MessageKeyTypeDoesntExistException,
+          MessageKeyNameDoesntExistException,
+          MessageInvalidTypeException,
+          UnsupportedMessageException,
+          MessageInvalidContentException {
+    TIC2WebSocketEventFactory factory = new TIC2WebSocketEventFactory();
 
-		String text = "{\"type\":\"" + MessageType.EVENT.name() + "\",\"name\":\"" + EventOnError.NAME
-				+ "\",\"dateTime\":\"01/01/2000 00:00:00\",\"data\":{\"errorCode\":\"-1\",\"errorMessage\":\"une erreur\",\"identifier\":{\"serialNumber\":\"010203040506\"}}}";
+    String text =
+        "{\"type\":\""
+            + MessageType.EVENT.name()
+            + "\",\"name\":\""
+            + EventOnError.NAME
+            + "\",\"dateTime\":\"01/01/2000 00:00:00\",\"data\":{\"errorCode\":\"-1\",\"errorMessage\":\"une erreur\",\"identifier\":{\"serialNumber\":\"010203040506\"}}}";
 
-		Message message = factory.getMessage(text, EventOnError.NAME);
+    Message message = factory.getMessage(text, EventOnError.NAME);
 
-		Assert.assertNotNull(message);
-		Assert.assertTrue(message instanceof EventOnError);
+    Assert.assertNotNull(message);
+    Assert.assertTrue(message instanceof EventOnError);
 
-		EventOnError event = (EventOnError) message;
+    EventOnError event = (EventOnError) message;
 
-		Assert.assertEquals(MessageType.EVENT, event.getType());
-		Assert.assertEquals(EventOnError.NAME, event.getName());
-		Assert.assertNotNull(event.getData());
+    Assert.assertEquals(MessageType.EVENT, event.getType());
+    Assert.assertEquals(EventOnError.NAME, event.getName());
+    Assert.assertNotNull(event.getData());
 
-		Message messageDecoded = factory.getMessage(event.toString(), EventOnError.NAME);
-		Assert.assertNotNull(message);
-		Assert.assertTrue(messageDecoded.equals(event));
-	}
+    Message messageDecoded = factory.getMessage(event.toString(), EventOnError.NAME);
+    Assert.assertNotNull(message);
+    Assert.assertTrue(messageDecoded.equals(event));
+  }
 }

@@ -7,135 +7,123 @@
 
 package enedis.tic.service.message;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import enedis.lab.types.DataDictionary;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.KeyDescriptor;
 import enedis.lab.types.datadictionary.KeyDescriptorDataDictionary;
 import enedis.lab.util.message.Response;
 import enedis.tic.core.TICCoreFrame;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * ResponseReadTIC class
- * 
- * Generated
+ *
+ * <p>Generated
  */
-public class ResponseReadTIC extends Response
-{
-	protected static final String						KEY_DATA	= "data";
+public class ResponseReadTIC extends Response {
+  protected static final String KEY_DATA = "data";
 
-	/** Message name */
-	public static final String							NAME		= "ReadTIC";
+  /** Message name */
+  public static final String NAME = "ReadTIC";
 
-	private List<KeyDescriptor<?>>						keys		= new ArrayList<KeyDescriptor<?>>();
+  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
-	protected KeyDescriptorDataDictionary<TICCoreFrame>	kData;
+  protected KeyDescriptorDataDictionary<TICCoreFrame> kData;
 
-	protected ResponseReadTIC()
-	{
-		super();
-		this.loadKeyDescriptors();
+  protected ResponseReadTIC() {
+    super();
+    this.loadKeyDescriptors();
 
-		this.kName.setAcceptedValues(NAME);
-	}
+    this.kName.setAcceptedValues(NAME);
+  }
 
-	/**
-	 * Constructor using map
-	 *
-	 * @param map
-	 * @throws DataDictionaryException
-	 */
-	public ResponseReadTIC(Map<String, Object> map) throws DataDictionaryException
-	{
-		this();
-		this.copy(fromMap(map));
-	}
+  /**
+   * Constructor using map
+   *
+   * @param map
+   * @throws DataDictionaryException
+   */
+  public ResponseReadTIC(Map<String, Object> map) throws DataDictionaryException {
+    this();
+    this.copy(fromMap(map));
+  }
 
-	/**
-	 * Constructor using datadictionary
-	 *
-	 * @param other
-	 * @throws DataDictionaryException
-	 */
-	public ResponseReadTIC(DataDictionary other) throws DataDictionaryException
-	{
-		this();
-		this.copy(other);
-	}
+  /**
+   * Constructor using datadictionary
+   *
+   * @param other
+   * @throws DataDictionaryException
+   */
+  public ResponseReadTIC(DataDictionary other) throws DataDictionaryException {
+    this();
+    this.copy(other);
+  }
 
-	/**
-	 * Constructor setting parameters to specific values
-	 *
-	 * @param dateTime
-	 * @param errorCode
-	 * @param errorMessage
-	 * @param data
-	 * @throws DataDictionaryException
-	 */
-	public ResponseReadTIC(LocalDateTime dateTime, Number errorCode, String errorMessage, TICCoreFrame data) throws DataDictionaryException
-	{
-		this();
+  /**
+   * Constructor setting parameters to specific values
+   *
+   * @param dateTime
+   * @param errorCode
+   * @param errorMessage
+   * @param data
+   * @throws DataDictionaryException
+   */
+  public ResponseReadTIC(
+      LocalDateTime dateTime, Number errorCode, String errorMessage, TICCoreFrame data)
+      throws DataDictionaryException {
+    this();
 
-		this.setDateTime(dateTime);
-		this.setErrorCode(errorCode);
-		this.setErrorMessage(errorMessage);
-		this.setData(data);
+    this.setDateTime(dateTime);
+    this.setErrorCode(errorCode);
+    this.setErrorMessage(errorMessage);
+    this.setData(data);
 
-		this.checkAndUpdate();
-	}
+    this.checkAndUpdate();
+  }
 
-	@Override
-	protected void updateOptionalParameters() throws DataDictionaryException
-	{
-		if (!this.exists(KEY_NAME))
-		{
-			this.setName(NAME);
-		}
-		super.updateOptionalParameters();
-	}
+  @Override
+  protected void updateOptionalParameters() throws DataDictionaryException {
+    if (!this.exists(KEY_NAME)) {
+      this.setName(NAME);
+    }
+    super.updateOptionalParameters();
+  }
 
-	/**
-	 * Get data
-	 *
-	 * @return the data
-	 */
-	public TICCoreFrame getData()
-	{
-		return (TICCoreFrame) this.data.get(KEY_DATA);
-	}
+  /**
+   * Get data
+   *
+   * @return the data
+   */
+  public TICCoreFrame getData() {
+    return (TICCoreFrame) this.data.get(KEY_DATA);
+  }
 
-	/**
-	 * Set data
-	 *
-	 * @param data
-	 * @throws DataDictionaryException
-	 */
-	public void setData(TICCoreFrame data) throws DataDictionaryException
-	{
-		this.setData((Object) data);
-	}
+  /**
+   * Set data
+   *
+   * @param data
+   * @throws DataDictionaryException
+   */
+  public void setData(TICCoreFrame data) throws DataDictionaryException {
+    this.setData((Object) data);
+  }
 
-	protected void setData(Object data) throws DataDictionaryException
-	{
-		this.data.put(KEY_DATA, this.kData.convert(data));
-	}
+  protected void setData(Object data) throws DataDictionaryException {
+    this.data.put(KEY_DATA, this.kData.convert(data));
+  }
 
-	private void loadKeyDescriptors()
-	{
-		try
-		{
-			this.kData = new KeyDescriptorDataDictionary<TICCoreFrame>(KEY_DATA, false, TICCoreFrame.class);
-			this.keys.add(this.kData);
+  private void loadKeyDescriptors() {
+    try {
+      this.kData =
+          new KeyDescriptorDataDictionary<TICCoreFrame>(KEY_DATA, false, TICCoreFrame.class);
+      this.keys.add(this.kData);
 
-			this.addAllKeyDescriptor(this.keys);
-		}
-		catch (DataDictionaryException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+      this.addAllKeyDescriptor(this.keys);
+    } catch (DataDictionaryException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
 }

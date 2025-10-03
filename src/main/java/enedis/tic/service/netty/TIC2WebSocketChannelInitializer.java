@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -7,6 +7,8 @@
 
 package enedis.tic.service.netty;
 
+import enedis.tic.service.client.TIC2WebSocketClientPool;
+import enedis.tic.service.requesthandler.TIC2WebSocketRequestHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -16,53 +18,45 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
-import enedis.tic.service.client.TIC2WebSocketClientPool;
-import enedis.tic.service.requesthandler.TIC2WebSocketRequestHandler;
+/** Channel initializer for TIC2WebSocket server */
+public class TIC2WebSocketChannelInitializer extends ChannelInitializer<SocketChannel> {
+  private static final String WEBSOCKET_PATH = "/";
 
-/**
- * Channel initializer for TIC2WebSocket server
- */
-public class TIC2WebSocketChannelInitializer extends ChannelInitializer<SocketChannel>
-{
-    private static final String WEBSOCKET_PATH = "/";
+  private final TIC2WebSocketClientPool clientPool;
+  private final TIC2WebSocketRequestHandler requestHandler;
 
-    private final TIC2WebSocketClientPool clientPool;
-    private final TIC2WebSocketRequestHandler requestHandler;
+  /**
+   * Constructor
+   *
+   * @param clientPool the client pool
+   * @param requestHandler the request handler
+   */
+  public TIC2WebSocketChannelInitializer(
+      TIC2WebSocketClientPool clientPool, TIC2WebSocketRequestHandler requestHandler) {
+    this.clientPool = clientPool;
+    this.requestHandler = requestHandler;
+  }
 
-    /**
-     * Constructor
-     * 
-     * @param clientPool     the client pool
-     * @param requestHandler the request handler
-     */
-    public TIC2WebSocketChannelInitializer(TIC2WebSocketClientPool clientPool, TIC2WebSocketRequestHandler requestHandler)
-    {
-        this.clientPool = clientPool;
-        this.requestHandler = requestHandler;
-    }
+  @Override
+  protected void initChannel(SocketChannel ch) throws Exception {
+    ChannelPipeline pipeline = ch.pipeline();
 
-    @Override
-    protected void initChannel(SocketChannel ch) throws Exception
-    {
-        ChannelPipeline pipeline = ch.pipeline();
+    // HTTP codec
+    pipeline.addLast(new HttpServerCodec());
 
-        // HTTP codec
-        pipeline.addLast(new HttpServerCodec());
+    // HTTP object aggregator
+    pipeline.addLast(new HttpObjectAggregator(65536));
 
-        // HTTP object aggregator
-        pipeline.addLast(new HttpObjectAggregator(65536));
+    // Chunked write handler for large messages
+    pipeline.addLast(new ChunkedWriteHandler());
 
-        // Chunked write handler for large messages
-        pipeline.addLast(new ChunkedWriteHandler());
+    // WebSocket compression
+    pipeline.addLast(new WebSocketServerCompressionHandler());
 
-        // WebSocket compression
-        pipeline.addLast(new WebSocketServerCompressionHandler());
+    // WebSocket protocol handler
+    pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH, null, true));
 
-        // WebSocket protocol handler
-        pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH, null, true));
-
-        // Custom TIC2WebSocket handler
-        pipeline.addLast(new TIC2WebSocketHandler(clientPool, requestHandler));
-    }
-
+    // Custom TIC2WebSocket handler
+    pipeline.addLast(new TIC2WebSocketHandler(clientPool, requestHandler));
+  }
 }

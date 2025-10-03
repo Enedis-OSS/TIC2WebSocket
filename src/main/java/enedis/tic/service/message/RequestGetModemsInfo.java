@@ -7,63 +7,55 @@
 
 package enedis.tic.service.message;
 
-import java.util.Map;
-
 import enedis.lab.types.DataDictionary;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.util.message.Request;
+import java.util.Map;
 
 /**
  * RequestGetModemsInfo class
  *
- * Generated
+ * <p>Generated
  */
-public class RequestGetModemsInfo extends Request
-{
-	/** Message name */
-	public static final String NAME = "GetModemsInfo";
+public class RequestGetModemsInfo extends Request {
+  /** Message name */
+  public static final String NAME = "GetModemsInfo";
 
-	public RequestGetModemsInfo() throws DataDictionaryException
-	{
-		super();
+  public RequestGetModemsInfo() throws DataDictionaryException {
+    super();
 
-		this.kName.setAcceptedValues(NAME);
+    this.kName.setAcceptedValues(NAME);
 
-		this.checkAndUpdate();
-	}
+    this.checkAndUpdate();
+  }
 
-	/**
-	 * Constructor using map
-	 *
-	 * @param map
-	 * @throws DataDictionaryException
-	 */
-	public RequestGetModemsInfo(Map<String, Object> map) throws DataDictionaryException
-	{
-		this();
-		this.copy(fromMap(map));
-	}
+  /**
+   * Constructor using map
+   *
+   * @param map
+   * @throws DataDictionaryException
+   */
+  public RequestGetModemsInfo(Map<String, Object> map) throws DataDictionaryException {
+    this();
+    this.copy(fromMap(map));
+  }
 
-	/**
-	 * Constructor using datadictionary
-	 *
-	 * @param other
-	 * @throws DataDictionaryException
-	 */
-	public RequestGetModemsInfo(DataDictionary other) throws DataDictionaryException
-	{
-		this();
-		this.copy(other);
-	}
+  /**
+   * Constructor using datadictionary
+   *
+   * @param other
+   * @throws DataDictionaryException
+   */
+  public RequestGetModemsInfo(DataDictionary other) throws DataDictionaryException {
+    this();
+    this.copy(other);
+  }
 
-	@Override
-	protected void updateOptionalParameters() throws DataDictionaryException
-	{
-		if (!this.exists(KEY_NAME))
-		{
-			this.setName(NAME);
-		}
-		super.updateOptionalParameters();
-	}
-
+  @Override
+  protected void updateOptionalParameters() throws DataDictionaryException {
+    if (!this.exists(KEY_NAME)) {
+      this.setName(NAME);
+    }
+    super.updateOptionalParameters();
+  }
 }

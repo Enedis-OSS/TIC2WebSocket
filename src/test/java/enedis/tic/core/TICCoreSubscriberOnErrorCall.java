@@ -10,14 +10,11 @@ package enedis.tic.core;
 import enedis.lab.mock.FunctionCall;
 
 @SuppressWarnings("javadoc")
-public class TICCoreSubscriberOnErrorCall extends FunctionCall
-{
-	public TICCoreError error;
+public class TICCoreSubscriberOnErrorCall extends FunctionCall {
+  public TICCoreError error;
 
-	public TICCoreSubscriberOnErrorCall(TICCoreError error)
-	{
-		super();
-		this.error = error;
-	}
-
+  public TICCoreSubscriberOnErrorCall(TICCoreError error) {
+    super();
+    this.error = error;
+  }
 }

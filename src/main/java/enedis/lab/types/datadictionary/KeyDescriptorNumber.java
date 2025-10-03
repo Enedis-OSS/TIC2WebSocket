@@ -9,76 +9,68 @@ package enedis.lab.types.datadictionary;
 
 import enedis.lab.types.DataDictionaryException;
 
-/**
- * DataDictionary key descriptor Number
- */
-public class KeyDescriptorNumber extends KeyDescriptorBase<Number>
-{
-	/**
-	 * Default constructor
-	 * 
-	 * @param name
-	 * @param mandatory
-	 */
-	public KeyDescriptorNumber(String name, boolean mandatory)
-	{
-		super(name, mandatory);
-	}
+/** DataDictionary key descriptor Number */
+public class KeyDescriptorNumber extends KeyDescriptorBase<Number> {
+  /**
+   * Default constructor
+   *
+   * @param name
+   * @param mandatory
+   */
+  public KeyDescriptorNumber(String name, boolean mandatory) {
+    super(name, mandatory);
+  }
 
-	@Override
-	public Number convertValue(Object value) throws DataDictionaryException
-	{
-		Number convertedValue = null;
+  @Override
+  public Number convertValue(Object value) throws DataDictionaryException {
+    Number convertedValue = null;
 
-		if (value instanceof Number)
-		{
-			convertedValue = (Number) value;
-		}
-		else if (value instanceof String)
-		{
-			convertedValue = this.toNumber((String) value);
-		}
-		else
-		{
-			throw new DataDictionaryException("Key " + this.getName() + ": Cannot convert type " + value.getClass().getSimpleName() + " to Number");
-		}
+    if (value instanceof Number) {
+      convertedValue = (Number) value;
+    } else if (value instanceof String) {
+      convertedValue = this.toNumber((String) value);
+    } else {
+      throw new DataDictionaryException(
+          "Key "
+              + this.getName()
+              + ": Cannot convert type "
+              + value.getClass().getSimpleName()
+              + " to Number");
+    }
 
-		return convertedValue;
-	}
+    return convertedValue;
+  }
 
-	protected void checkAcceptedValues(Number value) throws DataDictionaryException
-	{
-		if (this.acceptedValues != null)
-		{
-			boolean accepted = false;
-			
-			for(Number v : this.acceptedValues)
-			{
-				if(v.doubleValue() == value.doubleValue())
-				{
-					accepted = true;
-					break;
-				}
-			}
+  protected void checkAcceptedValues(Number value) throws DataDictionaryException {
+    if (this.acceptedValues != null) {
+      boolean accepted = false;
 
-			if(!accepted)
-			{
-				throw new DataDictionaryException("Key " + this.getName() + " doesn't respect mandatory value");				
-			}
-		}
-	}
-	
-	private Number toNumber(String value) throws DataDictionaryException
-	{
-		Number out = null;
-		try
-		{
-			out = Double.valueOf((String) value);
-		}
-		catch (NumberFormatException e)
-		{
-			throw new DataDictionaryException("Key " + this.getName() + ": Cannot convert type " + value.getClass().getSimpleName() + " to Number");
-		}
-		return out;
-	}
+      for (Number v : this.acceptedValues) {
+        if (v.doubleValue() == value.doubleValue()) {
+          accepted = true;
+          break;
+        }
+      }
+
+      if (!accepted) {
+        throw new DataDictionaryException(
+            "Key " + this.getName() + " doesn't respect mandatory value");
+      }
+    }
+  }
+
+  private Number toNumber(String value) throws DataDictionaryException {
+    Number out = null;
+    try {
+      out = Double.valueOf((String) value);
+    } catch (NumberFormatException e) {
+      throw new DataDictionaryException(
+          "Key "
+              + this.getName()
+              + ": Cannot convert type "
+              + value.getClass().getSimpleName()
+              + " to Number");
+    }
+    return out;
+  }
 }

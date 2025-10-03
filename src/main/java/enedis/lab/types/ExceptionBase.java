@@ -7,71 +7,61 @@
 
 package enedis.lab.types;
 
-/**
- * Exception base
- */
+/** Exception base */
 @SuppressWarnings("serial")
-public class ExceptionBase extends Exception
-{
-	protected int		code;
-	protected String	info;
+public class ExceptionBase extends Exception {
+  protected int code;
+  protected String info;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param code
-	 * @param info
-	 */
-	public ExceptionBase(int code, String info)
-	{
-		this.setErrorCode(code);
-		this.setErrorInfo(info);
-	}
+  /**
+   * Constructor
+   *
+   * @param code
+   * @param info
+   */
+  public ExceptionBase(int code, String info) {
+    this.setErrorCode(code);
+    this.setErrorInfo(info);
+  }
 
-	@Override
-	public String getMessage()
-	{
-		return this.info + " (" + this.code + ")";
-	}
+  @Override
+  public String getMessage() {
+    return this.info + " (" + this.code + ")";
+  }
 
-	/**
-	 * Get error code
-	 * 
-	 * @return error code
-	 */
-	public int getErrorCode()
-	{
-		return this.code;
-	}
+  /**
+   * Get error code
+   *
+   * @return error code
+   */
+  public int getErrorCode() {
+    return this.code;
+  }
 
-	/**
-	 * Set error code
-	 * 
-	 * @param errorCode
-	 */
-	public void setErrorCode(int errorCode)
-	{
-		this.code = errorCode;
-	}
+  /**
+   * Set error code
+   *
+   * @param errorCode
+   */
+  public void setErrorCode(int errorCode) {
+    this.code = errorCode;
+  }
 
-	/**
-	 * Get error info
-	 * 
-	 * @return error info
-	 */
-	public String getErrorInfo()
-	{
-		return this.info;
-	}
+  /**
+   * Get error info
+   *
+   * @return error info
+   */
+  public String getErrorInfo() {
+    return this.info;
+  }
 
-	/**
-	 * Set error info
-	 * 
-	 * @param errorInfo
-	 */
-	public void setErrorInfo(String errorInfo)
-	{
-		this.info = errorInfo;
-	}
-
+  /**
+   * Set error info
+   *
+   * @param errorInfo
+   */
+  public void setErrorInfo(String errorInfo) {
+    this.info = errorInfo;
+  }
 }

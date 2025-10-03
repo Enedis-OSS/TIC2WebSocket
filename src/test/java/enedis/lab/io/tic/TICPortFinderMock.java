@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -12,36 +12,28 @@ import enedis.lab.types.DataArrayList;
 import enedis.lab.types.DataList;
 
 @SuppressWarnings("javadoc")
-public class TICPortFinderMock extends PortFinderMock<TICPortDescriptor> implements TICPortFinder
-{
-	public DataList<TICPortDescriptor> nativeDescriptorList = new DataArrayList<TICPortDescriptor>();
+public class TICPortFinderMock extends PortFinderMock<TICPortDescriptor> implements TICPortFinder {
+  public DataList<TICPortDescriptor> nativeDescriptorList = new DataArrayList<TICPortDescriptor>();
 
-	public TICPortFinderMock()
-	{
-		super();
-	}
+  public TICPortFinderMock() {
+    super();
+  }
 
-	public TICPortFinderMock(TICPortDescriptor... descriptors)
-	{
-		this.setDescriptors(DataArrayList.asList(descriptors));
-	}
+  public TICPortFinderMock(TICPortDescriptor... descriptors) {
+    this.setDescriptors(DataArrayList.asList(descriptors));
+  }
 
-	@Override
-	public TICPortDescriptor findNative(String portName)
-	{
-		for (TICPortDescriptor descriptor : this.nativeDescriptorList)
-		{
-			if (descriptor.getPortName() == null && portName == null)
-			{
-				return descriptor;
-			}
-			if (descriptor.getPortName().equals(portName))
-			{
-				return descriptor;
-			}
-		}
+  @Override
+  public TICPortDescriptor findNative(String portName) {
+    for (TICPortDescriptor descriptor : this.nativeDescriptorList) {
+      if (descriptor.getPortName() == null && portName == null) {
+        return descriptor;
+      }
+      if (descriptor.getPortName().equals(portName)) {
+        return descriptor;
+      }
+    }
 
-		return null;
-	}
-
+    return null;
+  }
 }

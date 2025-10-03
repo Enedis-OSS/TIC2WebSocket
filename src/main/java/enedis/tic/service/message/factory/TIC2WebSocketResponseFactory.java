@@ -14,21 +14,15 @@ import enedis.tic.service.message.ResponseReadTIC;
 import enedis.tic.service.message.ResponseSubscribeTIC;
 import enedis.tic.service.message.ResponseUnsubscribeTIC;
 
-/**
- * TIC2WebSocket request factory
- */
-public class TIC2WebSocketResponseFactory extends ResponseFactory
-{
-	/**
-	 * Default constructor
-	 */
-	public TIC2WebSocketResponseFactory()
-	{
-		super();
-		this.addMessageClass(ResponseGetAvailableTICs.NAME, ResponseGetAvailableTICs.class);
-		this.addMessageClass(ResponseGetModemsInfo.NAME, ResponseGetModemsInfo.class);
-		this.addMessageClass(ResponseReadTIC.NAME, ResponseReadTIC.class);
-		this.addMessageClass(ResponseSubscribeTIC.NAME, ResponseSubscribeTIC.class);
-		this.addMessageClass(ResponseUnsubscribeTIC.NAME, ResponseUnsubscribeTIC.class);
-	}
+/** TIC2WebSocket request factory */
+public class TIC2WebSocketResponseFactory extends ResponseFactory {
+  /** Default constructor */
+  public TIC2WebSocketResponseFactory() {
+    super();
+    this.addMessageClass(ResponseGetAvailableTICs.NAME, ResponseGetAvailableTICs.class);
+    this.addMessageClass(ResponseGetModemsInfo.NAME, ResponseGetModemsInfo.class);
+    this.addMessageClass(ResponseReadTIC.NAME, ResponseReadTIC.class);
+    this.addMessageClass(ResponseSubscribeTIC.NAME, ResponseSubscribeTIC.class);
+    this.addMessageClass(ResponseUnsubscribeTIC.NAME, ResponseUnsubscribeTIC.class);
+  }
 }

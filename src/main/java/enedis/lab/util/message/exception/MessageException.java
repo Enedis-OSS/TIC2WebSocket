@@ -7,51 +7,41 @@
 
 package enedis.lab.util.message.exception;
 
-/**
- * Message exception
- */
-public class MessageException extends Exception
-{
+/** Message exception */
+public class MessageException extends Exception {
 
-	private static final long serialVersionUID = -2263755971102386572L;
+  private static final long serialVersionUID = -2263755971102386572L;
 
-	/**
-	 * Default constructor
-	 */
-	public MessageException()
-	{
-		super();
-	}
+  /** Default constructor */
+  public MessageException() {
+    super();
+  }
 
-	/**
-	 * Constructor using message and cause
-	 * 
-	 * @param message
-	 * @param cause
-	 */
-	public MessageException(String message, Throwable cause)
-	{
-		super(message, cause);
-	}
+  /**
+   * Constructor using message and cause
+   *
+   * @param message
+   * @param cause
+   */
+  public MessageException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-	/**
-	 * Constructor using message
-	 * 
-	 * @param message
-	 */
-	public MessageException(String message)
-	{
-		super(message);
-	}
+  /**
+   * Constructor using message
+   *
+   * @param message
+   */
+  public MessageException(String message) {
+    super(message);
+  }
 
-	/**
-	 * Constructor using cause
-	 * 
-	 * @param cause
-	 */
-	public MessageException(Throwable cause)
-	{
-		super(cause);
-	}
-
+  /**
+   * Constructor using cause
+   *
+   * @param cause
+   */
+  public MessageException(Throwable cause) {
+    super(cause);
+  }
 }

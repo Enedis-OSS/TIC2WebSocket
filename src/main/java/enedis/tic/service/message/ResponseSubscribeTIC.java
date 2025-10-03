@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -7,99 +7,88 @@
 
 package enedis.tic.service.message;
 
+import enedis.lab.types.DataDictionary;
+import enedis.lab.types.DataDictionaryException;
+import enedis.lab.types.datadictionary.KeyDescriptor;
+import enedis.lab.util.message.Response;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import enedis.lab.types.DataDictionary;
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.types.datadictionary.KeyDescriptor;
-import enedis.lab.util.message.Response;
-
 /**
  * ResponseSubscribeTIC class
- * 
- * Generated
+ *
+ * <p>Generated
  */
-public class ResponseSubscribeTIC extends Response
-{
-	/** Message name */
-	public static final String		NAME	= "SubscribeTIC";
+public class ResponseSubscribeTIC extends Response {
+  /** Message name */
+  public static final String NAME = "SubscribeTIC";
 
-	private List<KeyDescriptor<?>>	keys	= new ArrayList<KeyDescriptor<?>>();
+  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
-	protected ResponseSubscribeTIC()
-	{
-		super();
-		this.loadKeyDescriptors();
+  protected ResponseSubscribeTIC() {
+    super();
+    this.loadKeyDescriptors();
 
-		this.kName.setAcceptedValues(NAME);
-	}
+    this.kName.setAcceptedValues(NAME);
+  }
 
-	/**
-	 * Constructor using map
-	 *
-	 * @param map
-	 * @throws DataDictionaryException
-	 */
-	public ResponseSubscribeTIC(Map<String, Object> map) throws DataDictionaryException
-	{
-		this();
-		this.copy(fromMap(map));
-	}
+  /**
+   * Constructor using map
+   *
+   * @param map
+   * @throws DataDictionaryException
+   */
+  public ResponseSubscribeTIC(Map<String, Object> map) throws DataDictionaryException {
+    this();
+    this.copy(fromMap(map));
+  }
 
-	/**
-	 * Constructor using datadictionary
-	 *
-	 * @param other
-	 * @throws DataDictionaryException
-	 */
-	public ResponseSubscribeTIC(DataDictionary other) throws DataDictionaryException
-	{
-		this();
-		this.copy(other);
-	}
+  /**
+   * Constructor using datadictionary
+   *
+   * @param other
+   * @throws DataDictionaryException
+   */
+  public ResponseSubscribeTIC(DataDictionary other) throws DataDictionaryException {
+    this();
+    this.copy(other);
+  }
 
-	/**
-	 * Constructor setting parameters to specific values
-	 *
-	 * @param dateTime
-	 * @param errorCode
-	 * @param errorMessage
-	 * @throws DataDictionaryException
-	 */
-	public ResponseSubscribeTIC(LocalDateTime dateTime, Number errorCode, String errorMessage) throws DataDictionaryException
-	{
-		this();
+  /**
+   * Constructor setting parameters to specific values
+   *
+   * @param dateTime
+   * @param errorCode
+   * @param errorMessage
+   * @throws DataDictionaryException
+   */
+  public ResponseSubscribeTIC(LocalDateTime dateTime, Number errorCode, String errorMessage)
+      throws DataDictionaryException {
+    this();
 
-		this.setDateTime(dateTime);
-		this.setErrorCode(errorCode);
-		this.setErrorMessage(errorMessage);
+    this.setDateTime(dateTime);
+    this.setErrorCode(errorCode);
+    this.setErrorMessage(errorMessage);
 
-		this.checkAndUpdate();
-	}
+    this.checkAndUpdate();
+  }
 
-	@Override
-	protected void updateOptionalParameters() throws DataDictionaryException
-	{
-		if (!this.exists(KEY_NAME))
-		{
-			this.setName(NAME);
-		}
-		super.updateOptionalParameters();
-	}
+  @Override
+  protected void updateOptionalParameters() throws DataDictionaryException {
+    if (!this.exists(KEY_NAME)) {
+      this.setName(NAME);
+    }
+    super.updateOptionalParameters();
+  }
 
-	private void loadKeyDescriptors()
-	{
-		try
-		{
+  private void loadKeyDescriptors() {
+    try {
 
-			this.addAllKeyDescriptor(this.keys);
-		}
-		catch (DataDictionaryException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+      this.addAllKeyDescriptor(this.keys);
+    } catch (DataDictionaryException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
 }

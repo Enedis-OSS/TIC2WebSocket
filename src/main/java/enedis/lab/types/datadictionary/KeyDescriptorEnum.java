@@ -11,77 +11,75 @@ import enedis.lab.types.DataDictionaryException;
 
 /**
  * DataDictionary key descriptor Enum
- * 
+ *
  * @param <T>
  */
 @SuppressWarnings("rawtypes")
-public class KeyDescriptorEnum<T extends Enum> extends KeyDescriptorBase<T>
-{
-	private Class<T> enumClass;
-	private String prefix;
+public class KeyDescriptorEnum<T extends Enum> extends KeyDescriptorBase<T> {
+  private Class<T> enumClass;
+  private String prefix;
 
-	/**
-	 * Default constructor
-	 * 
-	 * @param name
-	 * @param mandatory
-	 * @param enumClass
-	 */
-	public KeyDescriptorEnum(String name, boolean mandatory, Class<T> enumClass)
-	{
-		this(name, mandatory, enumClass, "");
-	}
-	
-	/**
-	 * Constructor setting all parameters
-	 * 
-	 * @param name
-	 * @param mandatory
-	 * @param enumClass
-	 * @param prefix 
-	 */
-	public KeyDescriptorEnum(String name, boolean mandatory, Class<T> enumClass, String prefix)
-	{
-		super(name, mandatory);
-		this.enumClass = enumClass;
-		this.prefix = prefix;
-	}
+  /**
+   * Default constructor
+   *
+   * @param name
+   * @param mandatory
+   * @param enumClass
+   */
+  public KeyDescriptorEnum(String name, boolean mandatory, Class<T> enumClass) {
+    this(name, mandatory, enumClass, "");
+  }
 
-	@Override
-	public T convertValue(Object value) throws DataDictionaryException
-	{
-		T convertedValue = null;
+  /**
+   * Constructor setting all parameters
+   *
+   * @param name
+   * @param mandatory
+   * @param enumClass
+   * @param prefix
+   */
+  public KeyDescriptorEnum(String name, boolean mandatory, Class<T> enumClass, String prefix) {
+    super(name, mandatory);
+    this.enumClass = enumClass;
+    this.prefix = prefix;
+  }
 
-		if (this.enumClass.isAssignableFrom(value.getClass()))
-		{
-			convertedValue = this.enumClass.cast(value);
-		}
-		else if (value instanceof String)
-		{
-			convertedValue = this.toEnum((String) value);
-		}
-		else
-		{
-			throw new DataDictionaryException("Key " + this.getName() + ": Cannot convert type " + value.getClass().getSimpleName() + " to " + this.enumClass.getSimpleName());
-		}
+  @Override
+  public T convertValue(Object value) throws DataDictionaryException {
+    T convertedValue = null;
 
-		return convertedValue;
-	}
+    if (this.enumClass.isAssignableFrom(value.getClass())) {
+      convertedValue = this.enumClass.cast(value);
+    } else if (value instanceof String) {
+      convertedValue = this.toEnum((String) value);
+    } else {
+      throw new DataDictionaryException(
+          "Key "
+              + this.getName()
+              + ": Cannot convert type "
+              + value.getClass().getSimpleName()
+              + " to "
+              + this.enumClass.getSimpleName());
+    }
 
-	@SuppressWarnings("unchecked")
-	protected T toEnum(String value) throws DataDictionaryException
-	{
-		T convertedValue = null;
-		try
-		{
-			String preparedValue = this.prefix + value.toUpperCase().replace(".", "_").replace("-", "_");
-			convertedValue = (T) Enum.valueOf(this.enumClass, preparedValue);
-		}
-		catch (IllegalArgumentException e)
-		{
-			throw new DataDictionaryException("Key " + this.getName() + ": " + this.enumClass.getSimpleName() + " doesn't contain " + value);
-		}
-		return convertedValue;
-	}
-	
+    return convertedValue;
+  }
+
+  @SuppressWarnings("unchecked")
+  protected T toEnum(String value) throws DataDictionaryException {
+    T convertedValue = null;
+    try {
+      String preparedValue = this.prefix + value.toUpperCase().replace(".", "_").replace("-", "_");
+      convertedValue = (T) Enum.valueOf(this.enumClass, preparedValue);
+    } catch (IllegalArgumentException e) {
+      throw new DataDictionaryException(
+          "Key "
+              + this.getName()
+              + ": "
+              + this.enumClass.getSimpleName()
+              + " doesn't contain "
+              + value);
+    }
+    return convertedValue;
+  }
 }

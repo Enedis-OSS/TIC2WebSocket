@@ -10,21 +10,19 @@ package enedis.tic.core;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TICCoreSubscriberMock implements TICCoreSubscriber
-{
-	public List<TICCoreSubscriberOnDataCall>	onDataCalls		= new ArrayList<TICCoreSubscriberOnDataCall>();
-	public List<TICCoreSubscriberOnErrorCall>	onErrorCalls	= new ArrayList<TICCoreSubscriberOnErrorCall>();
+public class TICCoreSubscriberMock implements TICCoreSubscriber {
+  public List<TICCoreSubscriberOnDataCall> onDataCalls =
+      new ArrayList<TICCoreSubscriberOnDataCall>();
+  public List<TICCoreSubscriberOnErrorCall> onErrorCalls =
+      new ArrayList<TICCoreSubscriberOnErrorCall>();
 
-	@Override
-	public void onData(TICCoreFrame frame)
-	{
-		this.onDataCalls.add(new TICCoreSubscriberOnDataCall(frame));
-	}
+  @Override
+  public void onData(TICCoreFrame frame) {
+    this.onDataCalls.add(new TICCoreSubscriberOnDataCall(frame));
+  }
 
-	@Override
-	public void onError(TICCoreError error)
-	{
-		this.onErrorCalls.add(new TICCoreSubscriberOnErrorCall(error));
-	}
-
+  @Override
+  public void onError(TICCoreError error) {
+    this.onErrorCalls.add(new TICCoreSubscriberOnErrorCall(error));
+  }
 }

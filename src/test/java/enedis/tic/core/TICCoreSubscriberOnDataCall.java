@@ -10,14 +10,11 @@ package enedis.tic.core;
 import enedis.lab.mock.FunctionCall;
 
 @SuppressWarnings("javadoc")
-public class TICCoreSubscriberOnDataCall extends FunctionCall
-{
-	public TICCoreFrame frame;
+public class TICCoreSubscriberOnDataCall extends FunctionCall {
+  public TICCoreFrame frame;
 
-	public TICCoreSubscriberOnDataCall(TICCoreFrame frame)
-	{
-		super();
-		this.frame = frame;
-	}
-
+  public TICCoreSubscriberOnDataCall(TICCoreFrame frame) {
+    super();
+    this.frame = frame;
+  }
 }

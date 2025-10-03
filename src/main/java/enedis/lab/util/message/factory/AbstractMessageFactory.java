@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -7,92 +7,89 @@
 
 package enedis.lab.util.message.factory;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.DataDictionaryBase;
 import enedis.lab.util.message.Message;
 import enedis.lab.util.message.exception.MessageInvalidContentException;
 import enedis.lab.util.message.exception.MessageInvalidFormatException;
 import enedis.lab.util.message.exception.UnsupportedMessageException;
+import java.util.HashMap;
+import java.util.Map;
+import org.json.JSONException;
 
 /**
  * Message factory
- * 
+ *
  * @param <T>
  */
-public class AbstractMessageFactory<T extends Message>
-{
-	private Class<T>						clazz;
-	private Map<String, Class<? extends T>>	messageClasses;
+public class AbstractMessageFactory<T extends Message> {
+  private Class<T> clazz;
+  private Map<String, Class<? extends T>> messageClasses;
 
-	/**
-	 * Default constructor
-	 * 
-	 * @param clazz
-	 */
-	public AbstractMessageFactory(Class<T> clazz)
-	{
-		this.clazz = clazz;
-		this.messageClasses = new HashMap<String, Class<? extends T>>();
-	}
+  /**
+   * Default constructor
+   *
+   * @param clazz
+   */
+  public AbstractMessageFactory(Class<T> clazz) {
+    this.clazz = clazz;
+    this.messageClasses = new HashMap<String, Class<? extends T>>();
+  }
 
-	/**
-	 * Get message from text
-	 * 
-	 * @param text
-	 * @param name
-	 * @return message
-	 * @throws UnsupportedMessageException
-	 * @throws MessageInvalidFormatException
-	 * @throws MessageInvalidContentException
-	 */
-	public final T getMessage(String text, String name) throws UnsupportedMessageException, MessageInvalidFormatException, MessageInvalidContentException
-	{
-		T message = null;
+  /**
+   * Get message from text
+   *
+   * @param text
+   * @param name
+   * @return message
+   * @throws UnsupportedMessageException
+   * @throws MessageInvalidFormatException
+   * @throws MessageInvalidContentException
+   */
+  public final T getMessage(String text, String name)
+      throws UnsupportedMessageException,
+          MessageInvalidFormatException,
+          MessageInvalidContentException {
+    T message = null;
 
-		try
-		{
-			Class<? extends T> messageClazz = this.messageClasses.get(name);
+    try {
+      Class<? extends T> messageClazz = this.messageClasses.get(name);
 
-			if (messageClazz != null)
-			{
-				message = messageClazz.cast(DataDictionaryBase.fromString(text, messageClazz));
-			}
-			else
-			{
-				throw new UnsupportedMessageException("Unsupported " + this.clazz.getSimpleName() + " : " + name);
-			}
-		}
-		catch (JSONException e)
-		{
-			throw new MessageInvalidFormatException("Invalid " + this.clazz.getSimpleName() + " " + name + " format, it should be JSON : " + e.getMessage(), e);
-		}
-		catch (DataDictionaryException e)
-		{
-			throw new MessageInvalidContentException("Invalid " + this.clazz.getSimpleName() + " " + name + " content : " + e.getMessage(), e);
-		}
+      if (messageClazz != null) {
+        message = messageClazz.cast(DataDictionaryBase.fromString(text, messageClazz));
+      } else {
+        throw new UnsupportedMessageException(
+            "Unsupported " + this.clazz.getSimpleName() + " : " + name);
+      }
+    } catch (JSONException e) {
+      throw new MessageInvalidFormatException(
+          "Invalid "
+              + this.clazz.getSimpleName()
+              + " "
+              + name
+              + " format, it should be JSON : "
+              + e.getMessage(),
+          e);
+    } catch (DataDictionaryException e) {
+      throw new MessageInvalidContentException(
+          "Invalid " + this.clazz.getSimpleName() + " " + name + " content : " + e.getMessage(), e);
+    }
 
-		return message;
-	}
+    return message;
+  }
 
-	/**
-	 * Add a Message class to decode message with the given name
-	 * 
-	 * @param name
-	 * @param messageClazz
-	 */
-	public final void addMessageClass(String name, Class<? extends T> messageClazz)
-	{
-		if (name == null || messageClazz == null)
-		{
-			throw new IllegalArgumentException("Name and " + this.clazz.getSimpleName() + " class can't be null");
-		}
+  /**
+   * Add a Message class to decode message with the given name
+   *
+   * @param name
+   * @param messageClazz
+   */
+  public final void addMessageClass(String name, Class<? extends T> messageClazz) {
+    if (name == null || messageClazz == null) {
+      throw new IllegalArgumentException(
+          "Name and " + this.clazz.getSimpleName() + " class can't be null");
+    }
 
-		this.messageClasses.put(name, messageClazz);
-	}
-
+    this.messageClasses.put(name, messageClazz);
+  }
 }

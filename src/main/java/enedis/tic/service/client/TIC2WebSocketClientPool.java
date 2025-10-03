@@ -7,46 +7,41 @@
 
 package enedis.tic.service.client;
 
+import enedis.tic.service.endpoint.EventSender;
+import io.netty.channel.Channel;
 import java.util.Optional;
 
-import io.netty.channel.Channel;
+/** TIC2WebSocket client pool interface */
+public interface TIC2WebSocketClientPool {
+  /**
+   * Get client from channel id
+   *
+   * @param channelId
+   * @return client
+   */
+  public Optional<TIC2WebSocketClient> getClient(String channelId);
 
-import enedis.tic.service.endpoint.EventSender;
+  /**
+   * Check if a client with the given channel id exists
+   *
+   * @param channelId
+   * @return true if a client with the given channel id exists
+   */
+  public boolean exists(String channelId);
 
-/**
- * TIC2WebSocket client pool interface
- */
-public interface TIC2WebSocketClientPool
-{
-	/**
-	 * Get client from channel id
-	 * 
-	 * @param channelId
-	 * @return client
-	 */
-	public Optional<TIC2WebSocketClient> getClient(String channelId);
+  /**
+   * Create a new client
+   *
+   * @param channel
+   * @param sender
+   * @return new client
+   */
+  public TIC2WebSocketClient createClient(Channel channel, EventSender sender);
 
-	/**
-	 * Check if a client with the given channel id exists
-	 * 
-	 * @param channelId
-	 * @return true if a client with the given channel id exists
-	 */
-	public boolean exists(String channelId);
-
-	/**
-	 * Create a new client
-	 * 
-	 * @param channel
-	 * @param sender
-	 * @return new client
-	 */
-	public TIC2WebSocketClient createClient(Channel channel, EventSender sender);
-
-	/**
-	 * Remove client with the given channel id
-	 * 
-	 * @param channelId
-	 */
-	public void remove(String channelId);
+  /**
+   * Remove client with the given channel id
+   *
+   * @param channelId
+   */
+  public void remove(String channelId);
 }
