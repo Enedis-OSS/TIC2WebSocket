@@ -21,17 +21,20 @@ import enedis.lab.types.datadictionary.KeyDescriptor;
 import enedis.lab.types.datadictionary.KeyDescriptorEnum;
 
 /**
- * ChannelTICSerialPortConfiguration class
+ * Configuration class for TIC serial port channels.
+ * <p>
+ * This class extends {@link ChannelSerialPortConfiguration} to provide specific
+ * configuration for TIC protocol communication over serial ports. It handles
+ * TIC mode selection (HISTORIC, STANDARD, or AUTO) and automatically configures
+ * the appropriate serial port parameters based on the selected TIC mode.
+ * <p>
+ * The class supports both manual TIC mode selection and automatic detection,
+ * with different baud rates for HISTORIC (1200 bps) and STANDARD (9600 bps) modes.
  *
- * Generated
+ * @author Enedis Smarties team
  */
 public class ChannelTICSerialPortConfiguration extends ChannelSerialPortConfiguration
 {
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	protected static final String			KEY_TIC_MODE				= "ticMode";
 
@@ -43,33 +46,13 @@ public class ChannelTICSerialPortConfiguration extends ChannelSerialPortConfigur
 	protected static final Number			STOP_BITS_ACCEPTED_VALUE	= 1.0d;
 	protected static final TICMode			TIC_MODE_DEFAULT_VALUE		= TICMode.AUTO;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private List<KeyDescriptor<?>>			keys						= new ArrayList<KeyDescriptor<?>>();
 
 	protected KeyDescriptorEnum<TICMode>	kTicMode;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	protected ChannelTICSerialPortConfiguration()
 	{
@@ -83,10 +66,14 @@ public class ChannelTICSerialPortConfiguration extends ChannelSerialPortConfigur
 	}
 
 	/**
-	 * Constructor using map
+	 * Creates a new TIC serial port configuration from a map of parameters.
+	 * <p>
+	 * The map should contain configuration parameters that will be copied to this
+	 * configuration object. The TIC mode and serial port parameters will be
+	 * automatically configured based on the provided values.
 	 *
-	 * @param map
-	 * @throws DataDictionaryException
+	 * @param map the map containing configuration parameters
+	 * @throws DataDictionaryException if the map contains invalid parameters
 	 */
 	public ChannelTICSerialPortConfiguration(Map<String, Object> map) throws DataDictionaryException
 	{
@@ -95,10 +82,14 @@ public class ChannelTICSerialPortConfiguration extends ChannelSerialPortConfigur
 	}
 
 	/**
-	 * Constructor using datadictionary
+	 * Creates a new TIC serial port configuration by copying from another data dictionary.
+	 * <p>
+	 * This constructor creates a new configuration object by copying all parameters
+	 * from the provided data dictionary. The TIC mode and serial port parameters
+	 * will be automatically configured based on the copied values.
 	 *
-	 * @param other
-	 * @throws DataDictionaryException
+	 * @param other the data dictionary to copy configuration from
+	 * @throws DataDictionaryException if the data dictionary contains invalid parameters
 	 */
 	public ChannelTICSerialPortConfiguration(DataDictionary other) throws DataDictionaryException
 	{
@@ -107,13 +98,14 @@ public class ChannelTICSerialPortConfiguration extends ChannelSerialPortConfigur
 	}
 
 	/**
+	 * Creates a new TIC serial port configuration with the specified name and file.
+	 * <p>
+	 * This constructor initializes the configuration with default values and associates
+	 * it with the provided name and configuration file. The TIC mode will be set
+	 * to AUTO by default, allowing automatic detection of the appropriate mode.
 	 *
-	 * Constructor setting configuration name/file and parameters to default values
-	 *
-	 * @param name
-	 *            the configuration name
-	 * @param file
-	 *            the configuration file
+	 * @param name the configuration name
+	 * @param file the configuration file
 	 */
 	public ChannelTICSerialPortConfiguration(String name, File file)
 	{
@@ -122,12 +114,16 @@ public class ChannelTICSerialPortConfiguration extends ChannelSerialPortConfigur
 	}
 
 	/**
-	 * Constructor setting parameters to specific values
+	 * Creates a new TIC serial port configuration with specific parameters.
+	 * <p>
+	 * This constructor creates a configuration with the specified name, port name,
+	 * and TIC mode. The serial port parameters (baud rate, parity, data bits, stop bits)
+	 * will be automatically configured based on the selected TIC mode.
 	 *
-	 * @param name
-	 * @param portName
-	 * @param ticMode
-	 * @throws DataDictionaryException
+	 * @param name the configuration name
+	 * @param portName the serial port name (e.g., "/dev/ttyUSB0" on Linux, "COM1" on Windows)
+	 * @param ticMode the TIC mode (HISTORIC, STANDARD, or AUTO)
+	 * @throws DataDictionaryException if the provided parameters are invalid
 	 */
 	public ChannelTICSerialPortConfiguration(String name, String portName, TICMode ticMode) throws DataDictionaryException
 	{
@@ -140,12 +136,6 @@ public class ChannelTICSerialPortConfiguration extends ChannelSerialPortConfigur
 		this.checkAndUpdate();
 	}
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE
-	/// ChannelSerialPortConfiguration
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	protected void updateOptionalParameters() throws DataDictionaryException
@@ -177,16 +167,15 @@ public class ChannelTICSerialPortConfiguration extends ChannelSerialPortConfigur
 		super.updateOptionalParameters();
 	}
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Get tic mode
+	 * Gets the current TIC mode configuration.
+	 * <p>
+	 * Returns the TIC mode that has been set for this configuration. The mode
+	 * determines the communication protocol and serial port parameters used
+	 * for TIC communication.
 	 *
-	 * @return the tic mode
+	 * @return the current TIC mode (HISTORIC, STANDARD, or AUTO)
 	 */
 	public TICMode getTicMode()
 	{
@@ -194,22 +183,39 @@ public class ChannelTICSerialPortConfiguration extends ChannelSerialPortConfigur
 	}
 
 	/**
-	 * Set tic mode
+	 * Sets the TIC mode for this configuration.
+	 * <p>
+	 * When the TIC mode is set, the serial port parameters are automatically
+	 * updated to match the requirements of the selected mode:
+	 * <ul>
+	 * <li>HISTORIC: 1200 bps, 7 data bits, even parity, 1 stop bit</li>
+	 * <li>STANDARD: 9600 bps, 7 data bits, even parity, 1 stop bit</li>
+	 * <li>AUTO: Automatically detects the appropriate mode</li>
+	 * </ul>
 	 *
-	 * @param ticMode
-	 * @throws DataDictionaryException
+	 * @param ticMode the TIC mode to set
+	 * @throws DataDictionaryException if the TIC mode is invalid
 	 */
 	public void setTicMode(TICMode ticMode) throws DataDictionaryException
 	{
 		this.setTicMode((Object) ticMode);
 	}
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Sets the TIC mode using an object value and automatically configures
+	 * the baud rate based on the selected mode.
+	 * <p>
+	 * This protected method is used internally to set the TIC mode from various
+	 * object types and automatically adjusts the baud rate:
+	 * <ul>
+	 * <li>HISTORIC mode: sets baud rate to 1200 bps</li>
+	 * <li>STANDARD or AUTO mode: sets baud rate to 9600 bps</li>
+	 * </ul>
+	 *
+	 * @param ticMode the TIC mode object to set
+	 * @throws DataDictionaryException if the TIC mode object is invalid
+	 */
 	protected void setTicMode(Object ticMode) throws DataDictionaryException
 	{
 		this.data.put(KEY_TIC_MODE, this.kTicMode.convert(ticMode));
@@ -227,12 +233,18 @@ public class ChannelTICSerialPortConfiguration extends ChannelSerialPortConfigur
 		}
 	}
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Loads and initializes the key descriptors for TIC mode configuration.
+	 * <p>
+	 * This private method sets up the key descriptor for the TIC mode parameter,
+	 * which is used for validation and conversion of TIC mode values. It creates
+	 * a key descriptor for the TICMode enum and adds it to the list of keys
+	 * managed by this configuration object.
+	 * <p>
+	 * If an error occurs during initialization, it wraps the DataDictionaryException
+	 * in a RuntimeException to maintain the constructor's contract.
+	 */
 	private void loadKeyDescriptors()
 	{
 		try
