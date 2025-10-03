@@ -15,19 +15,59 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import org.json.JSONObject;
 
-/** TIC frame standard data set */
+/**
+ * Data set representation for standard TIC frames.
+ *
+ * <p>
+ * This class extends {@link TICFrameDataSet} to provide checksum calculation,
+ * byte serialization,
+ * date/time handling, and JSON conversion for standard TIC data sets. It
+ * defines the separator and
+ * implements the protocol-specific logic for standard frames.
+ *
+ * <p>
+ * Key features:
+ * <ul>
+ * <li>Defines the separator for standard TIC data sets</li>
+ * <li>Implements checksum calculation for label, data, and optional
+ * date/time</li>
+ * <li>Handles date/time fields as strings or {@link LocalDateTime}</li>
+ * <li>Serializes the data set to bytes and JSON</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see TICFrameDataSet
+ * @see TICFrame
+ */
 public class TICFrameStandardDataSet extends TICFrameDataSet {
-  /** Separator */
+  /**
+   * Separator character (horizontal tab, 0x09) used in standard TIC data sets.
+   */
   public static final byte SEPARATOR = 0x09; // HT
 
+  /**
+   * Date/time field for the data set (optional, may be null).
+   */
   protected BytesArray dateTime = null;
 
-  /** Constructor */
+  /**
+   * Constructs an empty standard TIC data set.
+   */
   public TICFrameStandardDataSet() {
     super();
     this.init();
   }
 
+  /**
+   * Computes the consistent checksum for this data set according to the standard
+   * TIC protocol.
+   *
+   * <p>
+   * The checksum is calculated over the label, optional date/time, and data
+   * fields.
+   *
+   * @return the computed checksum, or null if label or data is missing
+   */
   @Override
   public Byte getConsistentChecksum() {
     Byte crc = 0;
@@ -66,26 +106,32 @@ public class TICFrameStandardDataSet extends TICFrameDataSet {
   }
 
   /**
-   * Compute update
+   * Updates the checksum value with the given byte.
    *
-   * @param crc
-   * @param octet
-   * @return Byte crc compute after Update
+   * @param crc   the current checksum value
+   * @param octet the byte to add
+   * @return the updated checksum value
    */
   public Byte computeUpdate(Byte crc, byte octet) {
     return (byte) (crc + (octet & 0xff));
   }
 
   /**
-   * Compute end
+   * Finalizes the checksum value according to the standard TIC protocol.
    *
-   * @param crc
-   * @return Byte crc compute after End
+   * @param crc the current checksum value
+   * @return the finalized checksum value
    */
   public Byte computeEnd(Byte crc) {
     return (byte) ((crc & 0x3F) + 0x20);
   }
 
+  /**
+   * Serializes this data set to a byte array according to the standard TIC
+   * protocol.
+   *
+   * @return the byte array representation of the data set
+   */
   @Override
   public byte[] getBytes() {
     BytesArray dataSet = new BytesArray();
@@ -111,11 +157,23 @@ public class TICFrameStandardDataSet extends TICFrameDataSet {
     return dataSet.getBytes();
   }
 
+  /**
+   * Converts this data set to a JSON object using the default options.
+   *
+   * @return the JSON representation of the data set
+   */
   @Override
   public JSONObject toJSON() {
     return this.toJSON(TICFrame.TRIMMED);
   }
 
+  /**
+   * Converts this data set to a JSON object with the specified options.
+   *
+   * @param option bitmask of options (e.g., {@link TICFrame#NOCHECKSUM},
+   *               {@link TICFrame#NODATETIME})
+   * @return the JSON representation of the data set
+   */
   @Override
   public JSONObject toJSON(int option) {
     JSONObject jsonObject = new JSONObject();
@@ -148,22 +206,22 @@ public class TICFrameStandardDataSet extends TICFrameDataSet {
   }
 
   /**
-   * Setup
+   * Sets up the data set with the given label, data, and date/time strings.
    *
-   * @param label
-   * @param data
-   * @param dateTime
+   * @param label    the label string
+   * @param data     the data string
+   * @param dateTime the date/time string
    */
   public void setup(String label, String data, String dateTime) {
     this.setup(label.getBytes(), data.getBytes(), dateTime.getBytes());
   }
 
   /**
-   * Setup
+   * Sets up the data set with the given label, data, and date/time byte arrays.
    *
-   * @param label
-   * @param data
-   * @param dateTime
+   * @param label    the label bytes
+   * @param data     the data bytes
+   * @param dateTime the date/time bytes
    */
   public void setup(byte[] label, byte[] data, byte[] dateTime) {
     super.setup(label, data);
@@ -171,32 +229,33 @@ public class TICFrameStandardDataSet extends TICFrameDataSet {
   }
 
   /**
-   * Get datetime
+   * Returns the date/time string for this data set, or null if not set.
    *
-   * @return datetime
+   * @return the date/time string, or null if not set
    */
   public String getDateTime() {
-    return new String(this.dateTime.getBytes());
+    return this.dateTime == null ? null : new String(this.dateTime.getBytes());
   }
 
   /**
-   * Check datetime
+   * Checks if the date/time field is set.
    *
-   * @return result
+   * @return true if date/time is set, false otherwise
    */
   public Boolean checkDateTime() {
-    if (this.dateTime == null) {
-      return false;
-    }
-    return true;
+    return this.dateTime != null;
   }
 
   /**
-   * Get datetime as local datetime
+   * Returns the date/time as a {@link LocalDateTime} for this data set, or null
+   * if not set or invalid.
    *
-   * @return datetime as local datetime
+   * <p>
+   * The expected format is "HyyMMddHHmmss" (13 characters, with the first
+   * character ignored).
+   *
+   * @return the date/time as {@link LocalDateTime}, or null if not set or invalid
    */
-  // DATE H190730100158 yyMMddHHmmss
   public LocalDateTime getDateTimeAsLocalDateTime() {
     String strDateTime = this.getDateTime();
     LocalDateTime localDateTime = null;
@@ -214,33 +273,36 @@ public class TICFrameStandardDataSet extends TICFrameDataSet {
   }
 
   /**
-   * Set date time
+   * Sets the date/time field from a string value.
    *
-   * @param dateTime
+   * @param dateTime the date/time string
    */
   public void setDateTime(String dateTime) {
     this.setDateTime(dateTime.getBytes());
   }
 
   /**
-   * Set datetime
+   * Sets the date/time field from a byte array value.
    *
-   * @param dateTime
+   * @param dateTime the date/time bytes
    */
   public void setDateTime(byte[] dateTime) {
     this.setDateTime(new BytesArray(dateTime));
   }
 
   /**
-   * Set date time
+   * Sets the date/time field from a {@link BytesArray} value.
    *
-   * @param dateTime
+   * @param dateTime the date/time as a {@link BytesArray}
    */
   public void setDateTime(BytesArray dateTime) {
     this.dateTime = dateTime;
     this.setChecksum();
   }
 
+  /**
+   * Initializes the data set, clearing the date/time field.
+   */
   private void init() {
     this.dateTime = null;
   }

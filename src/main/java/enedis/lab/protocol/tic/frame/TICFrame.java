@@ -17,57 +17,80 @@ import java.util.List;
 import java.util.Objects;
 import org.json.JSONObject;
 
-/** TICFrame */
+/**
+ * Abstract base class for TIC frames.
+ *
+ * <p>
+ * This class provides the structure and common operations for TIC frames,
+ * including data set
+ * management, byte serialization, and data dictionary conversion. Subclasses
+ * implement protocol-specific
+ * details for standard and historic TIC formats.
+ *
+ * <p>
+ * Key features:
+ * <ul>
+ * <li>Defines constants for frame delimiters and options</li>
+ * <li>Manages a list of labeled data sets</li>
+ * <li>Provides methods for adding, removing, and retrieving data sets</li>
+ * <li>Supports conversion to byte arrays and data dictionaries</li>
+ * <li>Abstract methods for protocol-specific data set and mode handling</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see TICFrameDataSet
+ * @see TICMode
+ */
 public abstract class TICFrame {
-  /** Beginning pattern */
+  /**
+   * Frame start delimiter (STX, 0x02).
+   */
   public static final byte BEGINNING_PATTERN = 0x02; // STX
 
-  /** End pattern */
+  /**
+   * Frame end delimiter (ETX, 0x03).
+   */
   public static final byte END_PATTERN = 0x03; // ETX
 
-  /** End of trame pattern */
+  /**
+   * End of transmission delimiter (EOT, 0x04).
+   */
   public static final byte EOT = 0x04; // EOT
 
-  // Options
-  /** No specific options */
+  // Frame options and keys
+  /** No specific options. */
   public static final int EXPLICIT = 0x0000;
-
-  /** No checksum options */
+  /** Hide checksums in data dictionary. */
   public static final int NOCHECKSUM = 0x0001;
-
-  /** No date time options */
+  /** Hide date/time fields in data dictionary. */
   public static final int NODATETIME = 0x0002;
-
-  /** No tic mode options */
+  /** Hide TIC mode in data dictionary. */
   public static final int NOTICMODE = 0x0004;
-
-  /** No invalid options */
+  /** Filter invalid data sets in data dictionary. */
   public static final int NOINVALID = 0x0008;
-
-  /** Trimmed options */
+  /** Trimmed options: hide checksum, date/time, and invalid data sets. */
   public static final int TRIMMED = NOCHECKSUM | NODATETIME | NOINVALID;
-
-  /** Key tic frame */
+  /** Key for TIC frame in data dictionary. */
   public static final String KEY_TICFRAME = "ticFrame";
-
-  /** Key tic mode */
+  /** Key for TIC mode in data dictionary. */
   public static final String KEY_TICMODE = "ticMode";
-
-  /** Key label */
+  /** Key for label in data dictionary. */
   public static final String KEY_LABEL = "label";
-
-  /** Key data */
+  /** Key for data in data dictionary. */
   public static final String KEY_DATA = "data";
-
-  /** Key checksum */
+  /** Key for checksum in data dictionary. */
   public static final String KEY_CHECKSUM = "checksum";
-
-  /** Key date time */
+  /** Key for date/time in data dictionary. */
   public static final String KEY_DATETIME = "dateTime";
 
+  /**
+   * List of data sets contained in this TIC frame.
+   */
   protected List<TICFrameDataSet> DataSetList;
 
-  /** Default constructor */
+  /**
+   * Constructs an empty TIC frame with an empty data set list.
+   */
   public TICFrame() {
     this.DataSetList = new ArrayList<TICFrameDataSet>();
   }
@@ -79,36 +102,39 @@ public abstract class TICFrame {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (this.getClass() != obj.getClass()) return false;
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (this.getClass() != obj.getClass())
+      return false;
     TICFrame other = (TICFrame) obj;
     return Objects.equals(this.DataSetList, other.DataSetList);
   }
 
   /**
-   * Return the list of DataSet
+   * Returns the list of data sets contained in this frame.
    *
-   * @return the list of DataSet
+   * @return the list of data sets
    */
   public List<TICFrameDataSet> getDataSetList() {
     return this.DataSetList;
   }
 
   /**
-   * Set the list of DataSet
+   * Sets the list of data sets for this frame.
    *
-   * @param dataSetList
+   * @param dataSetList the list of data sets to set
    */
   public void setDataSetList(List<TICFrameDataSet> dataSetList) {
     this.DataSetList = dataSetList;
   }
 
   /**
-   * Return the index of the given DataSet
+   * Returns the index of the data set with the given label.
    *
-   * @param label Label of the DataSet
-   * @return the index of the given DataSet or '-1' if it does not exist
+   * @param label the label of the data set
+   * @return the index of the data set, or -1 if not found
    */
   public int indexOf(String label) {
     int index = -1;
@@ -124,10 +150,10 @@ public abstract class TICFrame {
   }
 
   /**
-   * Return the given DataSet
+   * Returns the data set with the given label, or null if not found.
    *
-   * @param label Label of the DataSet
-   * @return the given DataSet or 'null' if it does not exist
+   * @param label the label of the data set
+   * @return the data set, or null if not found
    */
   public TICFrameDataSet getDataSet(String label) {
     TICFrameDataSet dataSet = null;
@@ -143,10 +169,11 @@ public abstract class TICFrame {
   }
 
   /**
-   * Return the data field of the given DataSet
+   * Returns the data value for the data set with the given label, or null if not
+   * found.
    *
-   * @param label Label of the DataSet
-   * @return the data field of the given DataSet
+   * @param label the label of the data set
+   * @return the data value, or null if not found
    */
   public String getData(String label) {
     TICFrameDataSet dataSet = this.getDataSet(label);
@@ -159,10 +186,11 @@ public abstract class TICFrame {
   }
 
   /**
-   * Add the dataSet at the end of the list. If the dataSet already existed, its data and checksum
-   * are just set
+   * Adds the given data set to the end of the list. If a data set with the same
+   * label exists,
+   * its data and checksum are updated.
    *
-   * @param dataSet
+   * @param dataSet the data set to add or update
    */
   public void addDataSet(TICFrameDataSet dataSet) {
     TICFrameDataSet oldDataSet = this.getDataSet(dataSet.getLabel());
@@ -176,11 +204,12 @@ public abstract class TICFrame {
   }
 
   /**
-   * Add the dataSet at the given index of the list. If the dataSet already existed, its data and
-   * checksum are set and it is moved at the given index
+   * Adds the given data set at the specified index. If a data set with the same
+   * label exists,
+   * its data and checksum are updated and it is moved to the new index.
    *
-   * @param index
-   * @param dataSet
+   * @param index   the position to insert the data set
+   * @param dataSet the data set to add or update
    */
   public void addDataSet(int index, TICFrameDataSet dataSet) {
     int dataSetIndex = this.indexOf(dataSet.getLabel());
@@ -199,30 +228,31 @@ public abstract class TICFrame {
   }
 
   /**
-   * Add data set
+   * Adds a new data set with the given label and data to the frame.
    *
-   * @param label
-   * @param data
-   * @return tic frame data set
+   * @param label the label for the data set
+   * @param data  the data value
+   * @return the created or updated data set
    */
   public abstract TICFrameDataSet addDataSet(String label, String data);
 
   /**
-   * Add data set
+   * Adds a new data set with the given label and data at the specified index in
+   * the frame.
    *
-   * @param index
-   * @param label
-   * @param data
-   * @return tic frame data set
+   * @param index the position to insert the data set
+   * @param label the label for the data set
+   * @param data  the data value
+   * @return the created or updated data set
    */
   public abstract TICFrameDataSet addDataSet(int index, String label, String data);
 
   /**
-   * Move the DataSet at the given index.
+   * Moves the data set with the given label to the specified index.
    *
-   * @param label
-   * @param index
-   * @return true if the operation has been done, else return false
+   * @param label the label of the data set to move
+   * @param index the new index for the data set
+   * @return true if the operation succeeded, false otherwise
    */
   public boolean moveDataSet(String label, int index) {
     int previous_index = this.indexOf(label);
@@ -253,11 +283,11 @@ public abstract class TICFrame {
   }
 
   /**
-   * Set data set
+   * Sets the data value for the data set with the given label.
    *
-   * @param label
-   * @param data
-   * @return true if succeed
+   * @param label the label of the data set
+   * @param data  the new data value
+   * @return true if the data set was found and updated, false otherwise
    */
   public boolean setDataSet(String label, String data) {
     TICFrameDataSet dataSet = this.getDataSet(label);
@@ -273,12 +303,12 @@ public abstract class TICFrame {
   }
 
   /**
-   * Set data set
+   * Sets the data value and checksum for the data set with the given label.
    *
-   * @param label
-   * @param data
-   * @param checksum
-   * @return true if succeed
+   * @param label    the label of the data set
+   * @param data     the new data value
+   * @param checksum the new checksum value
+   * @return true if the data set was found and updated, false otherwise
    */
   public boolean setDataSet(String label, String data, byte checksum) {
     TICFrameDataSet dataSet = this.getDataSet(label);
@@ -294,10 +324,10 @@ public abstract class TICFrame {
   }
 
   /**
-   * Remove data set
+   * Removes the data set with the given label from the frame.
    *
-   * @param label
-   * @return tic frame data set
+   * @param label the label of the data set to remove
+   * @return the removed data set, or null if not found
    */
   public TICFrameDataSet removeDataSet(String label) {
     TICFrameDataSet dataSet = null;
@@ -312,10 +342,10 @@ public abstract class TICFrame {
   }
 
   /**
-   * Remove data set
+   * Removes the data set at the specified index from the frame.
    *
-   * @param index
-   * @return tic frame data set
+   * @param index the index of the data set to remove
+   * @return the removed data set, or null if not found
    */
   public TICFrameDataSet removeDataSet(int index) {
     TICFrameDataSet dataSet = null;
@@ -328,9 +358,9 @@ public abstract class TICFrame {
   }
 
   /**
-   * Get bytes
+   * Serializes this frame to a byte array according to the TIC protocol.
    *
-   * @return bytes
+   * @return the byte array representation of the frame
    */
   public byte[] getBytes() {
     BytesArray bytesFrame = new BytesArray();
@@ -347,22 +377,26 @@ public abstract class TICFrame {
   }
 
   /**
-   * Get data dictionary
+   * Returns a data dictionary representation of this frame with default options.
    *
-   * @return data dictionary
-   * @throws DataDictionaryException
+   * @return the data dictionary
+   * @throws DataDictionaryException if conversion fails
    */
   public DataDictionary getDataDictionary() throws DataDictionaryException {
     return this.getDataDictionary(0);
   }
 
   /**
-   * Return a DataDictionary object corresponding to the TIC frame
+   * Returns a data dictionary representation of this frame with the specified
+   * options.
    *
-   * @param options options to DataDictionary render (use like bits fields) : - EXPLICIT : frame is
-   *     detailed - NOCHECKSUM : DataSet checksum are hidden - NODATETIME : DataSet dateTime fields
-   *     are hidden - NOTICMODE : Tic mode is hidden; - TRIMMED : NOCHECKSUM | NODATETIME -
-   *     FILTER_INVALID : Invalid DataSet are filtered
+   * @param options options to DataDictionary render (use like bits fields) : -
+   *                EXPLICIT : frame is
+   *                detailed - NOCHECKSUM : DataSet checksum are hidden -
+   *                NODATETIME : DataSet dateTime fields
+   *                are hidden - NOTICMODE : Tic mode is hidden; - TRIMMED :
+   *                NOCHECKSUM | NODATETIME -
+   *                FILTER_INVALID : Invalid DataSet are filtered
    * @return data dictionary
    * @throws DataDictionaryException
    */
@@ -398,9 +432,9 @@ public abstract class TICFrame {
   }
 
   /**
-   * Get mode
+   * Returns the TIC mode for this frame (protocol-specific).
    *
-   * @return mode
+   * @return the TIC mode
    */
   public abstract TICMode getMode();
 }

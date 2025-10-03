@@ -11,28 +11,74 @@ import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.protocol.tic.frame.TICFrame;
 import java.time.LocalDateTime;
 
-/** TIC frame standard */
+/**
+ * TIC frame representation for standard TIC protocol.
+ *
+ * <p>
+ * This class extends {@link TICFrame} to provide support for standard TIC
+ * frames, including
+ * info group delimiters, data set management, and date/time handling. It allows
+ * adding labeled data sets
+ * and retrieving data or date/time values by label. Always reports its mode as
+ * {@link TICMode#STANDARD}.
+ *
+ * <p>
+ * Key features:
+ * <ul>
+ * <li>Defines info group delimiters for standard TIC frames</li>
+ * <li>Supports adding and retrieving labeled data sets</li>
+ * <li>Handles date/time fields as strings or {@link LocalDateTime}</li>
+ * <li>Always returns STANDARD as the TIC mode</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see TICFrame
+ * @see TICFrameStandardDataSet
+ * @see TICMode
+ */
 public class TICFrameStandard extends TICFrame {
-  /** Begin info group */
+  /**
+   * Info group begin delimiter (LF, 0x03) for standard TIC frames.
+   */
   public static final byte INFOGROUP_BEGIN = 0x03; // LF
 
-  /** End info group */
+  /**
+   * Info group end delimiter (CR, 0x03) for standard TIC frames.
+   */
   public static final byte INFOGROUP_END = 0x03; // CR
 
-  /** Sep info group */
+  /**
+   * Info group separator (HT, 0x03) for standard TIC frames.
+   */
   public static final byte INFOGROUP_SEP = 0x03; // HT
 
-  /** Min size info group */
+  /**
+   * Minimum size of an info group in bytes (LF + Label + HT + Data + HT + ...).
+   */
   public static final int INFOGROUP_MIN_SIZE = 7; // LF + Label + HT + Data + HT +
 
-  /** MIN_SIZE */
+  /**
+   * Minimum size of a standard TIC frame (info group + ETX + STX).
+   */
   public static final int MIN_SIZE = INFOGROUP_MIN_SIZE + 2; // ETX + INFGROUP_MIN_SIZE + STX
 
-  /** Default constructor */
+  /**
+   * Constructs an empty standard TIC frame.
+   */
   public TICFrameStandard() {
     super();
   }
 
+  /**
+   * Adds a new data set with the given label and data to the frame.
+   *
+   * <p>
+   * If a data set with the same label exists, it is updated and added again.
+   *
+   * @param label the label for the data set
+   * @param data  the data value
+   * @return the created or updated {@link TICFrameStandardDataSet}
+   */
   @Override
   public TICFrameStandardDataSet addDataSet(String label, String data) {
     TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
@@ -52,6 +98,19 @@ public class TICFrameStandard extends TICFrame {
     return dataSet;
   }
 
+  /**
+   * Adds a new data set with the given label and data at the specified index in
+   * the frame.
+   *
+   * <p>
+   * If a data set with the same label exists, it is updated and moved to the new
+   * index.
+   *
+   * @param index the position to insert the data set
+   * @param label the label for the data set
+   * @param data  the data value
+   * @return the created or updated {@link TICFrameStandardDataSet}
+   */
   @Override
   public TICFrameStandardDataSet addDataSet(int index, String label, String data) {
     TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
@@ -83,11 +142,23 @@ public class TICFrameStandard extends TICFrame {
     return dataSet;
   }
 
+  /**
+   * Returns the TIC mode for this frame (always STANDARD).
+   *
+   * @return {@link TICMode#STANDARD}
+   */
   @Override
   public TICMode getMode() {
     return TICMode.STANDARD;
   }
 
+  /**
+   * Returns the data value for the given label, or the date/time if the label is
+   * "DATE".
+   *
+   * @param label the label to search for
+   * @return the data value or date/time string, or null if not found
+   */
   @Override
   public String getData(String label) {
     TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
@@ -104,12 +175,12 @@ public class TICFrameStandard extends TICFrame {
   }
 
   /**
-   * Add data set
+   * Adds a new data set with the given label, data, and date/time value.
    *
-   * @param label
-   * @param data
-   * @param dateTime
-   * @return the added data set
+   * @param label    the label for the data set
+   * @param data     the data value
+   * @param dateTime the date/time string
+   * @return the created or updated {@link TICFrameStandardDataSet}
    */
   public TICFrameStandardDataSet addDataSet(String label, String data, String dateTime) {
     TICFrameStandardDataSet dataSet = this.addDataSet(label, data);
@@ -120,10 +191,10 @@ public class TICFrameStandard extends TICFrame {
   }
 
   /**
-   * Get string datetime
+   * Returns the date/time string for the given label, or null if not found.
    *
-   * @param label
-   * @return string datetime
+   * @param label the label to search for
+   * @return the date/time string, or null if not found
    */
   public String getDateTime(String label) {
     TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
@@ -135,10 +206,11 @@ public class TICFrameStandard extends TICFrame {
   }
 
   /**
-   * Get date time as localDateTime
+   * Returns the date/time as a {@link LocalDateTime} for the given label, or null
+   * if not found.
    *
-   * @param label
-   * @return LocalDateTime
+   * @param label the label to search for
+   * @return the date/time as {@link LocalDateTime}, or null if not found
    */
   public LocalDateTime getDateTimeAsLocalDateTime(String label) {
     TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);

@@ -11,19 +11,55 @@ import enedis.lab.types.BytesArray;
 import java.util.Objects;
 import org.json.JSONObject;
 
-/** TIC frame data set */
+/**
+ * Abstract base class for data sets in TIC frames.
+ *
+ * <p>
+ * This class provides the structure and common operations for TIC frame data
+ * sets, including
+ * label/data management, checksum calculation, and serialization. Subclasses
+ * implement protocol-specific
+ * details for standard and historic TIC formats.
+ *
+ * <p>
+ * Key features:
+ * <ul>
+ * <li>Defines constants for data set delimiters</li>
+ * <li>Manages label, data, and checksum fields</li>
+ * <li>Provides methods for setting and validating fields</li>
+ * <li>Abstract methods for protocol-specific serialization and checksum</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see BytesArray
+ */
 public abstract class TICFrameDataSet {
-  /** Beginning pattern */
+  /**
+   * Data set start delimiter (LF, 0x0A).
+   */
   public static final byte BEGINNING_PATTERN = 0x0A; // LF
 
-  /** End pattern */
+  /**
+   * Data set end delimiter (CR, 0x0D).
+   */
   public static final byte END_PATTERN = 0x0D; // CR
 
+  /**
+   * Label field for the data set.
+   */
   protected BytesArray label = null;
+  /**
+   * Data field for the data set.
+   */
   protected BytesArray data = null;
+  /**
+   * Checksum value for the data set.
+   */
   protected byte checksum;
 
-  /** Default constructor */
+  /**
+   * Constructs an empty TIC frame data set.
+   */
   public TICFrameDataSet() {
     this.init();
   }
@@ -35,9 +71,12 @@ public abstract class TICFrameDataSet {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (this.getClass() != obj.getClass()) return false;
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (this.getClass() != obj.getClass())
+      return false;
     TICFrameDataSet other = (TICFrameDataSet) obj;
     return this.checksum == other.checksum
         && Objects.equals(this.data, other.data)
@@ -45,20 +84,20 @@ public abstract class TICFrameDataSet {
   }
 
   /**
-   * Setup from string label and data
+   * Sets up the data set with the given label and data strings.
    *
-   * @param label
-   * @param data
+   * @param label the label string
+   * @param data  the data string
    */
   public void setup(String label, String data) {
     this.setup(label.getBytes(), data.getBytes());
   }
 
   /**
-   * Setup from byte[] label and data
+   * Sets up the data set with the given label and data byte arrays.
    *
-   * @param label
-   * @param data
+   * @param label the label bytes
+   * @param data  the data bytes
    */
   public void setup(byte[] label, byte[] data) {
     this.label = new BytesArray(label);
@@ -66,36 +105,37 @@ public abstract class TICFrameDataSet {
   }
 
   /**
-   * Get label
+   * Returns the label string for this data set.
    *
-   * @return label
+   * @return the label string
    */
   public String getLabel() {
     return new String(this.label.getBytes());
   }
 
   /**
-   * Set the Label
+   * Sets the label field from a string value.
    *
-   * @param label
+   * @param label the label string
    */
   public void setLabel(String label) {
     this.setLabel(label.getBytes());
   }
 
   /**
-   * Set the Label
+   * Sets the label field from a byte array value.
    *
-   * @param label
+   * @param label the label bytes
    */
   public void setLabel(byte[] label) {
     this.setLabel(new BytesArray(label));
   }
 
   /**
-   * Set the Label
+   * Sets the label field from a {@link BytesArray} value and updates the
+   * checksum.
    *
-   * @param label
+   * @param label the label as a {@link BytesArray}
    */
   public void setLabel(BytesArray label) {
     this.label = label;
@@ -103,36 +143,36 @@ public abstract class TICFrameDataSet {
   }
 
   /**
-   * Get data
+   * Returns the data string for this data set.
    *
-   * @return data
+   * @return the data string
    */
   public String getData() {
     return new String(this.data.getBytes());
   }
 
   /**
-   * Set data
+   * Sets the data field from a string value.
    *
-   * @param data
+   * @param data the data string
    */
   public void setData(String data) {
     this.setData(data.getBytes());
   }
 
   /**
-   * Set data
+   * Sets the data field from a byte array value.
    *
-   * @param data
+   * @param data the data bytes
    */
   public void setData(byte[] data) {
     this.setData(new BytesArray(data));
   }
 
   /**
-   * Set data
+   * Sets the data field from a {@link BytesArray} value and updates the checksum.
    *
-   * @param data
+   * @param data the data as a {@link BytesArray}
    */
   public void setData(BytesArray data) {
     this.data = data;
@@ -140,19 +180,19 @@ public abstract class TICFrameDataSet {
   }
 
   /**
-   * Get checksum
+   * Returns the checksum value for this data set.
    *
-   * @return checksum
+   * @return the checksum value
    */
   public byte getChecksum() {
-
     return this.checksum;
   }
 
   /**
-   * Compute and set the checksum (NB: Label and Data shall have been set)
+   * Computes and sets the checksum for this data set (label and data must be
+   * set).
    *
-   * @return true if the operation succeeds, else, return false
+   * @return true if the operation succeeds, false otherwise
    */
   public boolean setChecksum() {
     Byte checksum = this.getConsistentChecksum();
@@ -166,16 +206,18 @@ public abstract class TICFrameDataSet {
   }
 
   /**
-   * Set the checksum at a given value
+   * Sets the checksum to the given value.
    *
-   * @param checksum
+   * @param checksum the checksum value to set
    */
   public void setChecksum(byte checksum) {
     this.checksum = checksum;
   }
 
   /**
-   * @return true if fields are consistent with checksum
+   * Checks if the label, data, and checksum fields are consistent.
+   *
+   * @return true if the fields are consistent with the checksum, false otherwise
    */
   public boolean isValid() {
     Byte consistentChecksum = this.getConsistentChecksum();
@@ -189,34 +231,37 @@ public abstract class TICFrameDataSet {
   }
 
   /**
-   * Get bytes
+   * Serializes this data set to a byte array according to the TIC protocol.
    *
-   * @return bytes
+   * @return the byte array representation of the data set
    */
   public abstract byte[] getBytes();
 
   /**
-   * Conver to JSON
+   * Converts this data set to a JSON object using the default options.
    *
-   * @return json object
+   * @return the JSON representation of the data set
    */
   public abstract JSONObject toJSON();
 
   /**
-   * Conver to JSON
+   * Converts this data set to a JSON object with the specified options.
    *
-   * @param option
-   * @return json object
+   * @param option bitmask of options (e.g., hide checksum, date/time)
+   * @return the JSON representation of the data set
    */
   public abstract JSONObject toJSON(int option);
 
   /**
-   * Return the consistent checksum of the DataSet
+   * Computes the consistent checksum for this data set according to the protocol.
    *
-   * @return the consistent checksum of the DataSet
+   * @return the consistent checksum value, or null if not computable
    */
   protected abstract Byte getConsistentChecksum();
 
+  /**
+   * Initializes the data set, clearing label, data, and checksum fields.
+   */
   private void init() {
     this.label = null;
     this.data = null;

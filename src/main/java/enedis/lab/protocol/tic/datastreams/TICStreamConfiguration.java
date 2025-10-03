@@ -21,23 +21,67 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TICStreamConfiguration class
+ * Configuration class for TIC data streams.
  *
- * <p>Generated
+ * <p>
+ * This class extends {@link DataStreamConfiguration} to provide configuration
+ * management
+ * for TIC data streams, including TIC mode selection, type, direction, and
+ * channel name.
+ * It supports construction from maps, data dictionaries, or direct parameters,
+ * and ensures
+ * that all required configuration keys are present and valid for TIC
+ * input/output streams.
+ *
+ * <p>
+ * Key features:
+ * <ul>
+ * <li>Supports both standard and historic TIC modes</li>
+ * <li>Validates configuration parameters for TIC data streams</li>
+ * <li>Provides accessors for TIC mode and other stream properties</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see DataStreamConfiguration
+ * @see TICMode
  */
 public class TICStreamConfiguration extends DataStreamConfiguration {
+  /**
+   * Key for the TIC mode parameter in the configuration.
+   */
   protected static final String KEY_TIC_MODE = "ticMode";
 
+  /**
+   * Accepted value for the stream type (TIC).
+   */
   private static final DataStreamType TYPE_ACCEPTED_VALUE = DataStreamType.TIC;
+
+  /**
+   * Accepted values for the stream direction (INPUT or OUTPUT).
+   */
   private static final DataStreamDirection[] DIRECTION_ACCEPTED_VALUES = {
-    DataStreamDirection.OUTPUT, DataStreamDirection.INPUT
+      DataStreamDirection.OUTPUT, DataStreamDirection.INPUT
   };
+
+  /**
+   * Default value for the TIC mode (AUTO).
+   */
   private static final TICMode TIC_MODE_DEFAULT_VALUE = TICMode.AUTO;
 
+  /**
+   * List of key descriptors for configuration validation.
+   */
   private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
+  /**
+   * Key descriptor for the TIC mode parameter.
+   */
   protected KeyDescriptorEnum<TICMode> kTicMode;
 
+  /**
+   * Protected default constructor. Initializes key descriptors and sets default
+   * values.
+   */
   protected TICStreamConfiguration() {
     super();
     this.loadKeyDescriptors();
@@ -48,10 +92,10 @@ public class TICStreamConfiguration extends DataStreamConfiguration {
   }
 
   /**
-   * Constructor using map
+   * Constructs a TICStreamConfiguration from a map of parameters.
    *
-   * @param map
-   * @throws DataDictionaryException
+   * @param map the map containing configuration parameters
+   * @throws DataDictionaryException if the configuration is invalid
    */
   public TICStreamConfiguration(Map<String, Object> map) throws DataDictionaryException {
     this();
@@ -59,10 +103,10 @@ public class TICStreamConfiguration extends DataStreamConfiguration {
   }
 
   /**
-   * Constructor using datadictionary
+   * Constructs a TICStreamConfiguration from a {@link DataDictionary}.
    *
-   * @param other
-   * @throws DataDictionaryException
+   * @param other the data dictionary containing configuration parameters
+   * @throws DataDictionaryException if the configuration is invalid
    */
   public TICStreamConfiguration(DataDictionary other) throws DataDictionaryException {
     this();
@@ -70,7 +114,8 @@ public class TICStreamConfiguration extends DataStreamConfiguration {
   }
 
   /**
-   * Constructor setting configuration name/file and parameters to default values
+   * Constructs a TICStreamConfiguration with the specified name and file, using
+   * default parameters.
    *
    * @param name the configuration name
    * @param file the configuration file
@@ -81,13 +126,13 @@ public class TICStreamConfiguration extends DataStreamConfiguration {
   }
 
   /**
-   * Constructor setting parameters to specific values
+   * Constructs a TICStreamConfiguration with the specified parameters.
    *
-   * @param name
-   * @param direction
-   * @param channelName
-   * @param ticMode
-   * @throws DataDictionaryException
+   * @param name        the configuration name
+   * @param direction   the data stream direction (INPUT or OUTPUT)
+   * @param channelName the channel name
+   * @param ticMode     the TIC mode (STANDARD, HISTORIC, or AUTO)
+   * @throws DataDictionaryException if the configuration is invalid
    */
   public TICStreamConfiguration(
       String name, DataStreamDirection direction, String channelName, TICMode ticMode)
@@ -102,6 +147,11 @@ public class TICStreamConfiguration extends DataStreamConfiguration {
     this.checkAndUpdate();
   }
 
+  /**
+   * Updates optional configuration parameters to their default values if not set.
+   *
+   * @throws DataDictionaryException if an error occurs during update
+   */
   @Override
   protected void updateOptionalParameters() throws DataDictionaryException {
     if (!this.exists(KEY_TYPE)) {
@@ -114,28 +164,37 @@ public class TICStreamConfiguration extends DataStreamConfiguration {
   }
 
   /**
-   * Get tic mode
+   * Returns the configured TIC mode for this stream.
    *
-   * @return the tic mode
+   * @return the TIC mode (STANDARD, HISTORIC, or AUTO)
    */
   public TICMode getTicMode() {
     return (TICMode) this.data.get(KEY_TIC_MODE);
   }
 
   /**
-   * Set tic mode
+   * Sets the TIC mode for this stream.
    *
-   * @param ticMode
-   * @throws DataDictionaryException
+   * @param ticMode the TIC mode to set (STANDARD, HISTORIC, or AUTO)
+   * @throws DataDictionaryException if the value is invalid
    */
   public void setTicMode(TICMode ticMode) throws DataDictionaryException {
     this.setTicMode((Object) ticMode);
   }
 
+  /**
+   * Sets the TIC mode for this stream using a generic object.
+   *
+   * @param ticMode the TIC mode as an object
+   * @throws DataDictionaryException if the value is invalid
+   */
   protected void setTicMode(Object ticMode) throws DataDictionaryException {
     this.data.put(KEY_TIC_MODE, this.kTicMode.convert(ticMode));
   }
 
+  /**
+   * Loads key descriptors for configuration validation and type conversion.
+   */
   private void loadKeyDescriptors() {
     try {
       this.kTicMode = new KeyDescriptorEnum<TICMode>(KEY_TIC_MODE, true, TICMode.class);
