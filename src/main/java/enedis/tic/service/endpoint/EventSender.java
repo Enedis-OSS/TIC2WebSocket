@@ -7,20 +7,16 @@
 
 package enedis.tic.service.endpoint;
 
+import enedis.lab.util.message.Event;
 import io.netty.channel.Channel;
 
-import enedis.lab.util.message.Event;
-
-/**
- * Event sender interface
- */
-public interface EventSender
-{
-	/**
-	 * Send event
-	 * 
-	 * @param channel
-	 * @param event
-	 */
-	public void sendEvent(Channel channel, Event event);
+/** Event sender interface */
+public interface EventSender {
+  /**
+   * Send event
+   *
+   * @param channel
+   * @param event
+   */
+  public void sendEvent(Channel channel, Event event);
 }

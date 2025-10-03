@@ -1,13 +1,11 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
 // SPDX-License-Identifier: Apache-2.0
 
 package enedis.lab.io.tic;
-
-import java.util.List;
 
 import enedis.lab.io.serialport.SerialPortDescriptor;
 import enedis.lab.io.serialport.SerialPortFinder;
@@ -18,189 +16,107 @@ import enedis.lab.io.usb.USBPortFinderBase;
 import enedis.lab.types.DataArrayList;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.DataList;
+import java.util.List;
 
-/**
- * Class used to find all TIC port descriptor
- */
-public class TICPortFinderBase implements TICPortFinder
-{
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/** Class used to find all TIC port descriptor */
+public class TICPortFinderBase implements TICPortFinder {
+  /**
+   * Program writing the TIC port descriptor list (JSON format) on the output stream
+   *
+   * @param args not used
+   */
+  public static void main(String[] args) {
+    DataList<TICPortDescriptor> descriptors = getInstance().findAll();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    System.out.println(descriptors.toString(2));
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Get instance
+   *
+   * @return Unique instance
+   */
+  public static TICPortFinderBase getInstance() {
+    if (instance == null) {
+      instance = new TICPortFinderBase();
+    }
 
-	/**
-	 * Program writing the TIC port descriptor list (JSON format) on the output stream
-	 *
-	 * @param args
-	 *            not used
-	 */
-	public static void main(String[] args)
-	{
-		DataList<TICPortDescriptor> descriptors = getInstance().findAll();
+    return instance;
+  }
 
-		System.out.println(descriptors.toString(2));
-	}
+  private static TICPortFinderBase instance;
 
-	/**
-	 * Get instance
-	 *
-	 * @return Unique instance
-	 */
-	public static TICPortFinderBase getInstance()
-	{
-		if (instance == null)
-		{
-			instance = new TICPortFinderBase();
-		}
+  private SerialPortFinder serialPortFinder;
+  private USBPortFinder usbPortFinder;
 
-		return instance;
-	}
+  private TICPortFinderBase() {
+    this(SerialPortFinderBase.getInstance(), USBPortFinderBase.getInstance());
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructor with finder parameters
+   *
+   * @param serialPortFinder the serial port finder interface
+   * @param usbPortFinder the USB port finder interface
+   */
+  public TICPortFinderBase(SerialPortFinder serialPortFinder, USBPortFinder usbPortFinder) {
+    if (serialPortFinder == null) {
+      throw new IllegalArgumentException("Cannot set null serial port finder");
+    }
+    this.serialPortFinder = serialPortFinder;
+    if (usbPortFinder == null) {
+      throw new IllegalArgumentException("Cannot set null USB port finder");
+    }
+    this.usbPortFinder = usbPortFinder;
+  }
 
-	private static TICPortFinderBase	instance;
+  @Override
+  public DataList<TICPortDescriptor> findAll() {
+    DataList<TICPortDescriptor> ticSerialPort = new DataArrayList<TICPortDescriptor>();
 
-	private SerialPortFinder			serialPortFinder;
-	private USBPortFinder				usbPortFinder;
+    for (TICModemType modemType : TICModemType.values()) {
+      List<SerialPortDescriptor> tmpSerialPort =
+          this.serialPortFinder.findByProductIdAndVendorId(
+              modemType.getProductId(), modemType.getVendorId());
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      if (tmpSerialPort.isEmpty()) {
+        List<USBPortDescriptor> tmpUSBPort =
+            this.usbPortFinder.findByProductIdAndVendorId(
+                modemType.getProductId(), modemType.getVendorId());
 
-	private TICPortFinderBase()
-	{
-		this(SerialPortFinderBase.getInstance(), USBPortFinderBase.getInstance());
-	}
+        for (USBPortDescriptor upd : tmpUSBPort) {
+          try {
+            TICPortDescriptor tic = new TICPortDescriptor(upd, modemType);
+            ticSerialPort.add(tic);
+          } catch (DataDictionaryException e) {
+          }
+        }
+      } else {
+        for (SerialPortDescriptor spd : tmpSerialPort) {
+          try {
+            TICPortDescriptor tic = new TICPortDescriptor(spd, modemType);
+            ticSerialPort.add(tic);
+          } catch (DataDictionaryException e) {
+          }
+        }
+      }
+    }
 
-	/**
-	 * Constructor with finder parameters
-	 *
-	 * @param serialPortFinder
-	 *            the serial port finder interface
-	 * @param usbPortFinder
-	 *            the USB port finder interface
-	 */
-	public TICPortFinderBase(SerialPortFinder serialPortFinder, USBPortFinder usbPortFinder)
-	{
-		if (serialPortFinder == null)
-		{
-			throw new IllegalArgumentException("Cannot set null serial port finder");
-		}
-		this.serialPortFinder = serialPortFinder;
-		if (usbPortFinder == null)
-		{
-			throw new IllegalArgumentException("Cannot set null USB port finder");
-		}
-		this.usbPortFinder = usbPortFinder;
-	}
+    return ticSerialPort;
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE
-	/// TICPortFinder
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  @Override
+  public TICPortDescriptor findNative(String portName) {
+    TICPortDescriptor ticPortDescriptor = null;
+    SerialPortDescriptor serialPortDescriptor = this.serialPortFinder.findNative(portName);
 
-	@Override
-	public DataList<TICPortDescriptor> findAll()
-	{
-		DataList<TICPortDescriptor> ticSerialPort = new DataArrayList<TICPortDescriptor>();
+    if (serialPortDescriptor != null) {
+      try {
+        ticPortDescriptor = new TICPortDescriptor(serialPortDescriptor, null);
+      } catch (DataDictionaryException e) {
+      }
+    }
 
-		for (TICModemType modemType : TICModemType.values())
-		{
-			List<SerialPortDescriptor> tmpSerialPort = this.serialPortFinder.findByProductIdAndVendorId(modemType.getProductId(), modemType.getVendorId());
-
-			if (tmpSerialPort.isEmpty())
-			{
-				List<USBPortDescriptor> tmpUSBPort = this.usbPortFinder.findByProductIdAndVendorId(modemType.getProductId(), modemType.getVendorId());
-
-				for (USBPortDescriptor upd : tmpUSBPort)
-				{
-					try
-					{
-						TICPortDescriptor tic = new TICPortDescriptor(upd, modemType);
-						ticSerialPort.add(tic);
-					}
-					catch (DataDictionaryException e)
-					{
-					}
-				}
-			}
-			else
-			{
-				for (SerialPortDescriptor spd : tmpSerialPort)
-				{
-					try
-					{
-						TICPortDescriptor tic = new TICPortDescriptor(spd, modemType);
-						ticSerialPort.add(tic);
-					}
-					catch (DataDictionaryException e)
-					{
-					}
-				}
-			}
-		}
-
-		return ticSerialPort;
-	}
-
-	@Override
-	public TICPortDescriptor findNative(String portName)
-	{
-		TICPortDescriptor ticPortDescriptor = null;
-		SerialPortDescriptor serialPortDescriptor = this.serialPortFinder.findNative(portName);
-
-		if (serialPortDescriptor != null)
-		{
-			try
-			{
-				ticPortDescriptor = new TICPortDescriptor(serialPortDescriptor, null);
-			}
-			catch (DataDictionaryException e)
-			{
-			}
-		}
-
-		return ticPortDescriptor;
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    return ticPortDescriptor;
+  }
 }

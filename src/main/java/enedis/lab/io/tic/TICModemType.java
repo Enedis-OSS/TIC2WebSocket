@@ -7,42 +7,36 @@
 
 package enedis.lab.io.tic;
 
-/**
- * TIC Modem type
- */
-public enum TICModemType
-{
-	/** Modem michaud */
-	MICHAUD(0x6001, 0x0403),
-	/** Télé info */
-	TELEINFO(0x6015, 0x0403);
+/** TIC Modem type */
+public enum TICModemType {
+  /** Modem michaud */
+  MICHAUD(0x6001, 0x0403),
+  /** Télé info */
+  TELEINFO(0x6015, 0x0403);
 
-	private int	productId;
-	private int	vendorId;
+  private int productId;
+  private int vendorId;
 
-	TICModemType(int productId, int vendorId)
-	{
-		this.productId = productId;
-		this.vendorId = vendorId;
-	}
+  TICModemType(int productId, int vendorId) {
+    this.productId = productId;
+    this.vendorId = vendorId;
+  }
 
-	/**
-	 * Get product id
-	 *
-	 * @return product id
-	 */
-	public int getProductId()
-	{
-		return this.productId;
-	}
+  /**
+   * Get product id
+   *
+   * @return product id
+   */
+  public int getProductId() {
+    return this.productId;
+  }
 
-	/**
-	 * Get vendor id
-	 *
-	 * @return vendor id
-	 */
-	public int getVendorId()
-	{
-		return this.vendorId;
-	}
+  /**
+   * Get vendor id
+   *
+   * @return vendor id
+   */
+  public int getVendorId() {
+    return this.vendorId;
+  }
 }

@@ -9,16 +9,10 @@ package enedis.lab.util.message.factory;
 
 import enedis.lab.util.message.Response;
 
-/**
- * Request factory
- */
-public class ResponseFactory extends AbstractMessageFactory<Response>
-{
-	/**
-	 * Default constructor
-	 */
-	public ResponseFactory()
-	{
-		super(Response.class);
-	}
+/** Request factory */
+public class ResponseFactory extends AbstractMessageFactory<Response> {
+  /** Default constructor */
+  public ResponseFactory() {
+    super(Response.class);
+  }
 }

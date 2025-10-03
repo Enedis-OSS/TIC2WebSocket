@@ -9,16 +9,10 @@ package enedis.lab.util.message.factory;
 
 import enedis.lab.util.message.Event;
 
-/**
- * Request factory
- */
-public class EventFactory extends AbstractMessageFactory<Event>
-{
-	/**
-	 * Default constructor
-	 */
-	public EventFactory()
-	{
-		super(Event.class);
-	}
+/** Request factory */
+public class EventFactory extends AbstractMessageFactory<Event> {
+  /** Default constructor */
+  public EventFactory() {
+    super(Event.class);
+  }
 }

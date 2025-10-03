@@ -7,154 +7,88 @@
 
 package enedis.tic.service.message;
 
+import enedis.lab.types.DataDictionary;
+import enedis.lab.types.DataDictionaryException;
+import enedis.lab.types.datadictionary.KeyDescriptor;
+import enedis.lab.util.message.Response;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import enedis.lab.types.DataDictionary;
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.types.datadictionary.KeyDescriptor;
-import enedis.lab.util.message.Response;
-
 /**
  * ResponseUnsubscribeTIC class
- * 
- * Generated
+ *
+ * <p>Generated
  */
-public class ResponseUnsubscribeTIC extends Response
-{
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public class ResponseUnsubscribeTIC extends Response {
+  /** Message name */
+  public static final String NAME = "UnsubscribeTIC";
 
-	/** Message name */
-	public static final String		NAME	= "UnsubscribeTIC";
+  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected ResponseUnsubscribeTIC() {
+    super();
+    this.loadKeyDescriptors();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    this.kName.setAcceptedValues(NAME);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructor using map
+   *
+   * @param map
+   * @throws DataDictionaryException
+   */
+  public ResponseUnsubscribeTIC(Map<String, Object> map) throws DataDictionaryException {
+    this();
+    this.copy(fromMap(map));
+  }
 
-	private List<KeyDescriptor<?>>	keys				= new ArrayList<KeyDescriptor<?>>();
+  /**
+   * Constructor using datadictionary
+   *
+   * @param other
+   * @throws DataDictionaryException
+   */
+  public ResponseUnsubscribeTIC(DataDictionary other) throws DataDictionaryException {
+    this();
+    this.copy(other);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructor setting parameters to specific values
+   *
+   * @param dateTime
+   * @param errorCode
+   * @param errorMessage
+   * @throws DataDictionaryException
+   */
+  public ResponseUnsubscribeTIC(LocalDateTime dateTime, Number errorCode, String errorMessage)
+      throws DataDictionaryException {
+    this();
 
-	protected ResponseUnsubscribeTIC()
-	{
-		super();
-		this.loadKeyDescriptors();
+    this.setDateTime(dateTime);
+    this.setErrorCode(errorCode);
+    this.setErrorMessage(errorMessage);
 
-		this.kName.setAcceptedValues(NAME);
-	}
+    this.checkAndUpdate();
+  }
 
-	/**
-	 * Constructor using map
-	 *
-	 * @param map
-	 * @throws DataDictionaryException
-	 */
-	public ResponseUnsubscribeTIC(Map<String, Object> map) throws DataDictionaryException
-	{
-		this();
-		this.copy(fromMap(map));
-	}
+  @Override
+  protected void updateOptionalParameters() throws DataDictionaryException {
+    if (!this.exists(KEY_NAME)) {
+      this.setName(NAME);
+    }
+    super.updateOptionalParameters();
+  }
 
-	/**
-	 * Constructor using datadictionary
-	 *
-	 * @param other
-	 * @throws DataDictionaryException
-	 */
-	public ResponseUnsubscribeTIC(DataDictionary other) throws DataDictionaryException
-	{
-		this();
-		this.copy(other);
-	}
+  private void loadKeyDescriptors() {
+    try {
 
-	/**
-	 * Constructor setting parameters to specific values
-	 *
-	 * @param dateTime
-	 * @param errorCode
-	 * @param errorMessage
-	 * @throws DataDictionaryException
-	 */
-	public ResponseUnsubscribeTIC(LocalDateTime dateTime, Number errorCode, String errorMessage) throws DataDictionaryException
-	{
-		this();
-
-		this.setDateTime(dateTime);
-		this.setErrorCode(errorCode);
-		this.setErrorMessage(errorMessage);
-
-		this.checkAndUpdate();
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE 
-	/// Response
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	protected void updateOptionalParameters() throws DataDictionaryException
-	{
-		if (!this.exists(KEY_NAME))
-		{
-			this.setName(NAME);
-		}
-		super.updateOptionalParameters();
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-
-	private void loadKeyDescriptors()
-	{
-		try
-		{
-
-			this.addAllKeyDescriptor(this.keys);
-		}
-		catch (DataDictionaryException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+      this.addAllKeyDescriptor(this.keys);
+    } catch (DataDictionaryException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
 }

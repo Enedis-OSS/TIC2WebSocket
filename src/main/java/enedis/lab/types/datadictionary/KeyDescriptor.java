@@ -14,53 +14,50 @@ import enedis.lab.types.DataDictionaryException;
  *
  * @param <T>
  */
-public interface KeyDescriptor<T>
-{
-	/**
-	 * Get key name
-	 *
-	 * @return key name
-	 */
-	public String getName();
+public interface KeyDescriptor<T> {
+  /**
+   * Get key name
+   *
+   * @return key name
+   */
+  public String getName();
 
-	/**
-	 * Get mandatory flag
-	 *
-	 * @return mandatory flag
-	 */
-	public boolean isMandatory();
+  /**
+   * Get mandatory flag
+   *
+   * @return mandatory flag
+   */
+  public boolean isMandatory();
 
-	/**
-	 * Set mandatory flag
-	 *
-	 * @param mandatory
-	 */
-	public void setMandatory(boolean mandatory);
+  /**
+   * Set mandatory flag
+   *
+   * @param mandatory
+   */
+  public void setMandatory(boolean mandatory);
 
-	/**
-	 * Set a list of accepted values
-	 *
-	 * @param acceptedValues
-	 */
-	@SuppressWarnings("unchecked")
-	public void setAcceptedValues(T... acceptedValues);
+  /**
+   * Set a list of accepted values
+   *
+   * @param acceptedValues
+   */
+  @SuppressWarnings("unchecked")
+  public void setAcceptedValues(T... acceptedValues);
 
-	/**
-	 * Convert a Object value to a T value
-	 *
-	 * @param value
-	 *            object to convert
-	 * @return value converted to T type
-	 * @throws DataDictionaryException
-	 */
-	public T convert(Object value) throws DataDictionaryException;
+  /**
+   * Convert a Object value to a T value
+   *
+   * @param value object to convert
+   * @return value converted to T type
+   * @throws DataDictionaryException
+   */
+  public T convert(Object value) throws DataDictionaryException;
 
-	/**
-	 * Convert a T value to String
-	 *
-	 * @param value
-	 *            value to convert to String
-	 * @return String representation of the value
-	 */
-	public String toString(T value);
+  /**
+   * Convert a T value to String
+   *
+   * @param value value to convert to String
+   * @return String representation of the value
+   */
+  public String toString(T value);
 }

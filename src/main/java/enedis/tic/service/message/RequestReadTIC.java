@@ -7,183 +7,114 @@
 
 package enedis.tic.service.message;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import enedis.lab.types.DataDictionary;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.KeyDescriptor;
 import enedis.lab.types.datadictionary.KeyDescriptorDataDictionary;
 import enedis.lab.util.message.Request;
 import enedis.tic.core.TICIdentifier;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * RequestReadTIC class
- * 
- * Generated
+ *
+ * <p>Generated
  */
-public class RequestReadTIC extends Request
-{
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public class RequestReadTIC extends Request {
+  protected static final String KEY_DATA = "data";
 
-	protected static final String							KEY_DATA	= "data";
+  /** Message name */
+  public static final String NAME = "ReadTIC";
 
-	/** Message name */
-	public static final String								NAME		= "ReadTIC";
+  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected KeyDescriptorDataDictionary<TICIdentifier> kData;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected RequestReadTIC() {
+    super();
+    this.loadKeyDescriptors();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    this.kName.setAcceptedValues(NAME);
+  }
 
-	private List<KeyDescriptor<?>>							keys		= new ArrayList<KeyDescriptor<?>>();
+  /**
+   * Constructor using map
+   *
+   * @param map
+   * @throws DataDictionaryException
+   */
+  public RequestReadTIC(Map<String, Object> map) throws DataDictionaryException {
+    this();
+    this.copy(fromMap(map));
+  }
 
-	protected KeyDescriptorDataDictionary<TICIdentifier>	kData;
+  /**
+   * Constructor using datadictionary
+   *
+   * @param other
+   * @throws DataDictionaryException
+   */
+  public RequestReadTIC(DataDictionary other) throws DataDictionaryException {
+    this();
+    this.copy(other);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructor setting parameters to specific values
+   *
+   * @param data
+   * @throws DataDictionaryException
+   */
+  public RequestReadTIC(TICIdentifier data) throws DataDictionaryException {
+    this();
 
-	protected RequestReadTIC()
-	{
-		super();
-		this.loadKeyDescriptors();
+    this.setData(data);
 
-		this.kName.setAcceptedValues(NAME);
-	}
+    this.checkAndUpdate();
+  }
 
-	/**
-	 * Constructor using map
-	 *
-	 * @param map
-	 * @throws DataDictionaryException
-	 */
-	public RequestReadTIC(Map<String, Object> map) throws DataDictionaryException
-	{
-		this();
-		this.copy(fromMap(map));
-	}
+  @Override
+  protected void updateOptionalParameters() throws DataDictionaryException {
+    if (!this.exists(KEY_NAME)) {
+      this.setName(NAME);
+    }
+    super.updateOptionalParameters();
+  }
 
-	/**
-	 * Constructor using datadictionary
-	 *
-	 * @param other
-	 * @throws DataDictionaryException
-	 */
-	public RequestReadTIC(DataDictionary other) throws DataDictionaryException
-	{
-		this();
-		this.copy(other);
-	}
+  /**
+   * Get data
+   *
+   * @return the data
+   */
+  public TICIdentifier getData() {
+    return (TICIdentifier) this.data.get(KEY_DATA);
+  }
 
-	/**
-	 * Constructor setting parameters to specific values
-	 *
-	 * @param data
-	 * @throws DataDictionaryException
-	 */
-	public RequestReadTIC(TICIdentifier data) throws DataDictionaryException
-	{
-		this();
+  /**
+   * Set data
+   *
+   * @param data
+   * @throws DataDictionaryException
+   */
+  public void setData(TICIdentifier data) throws DataDictionaryException {
+    this.setData((Object) data);
+  }
 
-		this.setData(data);
+  protected void setData(Object data) throws DataDictionaryException {
+    this.data.put(KEY_DATA, this.kData.convert(data));
+  }
 
-		this.checkAndUpdate();
-	}
+  private void loadKeyDescriptors() {
+    try {
+      this.kData =
+          new KeyDescriptorDataDictionary<TICIdentifier>(KEY_DATA, true, TICIdentifier.class);
+      this.keys.add(this.kData);
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE 
-	/// Request
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	protected void updateOptionalParameters() throws DataDictionaryException
-	{
-		if (!this.exists(KEY_NAME))
-		{
-			this.setName(NAME);
-		}
-		super.updateOptionalParameters();
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Get data
-	 *
-	 * @return the data
-	 */
-	public TICIdentifier getData()
-	{
-		return (TICIdentifier) this.data.get(KEY_DATA);
-	}
-
-	/**
-	 * Set data
-	 *
-	 * @param data
-	 * @throws DataDictionaryException
-	 */
-	public void setData(TICIdentifier data) throws DataDictionaryException
-	{
-		this.setData((Object) data);
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	protected void setData(Object data) throws DataDictionaryException
-	{
-		this.data.put(KEY_DATA, this.kData.convert(data));
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-
-	private void loadKeyDescriptors()
-	{
-		try
-		{
-			this.kData = new KeyDescriptorDataDictionary<TICIdentifier>(KEY_DATA, true, TICIdentifier.class);
-			this.keys.add(this.kData);
-
-			this.addAllKeyDescriptor(this.keys);
-		}
-		catch (DataDictionaryException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+      this.addAllKeyDescriptor(this.keys);
+    } catch (DataDictionaryException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
 }

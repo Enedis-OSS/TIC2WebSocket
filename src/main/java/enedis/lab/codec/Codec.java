@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -12,25 +12,25 @@ package enedis.lab.codec;
  *
  * @param <T>
  * @param <K>
- *
+ * @author Enedis Smarties team
  */
-public interface Codec<T, K>
-{
-	/**
-	 * Decode type K to type T
-	 *
-	 * @param object
-	 * @return instance of T
-	 * @throws CodecException
-	 */
-	public T decode(K object) throws CodecException;
+public interface Codec<T, K> {
 
-	/**
-	 * Encode type T to type K
-	 *
-	 * @param object
-	 * @return instance of K
-	 * @throws CodecException
-	 */
-	public K encode(T object) throws CodecException;
+  /**
+   * Decode type K to type T
+   *
+   * @param object
+   * @return instance of T
+   * @throws CodecException
+   */
+  public T decode(K object) throws CodecException;
+
+  /**
+   * Encode type T to type K
+   *
+   * @param object
+   * @return instance of K
+   * @throws CodecException
+   */
+  public K encode(T object) throws CodecException;
 }

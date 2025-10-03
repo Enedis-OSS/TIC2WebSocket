@@ -7,186 +7,117 @@
 
 package enedis.tic.service.message;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import enedis.lab.types.DataDictionary;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.KeyDescriptor;
 import enedis.lab.types.datadictionary.KeyDescriptorDataDictionary;
 import enedis.lab.util.message.Event;
 import enedis.tic.core.TICCoreError;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * EventOnError class
- * 
- * Generated
+ *
+ * <p>Generated
  */
-public class EventOnError extends Event
-{
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public class EventOnError extends Event {
+  protected static final String KEY_DATA = "data";
 
-	protected static final String						KEY_DATA	= "data";
+  /** Message name */
+  public static final String NAME = "OnError";
 
-	/** Message name */
-	public static final String							NAME		= "OnError";
+  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected KeyDescriptorDataDictionary<TICCoreError> kData;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected EventOnError() {
+    super();
+    this.loadKeyDescriptors();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    this.kName.setAcceptedValues(NAME);
+  }
 
-	private List<KeyDescriptor<?>>						keys		= new ArrayList<KeyDescriptor<?>>();
+  /**
+   * Constructor using map
+   *
+   * @param map
+   * @throws DataDictionaryException
+   */
+  public EventOnError(Map<String, Object> map) throws DataDictionaryException {
+    this();
+    this.copy(fromMap(map));
+  }
 
-	protected KeyDescriptorDataDictionary<TICCoreError>	kData;
+  /**
+   * Constructor using datadictionary
+   *
+   * @param other
+   * @throws DataDictionaryException
+   */
+  public EventOnError(DataDictionary other) throws DataDictionaryException {
+    this();
+    this.copy(other);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructor setting parameters to specific values
+   *
+   * @param dateTime
+   * @param data
+   * @throws DataDictionaryException
+   */
+  public EventOnError(LocalDateTime dateTime, TICCoreError data) throws DataDictionaryException {
+    this();
 
-	protected EventOnError()
-	{
-		super();
-		this.loadKeyDescriptors();
+    this.setDateTime(dateTime);
+    this.setData(data);
 
-		this.kName.setAcceptedValues(NAME);
-	}
+    this.checkAndUpdate();
+  }
 
-	/**
-	 * Constructor using map
-	 *
-	 * @param map
-	 * @throws DataDictionaryException
-	 */
-	public EventOnError(Map<String, Object> map) throws DataDictionaryException
-	{
-		this();
-		this.copy(fromMap(map));
-	}
+  @Override
+  protected void updateOptionalParameters() throws DataDictionaryException {
+    if (!this.exists(KEY_NAME)) {
+      this.setName(NAME);
+    }
+    super.updateOptionalParameters();
+  }
 
-	/**
-	 * Constructor using datadictionary
-	 *
-	 * @param other
-	 * @throws DataDictionaryException
-	 */
-	public EventOnError(DataDictionary other) throws DataDictionaryException
-	{
-		this();
-		this.copy(other);
-	}
+  /**
+   * Get data
+   *
+   * @return the data
+   */
+  public TICCoreError getData() {
+    return (TICCoreError) this.data.get(KEY_DATA);
+  }
 
-	/**
-	 * Constructor setting parameters to specific values
-	 *
-	 * @param dateTime
-	 * @param data
-	 * @throws DataDictionaryException
-	 */
-	public EventOnError(LocalDateTime dateTime, TICCoreError data) throws DataDictionaryException
-	{
-		this();
+  /**
+   * Set data
+   *
+   * @param data
+   * @throws DataDictionaryException
+   */
+  public void setData(TICCoreError data) throws DataDictionaryException {
+    this.setData((Object) data);
+  }
 
-		this.setDateTime(dateTime);
-		this.setData(data);
+  protected void setData(Object data) throws DataDictionaryException {
+    this.data.put(KEY_DATA, this.kData.convert(data));
+  }
 
-		this.checkAndUpdate();
-	}
+  private void loadKeyDescriptors() {
+    try {
+      this.kData =
+          new KeyDescriptorDataDictionary<TICCoreError>(KEY_DATA, false, TICCoreError.class);
+      this.keys.add(this.kData);
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE 
-	/// Event
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	protected void updateOptionalParameters() throws DataDictionaryException
-	{
-		if (!this.exists(KEY_NAME))
-		{
-			this.setName(NAME);
-		}
-		super.updateOptionalParameters();
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Get data
-	 *
-	 * @return the data
-	 */
-	public TICCoreError getData()
-	{
-		return (TICCoreError) this.data.get(KEY_DATA);
-	}
-
-	/**
-	 * Set data
-	 *
-	 * @param data
-	 * @throws DataDictionaryException
-	 */
-	public void setData(TICCoreError data) throws DataDictionaryException
-	{
-		this.setData((Object) data);
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	protected void setData(Object data) throws DataDictionaryException
-	{
-		this.data.put(KEY_DATA, this.kData.convert(data));
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-
-	private void loadKeyDescriptors()
-	{
-		try
-		{
-			this.kData = new KeyDescriptorDataDictionary<TICCoreError>(KEY_DATA, false, TICCoreError.class);
-			this.keys.add(this.kData);
-
-			this.addAllKeyDescriptor(this.keys);
-		}
-		catch (DataDictionaryException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+      this.addAllKeyDescriptor(this.keys);
+    } catch (DataDictionaryException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
 }

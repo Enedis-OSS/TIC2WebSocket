@@ -9,24 +9,19 @@ package enedis.tic.core;
 
 import enedis.lab.util.task.Subscriber;
 
-/**
- * TICCore subscriber interface
- */
-public interface TICCoreSubscriber extends Subscriber
-{
-	/**
-	 * Notify when data
-	 *
-	 * @param frame
-	 *            the frame received
-	 */
-	public void onData(TICCoreFrame frame);
+/** TICCore subscriber interface */
+public interface TICCoreSubscriber extends Subscriber {
+  /**
+   * Notify when data
+   *
+   * @param frame the frame received
+   */
+  public void onData(TICCoreFrame frame);
 
-	/**
-	 * Notify when error
-	 *
-	 * @param error
-	 *            the error detected
-	 */
-	public void onError(TICCoreError error);
+  /**
+   * Notify when error
+   *
+   * @param error the error detected
+   */
+  public void onError(TICCoreError error);
 }
