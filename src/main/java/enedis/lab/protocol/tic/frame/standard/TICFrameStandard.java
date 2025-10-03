@@ -7,186 +7,145 @@
 
 package enedis.lab.protocol.tic.frame.standard;
 
-import java.time.LocalDateTime;
-
 import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.protocol.tic.frame.TICFrame;
+import java.time.LocalDateTime;
 
-/**
- * TIC frame standard
- */
-public class TICFrameStandard extends TICFrame
-{
-	/** Begin info group */
-	public static final byte	INFOGROUP_BEGIN		= 0x03;						// LF
-	/** End info group */
-	public static final byte	INFOGROUP_END		= 0x03;						// CR
-	/** Sep info group */
-	public static final byte	INFOGROUP_SEP		= 0x03;						// HT
+/** TIC frame standard */
+public class TICFrameStandard extends TICFrame {
+  /** Begin info group */
+  public static final byte INFOGROUP_BEGIN = 0x03; // LF
 
-	/** Min size info group */
-	public static final int		INFOGROUP_MIN_SIZE	= 7;						// LF + Label + HT + Data + HT +
-	/** MIN_SIZE */
-	public static final int		MIN_SIZE			= INFOGROUP_MIN_SIZE + 2;	// ETX + INFGROUP_MIN_SIZE + STX
+  /** End info group */
+  public static final byte INFOGROUP_END = 0x03; // CR
 
-	/**
-	 * Default constructor
-	 */
-	public TICFrameStandard()
-	{
-		super();
-	}
+  /** Sep info group */
+  public static final byte INFOGROUP_SEP = 0x03; // HT
 
-	@Override
-	public TICFrameStandardDataSet addDataSet(String label, String data)
-	{
-		TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
+  /** Min size info group */
+  public static final int INFOGROUP_MIN_SIZE = 7; // LF + Label + HT + Data + HT +
 
-		if (dataSet == null)
-		{
-			dataSet = new TICFrameStandardDataSet();
-			dataSet.setLabel(label);
-			dataSet.setData(data);
-			dataSet.getConsistentChecksum();
-		}
+  /** MIN_SIZE */
+  public static final int MIN_SIZE = INFOGROUP_MIN_SIZE + 2; // ETX + INFGROUP_MIN_SIZE + STX
 
-		else
-		{
-			dataSet.setData(data);
-			dataSet.getConsistentChecksum();
-		}
+  /** Default constructor */
+  public TICFrameStandard() {
+    super();
+  }
 
-		this.DataSetList.add(dataSet);
+  @Override
+  public TICFrameStandardDataSet addDataSet(String label, String data) {
+    TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
 
-		return dataSet;
-	}
+    if (dataSet == null) {
+      dataSet = new TICFrameStandardDataSet();
+      dataSet.setLabel(label);
+      dataSet.setData(data);
+      dataSet.getConsistentChecksum();
+    } else {
+      dataSet.setData(data);
+      dataSet.getConsistentChecksum();
+    }
 
-	@Override
-	public TICFrameStandardDataSet addDataSet(int index, String label, String data)
-	{
-		TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
+    this.DataSetList.add(dataSet);
 
-		if (dataSet == null)
-		{
-			dataSet = new TICFrameStandardDataSet();
-			dataSet.setLabel(label);
-			dataSet.setData(data);
-			dataSet.getConsistentChecksum();
+    return dataSet;
+  }
 
-			if ((index >= 0) && (index < this.DataSetList.size()))
-			{
-				this.DataSetList.add(index, dataSet);
-			}
+  @Override
+  public TICFrameStandardDataSet addDataSet(int index, String label, String data) {
+    TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
 
-			else
-			{
-				this.DataSetList.add(dataSet);
-			}
-		}
+    if (dataSet == null) {
+      dataSet = new TICFrameStandardDataSet();
+      dataSet.setLabel(label);
+      dataSet.setData(data);
+      dataSet.getConsistentChecksum();
 
-		else
-		{
-			dataSet.setData(data);
-			dataSet.getConsistentChecksum();
+      if ((index >= 0) && (index < this.DataSetList.size())) {
+        this.DataSetList.add(index, dataSet);
+      } else {
+        this.DataSetList.add(dataSet);
+      }
+    } else {
+      dataSet.setData(data);
+      dataSet.getConsistentChecksum();
 
-			this.DataSetList.remove(dataSet);
+      this.DataSetList.remove(dataSet);
 
-			if (index >= this.DataSetList.size())
-			{
-				this.DataSetList.add(dataSet);
-			}
+      if (index >= this.DataSetList.size()) {
+        this.DataSetList.add(dataSet);
+      } else {
+        this.DataSetList.add(index, dataSet);
+      }
+    }
 
-			else
-			{
-				this.DataSetList.add(index, dataSet);
-			}
-		}
+    return dataSet;
+  }
 
-		return dataSet;
-	}
+  @Override
+  public TICMode getMode() {
+    return TICMode.STANDARD;
+  }
 
-	@Override
-	public TICMode getMode()
-	{
-		return TICMode.STANDARD;
-	}
+  @Override
+  public String getData(String label) {
+    TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
 
-	@Override
-	public String getData(String label)
-	{
-		TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
+    if (dataSet != null) {
+      if (dataSet.getLabel().equals("DATE")) {
+        return dataSet.getDateTime();
+      } else {
+        return dataSet.getData();
+      }
+    } else {
+      return null;
+    }
+  }
 
-		if (dataSet != null)
-		{
-			if (dataSet.getLabel().equals("DATE"))
-			{
-				return dataSet.getDateTime();
-			}
-			else
-			{
-				return dataSet.getData();
-			}
-		}
+  /**
+   * Add data set
+   *
+   * @param label
+   * @param data
+   * @param dateTime
+   * @return the added data set
+   */
+  public TICFrameStandardDataSet addDataSet(String label, String data, String dateTime) {
+    TICFrameStandardDataSet dataSet = this.addDataSet(label, data);
 
-		else
-		{
-			return null;
-		}
-	}
+    dataSet.setDateTime(dateTime);
 
-	/**
-	 * Add data set
-	 *
-	 * @param label
-	 * @param data
-	 * @param dateTime
-	 * @return the added data set
-	 */
-	public TICFrameStandardDataSet addDataSet(String label, String data, String dateTime)
-	{
-		TICFrameStandardDataSet dataSet = this.addDataSet(label, data);
+    return dataSet;
+  }
 
-		dataSet.setDateTime(dateTime);
+  /**
+   * Get string datetime
+   *
+   * @param label
+   * @return string datetime
+   */
+  public String getDateTime(String label) {
+    TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
+    if (dataSet != null) {
+      return dataSet.getDateTime();
+    } else {
+      return null;
+    }
+  }
 
-		return dataSet;
-	}
-
-	/**
-	 * Get string datetime
-	 *
-	 * @param label
-	 * @return string datetime
-	 */
-	public String getDateTime(String label)
-	{
-		TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
-		if (dataSet != null)
-		{
-			return dataSet.getDateTime();
-		}
-		else
-		{
-			return null;
-		}
-	}
-
-	/**
-	 * Get date time as localDateTime
-	 *
-	 * @param label
-	 * @return LocalDateTime
-	 */
-	public LocalDateTime getDateTimeAsLocalDateTime(String label)
-	{
-		TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
-		if (dataSet != null)
-		{
-			return dataSet.getDateTimeAsLocalDateTime();
-		}
-		else
-		{
-			return null;
-		}
-	}
-
+  /**
+   * Get date time as localDateTime
+   *
+   * @param label
+   * @return LocalDateTime
+   */
+  public LocalDateTime getDateTimeAsLocalDateTime(String label) {
+    TICFrameStandardDataSet dataSet = (TICFrameStandardDataSet) this.getDataSet(label);
+    if (dataSet != null) {
+      return dataSet.getDateTimeAsLocalDateTime();
+    } else {
+      return null;
+    }
+  }
 }

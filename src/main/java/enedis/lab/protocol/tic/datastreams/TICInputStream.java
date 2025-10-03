@@ -20,162 +20,139 @@ import enedis.lab.types.DataDictionary;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.DataDictionaryBase;
 
-/**
- * TIC input stream
- */
-public class TICInputStream extends DataInputStream
-{
-	/** Key timestamp */
-	public static final String	KEY_TIMESTAMP	= "timestamp";
-	/** Key channel */
-	public static final String	KEY_CHANNEL		= "channel";
-	/** Key data */
-	public static final String	KEY_DATA		= "data";
+/** TIC input stream */
+public class TICInputStream extends DataInputStream {
+  /** Key timestamp */
+  public static final String KEY_TIMESTAMP = "timestamp";
 
-	protected TICCodec			codec;
+  /** Key channel */
+  public static final String KEY_CHANNEL = "channel";
 
-	/**
-	 * Constructor using configuration
-	 *
-	 * @param configuration
-	 * @throws DataStreamException
-	 */
-	public TICInputStream(TICStreamConfiguration configuration) throws DataStreamException
-	{
-		super(configuration);
-		this.codec = new TICCodec();
-		this.codec.setCurrentMode(configuration.getTicMode());
-	}
+  /** Key data */
+  public static final String KEY_DATA = "data";
 
-	@Override
-	public DataDictionary read() throws DataStreamException
-	{
-		return null;
-	}
+  protected TICCodec codec;
 
-	@Override
-	public DataStreamType getType()
-	{
-		return DataStreamType.TIC;
-	}
+  /**
+   * Constructor using configuration
+   *
+   * @param configuration
+   * @throws DataStreamException
+   */
+  public TICInputStream(TICStreamConfiguration configuration) throws DataStreamException {
+    super(configuration);
+    this.codec = new TICCodec();
+    this.codec.setCurrentMode(configuration.getTicMode());
+  }
 
-	@Override
-	public void onDataRead(String channelName, byte[] data)
-	{
-		if (!this.notifier.getSubscribers().isEmpty())
-		{
-			DataDictionary ticFrame = null;
-			try
-			{
-				ticFrame = this.decodeTICFrame(data);
-				if (ticFrame != null)
-				{
-					this.notifyOnDataReceived(ticFrame);
-				}
-			}
-			catch (DataDictionaryException exception)
-			{
-				this.logger.error(exception.getMessage(), exception);
-			}
-			catch (CodecException exception)
-			{
-				DataDictionaryBase errorDataDictionary = new DataDictionaryBase();
+  @Override
+  public DataDictionary read() throws DataStreamException {
+    return null;
+  }
 
-				String KEY_PARTIAL_FRAME = "partialTICFrame";
+  @Override
+  public DataStreamType getType() {
+    return DataStreamType.TIC;
+  }
 
-				errorDataDictionary.addKey(KEY_PARTIAL_FRAME);
+  @Override
+  public void onDataRead(String channelName, byte[] data) {
+    if (!this.notifier.getSubscribers().isEmpty()) {
+      DataDictionary ticFrame = null;
+      try {
+        ticFrame = this.decodeTICFrame(data);
+        if (ticFrame != null) {
+          this.notifyOnDataReceived(ticFrame);
+        }
+      } catch (DataDictionaryException exception) {
+        this.logger.error(exception.getMessage(), exception);
+      } catch (CodecException exception) {
+        DataDictionaryBase errorDataDictionary = new DataDictionaryBase();
 
-				try 
-				{
-					Object exceptionData = exception.getData();
-					if (exceptionData != null && exceptionData instanceof TICFrame)
-					{
-						try 
-						{
-							DataDictionary frameDataDictionary = ((TICFrame) exceptionData).getDataDictionary();
-							if (frameDataDictionary != null) 
-							{
-								errorDataDictionary.set(KEY_PARTIAL_FRAME, frameDataDictionary);
-							}
-							else
-							{
-								this.logger.warn("Frame data dictionary is null");
-								errorDataDictionary.set(KEY_PARTIAL_FRAME, "");
-							}
-						} 
-						catch (DataDictionaryException frameDataDictionaryException)
-						{
-							this.logger.warn("Can't get TICFrame data dictionary: " + frameDataDictionaryException.getMessage());
-							errorDataDictionary.set(KEY_PARTIAL_FRAME, "");
-						}
-					}
-					else
-					{
-						this.logger.error("No frame data available");
-						errorDataDictionary.set(KEY_PARTIAL_FRAME, "");
-					}
-				}
-				catch (DataDictionaryException dataDictionaryException)
-				{
-					this.logger.error("Can't convert TICFrame to DataDictonary" + dataDictionaryException.getMessage());
-				}
+        String KEY_PARTIAL_FRAME = "partialTICFrame";
 
-				this.logger.error(exception.getMessage() + errorDataDictionary.toString());
-				this.onErrorDetected(channelName, TICError.TIC_READER_READ_FRAME_CHECKSUM_INVALID.getValue(), exception.getMessage(), errorDataDictionary);
-			}
-		}
-	}
+        errorDataDictionary.addKey(KEY_PARTIAL_FRAME);
 
-	@Override
-	public void onDataWritten(String channelName, byte[] data)
-	{
-		// Not used
-	}
+        try {
+          Object exceptionData = exception.getData();
+          if (exceptionData != null && exceptionData instanceof TICFrame) {
+            try {
+              DataDictionary frameDataDictionary = ((TICFrame) exceptionData).getDataDictionary();
+              if (frameDataDictionary != null) {
+                errorDataDictionary.set(KEY_PARTIAL_FRAME, frameDataDictionary);
+              } else {
+                this.logger.warn("Frame data dictionary is null");
+                errorDataDictionary.set(KEY_PARTIAL_FRAME, "");
+              }
+            } catch (DataDictionaryException frameDataDictionaryException) {
+              this.logger.warn(
+                  "Can't get TICFrame data dictionary: "
+                      + frameDataDictionaryException.getMessage());
+              errorDataDictionary.set(KEY_PARTIAL_FRAME, "");
+            }
+          } else {
+            this.logger.error("No frame data available");
+            errorDataDictionary.set(KEY_PARTIAL_FRAME, "");
+          }
+        } catch (DataDictionaryException dataDictionaryException) {
+          this.logger.error(
+              "Can't convert TICFrame to DataDictonary" + dataDictionaryException.getMessage());
+        }
 
-	@Override
-	public void onErrorDetected(String channelName, int errorCode, String errorMessage)
-	{
-		this.notifyOnErrorDetected(errorCode, errorMessage, null);
-	}
+        this.logger.error(exception.getMessage() + errorDataDictionary.toString());
+        this.onErrorDetected(
+            channelName,
+            TICError.TIC_READER_READ_FRAME_CHECKSUM_INVALID.getValue(),
+            exception.getMessage(),
+            errorDataDictionary);
+      }
+    }
+  }
 
-	@Override
-	public void onErrorDetected(String channelName, int errorCode, String errorMessage, DataDictionary errorData)
-	{
-		this.notifyOnErrorDetected(errorCode, errorMessage, errorData);
-	}
-	/**
-	 * Get Mode
-	 *
-	 * @return TIC Mode
-	 */
-	public TICMode getMode()
-	{
-		ChannelTICSerialPort channelTIC = (ChannelTICSerialPort) this.channel;
+  @Override
+  public void onDataWritten(String channelName, byte[] data) {
+    // Not used
+  }
 
-		return channelTIC.getMode();
-	}
+  @Override
+  public void onErrorDetected(String channelName, int errorCode, String errorMessage) {
+    this.notifyOnErrorDetected(errorCode, errorMessage, null);
+  }
 
-	protected DataDictionary decodeTICFrame(byte[] data) throws DataDictionaryException, CodecException
-	{
-		TICFrame ticFrame;
-		try
-		{
-			ticFrame = this.codec.decode(data);
-		}
-		catch (CodecException exception)
-		{
-			throw new CodecException(exception.getMessage(), exception.getData());
-		}
+  @Override
+  public void onErrorDetected(
+      String channelName, int errorCode, String errorMessage, DataDictionary errorData) {
+    this.notifyOnErrorDetected(errorCode, errorMessage, errorData);
+  }
 
-		long timestamp = System.currentTimeMillis();
+  /**
+   * Get Mode
+   *
+   * @return TIC Mode
+   */
+  public TICMode getMode() {
+    ChannelTICSerialPort channelTIC = (ChannelTICSerialPort) this.channel;
 
-		DataDictionaryBase decodedTICFrame = new DataDictionaryBase();
+    return channelTIC.getMode();
+  }
 
-		decodedTICFrame.set(KEY_TIMESTAMP, timestamp);
-		decodedTICFrame.set(KEY_CHANNEL, this.getConfiguration().getChannelName());
-		decodedTICFrame.set(KEY_DATA, ticFrame);
+  protected DataDictionary decodeTICFrame(byte[] data)
+      throws DataDictionaryException, CodecException {
+    TICFrame ticFrame;
+    try {
+      ticFrame = this.codec.decode(data);
+    } catch (CodecException exception) {
+      throw new CodecException(exception.getMessage(), exception.getData());
+    }
 
-		return decodedTICFrame;
-	}
+    long timestamp = System.currentTimeMillis();
 
+    DataDictionaryBase decodedTICFrame = new DataDictionaryBase();
+
+    decodedTICFrame.set(KEY_TIMESTAMP, timestamp);
+    decodedTICFrame.set(KEY_CHANNEL, this.getConfiguration().getChannelName());
+    decodedTICFrame.set(KEY_DATA, ticFrame);
+
+    return decodedTICFrame;
+  }
 }

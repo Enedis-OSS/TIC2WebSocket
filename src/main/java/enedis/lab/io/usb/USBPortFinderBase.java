@@ -123,5 +123,4 @@ public class USBPortFinderBase implements USBPortFinder {
     LibUsb.exit(context);
     return usbPortList;
   }
-
 }

@@ -10,76 +10,54 @@ package enedis.lab.protocol.tic.frame.historic;
 import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.protocol.tic.frame.TICFrame;
 
-/**
- * TIC frame historic
- */
-public class TICFrameHistoric extends TICFrame
-{
-	/** Separator */
-	public static final byte SEPARATOR = 0x20; // SP
+/** TIC frame historic */
+public class TICFrameHistoric extends TICFrame {
+  /** Separator */
+  public static final byte SEPARATOR = 0x20; // SP
 
-	/**
-	 * Default constructor
-	 */
-	public TICFrameHistoric()
-	{
-		super();
-	}
+  /** Default constructor */
+  public TICFrameHistoric() {
+    super();
+  }
 
-	@Override
-	public TICFrameHistoricDataSet addDataSet(String label, String data)
-	{
-		return this.addDataSet(this.DataSetList.size(), label, data);
-	}
+  @Override
+  public TICFrameHistoricDataSet addDataSet(String label, String data) {
+    return this.addDataSet(this.DataSetList.size(), label, data);
+  }
 
-	@Override
-	public TICFrameHistoricDataSet addDataSet(int index, String label, String data)
-	{
-		TICFrameHistoricDataSet dataSet = (TICFrameHistoricDataSet) this.getDataSet(label);
+  @Override
+  public TICFrameHistoricDataSet addDataSet(int index, String label, String data) {
+    TICFrameHistoricDataSet dataSet = (TICFrameHistoricDataSet) this.getDataSet(label);
 
-		if (dataSet == null)
-		{
-			dataSet = new TICFrameHistoricDataSet();
-			dataSet.setLabel(label);
-			dataSet.setData(data);
-			dataSet.getConsistentChecksum();
+    if (dataSet == null) {
+      dataSet = new TICFrameHistoricDataSet();
+      dataSet.setLabel(label);
+      dataSet.setData(data);
+      dataSet.getConsistentChecksum();
 
-			if ((index >= 0) && (index < this.DataSetList.size()))
-			{
-				this.DataSetList.add(index, dataSet);
-			}
+      if ((index >= 0) && (index < this.DataSetList.size())) {
+        this.DataSetList.add(index, dataSet);
+      } else {
+        this.DataSetList.add(dataSet);
+      }
+    } else {
+      dataSet.setData(data);
+      dataSet.getConsistentChecksum();
 
-			else
-			{
-				this.DataSetList.add(dataSet);
-			}
-		}
+      this.DataSetList.remove(dataSet);
 
-		else
-		{
-			dataSet.setData(data);
-			dataSet.getConsistentChecksum();
+      if (index >= this.DataSetList.size()) {
+        this.DataSetList.add(dataSet);
+      } else {
+        this.DataSetList.add(index, dataSet);
+      }
+    }
 
-			this.DataSetList.remove(dataSet);
+    return dataSet;
+  }
 
-			if (index >= this.DataSetList.size())
-			{
-				this.DataSetList.add(dataSet);
-			}
-
-			else
-			{
-				this.DataSetList.add(index, dataSet);
-			}
-		}
-
-		return dataSet;
-	}
-
-	@Override
-	public TICMode getMode()
-	{
-		return TICMode.HISTORIC;
-	}
-
+  @Override
+  public TICMode getMode() {
+    return TICMode.HISTORIC;
+  }
 }

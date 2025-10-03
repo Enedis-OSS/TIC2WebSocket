@@ -119,5 +119,4 @@ public class TICPortFinderBase implements TICPortFinder {
 
     return ticPortDescriptor;
   }
-
 }

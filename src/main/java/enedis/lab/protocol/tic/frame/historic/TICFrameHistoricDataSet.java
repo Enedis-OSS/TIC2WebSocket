@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -7,129 +7,104 @@
 
 package enedis.lab.protocol.tic.frame.historic;
 
-import org.json.JSONObject;
-
 import enedis.lab.protocol.tic.frame.TICFrame;
 import enedis.lab.protocol.tic.frame.TICFrameDataSet;
 import enedis.lab.types.BytesArray;
+import org.json.JSONObject;
 
-/**
- * TIC frame historic data set
- */
-public class TICFrameHistoricDataSet extends TICFrameDataSet
-{
-	/** Separator */
-	public static final byte SEPARATOR = 0x20; // SP
+/** TIC frame historic data set */
+public class TICFrameHistoricDataSet extends TICFrameDataSet {
+  /** Separator */
+  public static final byte SEPARATOR = 0x20; // SP
 
-	/**
-	 * Constructor
-	 */
-	public TICFrameHistoricDataSet()
-	{
-		super();
-	}
+  /** Constructor */
+  public TICFrameHistoricDataSet() {
+    super();
+  }
 
-	@Override
-	public Byte getConsistentChecksum()
-	{
-		Byte crc = 0;
-		byte[] labelByte;
-		byte[] dataByte;
-		if ((this.label != null) && (this.data != null))
-		{
-			labelByte = this.label.getBytes();
-			for (int i = 0; i < labelByte.length; i++)
-			{
-				crc = this.computeUpdate(crc, labelByte[i]);
-			}
+  @Override
+  public Byte getConsistentChecksum() {
+    Byte crc = 0;
+    byte[] labelByte;
+    byte[] dataByte;
+    if ((this.label != null) && (this.data != null)) {
+      labelByte = this.label.getBytes();
+      for (int i = 0; i < labelByte.length; i++) {
+        crc = this.computeUpdate(crc, labelByte[i]);
+      }
 
-			crc = this.computeUpdate(crc, SEPARATOR);
-			dataByte = this.data.getBytes();
+      crc = this.computeUpdate(crc, SEPARATOR);
+      dataByte = this.data.getBytes();
 
-			for (int i = 0; i < dataByte.length; i++)
-			{
-				crc = this.computeUpdate(crc, dataByte[i]);
-			}
+      for (int i = 0; i < dataByte.length; i++) {
+        crc = this.computeUpdate(crc, dataByte[i]);
+      }
 
-			return this.computeEnd(crc);
-		}
-		else
-		{
-			return null;
-		}
+      return this.computeEnd(crc);
+    } else {
+      return null;
+    }
+  }
 
-	}
+  /**
+   * compute Update
+   *
+   * @param crc
+   * @param octet
+   * @return Byte crc after compute update
+   */
+  public Byte computeUpdate(Byte crc, byte octet) {
+    return (byte) (crc + (octet & 0xff));
+  }
 
-	/**
-	 * compute Update
-	 *
-	 * @param crc
-	 * @param octet
-	 * @return Byte crc after compute update
-	 */
-	public Byte computeUpdate(Byte crc, byte octet)
-	{
-		return (byte) (crc + (octet & 0xff));
-	}
+  /**
+   * compute End
+   *
+   * @param crc
+   * @return Byte crc after compute end
+   */
+  public Byte computeEnd(Byte crc) {
+    return (byte) ((crc & 0x3F) + 0x20);
+  }
 
-	/**
-	 * compute End
-	 *
-	 * @param crc
-	 * @return Byte crc after compute end
-	 */
-	public Byte computeEnd(Byte crc)
-	{
-		return (byte) ((crc & 0x3F) + 0x20);
-	}
+  @Override
+  public byte[] getBytes() {
+    BytesArray dataSet = new BytesArray();
 
-	@Override
-	public byte[] getBytes()
-	{
-		BytesArray dataSet = new BytesArray();
+    if ((this.label != null) && (this.data != null)) {
+      dataSet.add(BEGINNING_PATTERN);
+      dataSet.addAll(this.label.getBytes());
 
-		if ((this.label != null) && (this.data != null))
-		{
-			dataSet.add(BEGINNING_PATTERN);
-			dataSet.addAll(this.label.getBytes());
+      dataSet.add(SEPARATOR);
+      dataSet.addAll(this.data.getBytes());
 
-			dataSet.add(SEPARATOR);
-			dataSet.addAll(this.data.getBytes());
+      dataSet.add(SEPARATOR);
+      dataSet.add(this.checksum);
 
-			dataSet.add(SEPARATOR);
-			dataSet.add(this.checksum);
+      dataSet.add(END_PATTERN);
+    }
 
-			dataSet.add(END_PATTERN);
-		}
+    return dataSet.getBytes();
+  }
 
-		return dataSet.getBytes();
-	}
+  @Override
+  public JSONObject toJSON() {
+    return this.toJSON(TICFrame.TRIMMED);
+  }
 
-	@Override
-	public JSONObject toJSON()
-	{
-		return this.toJSON(TICFrame.TRIMMED);
-	}
+  @Override
+  public JSONObject toJSON(int option) {
+    JSONObject jsonObject = new JSONObject();
 
-	@Override
-	public JSONObject toJSON(int option)
-	{
-		JSONObject jsonObject = new JSONObject();
+    if ((option & TICFrame.NOCHECKSUM) > 0) {
+      jsonObject.put(new String(this.label.getBytes()), new String(this.data.getBytes()));
+    } else {
+      JSONObject content = new JSONObject();
+      content.put(TICFrame.KEY_DATA, new String(this.data.getBytes()));
+      content.put(TICFrame.KEY_CHECKSUM, this.checksum);
+      jsonObject.put(new String(this.label.getBytes()), content);
+    }
 
-		if ((option & TICFrame.NOCHECKSUM) > 0)
-		{
-			jsonObject.put(new String(this.label.getBytes()), new String(this.data.getBytes()));
-		}
-
-		else
-		{
-			JSONObject content = new JSONObject();
-			content.put(TICFrame.KEY_DATA, new String(this.data.getBytes()));
-			content.put(TICFrame.KEY_CHECKSUM, this.checksum);
-			jsonObject.put(new String(this.label.getBytes()), content);
-		}
-
-		return jsonObject;
-	}
-
+    return jsonObject;
+  }
 }

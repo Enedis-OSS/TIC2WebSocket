@@ -64,5 +64,4 @@ public class TICPortPlugNotifier extends PortPlugNotifier<TICPortFinder, TICPort
   public TICPortPlugNotifier(long period, TICPortFinder finder) {
     super(period, finder);
   }
-
 }
