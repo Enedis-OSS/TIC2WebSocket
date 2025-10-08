@@ -11,10 +11,21 @@ import java.util.Collection;
 import java.util.function.Predicate;
 
 /**
- * Notifier interface with filter
+ * Interface for managing filtered notifications to subscribers.
  *
- * @param <F> the filter
- * @param <T> the subscriber
+ * <p>This interface defines methods for subscribing, unsubscribing, and querying subscribers
+ * with associated filters. It supports flexible event delivery and observer patterns.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Selective event delivery based on filters</li>
+ *   <li>Managing filtered lists of subscribers</li>
+ *   <li>Supporting custom notification logic</li>
+ * </ul>
+ *
+ * @param <F> the filter type
+ * @param <T> the subscriber type
+ * @author Enedis Smarties team
  */
 public interface FilteredNotifier<F, T extends Subscriber> extends Notifier<T> {
   /**

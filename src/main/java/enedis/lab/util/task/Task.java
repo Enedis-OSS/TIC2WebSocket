@@ -7,7 +7,21 @@
 
 package enedis.lab.util.task;
 
-/** Task interface */
+/**
+ * Interface representing a generic asynchronous task.
+ *
+ * <p>This interface defines the contract for executing tasks, typically in a concurrent or event-driven
+ * environment. Implementations may represent background jobs, scheduled actions, or event handlers.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Running background operations</li>
+ *   <li>Scheduling periodic or delayed actions</li>
+ *   <li>Handling events or notifications</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ */
 public interface Task {
   /** Start task */
   public void start();

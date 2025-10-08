@@ -11,7 +11,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/** Time implementation */
+/**
+ * Utility class providing time-related constants and helper methods.
+ *
+ * <p>This class offers constants for time units and static methods for sleeping, formatting timestamps,
+ * and decorating messages with timestamps. It is designed for general-purpose time management and formatting.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Sleeping for a specified duration</li>
+ *   <li>Formatting timestamps as date/time strings</li>
+ *   <li>Decorating log messages with current date/time</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ */
 public abstract class Time {
   /** Millisecond */
   public static final int MILLISECOND = 1;

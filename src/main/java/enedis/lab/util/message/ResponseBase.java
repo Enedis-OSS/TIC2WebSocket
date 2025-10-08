@@ -18,9 +18,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ResponseBase class
+ * Concrete base class for response messages with data payload.
  *
- * <p>Generated
+ * <p>This class extends {@link Response} to provide support for a data payload field, enabling
+ * responses to carry additional structured data. It is used for responses that require more
+ * complex content beyond basic status and error reporting.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Returning structured data in response to client requests</li>
+ *   <li>Supporting extensible response formats</li>
+ *   <li>Providing a base for custom response types with data</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see Response
  */
 public class ResponseBase extends Response {
   protected static final String KEY_DATA = "data";

@@ -12,9 +12,20 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
- * Notifier with subscribers basic implementation
+ * Generic base implementation for managing subscribers and sending notifications.
+ *
+ * <p>This class provides mechanisms for adding, removing, and querying subscribers. It is used as a
+ * foundation for event-driven and observer patterns, supporting flexible notification delivery.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Managing lists of listeners or observers</li>
+ *   <li>Sending notifications to registered subscribers</li>
+ *   <li>Extending for custom notification logic</li>
+ * </ul>
  *
  * @param <T> the subscriber type
+ * @author Enedis Smarties team
  */
 public class NotifierBase<T extends Subscriber> implements Notifier<T> {
   protected Set<T> subscribers;

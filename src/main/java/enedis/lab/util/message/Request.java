@@ -15,9 +15,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Request class
+ * Abstract base class for request messages.
  *
- * <p>Generated
+ * <p>This class represents request messages. It enforces the accepted message type and provides support for request-specific
+ * fields. Subclasses can define additional request data and behavior.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Representing client requests for data or actions</li>
+ *   <li>Handling request validation and processing</li>
+ *   <li>Extending for custom request types</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see Message
  */
 public abstract class Request extends Message {
   private static final MessageType TYPE_ACCEPTED_VALUE = MessageType.REQUEST;

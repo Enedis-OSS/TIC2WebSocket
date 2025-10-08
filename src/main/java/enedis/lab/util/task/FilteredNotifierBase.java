@@ -17,10 +17,22 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Predicate;
 
 /**
- * Filtered notifier with subscribers basic implementation
+ * Generic base implementation for managing filtered notifications to subscribers.
+ *
+ * <p>This class provides mechanisms for subscribing, unsubscribing, and querying subscribers
+ * with associated filters. It supports both filtered and unfiltered (global) subscriptions,
+ * enabling flexible event delivery and observer patterns.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Delivering events to subscribers that match specific filters</li>
+ *   <li>Supporting selective notification in observer patterns</li>
+ *   <li>Extending for custom filtering logic</li>
+ * </ul>
  *
  * @param <F> the filter type
  * @param <T> the subscriber type
+ * @author Enedis Smarties team
  */
 public class FilteredNotifierBase<F, T extends Subscriber> implements FilteredNotifier<F, T> {
   protected Map<F, Collection<T>> subscribersFiltered;

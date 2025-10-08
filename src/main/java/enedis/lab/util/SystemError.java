@@ -11,7 +11,21 @@ import com.sun.jna.Native;
 import com.sun.jna.platform.win32.Kernel32Util;
 import org.apache.commons.lang3.SystemUtils;
 
-/** Class for system error */
+/**
+ * Utility class for retrieving system error codes and messages.
+ *
+ * <p>This class provides static methods to obtain the last system error code and its associated message,
+ * supporting multiple operating systems. It is designed for general-purpose error handling and diagnostics.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Retrieving the last system error code</li>
+ *   <li>Obtaining human-readable error messages</li>
+ *   <li>Supporting cross-platform error diagnostics</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ */
 public class SystemError {
   /**
    * Get system last error code

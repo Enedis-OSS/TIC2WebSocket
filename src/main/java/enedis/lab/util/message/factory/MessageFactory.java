@@ -15,23 +15,50 @@ import enedis.lab.util.message.exception.MessageKeyNameDoesntExistException;
 import enedis.lab.util.message.exception.MessageKeyTypeDoesntExistException;
 import enedis.lab.util.message.exception.UnsupportedMessageException;
 
-/** Message factory */
+/**
+ * Central factory for decoding and dispatching messages in the TIC2WebSocket framework.
+ *
+ * <p>This class coordinates the decoding of messages by delegating to specialized sub-factories
+ * for requests, responses, and events. It parses the message type and name, then dispatches to
+ * the appropriate factory for further decoding and validation.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Decoding incoming JSON messages into typed objects</li>
+ *   <li>Coordinating request, response, and event message handling</li>
+ *   <li>Supporting extensible message processing pipelines</li>
+ *   <li>Managing sub-factory references for modularity</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see BasicMessageFactory
+ * @see RequestFactory
+ * @see ResponseFactory
+ * @see EventFactory
+ */
 public class MessageFactory {
   private RequestFactory requestFactory;
   private ResponseFactory responseFactory;
   private EventFactory eventFactory;
 
-  /** Default constructor */
+  /**
+   * Creates a new MessageFactory with no sub-factories set.
+   *
+   * <p>Sub-factories must be set before decoding messages.
+   */
   public MessageFactory() {
     super();
   }
 
   /**
-   * Constructor using field
+   * Creates a new MessageFactory with the specified sub-factories.
    *
-   * @param requestFactory
-   * @param responseFactory
-   * @param eventFactory
+   * <p>This constructor initializes the factory with request, response, and event sub-factories
+   * for coordinated message decoding.
+   *
+   * @param requestFactory the factory for decoding request messages
+   * @param responseFactory the factory for decoding response messages
+   * @param eventFactory the factory for decoding event messages
    */
   public MessageFactory(
       RequestFactory requestFactory, ResponseFactory responseFactory, EventFactory eventFactory) {
@@ -42,16 +69,20 @@ public class MessageFactory {
   }
 
   /**
-   * Get message from String
+   * Decodes and dispatches a message from its text representation.
    *
-   * @param text
-   * @return message
-   * @throws MessageInvalidTypeException
-   * @throws MessageKeyNameDoesntExistException
-   * @throws MessageKeyTypeDoesntExistException
-   * @throws MessageInvalidFormatException
-   * @throws MessageInvalidContentException
-   * @throws UnsupportedMessageException
+   * <p>This method parses the provided text (typically JSON), determines the message type, and
+   * delegates decoding to the appropriate sub-factory. It throws specific exceptions for unsupported
+   * message types, invalid formats, or missing keys.
+   *
+   * @param text the text representation of the message (usually JSON)
+   * @return the decoded message object
+   * @throws MessageInvalidTypeException if the message type is invalid or unsupported
+   * @throws MessageKeyNameDoesntExistException if the message name key is missing
+   * @throws MessageKeyTypeDoesntExistException if the message type key is missing
+   * @throws MessageInvalidFormatException if the message format is invalid (e.g., malformed JSON)
+   * @throws MessageInvalidContentException if the message content fails validation
+   * @throws UnsupportedMessageException if the message type is not registered or supported
    */
   public Message getMessage(String text)
       throws MessageInvalidFormatException,
@@ -85,27 +116,27 @@ public class MessageFactory {
   }
 
   /**
-   * Set request factory
+   * Sets the request sub-factory for decoding request messages.
    *
-   * @param requestFactory
+   * @param requestFactory the factory for decoding request messages
    */
   public void setRequestFactory(RequestFactory requestFactory) {
     this.requestFactory = requestFactory;
   }
 
   /**
-   * Set response factory
+   * Sets the response sub-factory for decoding response messages.
    *
-   * @param responseFactory
+   * @param responseFactory the factory for decoding response messages
    */
   public void setResponseFactory(ResponseFactory responseFactory) {
     this.responseFactory = responseFactory;
   }
 
   /**
-   * Set event factory
+   * Sets the event sub-factory for decoding event messages.
    *
-   * @param eventFactory
+   * @param eventFactory the factory for decoding event messages
    */
   public void setEventFactory(EventFactory eventFactory) {
     this.eventFactory = eventFactory;
