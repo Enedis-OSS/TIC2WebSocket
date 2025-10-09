@@ -11,37 +11,66 @@ import enedis.tic.service.endpoint.EventSender;
 import io.netty.channel.Channel;
 import java.util.Optional;
 
-/** TIC2WebSocket client pool interface */
+/**
+ * Pool interface for managing TIC2WebSocketClient instances.
+ *
+ * <p>This interface defines methods for creating, retrieving, checking, and removing {@link
+ * TIC2WebSocketClient} objects associated with Netty WebSocket channels. It provides centralized
+ * management of client lifecycles and lookup by channel identifier.
+ *
+ * <p>Key features include:
+ *
+ * <ul>
+ *   <li>Client creation and registration
+ *   <li>Client lookup by channel ID
+ *   <li>Existence checks for active clients
+ *   <li>Client removal and cleanup
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see TIC2WebSocketClient
+ * @see Channel
+ * @see EventSender
+ */
 public interface TIC2WebSocketClientPool {
   /**
-   * Get client from channel id
+   * Retrieves the client associated with the specified channel ID.
    *
-   * @param channelId
-   * @return client
+   * <p>Returns an {@link Optional} containing the client if found, or empty if no client exists for
+   * the given channel ID.
+   *
+   * @param channelId the unique identifier of the WebSocket channel
+   * @return an Optional containing the client, or empty if not found
    */
-  public Optional<TIC2WebSocketClient> getClient(String channelId);
+  Optional<TIC2WebSocketClient> getClient(String channelId);
 
   /**
-   * Check if a client with the given channel id exists
+   * Checks if a client exists for the specified channel ID.
    *
-   * @param channelId
-   * @return true if a client with the given channel id exists
+   * <p>Returns true if a client is registered for the given channel ID, false otherwise.
+   *
+   * @param channelId the unique identifier of the WebSocket channel
+   * @return true if a client exists, false otherwise
    */
-  public boolean exists(String channelId);
+  boolean exists(String channelId);
 
   /**
-   * Create a new client
+   * Creates and registers a new client for the specified channel and event sender.
    *
-   * @param channel
-   * @param sender
-   * @return new client
+   * <p>Initializes a new {@link TIC2WebSocketClient} and associates it with the given channel.
+   *
+   * @param channel the Netty WebSocket channel for communication
+   * @param sender the event sender responsible for dispatching events
+   * @return the newly created client instance
    */
-  public TIC2WebSocketClient createClient(Channel channel, EventSender sender);
+  TIC2WebSocketClient createClient(Channel channel, EventSender sender);
 
   /**
-   * Remove client with the given channel id
+   * Removes the client associated with the specified channel ID.
    *
-   * @param channelId
+   * <p>Unregisters and cleans up the client for the given channel ID, if present.
+   *
+   * @param channelId the unique identifier of the WebSocket channel
    */
-  public void remove(String channelId);
+  void remove(String channelId);
 }
