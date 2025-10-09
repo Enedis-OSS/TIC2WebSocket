@@ -17,9 +17,19 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TICIdentifier class
+ * Class representing a core identifier with port ID, port name, and serial number.
  *
- * <p>Generated
+ * <p>This class provides mechanisms for constructing, accessing, and managing identifier information
+ * including port IDs, port names, and serial numbers. It is designed for general-purpose identifier handling.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Representing identifiers with structured data</li>
+ *   <li>Matching identifiers for streams and devices</li>
+ *   <li>Managing port and serial information</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
  */
 public class TICIdentifier extends DataDictionaryBase {
   protected static final String KEY_PORT_ID = "portId";

@@ -31,7 +31,21 @@ import java.util.function.Predicate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/** TICCore implementation */
+/**
+ * Core implementation for managing frame reading and subscriber notifications.
+ *
+ * <p>This class provides mechanisms for reading frames, managing streams, handling subscribers,
+ * and notifying events. It implements the core contract for frame acquisition and event delivery.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Reading frames from available sources</li>
+ *   <li>Managing and notifying subscribers</li>
+ *   <li>Handling stream lifecycle and modem events</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ */
 public class TICCoreBase
     implements TICCore, Task, TICCoreSubscriber, PlugSubscriber<TICPortDescriptor> {
   private static final int PLUG_NOTIFIER_POLLING_PERIOD = 100;

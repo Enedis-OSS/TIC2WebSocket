@@ -11,7 +11,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/** Task basic implementation */
+/**
+ * Abstract base class representing a generic asynchronous task.
+ *
+ * <p>This class provides a foundation for implementing tasks that can be executed
+ * asynchronously, typically in concurrent or event-driven environments.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Running background operations</li>
+ *   <li>Scheduling periodic or delayed actions</li>
+ *   <li>Extending for custom task logic</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ */
 public abstract class TaskBase implements Task, Runnable {
   private AtomicBoolean stopRequired;
   private Thread task;

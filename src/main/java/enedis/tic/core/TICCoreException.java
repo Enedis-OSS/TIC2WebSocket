@@ -9,6 +9,14 @@ package enedis.tic.core;
 
 import enedis.lab.types.ExceptionBase;
 
+/**
+ * Exception class for representing core errors and failures.
+ *
+ * <p>This class provides mechanisms for constructing exceptions with error codes and messages,
+ * supporting structured error handling and reporting.
+ *
+ * @author Enedis Smarties team
+ */
 public class TICCoreException extends ExceptionBase {
   private static final long serialVersionUID = -3285641164559292710L;
 

@@ -10,7 +10,21 @@ package enedis.lab.util.task;
 import enedis.lab.util.time.Time;
 import java.util.concurrent.atomic.AtomicLong;
 
-/** Periodic task with configurable period */
+/**
+ * Abstract class representing a generic periodic asynchronous task.
+ *
+ * <p>This class provides functionality for executing tasks at regular intervals,
+ * typically used for background operations or scheduled actions.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Running periodic background jobs</li>
+ *   <li>Scheduling recurring actions</li>
+ *   <li>Extending for custom periodic logic</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ */
 public abstract class TaskPeriodic extends TaskBase {
   /** Default period (in milliseconds) used to execute process */
   public static final long DEFAULT_PERIOD = 1000;

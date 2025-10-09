@@ -21,9 +21,19 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TICCoreFrame class
+ * Class representing a core frame with identifier, mode, capture time, and content.
  *
- * <p>Generated
+ * <p>This class provides mechanisms for constructing, accessing, and managing frame information
+ * including identifiers, modes, timestamps, and associated content. It is designed for general-purpose frame handling.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Representing frames with structured data</li>
+ *   <li>Managing frame identifiers and modes</li>
+ *   <li>Associating content and timestamps with frames</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
  */
 public class TICCoreFrame extends DataDictionaryBase {
   protected static final String KEY_IDENTIFIER = "identifier";

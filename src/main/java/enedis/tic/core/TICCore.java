@@ -11,7 +11,20 @@ import enedis.lab.io.tic.TICPortDescriptor;
 import enedis.lab.util.task.Task;
 import java.util.List;
 
-/** TICCore interface */
+/**
+ * Core interface for managing frame reading and subscriber notifications.
+ *
+ * <p>This interface defines methods for reading frames, managing subscribers, and retrieving modem information.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Reading frames from available sources</li>
+ *   <li>Managing and notifying subscribers</li>
+ *   <li>Retrieving modem and identifier information</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ */
 public interface TICCore extends Task {
   /**
    * Get available TICs

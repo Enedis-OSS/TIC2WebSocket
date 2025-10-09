@@ -10,9 +10,20 @@ package enedis.lab.util.task;
 import java.util.Collection;
 
 /**
- * Periodic task with subscribers basic implementation
+ * Abstract class representing a generic periodic asynchronous task with subscriber notification.
+ *
+ * <p>This class provides functionality for executing tasks at regular intervals and notifying
+ * registered subscribers of events or results.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Running periodic background jobs with notifications</li>
+ *   <li>Scheduling recurring actions and informing listeners</li>
+ *   <li>Extending for custom periodic and notification logic</li>
+ * </ul>
  *
  * @param <T> the subscriber type
+ * @author Enedis Smarties team
  */
 public abstract class TaskPeriodicWithSubscribers<T extends Subscriber> extends TaskPeriodic
     implements Notifier<T> {

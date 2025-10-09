@@ -19,9 +19,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Response class
+ * Abstract base class for response messages.
  *
- * <p>Generated
+ * <p>This class represents response messages. It provides support for response-specific fields such as date/time,
+ * error code, and error message, and enforces the accepted message type. Subclasses can define
+ * additional response data and behavior.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Representing server responses to client requests</li>
+ *   <li>Handling error reporting and status information</li>
+ *   <li>Extending for custom response types</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see Message
  */
 public abstract class Response extends Message {
   protected static final String KEY_DATE_TIME = "dateTime";

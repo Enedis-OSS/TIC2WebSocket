@@ -17,17 +17,38 @@ import enedis.lab.util.message.exception.MessageKeyTypeDoesntExistException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/** Message factory */
+/**
+ * Static factory for decoding basic message objects.
+ *
+ * <p>This class provides static methods for parsing and validating messages from their text
+ * representations, typically JSON. It handles extraction of message type and name, and throws
+ * specific exceptions for format, type, or key errors.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Decoding incoming JSON messages into basic message objects</li>
+ *   <li>Validating message format and required keys</li>
+ *   <li>Handling errors in message type or name extraction</li>
+ *   <li>Supporting generic message processing pipelines</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ */
 public abstract class BasicMessageFactory {
+  
   /**
-   * Get message from text
+   * Decodes a basic message from its text representation.
    *
-   * @param text
-   * @return message
-   * @throws MessageInvalidFormatException
-   * @throws MessageKeyTypeDoesntExistException
-   * @throws MessageKeyNameDoesntExistException
-   * @throws MessageInvalidTypeException
+   * <p>This method parses the provided text (typically JSON), extracts the message type and name,
+   * and instantiates a basic message object. It throws specific exceptions for unsupported message
+   * types, invalid formats, or missing keys.
+   *
+   * @param text the text representation of the message (usually JSON)
+   * @return the decoded basic message object
+   * @throws MessageInvalidFormatException if the message format is invalid (e.g., malformed JSON)
+   * @throws MessageKeyTypeDoesntExistException if the message type key is missing
+   * @throws MessageKeyNameDoesntExistException if the message name key is missing
+   * @throws MessageInvalidTypeException if the message type is invalid or unsupported
    */
   public static Message getMessage(String text)
       throws MessageInvalidFormatException,

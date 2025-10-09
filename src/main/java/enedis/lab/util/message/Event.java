@@ -17,9 +17,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Event class
+ * Abstract base class for event messages.
  *
- * <p>Generated
+ * <p>This class represents event messages. It provides support for event-specific fields such as date/time and
+ * enforces the accepted message type. Subclasses can define additional event data and behavior.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Representing system or application events</li>
+ *   <li>Handling event notifications in the message pipeline</li>
+ *   <li>Extending for custom event types</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see Message
  */
 public abstract class Event extends Message {
   protected static final String KEY_DATE_TIME = "dateTime";
