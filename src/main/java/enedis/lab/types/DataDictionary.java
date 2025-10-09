@@ -13,102 +13,110 @@ import java.io.OutputStream;
 import java.util.Map;
 import org.json.JSONObject;
 
-/** Interface used to handle data dictionaries */
+/**
+ * Interface for managing key-value data dictionaries with serialization and utility methods.
+ *
+ * <p>Provides methods for key management, value access, serialization to JSON and Map, file and
+ * stream output, and cloning. Implementations may support additional validation and type safety.
+ *
+ * @author Enedis Smarties team
+ */
 public interface DataDictionary extends Cloneable {
+
   /**
-   * Check key exists
+   * Checks if the specified key exists in the data dictionary.
    *
-   * @param key Key to check
-   * @return true if key exists, false otherwise
+   * @param key the key to check
+   * @return true if the key exists, false otherwise
    */
   public boolean exists(String key);
 
   /**
-   * Get the datadictionary current map keys list
+   * Returns the list of all keys currently present in the data dictionary.
    *
-   * @return the datadictionary current map keys list
+   * @return an array of key names
    */
   public String[] keys();
 
   /**
-   * Check if the datadictionary map contains the given key
+   * Checks if the data dictionary contains the specified key in its key set.
    *
-   * @param key
-   * @return true if the datadictionary map contains the given key
+   * @param key the key to check
+   * @return true if the key is present, false otherwise
    */
   public boolean existsInKeys(String key);
 
   /**
-   * Add the given key in the datadictionary map, if the given key already exists, do nothing
+   * Adds the specified key to the data dictionary. If the key already exists, no action is taken.
    *
-   * @param key
+   * @param key the key to add
    */
   public void addKey(String key);
 
   /**
-   * Remove the given key in the datadictionary map
+   * Removes the specified key from the data dictionary.
    *
-   * @param key
+   * @param key the key to remove
    */
   public void removeKey(String key);
 
-  /** Clear the datadictionary map */
+  /** Removes all keys and values from the data dictionary. */
   public void clear();
 
   /**
-   * Get value of the given key
+   * Returns the value associated with the specified key.
    *
-   * @param key
-   * @return value of the given key
+   * @param key the key whose value is to be returned
+   * @return the value of the given key, or null if not present
    */
   public Object get(String key);
 
   /**
-   * Set value of the given key
+   * Sets the value for the specified key in the data dictionary.
    *
-   * @param key
-   * @param value
-   * @throws DataDictionaryException
+   * @param key the key to set
+   * @param value the value to associate with the key
+   * @throws DataDictionaryException if the value is invalid or cannot be set
    */
   public void set(String key, Object value) throws DataDictionaryException;
 
   /**
-   * Copy an other datadictionary into this one
+   * Copies all key-value pairs from another data dictionary into this one.
    *
-   * @param other
-   * @throws DataDictionaryException
+   * @param other the data dictionary to copy from
+   * @throws DataDictionaryException if a value cannot be copied
    */
   public void copy(DataDictionary other) throws DataDictionaryException;
 
   /**
-   * Convert this dataditionary to JSON
+   * Serializes this data dictionary to a {@link JSONObject}.
    *
-   * @return a JSONObject
+   * @return a JSONObject representing the data dictionary
    */
   public JSONObject toJSON();
 
   /**
-   * Convert this dataditionary to Map
+   * Serializes this data dictionary to a {@link Map}.
    *
-   * @return a JSONObject
+   * @return a map representing the data dictionary
    */
   public Map<String, Object> toMap();
 
   /**
-   * Convert the given datadictionary to a File
+   * Writes the data dictionary to a file in JSON format.
    *
-   * @param file
-   * @param indentFactor
-   * @throws IOException
+   * @param file the file to write to
+   * @param indentFactor the number of spaces to add to each level of indentation
+   * @throws IOException if an I/O error occurs
    */
   public void toFile(File file, int indentFactor) throws IOException;
 
   /**
-   * Convert the given datadictionary to a Stream
+   * Writes the data dictionary to an output stream in JSON format.
    *
-   * @param stream
-   * @param indentFactor
-   * @throws IOException
+   * @param stream the output stream to write to
+   * @param indentFactor the number of spaces to add to each level of indentation
+   * @throws IOException if an I/O error occurs
    */
   public void toStream(OutputStream stream, int indentFactor) throws IOException;
 
@@ -116,21 +124,22 @@ public interface DataDictionary extends Cloneable {
   public String toString();
 
   /**
-   * Convert this dataditionary to a String
+   * Returns a string representation of the data dictionary in JSON format with the specified
+   * indentation.
    *
-   * @param indentFactor
-   * @return a JSONObject
+   * @param indentFactor the number of spaces to add to each level of indentation
+   * @return a string containing the JSON representation
    */
   public String toString(int indentFactor);
 
   /**
-   * Convert this dataditionary to Map
+   * Creates and returns a deep copy of this data dictionary.
    *
-   * @return a JSONObject
-   * @throws CloneNotSupportedException
+   * @return a clone of this data dictionary
+   * @throws CloneNotSupportedException if the object cannot be cloned
    */
   public Object clone() throws CloneNotSupportedException;
 
-  /** Print this datactionary in the console */
+  /** Prints the contents of this data dictionary to the console. */
   public void print();
 }

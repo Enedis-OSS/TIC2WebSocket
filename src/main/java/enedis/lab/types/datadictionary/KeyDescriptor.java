@@ -10,54 +10,62 @@ package enedis.lab.types.datadictionary;
 import enedis.lab.types.DataDictionaryException;
 
 /**
- * DataDictionary key descriptor interface
+ * Interface for describing a key in a data dictionary structure.
  *
- * @param <T>
+ * <p>A key descriptor defines the name, type, and validation rules for a key in a {@link
+ * enedis.lab.types.DataDictionary}. Implementations may specify accepted values, conversion logic,
+ * and whether the key is mandatory.
+ *
+ * @param <T> the type of value associated with the key
+ * @author Enedis Smarties team
  */
 public interface KeyDescriptor<T> {
-  /**
-   * Get key name
-   *
-   * @return key name
-   */
-  public String getName();
 
   /**
-   * Get mandatory flag
+   * Returns the name of the key described by this descriptor.
    *
-   * @return mandatory flag
+   * @return the key name (never null)
    */
-  public boolean isMandatory();
+  String getName();
 
   /**
-   * Set mandatory flag
+   * Indicates whether the key is mandatory in the data dictionary.
    *
-   * @param mandatory
+   * @return true if the key is mandatory, false otherwise
    */
-  public void setMandatory(boolean mandatory);
+  boolean isMandatory();
 
   /**
-   * Set a list of accepted values
+   * Sets whether the key is mandatory in the data dictionary.
    *
-   * @param acceptedValues
+   * @param mandatory true to mark the key as mandatory, false otherwise
+   */
+  void setMandatory(boolean mandatory);
+
+  /**
+   * Sets the list of accepted values for this key. If not set, any value of type T may be accepted
+   * depending on implementation.
+   *
+   * @param acceptedValues the accepted values for this key
    */
   @SuppressWarnings("unchecked")
-  public void setAcceptedValues(T... acceptedValues);
+  void setAcceptedValues(T... acceptedValues);
 
   /**
-   * Convert a Object value to a T value
+   * Converts an object to the value type T for this key. Implementations should validate and
+   * convert the input as needed.
    *
-   * @param value object to convert
-   * @return value converted to T type
-   * @throws DataDictionaryException
+   * @param value the object to convert
+   * @return the converted value of type T
+   * @throws DataDictionaryException if the value cannot be converted or is invalid
    */
-  public T convert(Object value) throws DataDictionaryException;
+  T convert(Object value) throws DataDictionaryException;
 
   /**
-   * Convert a T value to String
+   * Converts a value of type T to its string representation.
    *
-   * @param value value to convert to String
-   * @return String representation of the value
+   * @param value the value to convert to String
+   * @return the string representation of the value
    */
-  public String toString(T value);
+  String toString(T value);
 }

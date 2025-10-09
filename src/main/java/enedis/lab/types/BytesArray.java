@@ -13,18 +13,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-/** Bytes array */
+/**
+ * Represents a mutable array of bytes with utility methods for manipulation, searching, and
+ * slicing.
+ *
+ * <p>Implements the {@link List} interface for bytes, and provides additional methods for
+ * byte-level operations, such as splitting, slicing, and computing checksums. Supports conversion
+ * from integers and arrays, and offers options for greedy, contiguous, and pattern-based
+ * operations.
+ *
+ * @author Enedis Smarties team
+ */
 public class BytesArray implements List<Byte> {
-  /** Default option */
+  /** Default option for byte array operations. */
   public static final int DEFAULT_OPTIONS = 0x0000;
 
-  /** Greedy option */
+  /** Greedy option for slice/split operations. */
   public static final int GREEDY = 0x0001;
 
-  /** Contiguous option */
+  /** Contiguous option for slice/split operations. */
   public static final int CONTIGUOUS = 0x0002;
 
-  /** Remove patterns option */
+  /** Option to remove pattern bytes from results. */
   public static final int REMOVE_PATTERNS = 0x0004;
 
   /**
@@ -80,15 +90,15 @@ public class BytesArray implements List<Byte> {
 
   protected byte[] buffer;
 
-  /** Default constructor */
+  /** Constructs an empty BytesArray. */
   public BytesArray() {
     this.buffer = new byte[0];
   }
 
   /**
-   * Constructor from array of byte
+   * Constructs a BytesArray from a given byte array.
    *
-   * @param bytesArray
+   * @param bytesArray the source array of bytes (copied)
    */
   public BytesArray(byte[] bytesArray) {
     this.buffer = bytesArray.clone();
@@ -152,20 +162,13 @@ public class BytesArray implements List<Byte> {
     } else {
       byte[] bytesArray = new byte[this.buffer.length + 1];
 
-      // Si l'index est le premier
       if (0 == index) {
         System.arraycopy(this.buffer, 0, bytesArray, 1, this.buffer.length);
-      }
-
-      // Sinon, si l'index est le dernier
-      else if ((this.buffer.length - 1) == index) {
+      } else if ((this.buffer.length - 1) == index) {
         System.arraycopy(this.buffer, 0, bytesArray, 0, this.buffer.length - 1);
 
         bytesArray[bytesArray.length - 1] = this.buffer[this.buffer.length - 1];
-      }
-
-      // Sinon, si l'index est au milieu du tableau
-      else {
+      } else {
         System.arraycopy(this.buffer, 0, bytesArray, 0, index - 1);
 
         System.arraycopy(
@@ -186,16 +189,11 @@ public class BytesArray implements List<Byte> {
     boolean success = true;
 
     if ((null != element) && (element instanceof Number)) {
-      // Obtenir l'index de la première occurence de l'élément
       int index = this.indexOf(element);
 
-      // Si un tel élément a été trouvé,
       if (index >= 0) {
         this.removeIndex(index);
-      }
-
-      // Sinon,
-      else {
+      } else {
         success = false;
       }
     } else {
@@ -212,28 +210,25 @@ public class BytesArray implements List<Byte> {
     if ((index >= 0) && (index < this.buffer.length)) {
       element = new Byte(this.buffer[index]);
       this.removeIndex(index);
-    } else {
-      // Aucune action
     }
 
     return element;
   }
 
   /**
-   * Remove the buffer from an index to other
+   * Removes a range of bytes from the buffer, from {@code fromIndex} to {@code toIndex}
+   * (inclusive).
    *
-   * @param fromIndex
-   * @param toIndex
-   * @return new length of buffer
+   * @param fromIndex the starting index (inclusive)
+   * @param toIndex the ending index (inclusive)
+   * @return the number of bytes removed, or 0 if indices are invalid
    */
   public int remove(int fromIndex, int toIndex) {
     int length = 0;
-
     if ((fromIndex >= 0) && (toIndex < this.buffer.length) && (toIndex > fromIndex)) {
       this.removeSubList(fromIndex, toIndex);
       length = toIndex - fromIndex + 1;
     }
-
     return length;
   }
 
@@ -280,17 +275,13 @@ public class BytesArray implements List<Byte> {
       Object[] collectionArray = collection.toArray();
       byte[] bytesArray = new byte[this.buffer.length + collection.size()];
 
-      // Cas ou on ajoute en début:
       if (0 == index) {
         for (int i = 0; i < collectionArray.length; i++) {
           bytesArray[i] = ((Byte) collectionArray[i]).byteValue();
         }
 
         System.arraycopy(this.buffer, 0, bytesArray, collectionArray.length, this.buffer.length);
-      }
-
-      // Cas où on ajoute à la fin:
-      else if (this.buffer.length == index) {
+      } else if (this.buffer.length == index) {
         System.arraycopy(this.buffer, 0, bytesArray, 0, this.buffer.length);
 
         int j = index;
@@ -298,10 +289,7 @@ public class BytesArray implements List<Byte> {
           bytesArray[j] = ((Byte) collectionArray[i]).byteValue();
           j++;
         }
-      }
-
-      // Cas où on ajoute au milieu:
-      else {
+      } else {
         System.arraycopy(this.buffer, 0, bytesArray, 0, index);
 
         int j = index;
@@ -379,31 +367,27 @@ public class BytesArray implements List<Byte> {
   }
 
   /**
-   * Get the buffer element of the given index
+   * Returns the index of the first occurrence of the specified element, starting from the given
+   * offset.
    *
-   * @param element
-   * @param offset
-   * @return the element
+   * @param element the element to search for (must be a Number)
+   * @param offset the index to start searching from
+   * @return the index of the element, or -1 if not found
    */
   public int indexOf(Object element, int offset) {
     int index = -1;
-
     if ((null != element)
         && (element instanceof Number)
         && offset >= 0
         && offset < this.buffer.length) {
       Byte byte_element = ((Number) element).byteValue();
-
       for (int i = offset; i < this.buffer.length; i++) {
         if (this.buffer[i] == byte_element) {
           index = i;
           break;
         }
       }
-    } else {
-      // Aucune action
     }
-
     return index;
   }
 
@@ -420,8 +404,6 @@ public class BytesArray implements List<Byte> {
           break;
         }
       }
-    } else {
-      // Aucune action
     }
 
     return index;
@@ -467,44 +449,39 @@ public class BytesArray implements List<Byte> {
   }
 
   /**
-   * Get bytes
+   * Returns a copy of the underlying byte array.
    *
-   * @return bytes
+   * @return a copy of the bytes in this BytesArray
    */
   public byte[] getBytes() {
     return this.buffer;
   }
 
   /**
-   * Copy
+   * Returns a deep copy of this BytesArray.
    *
-   * @return copied BytesArray
+   * @return a new BytesArray with the same contents
    */
   public BytesArray copy() {
     return new BytesArray(this.buffer);
   }
 
   /**
-   * Get index of element
+   * Returns a list of all indices where the specified element occurs in the buffer.
    *
-   * @param element
-   * @return index of element
+   * @param element the element to search for (must be a Number)
+   * @return a list of indices where the element is found
    */
   public List<Integer> indexesOf(Object element) {
     List<Integer> indexesList = new ArrayList<Integer>();
-
     if ((null != element) && (element instanceof Number)) {
       Byte byte_element = ((Number) element).byteValue();
-
       for (int i = 0; i < this.buffer.length; i++) {
         if (this.buffer[i] == byte_element) {
           indexesList.add(i);
         }
       }
-    } else {
-      // Aucune action
     }
-
     return indexesList;
   }
 
@@ -560,7 +537,8 @@ public class BytesArray implements List<Byte> {
     List<Integer> patternsIndexesList = this.indexesOf(pattern.byteValue());
     List<BytesArray> bytesArraysList = new ArrayList<BytesArray>();
 
-    // Si le motif de séparation existe, copier chaque segment dans l'élément associé du tableau
+    // If the split pattern exists, copy each segment into the corresponding element
+    // of the array
     if (false == patternsIndexesList.isEmpty()) {
       int begin_index = 0;
       int end_index;
@@ -573,17 +551,14 @@ public class BytesArray implements List<Byte> {
 
         segment_length = end_index - begin_index;
 
-        // Si la taille du segment est non nulle,
+        // If the segment size is not zero
         if (segment_length > 0) {
           byte[] segment = new byte[segment_length];
 
           System.arraycopy(this.buffer, begin_index, segment, 0, segment_length);
 
           bytesArraysList.add(new BytesArray(segment));
-        }
-
-        // Sinon,
-        else {
+        } else {
           bytesArraysList.add(new BytesArray());
         }
 
@@ -591,7 +566,7 @@ public class BytesArray implements List<Byte> {
       }
     }
 
-    // Sinon, copier dans l'unique élément du tableau l'intégralité des données
+    // Otherwise, copy all data into the single element of the array
     else {
       bytesArraysList.add(new BytesArray(this.buffer));
     }
@@ -639,18 +614,19 @@ public class BytesArray implements List<Byte> {
       Number beginPattern, Number endPattern, int occurences, int options) {
     List<BytesArray> bytesArraysList;
 
-    // ... Si l'appel de la fonction est "gourmand" (greedy), il n'y aura au mieux qu'un élément à
-    // retourner qui
-    // correspondra au plus grand segment [begin_pattern, end_pattern] du tableau
-    // NB le paramètre 'occurences' est alors non signifiant
+    // ... If the function call is "greedy", there will be at most one element to
+    // return,
+    // which will correspond to the largest segment [begin_pattern, end_pattern] of
+    // the array.
+    // Note: the 'occurences' parameter is then not significant.
     if ((options & GREEDY) != 0) {
       bytesArraysList = this.sliceGreedy(beginPattern, endPattern, options);
     }
 
-    // ... Si l'appel de la fonction est "non gourmand" (not greedy), les éléments du tableau à
-    // retourner
-    // correspondront aux segments [begin_pattern, end_pattern]
-    // les plus rationnels, dans la limite des n premières occurences demandées
+    // ... If the function call is "not greedy", the elements to return will
+    // correspond
+    // to the most rational segments [begin_pattern, end_pattern], within the limit
+    // of the first n occurrences requested.
     else {
       bytesArraysList = this.sliceNotGreedy(beginPattern, endPattern, occurences, options);
     }
@@ -670,10 +646,10 @@ public class BytesArray implements List<Byte> {
     if (bytesArray != null && bytesArray.length > 0) {
       byte[] newBytesArray = new byte[this.buffer.length + bytesArray.length];
 
-      // copie des données existantes
+      // copy existing data
       System.arraycopy(this.buffer, 0, newBytesArray, 0, this.buffer.length);
 
-      // copie des nouvelles données
+      // copy new data
       System.arraycopy(bytesArray, 0, newBytesArray, this.buffer.length, bytesArray.length);
 
       this.buffer = newBytesArray;
@@ -698,32 +674,15 @@ public class BytesArray implements List<Byte> {
     if ((index >= 0) && (index <= this.buffer.length)) {
       byte[] newBytesArray = new byte[this.buffer.length + bytesArray.length];
 
-      // Cas ou on ajoute au début:
       if (0 == index) {
         System.arraycopy(bytesArray, 0, newBytesArray, 0, bytesArray.length);
-
-        // copie des données existantes
         System.arraycopy(this.buffer, 0, newBytesArray, bytesArray.length, this.buffer.length);
-      }
-
-      // Cas où on ajoute à la fin:
-      else if (this.buffer.length == index) {
-        // copie des données existantes
+      } else if (this.buffer.length == index) {
         System.arraycopy(this.buffer, 0, newBytesArray, 0, this.buffer.length);
-
-        // copie des nouvelles données
         System.arraycopy(bytesArray, 0, newBytesArray, this.buffer.length, bytesArray.length);
-      }
-
-      // Cas où on ajoute au milieu:
-      else {
-        // copie des données existantes (premier segment)
+      } else {
         System.arraycopy(this.buffer, 0, newBytesArray, 0, index);
-
-        // copie des nouvelles données
         System.arraycopy(bytesArray, 0, newBytesArray, index, bytesArray.length);
-
-        // copie des données existantes (deuxième segment)
         System.arraycopy(
             this.buffer,
             index,
@@ -860,7 +819,7 @@ public class BytesArray implements List<Byte> {
       Number beginPattern, Number endPattern, int occurences, int options) {
     List<BytesArray> bytesArraysList = new ArrayList<BytesArray>();
 
-    // Si la contiguité des segments est requise,
+    // If segment contiguity is required,
     if ((options & CONTIGUOUS) != 0) {
       bytesArraysList = this.sliceContiguous(beginPattern, endPattern, occurences, options);
     } else {
@@ -885,39 +844,41 @@ public class BytesArray implements List<Byte> {
     int endIndex = -1;
 
     for (int i = 0; i < this.buffer.length; i++) {
-      // Traiter un motif DEBUT
+      // Handle a BEGIN pattern
       if (this.buffer[i] == beginPattern.byteValue()) {
         if ((-1 == endIndex) || (this.buffer[i - 1] == endPattern.byteValue())) {
           beginIndex = i;
         }
       }
 
-      // Traiter un motif FIN
+      // Handle a END pattern
       else if (this.buffer[i] == endPattern.byteValue()) {
-        // Si nous ne sommes pas au dernier élément du tableau
+        // If we are not at the last element of the array
         if (i < (this.buffer.length - 1)) {
-          // Si le prochain caractère est le motif de début de trame
+          // If the next character is the start pattern
           if (this.buffer[i + 1] == beginPattern.byteValue()) {
             endIndex = i;
 
             this.slicePart(bytesArraysList, beginIndex, endIndex, options);
 
-            // Si un nombre d'occurences est spécifié et si le nombre de segments l'a déjà atteint,
-            // interrompre le traitement
+            // If a number of occurrences is specified and the number of segments has
+            // already been reached,
+            // stop processing
             if ((occurences > 0) && (bytesArraysList.size() >= occurences)) {
               break;
             }
           }
         }
 
-        // Sinon, si nous sommes au dernier élément du tableau
+        // Otherwise, if we are at the last element of the array
         else {
           endIndex = i;
 
           this.slicePart(bytesArraysList, beginIndex, endIndex, options);
 
-          // Si un nombre d'occurences est spécifié et si le nombre de segments l'a déjà atteint,
-          // interrompre le traitement
+          // If a number of occurrences is specified and the number of segments has
+          // already been reached,
+          // stop processing
           if ((occurences > 0) && (bytesArraysList.size() >= occurences)) {
             break;
           }
@@ -952,8 +913,9 @@ public class BytesArray implements List<Byte> {
 
         this.slicePart(bytesArraysList, beginIndex, endIndex, options);
 
-        // Si un nombre d'occurences est spécifié et si le nombre de segments l'a déjà atteint,
-        // interrompre le traitement
+        // If a number of occurrences is specified and the number of segments has
+        // already been reached,
+        // stop processing
         if ((occurences > 0) && (bytesArraysList.size() >= occurences)) {
           break;
         }
@@ -993,17 +955,17 @@ public class BytesArray implements List<Byte> {
   private void removeIndex(int index) {
     byte[] bytesArray = new byte[this.buffer.length - 1];
 
-    // Si l'index est le premier du tableau
+    // If the index is the first in the array
     if (0 == index) {
       System.arraycopy(this.buffer, 1, bytesArray, 0, bytesArray.length);
     }
 
-    // Sinon, si l'index est le dernier
+    // Else, if the index is the last
     else if ((this.buffer.length - 1) == index) {
       System.arraycopy(this.buffer, 0, bytesArray, 0, bytesArray.length);
     }
 
-    // Sinon, si l'index est au milieu du tableau
+    // Else, if the index is in the middle of the array
     else {
       System.arraycopy(this.buffer, 0, bytesArray, 0, index);
 

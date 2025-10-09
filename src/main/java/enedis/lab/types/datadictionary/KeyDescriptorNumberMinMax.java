@@ -10,55 +10,68 @@ package enedis.lab.types.datadictionary;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.util.MinMaxChecker;
 
-/** DataDictionary key descriptor Number min max */
+/**
+ * Key descriptor for numeric values with minimum and maximum constraints.
+ *
+ * <p>This descriptor extends {@link KeyDescriptorNumber} to enforce that the value is within
+ * specified bounds. It uses a {@link MinMaxChecker} to validate the value after conversion.
+ *
+ * @author Enedis Smarties team
+ */
 public class KeyDescriptorNumberMinMax extends KeyDescriptorNumber {
+  /** Utility for checking minimum and maximum value constraints. */
   private MinMaxChecker minMaxChecker;
 
   /**
-   * Default constructor
+   * Constructs a key descriptor for a numeric value with no min/max constraints.
    *
-   * @param name
-   * @param mandatory
+   * @param name the key name (must not be null)
+   * @param mandatory true if the key is mandatory, false otherwise
    */
   public KeyDescriptorNumberMinMax(String name, boolean mandatory) {
     this(name, mandatory, null, null);
   }
 
   /**
-   * Constructor setting all attributes
+   * Constructs a key descriptor for a numeric value with minimum and maximum constraints.
    *
-   * @param name
-   * @param mandatory
-   * @param min
-   * @param max
+   * @param name the key name (must not be null)
+   * @param mandatory true if the key is mandatory, false otherwise
+   * @param min the minimum allowed value (nullable)
+   * @param max the maximum allowed value (nullable)
    */
   public KeyDescriptorNumberMinMax(String name, boolean mandatory, Number min, Number max) {
     super(name, mandatory);
     this.minMaxChecker = new MinMaxChecker(min, max);
   }
 
+  /**
+   * Converts an object to a {@link Number} value and checks the min/max constraints.
+   *
+   * @param value the object to convert
+   * @return the converted number value
+   * @throws DataDictionaryException if the value cannot be converted or is out of bounds
+   */
   @Override
   public Number convertValue(Object value) throws DataDictionaryException {
     Number convertedValue = super.convertValue(value);
-
     this.check(convertedValue);
-
     return convertedValue;
   }
 
   /**
-   * Get min
+   * Returns the minimum allowed value, or null if not set.
    *
-   * @return min
+   * @return the minimum allowed value
    */
   public Number getMin() {
     return this.minMaxChecker.getMin();
   }
 
   /**
-   * Set min
+   * Sets the minimum allowed value.
    *
-   * @param min
+   * @param min the minimum allowed value
    * @throws IllegalArgumentException if min is greater than max
    */
   public void setMin(Number min) {
@@ -66,24 +79,30 @@ public class KeyDescriptorNumberMinMax extends KeyDescriptorNumber {
   }
 
   /**
-   * Get max
+   * Returns the maximum allowed value, or null if not set.
    *
-   * @return max
+   * @return the maximum allowed value
    */
   public Number getMax() {
     return this.minMaxChecker.getMax();
   }
 
   /**
-   * Set max
+   * Sets the maximum allowed value.
    *
-   * @param max
+   * @param max the maximum allowed value
    * @throws IllegalArgumentException if max is smaller than min
    */
   public void setMax(Number max) {
     this.minMaxChecker.setMax(max);
   }
 
+  /**
+   * Checks that the value is within the allowed bounds.
+   *
+   * @param convertedValue the value to check
+   * @throws DataDictionaryException if the value is out of bounds
+   */
   private void check(Number convertedValue) throws DataDictionaryException {
     if (convertedValue != null) {
       if (!this.minMaxChecker.check(convertedValue)) {

@@ -37,15 +37,10 @@ public class DataArrayList<E> extends ArrayList<E> implements DataList<E> {
   /**
    * Returns a fixed-size data list backed by the specified array. (Changes to the returned data
    * list "write through" to the array.) This method acts as bridge between array-based and
-   * collection-based APIs, in combination with {@link Collection#toArray}. The returned list is
-   * serializable and implements {@link RandomAccess}.
-   *
+   * collection-based APIs, in combination with {@link Collection#toArray}. 
+   * 
    * <p>This method also provides a convenient way to create a fixed-size data list initialized to
-   * contain several elements:
-   *
-   * <pre>
-   *     DataList&lt;String&gt; stooges = DataArrayList.asList("Larry", "Moe", "Curly");
-   * </pre>
+   * contain several elements.
    *
    * @param <E> the class of the objects in the array
    * @param items the array by which the data list will be backed

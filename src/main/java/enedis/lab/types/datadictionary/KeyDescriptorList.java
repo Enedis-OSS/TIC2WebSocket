@@ -19,25 +19,39 @@ import java.util.Map;
 import org.json.JSONObject;
 
 /**
- * DataDictionary key descriptor List
+ * Key descriptor for values that are lists of a specific type.
  *
- * @param <T>
+ * <p>This descriptor allows a key to be associated with a list of items, supporting conversion from
+ * arrays, lists, maps, and JSON objects. It handles type conversion for each item, including
+ * support for nested data dictionaries and enums.
+ *
+ * @param <T> the type of item in the list
+ * @author Enedis Smarties team
  */
 public class KeyDescriptorList<T> extends KeyDescriptorBase<List<T>> {
+  /** The class of the item accepted in the list for this key. */
   private Class<T> itemClass;
 
   /**
-   * Default constructor
+   * Constructs a key descriptor for a list value.
    *
-   * @param name
-   * @param mandatory
-   * @param itemClass
+   * @param name the key name (must not be null)
+   * @param mandatory true if the key is mandatory, false otherwise
+   * @param itemClass the class of the item accepted in the list
    */
   public KeyDescriptorList(String name, boolean mandatory, Class<T> itemClass) {
     super(name, mandatory);
     this.itemClass = itemClass;
   }
 
+  /**
+   * Converts an object to a list of items of type T for this key. Accepts single items, lists,
+   * arrays, or maps, and converts each item as needed.
+   *
+   * @param value the object to convert
+   * @return the converted list of items
+   * @throws DataDictionaryException if the value or any item cannot be converted
+   */
   @Override
   public List<T> convertValue(Object value) throws DataDictionaryException {
     List<T> convertedValue = new ArrayList<T>();
@@ -71,6 +85,13 @@ public class KeyDescriptorList<T> extends KeyDescriptorBase<List<T>> {
     return convertedValue;
   }
 
+  /**
+   * Converts a single item to the type T, handling data dictionaries and enums.
+   *
+   * @param item the item to convert
+   * @return the converted item
+   * @throws DataDictionaryException if the item cannot be converted
+   */
   private T convertItem(Object item) throws DataDictionaryException {
     T convertedItem = null;
     if (this.itemClass.isAssignableFrom(item.getClass())) {
@@ -91,6 +112,13 @@ public class KeyDescriptorList<T> extends KeyDescriptorBase<List<T>> {
     return convertedItem;
   }
 
+  /**
+   * Converts an item to a data dictionary of type T, using a Map or JSONObject.
+   *
+   * @param item the item to convert
+   * @return the converted data dictionary item
+   * @throws DataDictionaryException if the item cannot be converted
+   */
   private T convertDataDictionaryItem(Object item) throws DataDictionaryException {
     T convertedItem = null;
     if (item instanceof JSONObject) {
@@ -130,6 +158,13 @@ public class KeyDescriptorList<T> extends KeyDescriptorBase<List<T>> {
     return convertedItem;
   }
 
+  /**
+   * Converts an item to an enum of type T, using the valueOf method.
+   *
+   * @param item the item to convert (must be a String)
+   * @return the converted enum item
+   * @throws DataDictionaryException if the item cannot be converted
+   */
   @SuppressWarnings("unchecked")
   private T convertEnumItem(Object item) throws DataDictionaryException {
     T convertedItem = null;
@@ -146,7 +181,6 @@ public class KeyDescriptorList<T> extends KeyDescriptorBase<List<T>> {
       } catch (InvocationTargetException e) {
         e.printStackTrace();
       }
-
     } else {
       throw new DataDictionaryException(
           "Key "

@@ -10,33 +10,41 @@ package enedis.lab.types.datadictionary;
 import enedis.lab.types.DataDictionaryException;
 
 /**
- * DataDictionary key descriptor Enum
+ * Key descriptor for values that are Java enums.
  *
- * @param <T>
+ * <p>This descriptor allows a key to be associated with an enum value, supporting conversion from
+ * strings and type-safe validation. Optionally, a prefix can be added to the string value before
+ * conversion.
+ *
+ * @param <T> the enum type accepted as value
+ * @author Enedis Smarties team
  */
 @SuppressWarnings("rawtypes")
 public class KeyDescriptorEnum<T extends Enum> extends KeyDescriptorBase<T> {
+  /** The enum class accepted as value for this key. */
   private Class<T> enumClass;
+
+  /** Optional prefix to prepend to the string value before conversion. */
   private String prefix;
 
   /**
-   * Default constructor
+   * Constructs a key descriptor for an enum value with no prefix.
    *
-   * @param name
-   * @param mandatory
-   * @param enumClass
+   * @param name the key name (must not be null)
+   * @param mandatory true if the key is mandatory, false otherwise
+   * @param enumClass the enum class accepted as value
    */
   public KeyDescriptorEnum(String name, boolean mandatory, Class<T> enumClass) {
     this(name, mandatory, enumClass, "");
   }
 
   /**
-   * Constructor setting all parameters
+   * Constructs a key descriptor for an enum value with a prefix.
    *
-   * @param name
-   * @param mandatory
-   * @param enumClass
-   * @param prefix
+   * @param name the key name (must not be null)
+   * @param mandatory true if the key is mandatory, false otherwise
+   * @param enumClass the enum class accepted as value
+   * @param prefix the prefix to prepend to the string value before conversion
    */
   public KeyDescriptorEnum(String name, boolean mandatory, Class<T> enumClass, String prefix) {
     super(name, mandatory);
@@ -44,6 +52,14 @@ public class KeyDescriptorEnum<T extends Enum> extends KeyDescriptorBase<T> {
     this.prefix = prefix;
   }
 
+  /**
+   * Converts an object to the enum type T for this key. Accepts instances of T or strings
+   * (converted to enum constant).
+   *
+   * @param value the object to convert
+   * @return the converted enum value
+   * @throws DataDictionaryException if the value cannot be converted
+   */
   @Override
   public T convertValue(Object value) throws DataDictionaryException {
     T convertedValue = null;
@@ -65,6 +81,14 @@ public class KeyDescriptorEnum<T extends Enum> extends KeyDescriptorBase<T> {
     return convertedValue;
   }
 
+  /**
+   * Converts a string to the enum type T, applying the prefix if set. The string is uppercased and
+   * dots/hyphens are replaced with underscores.
+   *
+   * @param value the string value to convert
+   * @return the corresponding enum constant
+   * @throws DataDictionaryException if the value does not match any enum constant
+   */
   @SuppressWarnings("unchecked")
   protected T toEnum(String value) throws DataDictionaryException {
     T convertedValue = null;

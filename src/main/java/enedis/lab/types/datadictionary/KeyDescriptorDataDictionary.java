@@ -14,26 +14,40 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
- * DataDictionary key descriptor DataDictionary
+ * Key descriptor for values that are themselves data dictionaries.
  *
- * @param <T>
+ * <p>This descriptor allows a key to be associated with a nested {@link DataDictionaryBase} value.
+ * It supports conversion from strings, maps, and other data dictionary instances to the target
+ * type.
+ *
+ * @param <T> the type of data dictionary accepted as value
+ * @author Enedis Smarties team
  */
 public class KeyDescriptorDataDictionary<T extends DataDictionaryBase>
     extends KeyDescriptorBase<T> {
+  /** The class of the data dictionary accepted as value for this key. */
   private Class<T> dataDictionaryClass;
 
   /**
-   * Default constructor
+   * Constructs a key descriptor for a data dictionary value.
    *
-   * @param name
-   * @param mandatory
-   * @param dataDictionaryClass
+   * @param name the key name (must not be null)
+   * @param mandatory true if the key is mandatory, false otherwise
+   * @param dataDictionaryClass the class of the data dictionary accepted as value
    */
   public KeyDescriptorDataDictionary(String name, boolean mandatory, Class<T> dataDictionaryClass) {
     super(name, mandatory);
     this.dataDictionaryClass = dataDictionaryClass;
   }
 
+  /**
+   * Converts an object to the data dictionary type T for this key. Accepts instances of T, strings
+   * (parsed as JSON), other DataDictionary, or Map.
+   *
+   * @param value the object to convert
+   * @return the converted data dictionary value
+   * @throws DataDictionaryException if the value cannot be converted
+   */
   @SuppressWarnings("unchecked")
   @Override
   public T convertValue(Object value) throws DataDictionaryException {

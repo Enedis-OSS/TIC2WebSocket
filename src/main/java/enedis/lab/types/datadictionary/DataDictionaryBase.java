@@ -33,19 +33,40 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/** DataDictionary basic implementation */
+/**
+ * Basic implementation of the {@link DataDictionary} interface.
+ *
+ * <p>This class provides a flexible and extensible data dictionary structure for storing key-value
+ * pairs, supporting serialization to and from JSON, file and stream I/O, and key descriptor
+ * management. It is designed to be used as a base class for more specific data dictionary
+ * implementations.
+ *
+ * <p>Features include:
+ *
+ * <ul>
+ *   <li>Static factory methods for instantiating from files, streams, strings, JSON objects, and
+ *       maps
+ *   <li>Support for nested data dictionaries and lists
+ *   <li>Key descriptor management for type safety and validation
+ *   <li>Serialization and deserialization to/from JSON and Java Map
+ *   <li>Cloning, equality, and string representation
+ *   <li>Mandatory and optional key validation
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ */
 public class DataDictionaryBase implements DataDictionary {
   private static final int JSON_INDENT_FACTOR = 0;
 
   /**
-   * Instantiate a datadictionary from a File
+   * Creates a new data dictionary instance from a file containing JSON data.
    *
-   * @param file
-   * @param clazz
-   * @return a datadictionary
-   * @throws JSONException
-   * @throws DataDictionaryException
-   * @throws IOException
+   * @param file the file to read from
+   * @param clazz the class of the data dictionary to instantiate
+   * @return a new data dictionary instance
+   * @throws JSONException if the file content is not valid JSON
+   * @throws DataDictionaryException if the dictionary cannot be created
+   * @throws IOException if an I/O error occurs
    */
   public static DataDictionary fromFile(File file, Class<? extends DataDictionary> clazz)
       throws JSONException, DataDictionaryException, IOException {
@@ -59,14 +80,14 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   /**
-   * Instantiate a datadictionary from a Stream
+   * Creates a new data dictionary instance from an input stream containing JSON data.
    *
-   * @param stream
-   * @param clazz
-   * @return a datadictionary
-   * @throws JSONException
-   * @throws DataDictionaryException
-   * @throws IOException
+   * @param stream the input stream to read from
+   * @param clazz the class of the data dictionary to instantiate
+   * @return a new data dictionary instance
+   * @throws JSONException if the stream content is not valid JSON
+   * @throws DataDictionaryException if the dictionary cannot be created
+   * @throws IOException if an I/O error occurs
    */
   public static DataDictionary fromStream(InputStream stream, Class<? extends DataDictionary> clazz)
       throws JSONException, DataDictionaryException, IOException {
@@ -83,13 +104,13 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   /**
-   * Instantiate a datadictionary from a String
+   * Creates a new data dictionary instance from a JSON string.
    *
-   * @param text
-   * @param clazz
-   * @return a datadictionary
-   * @throws JSONException
-   * @throws DataDictionaryException
+   * @param text the JSON string
+   * @param clazz the class of the data dictionary to instantiate
+   * @return a new data dictionary instance
+   * @throws JSONException if the string is not valid JSON
+   * @throws DataDictionaryException if the dictionary cannot be created
    */
   public static DataDictionary fromString(String text, Class<? extends DataDictionary> clazz)
       throws JSONException, DataDictionaryException {
@@ -103,13 +124,13 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   /**
-   * Instantiate a datadictionary from a JSONObject
+   * Creates a new data dictionary instance from a {@link JSONObject}.
    *
-   * @param jsonObject
-   * @param clazz
-   * @return a datadictionary
-   * @throws JSONException
-   * @throws DataDictionaryException
+   * @param jsonObject the JSON object
+   * @param clazz the class of the data dictionary to instantiate
+   * @return a new data dictionary instance
+   * @throws JSONException if the object is not valid JSON
+   * @throws DataDictionaryException if the dictionary cannot be created
    */
   public static DataDictionary fromJSON(
       JSONObject jsonObject, Class<? extends DataDictionary> clazz)
@@ -122,13 +143,12 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   /**
-   * Instantiate a datadictionary from a Map
+   * Creates a new data dictionary instance from a map of key-value pairs and a dictionary class.
    *
-   * @param map
-   * @param clazz
-   * @return a datadictionary
-   * @throws JSONException
-   * @throws DataDictionaryException
+   * @param map the map containing key-value pairs
+   * @param clazz the class of the data dictionary to instantiate
+   * @return a new data dictionary instance
+   * @throws DataDictionaryException if the dictionary cannot be created
    */
   public static DataDictionary fromMap(
       Map<String, Object> map, Class<? extends DataDictionary> clazz)
@@ -158,12 +178,11 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   /**
-   * Instantiate a datadictionary from a Map
+   * Creates a new data dictionary instance from a map of key-value pairs.
    *
-   * @param map
-   * @return a datadictionary
-   * @throws JSONException
-   * @throws DataDictionaryException
+   * @param map the map containing key-value pairs
+   * @return a new data dictionary instance
+   * @throws DataDictionaryException if the dictionary cannot be created
    */
   public static DataDictionary fromMap(Map<String, Object> map) throws DataDictionaryException {
     if (map == null) {
@@ -188,19 +207,22 @@ public class DataDictionaryBase implements DataDictionary {
     return dataDictionnary;
   }
 
+  /** List of key descriptors defining the structure and validation rules for this dictionary. */
   private List<KeyDescriptor<?>> keyDescriptors;
+
+  /** Internal map storing the key-value pairs of the dictionary. */
   protected HashMap<String, Object> data;
 
-  /** Default constructor */
+  /** Constructs an empty data dictionary with no key descriptors or data. */
   public DataDictionaryBase() {
     this.init();
   }
 
   /**
-   * Constructor using map and setting key not defined allowed flag
+   * Constructs a data dictionary from a map of key-value pairs.
    *
-   * @param map
-   * @throws DataDictionaryException
+   * @param map the map containing initial key-value pairs
+   * @throws DataDictionaryException if an error occurs during initialization
    */
   public DataDictionaryBase(Map<String, Object> map) throws DataDictionaryException {
     this();
@@ -208,10 +230,10 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   /**
-   * Constructor using dataDictionary and setting key not defined allowed flag
+   * Constructs a data dictionary by copying another data dictionary.
    *
-   * @param other
-   * @throws DataDictionaryException
+   * @param other the data dictionary to copy
+   * @throws DataDictionaryException if an error occurs during initialization
    */
   public DataDictionaryBase(DataDictionary other) throws DataDictionaryException {
     this();
@@ -219,18 +241,33 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   @Override
+  /**
+   * Checks if a key exists in the data dictionary.
+   *
+   * @param key the key to check
+   * @return true if the key exists, false otherwise
+   */
   public final boolean exists(String key) {
     return this.data.containsKey(key);
   }
 
   @Override
+  /**
+   * Checks if a key exists in the key descriptors.
+   *
+   * @param key the key to check
+   * @return true if the key exists in the key descriptors, false otherwise
+   */
   public final boolean existsInKeys(String key) {
-    // @formatter:off
     return this.keyDescriptors.stream().filter(k -> k.getName().equals(key)).findAny().isPresent();
-    // @formatter:on
   }
 
   @Override
+  /**
+   * Returns all keys present in the data dictionary.
+   *
+   * @return an array of all keys
+   */
   public final String[] keys() {
     Set<String> setKeys = this.data.keySet();
     String[] keys = new String[setKeys.size()];
@@ -241,6 +278,11 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   @Override
+  /**
+   * Adds a key to the data dictionary if it does not already exist.
+   *
+   * @param key the key to add
+   */
   public final void addKey(String key) {
     if (key != null) {
       this.data.putIfAbsent(key, null);
@@ -248,6 +290,11 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   @Override
+  /**
+   * Removes a key from the data dictionary.
+   *
+   * @param key the key to remove
+   */
   public final void removeKey(String key) {
     if (key != null) {
       this.data.remove(key);
@@ -255,11 +302,24 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   @Override
+  /**
+   * Retrieves the value associated with a key in the data dictionary.
+   *
+   * @param key the key whose value is to be returned
+   * @return the value associated with the key, or null if not present
+   */
   public final Object get(String key) {
     return this.data.get(key);
   }
 
   @Override
+  /**
+   * Sets the value for a key in the data dictionary.
+   *
+   * @param key the key to set
+   * @param value the value to associate with the key
+   * @throws DataDictionaryException if the key is not allowed or an error occurs
+   */
   public final void set(String key, Object value) throws DataDictionaryException {
     if (key == null) {
       throw new DataDictionaryException("Key null not allowed");
@@ -272,12 +332,10 @@ public class DataDictionaryBase implements DataDictionary {
       if (keyDescriptor.isPresent()) {
         try {
           String setterName = this.getSetterName(key);
-          // @formatter:off
           List<String> methodNameList =
               Arrays.asList(this.getClass().getDeclaredMethods()).stream()
                   .map(m -> m.getName())
                   .collect(Collectors.toList());
-          // @formatter:on
           if (methodNameList.contains(setterName)) {
             Method method = this.getClass().getDeclaredMethod(setterName, Object.class);
             method.setAccessible(true);
@@ -313,6 +371,12 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   @Override
+  /**
+   * Copies all key-value pairs from another data dictionary into this one.
+   *
+   * @param other the data dictionary to copy from
+   * @throws DataDictionaryException if an error occurs during copying
+   */
   public void copy(DataDictionary other) throws DataDictionaryException {
     String[] otherKeys = other.keys();
 
@@ -325,11 +389,17 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   @Override
+  /** Removes all key-value pairs from the data dictionary. */
   public final void clear() {
     this.data.clear();
   }
 
   @Override
+  /**
+   * Returns the hash code value for this data dictionary.
+   *
+   * @return the hash code value
+   */
   public final int hashCode() {
     final int prime = 31;
     int result = 1;
@@ -338,6 +408,12 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   @Override
+  /**
+   * Compares this data dictionary to another object for equality.
+   *
+   * @param object the object to compare
+   * @return true if the objects are equal, false otherwise
+   */
   public final boolean equals(Object object) {
     if (object == null) {
       return false;
@@ -430,6 +506,13 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   @Override
+  /**
+   * Writes the data dictionary to a file as JSON.
+   *
+   * @param file the file to write to
+   * @param indentFactor the number of spaces to add to each level of indentation
+   * @throws IOException if an I/O error occurs
+   */
   public final void toFile(File file, int indentFactor) throws IOException {
     OutputStream stream = new FileOutputStream(file);
 
@@ -437,6 +520,13 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   @Override
+  /**
+   * Writes the data dictionary to an output stream as JSON.
+   *
+   * @param stream the output stream to write to
+   * @param indentFactor the number of spaces to add to each level of indentation
+   * @throws IOException if an I/O error occurs
+   */
   public final void toStream(OutputStream stream, int indentFactor) throws IOException {
     String text = this.toString(indentFactor);
 
@@ -444,6 +534,11 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   @Override
+  /**
+   * Serializes the data dictionary to a {@link JSONObject}.
+   *
+   * @return the JSON representation of the data dictionary
+   */
   public JSONObject toJSON() {
     JSONObject jsonObject = new JSONObject();
     String[] keys = this.keys();
@@ -467,21 +562,42 @@ public class DataDictionaryBase implements DataDictionary {
 
   @SuppressWarnings("unchecked")
   @Override
+  /**
+   * Returns a shallow copy of the internal map representing the data dictionary.
+   *
+   * @return a map containing all key-value pairs
+   */
   public final Map<String, Object> toMap() {
     return (Map<String, Object>) this.data.clone();
   }
 
   @Override
+  /**
+   * Returns a string representation of the data dictionary in JSON format.
+   *
+   * @return the string representation of the data dictionary
+   */
   public String toString() {
     return this.toString(DataDictionaryBase.JSON_INDENT_FACTOR);
   }
 
   @Override
+  /**
+   * Returns a string representation of the data dictionary in JSON format with indentation.
+   *
+   * @param identFactor the number of spaces to add to each level of indentation
+   * @return the string representation of the data dictionary
+   */
   public String toString(int identFactor) {
     return this.toJSON().toString(identFactor);
   }
 
   @Override
+  /**
+   * Creates and returns a deep copy of this data dictionary.
+   *
+   * @return a clone of this data dictionary
+   */
   public DataDictionaryBase clone() {
     try {
       Constructor<?> constructor = this.getClass().getConstructor(DataDictionary.class);
@@ -492,15 +608,26 @@ public class DataDictionaryBase implements DataDictionary {
   }
 
   @Override
+  /** Prints the data dictionary to the standard output in pretty JSON format. */
   public void print() {
     System.out.println(this.toString(2));
   }
 
+  /**
+   * Updates optional parameters and checks that all mandatory parameters are present.
+   *
+   * @throws DataDictionaryException if a mandatory parameter is missing or invalid
+   */
   protected final void checkAndUpdate() throws DataDictionaryException {
     this.updateOptionalParameters();
     this.checkMandatoryParameters();
   }
 
+  /**
+   * Checks that all mandatory parameters defined by key descriptors are present in the dictionary.
+   *
+   * @throws DataDictionaryException if a mandatory key is missing
+   */
   protected void checkMandatoryParameters() throws DataDictionaryException {
     for (KeyDescriptor<?> key : this.keyDescriptors) {
       if (key.isMandatory() && !this.exists(key.getName())) {
@@ -509,8 +636,20 @@ public class DataDictionaryBase implements DataDictionary {
     }
   }
 
+  /**
+   * Updates optional parameters in the data dictionary. Subclasses may override to provide custom
+   * logic.
+   *
+   * @throws DataDictionaryException if an error occurs during update
+   */
   protected void updateOptionalParameters() throws DataDictionaryException {}
 
+  /**
+   * Adds a key descriptor to the list of key descriptors for this dictionary.
+   *
+   * @param keyDescriptor the key descriptor to add
+   * @throws DataDictionaryException if the key already exists
+   */
   protected void addKeyDescriptor(KeyDescriptor<?> keyDescriptor) throws DataDictionaryException {
     if (this.existsInKeys(keyDescriptor.getName())) {
       throw new DataDictionaryException("Key " + keyDescriptor.getName() + "already exists");
@@ -518,6 +657,12 @@ public class DataDictionaryBase implements DataDictionary {
     this.keyDescriptors.add(keyDescriptor);
   }
 
+  /**
+   * Adds all key descriptors from the provided list to this dictionary.
+   *
+   * @param keyDescriptor the list of key descriptors to add
+   * @throws DataDictionaryException if a key already exists
+   */
   protected void addAllKeyDescriptor(List<KeyDescriptor<?>> keyDescriptor)
       throws DataDictionaryException {
     for (KeyDescriptor<?> key : keyDescriptor) {
@@ -525,10 +670,14 @@ public class DataDictionaryBase implements DataDictionary {
     }
   }
 
+  /**
+   * Retrieves the key descriptor for the specified key name, if present.
+   *
+   * @param name the name of the key
+   * @return an {@link Optional} containing the key descriptor if found, or empty otherwise
+   */
   protected Optional<KeyDescriptor<?>> getKeyDescriptor(String name) {
-    // @formatter:off
     return this.keyDescriptors.stream().filter(k -> k.getName().equals(name)).findFirst();
-    // @formatter:on
   }
 
   private String getSetterName(String key) {
