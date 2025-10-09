@@ -19,15 +19,16 @@ import java.util.function.Predicate;
 /**
  * Generic base implementation for managing filtered notifications to subscribers.
  *
- * <p>This class provides mechanisms for subscribing, unsubscribing, and querying subscribers
- * with associated filters. It supports both filtered and unfiltered (global) subscriptions,
- * enabling flexible event delivery and observer patterns.
+ * <p>This class provides mechanisms for subscribing, unsubscribing, and querying subscribers with
+ * associated filters. It supports both filtered and unfiltered (global) subscriptions, enabling
+ * flexible event delivery and observer patterns.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Delivering events to subscribers that match specific filters</li>
- *   <li>Supporting selective notification in observer patterns</li>
- *   <li>Extending for custom filtering logic</li>
+ *   <li>Delivering events to subscribers that match specific filters
+ *   <li>Supporting selective notification in observer patterns
+ *   <li>Extending for custom filtering logic
  * </ul>
  *
  * @param <F> the filter type

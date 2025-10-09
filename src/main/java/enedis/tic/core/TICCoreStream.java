@@ -13,14 +13,15 @@ import enedis.lab.util.task.Task;
 /**
  * Interface for managing core streams, frame acquisition, and subscriber notifications.
  *
- * <p>This interface defines methods for accessing stream identifiers and managing subscribers.
- * It provides a contract for implementations that handle frame delivery and event notification.
+ * <p>This interface defines methods for accessing stream identifiers and managing subscribers. It
+ * provides a contract for implementations that handle frame delivery and event notification.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Acquiring frames from streams</li>
- *   <li>Managing and notifying subscribers</li>
- *   <li>Supporting event-driven stream operations</li>
+ *   <li>Acquiring frames from streams
+ *   <li>Managing and notifying subscribers
+ *   <li>Supporting event-driven stream operations
  * </ul>
  *
  * @author Enedis Smarties team

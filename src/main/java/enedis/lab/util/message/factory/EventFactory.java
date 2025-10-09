@@ -17,10 +17,11 @@ import enedis.lab.util.message.Event;
  * typically JSON, and supports extensible event handling in the message processing pipeline.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Decoding incoming event messages into typed objects</li>
- *   <li>Registering custom event types for extensibility</li>
- *   <li>Supporting generic event processing pipelines</li>
+ *   <li>Decoding incoming event messages into typed objects
+ *   <li>Registering custom event types for extensibility
+ *   <li>Supporting generic event processing pipelines
  * </ul>
  *
  * @author Enedis Smarties team

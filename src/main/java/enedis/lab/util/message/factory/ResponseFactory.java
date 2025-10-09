@@ -17,10 +17,11 @@ import enedis.lab.util.message.Response;
  * typically JSON, and supports extensible response handling in the message processing pipeline.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Decoding incoming response messages into typed objects</li>
- *   <li>Registering custom response types for extensibility</li>
- *   <li>Supporting generic response processing pipelines</li>
+ *   <li>Decoding incoming response messages into typed objects
+ *   <li>Registering custom response types for extensibility
+ *   <li>Supporting generic response processing pipelines
  * </ul>
  *
  * @author Enedis Smarties team

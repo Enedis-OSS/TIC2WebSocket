@@ -21,15 +21,16 @@ import java.util.Map;
 /**
  * Abstract base class for response messages.
  *
- * <p>This class represents response messages. It provides support for response-specific fields such as date/time,
- * error code, and error message, and enforces the accepted message type. Subclasses can define
- * additional response data and behavior.
+ * <p>This class represents response messages. It provides support for response-specific fields such
+ * as date/time, error code, and error message, and enforces the accepted message type. Subclasses
+ * can define additional response data and behavior.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Representing server responses to client requests</li>
- *   <li>Handling error reporting and status information</li>
- *   <li>Extending for custom response types</li>
+ *   <li>Representing server responses to client requests
+ *   <li>Handling error reporting and status information
+ *   <li>Extending for custom response types
  * </ul>
  *
  * @author Enedis Smarties team

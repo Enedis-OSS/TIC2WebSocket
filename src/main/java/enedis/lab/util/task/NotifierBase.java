@@ -18,10 +18,11 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * foundation for event-driven and observer patterns, supporting flexible notification delivery.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Managing lists of listeners or observers</li>
- *   <li>Sending notifications to registered subscribers</li>
- *   <li>Extending for custom notification logic</li>
+ *   <li>Managing lists of listeners or observers
+ *   <li>Sending notifications to registered subscribers
+ *   <li>Extending for custom notification logic
  * </ul>
  *
  * @param <T> the subscriber type

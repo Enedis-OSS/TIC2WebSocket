@@ -14,10 +14,11 @@ package enedis.tic.core;
  * It provides a structured way to manage and interpret error states.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Representing error states in core logic</li>
- *   <li>Supporting diagnostics and error reporting</li>
- *   <li>Mapping error codes to messages</li>
+ *   <li>Representing error states in core logic
+ *   <li>Supporting diagnostics and error reporting
+ *   <li>Mapping error codes to messages
  * </ul>
  *
  * @author Enedis Smarties team

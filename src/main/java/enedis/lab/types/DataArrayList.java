@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.RandomAccess;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,8 +36,8 @@ public class DataArrayList<E> extends ArrayList<E> implements DataList<E> {
   /**
    * Returns a fixed-size data list backed by the specified array. (Changes to the returned data
    * list "write through" to the array.) This method acts as bridge between array-based and
-   * collection-based APIs, in combination with {@link Collection#toArray}. 
-   * 
+   * collection-based APIs, in combination with {@link Collection#toArray}.
+   *
    * <p>This method also provides a convenient way to create a fixed-size data list initialized to
    * contain several elements.
    *

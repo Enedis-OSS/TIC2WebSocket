@@ -14,13 +14,15 @@ import java.util.List;
 /**
  * Core interface for managing frame reading and subscriber notifications.
  *
- * <p>This interface defines methods for reading frames, managing subscribers, and retrieving modem information.
+ * <p>This interface defines methods for reading frames, managing subscribers, and retrieving modem
+ * information.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Reading frames from available sources</li>
- *   <li>Managing and notifying subscribers</li>
- *   <li>Retrieving modem and identifier information</li>
+ *   <li>Reading frames from available sources
+ *   <li>Managing and notifying subscribers
+ *   <li>Retrieving modem and identifier information
  * </ul>
  *
  * @author Enedis Smarties team

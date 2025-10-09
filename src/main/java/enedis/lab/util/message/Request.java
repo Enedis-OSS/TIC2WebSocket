@@ -17,14 +17,15 @@ import java.util.Map;
 /**
  * Abstract base class for request messages.
  *
- * <p>This class represents request messages. It enforces the accepted message type and provides support for request-specific
- * fields. Subclasses can define additional request data and behavior.
+ * <p>This class represents request messages. It enforces the accepted message type and provides
+ * support for request-specific fields. Subclasses can define additional request data and behavior.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Representing client requests for data or actions</li>
- *   <li>Handling request validation and processing</li>
- *   <li>Extending for custom request types</li>
+ *   <li>Representing client requests for data or actions
+ *   <li>Handling request validation and processing
+ *   <li>Extending for custom request types
  * </ul>
  *
  * @author Enedis Smarties team

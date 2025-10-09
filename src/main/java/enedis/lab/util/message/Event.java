@@ -19,14 +19,16 @@ import java.util.Map;
 /**
  * Abstract base class for event messages.
  *
- * <p>This class represents event messages. It provides support for event-specific fields such as date/time and
- * enforces the accepted message type. Subclasses can define additional event data and behavior.
+ * <p>This class represents event messages. It provides support for event-specific fields such as
+ * date/time and enforces the accepted message type. Subclasses can define additional event data and
+ * behavior.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Representing system or application events</li>
- *   <li>Handling event notifications in the message pipeline</li>
- *   <li>Extending for custom event types</li>
+ *   <li>Representing system or application events
+ *   <li>Handling event notifications in the message pipeline
+ *   <li>Extending for custom event types
  * </ul>
  *
  * @author Enedis Smarties team

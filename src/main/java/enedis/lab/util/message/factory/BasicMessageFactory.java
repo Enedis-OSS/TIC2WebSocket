@@ -25,17 +25,18 @@ import org.json.JSONObject;
  * specific exceptions for format, type, or key errors.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Decoding incoming JSON messages into basic message objects</li>
- *   <li>Validating message format and required keys</li>
- *   <li>Handling errors in message type or name extraction</li>
- *   <li>Supporting generic message processing pipelines</li>
+ *   <li>Decoding incoming JSON messages into basic message objects
+ *   <li>Validating message format and required keys
+ *   <li>Handling errors in message type or name extraction
+ *   <li>Supporting generic message processing pipelines
  * </ul>
  *
  * @author Enedis Smarties team
  */
 public abstract class BasicMessageFactory {
-  
+
   /**
    * Decodes a basic message from its text representation.
    *

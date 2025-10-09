@@ -22,13 +22,15 @@ import java.util.Map;
  * Class representing a core error with identifier, code, message, and optional data.
  *
  * <p>This class provides mechanisms for constructing, accessing, and managing error information
- * including error codes, messages, and associated data. It is designed for general-purpose error handling.
+ * including error codes, messages, and associated data. It is designed for general-purpose error
+ * handling.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Representing errors with structured data</li>
- *   <li>Managing error codes and messages</li>
- *   <li>Associating additional data with errors</li>
+ *   <li>Representing errors with structured data
+ *   <li>Managing error codes and messages
+ *   <li>Associating additional data with errors
  * </ul>
  *
  * @author Enedis Smarties team

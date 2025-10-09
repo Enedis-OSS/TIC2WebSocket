@@ -25,11 +25,12 @@ import org.json.JSONException;
  * classes to be registered and decoded dynamically based on their names.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Decoding incoming JSON messages into typed objects</li>
- *   <li>Registering custom message types for extensibility</li>
- *   <li>Handling errors in message format or content</li>
- *   <li>Supporting generic message processing pipelines</li>
+ *   <li>Decoding incoming JSON messages into typed objects
+ *   <li>Registering custom message types for extensibility
+ *   <li>Handling errors in message format or content
+ *   <li>Supporting generic message processing pipelines
  * </ul>
  *
  * @param <T> the type of message handled by this factory
@@ -42,8 +43,8 @@ public class AbstractMessageFactory<T extends Message> {
   /**
    * Creates a new AbstractMessageFactory for the specified message type.
    *
-   * <p>This constructor initializes the factory for a given message class and prepares the
-   * internal registry for message type mappings.
+   * <p>This constructor initializes the factory for a given message class and prepares the internal
+   * registry for message type mappings.
    *
    * @param clazz the class of message objects handled by this factory
    */

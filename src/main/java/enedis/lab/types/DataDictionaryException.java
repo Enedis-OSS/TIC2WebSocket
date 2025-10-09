@@ -8,14 +8,14 @@
 package enedis.lab.types;
 
 /**
- * Exception type used to represent errors occurring when manipulating or interpreting
- * data dictionary elements.
+ * Exception type used to represent errors occurring when manipulating or interpreting data
+ * dictionary elements.
  *
- * <p>This exception typically indicates issues such as invalid data mappings, corrupted
- * metadata, or unexpected dictionary structures encountered during runtime.</p>
+ * <p>This exception typically indicates issues such as invalid data mappings, corrupted metadata,
+ * or unexpected dictionary structures encountered during runtime.
  *
- * <p>It extends {@link java.lang.Exception}, allowing both checked exception handling and
- * detailed error propagation with message and cause information.</p>
+ * <p>It extends {@link java.lang.Exception}, allowing both checked exception handling and detailed
+ * error propagation with message and cause information.
  *
  * @author Enedis Smarties team
  */
@@ -23,9 +23,7 @@ public class DataDictionaryException extends Exception {
 
   private static final long serialVersionUID = -7967428428453584771L;
 
-  /**
-   * Creates a new {@code DataDictionaryException} with no detail message or cause.
-   */
+  /** Creates a new {@code DataDictionaryException} with no detail message or cause. */
   public DataDictionaryException() {
     super();
   }
@@ -59,8 +57,8 @@ public class DataDictionaryException extends Exception {
   }
 
   /**
-   * Creates a new {@code DataDictionaryException} with full control over suppression
-   * and stack trace writability.
+   * Creates a new {@code DataDictionaryException} with full control over suppression and stack
+   * trace writability.
    *
    * @param message the detail message describing the error context
    * @param cause the underlying cause of the exception

@@ -14,14 +14,16 @@ import java.util.Date;
 /**
  * Utility class providing time-related constants and helper methods.
  *
- * <p>This class offers constants for time units and static methods for sleeping, formatting timestamps,
- * and decorating messages with timestamps. It is designed for general-purpose time management and formatting.
+ * <p>This class offers constants for time units and static methods for sleeping, formatting
+ * timestamps, and decorating messages with timestamps. It is designed for general-purpose time
+ * management and formatting.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Sleeping for a specified duration</li>
- *   <li>Formatting timestamps as date/time strings</li>
- *   <li>Decorating log messages with current date/time</li>
+ *   <li>Sleeping for a specified duration
+ *   <li>Formatting timestamps as date/time strings
+ *   <li>Decorating log messages with current date/time
  * </ul>
  *
  * @author Enedis Smarties team

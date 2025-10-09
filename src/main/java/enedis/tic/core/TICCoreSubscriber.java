@@ -16,10 +16,11 @@ import enedis.lab.util.task.Subscriber;
  * for objects that handle event-driven notifications in core operations.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Receiving frame notifications</li>
- *   <li>Handling error events</li>
- *   <li>Implementing event-driven logic</li>
+ *   <li>Receiving frame notifications
+ *   <li>Handling error events
+ *   <li>Implementing event-driven logic
  * </ul>
  *
  * @author Enedis Smarties team

@@ -19,14 +19,16 @@ import java.util.Map;
 /**
  * Class representing a core identifier with port ID, port name, and serial number.
  *
- * <p>This class provides mechanisms for constructing, accessing, and managing identifier information
- * including port IDs, port names, and serial numbers. It is designed for general-purpose identifier handling.
+ * <p>This class provides mechanisms for constructing, accessing, and managing identifier
+ * information including port IDs, port names, and serial numbers. It is designed for
+ * general-purpose identifier handling.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Representing identifiers with structured data</li>
- *   <li>Matching identifiers for streams and devices</li>
- *   <li>Managing port and serial information</li>
+ *   <li>Representing identifiers with structured data
+ *   <li>Matching identifiers for streams and devices
+ *   <li>Managing port and serial information
  * </ul>
  *
  * @author Enedis Smarties team

@@ -13,14 +13,16 @@ import com.sun.jna.Native;
 /**
  * Interface for accessing native C library functions via JNA.
  *
- * <p>This interface provides access to system-level C library functions, such as retrieving error messages
- * associated with error codes. It is designed for general-purpose native integration and diagnostics.
+ * <p>This interface provides access to system-level C library functions, such as retrieving error
+ * messages associated with error codes. It is designed for general-purpose native integration and
+ * diagnostics.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Obtaining human-readable error messages from system error codes</li>
- *   <li>Integrating with native system libraries</li>
- *   <li>Supporting cross-platform diagnostics</li>
+ *   <li>Obtaining human-readable error messages from system error codes
+ *   <li>Integrating with native system libraries
+ *   <li>Supporting cross-platform diagnostics
  * </ul>
  *
  * @author Enedis Smarties team

@@ -39,14 +39,15 @@ import org.apache.logging.log4j.Logger;
 /**
  * Core stream implementation for frame acquisition and subscriber notifications.
  *
- * <p>This class provides mechanisms for managing streams, acquiring frames, handling errors,
- * and notifying subscribers. It implements the contract for event-driven stream operations.
+ * <p>This class provides mechanisms for managing streams, acquiring frames, handling errors, and
+ * notifying subscribers. It implements the contract for event-driven stream operations.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Acquiring frames from streams</li>
- *   <li>Managing and notifying subscribers</li>
- *   <li>Handling errors and stream lifecycle</li>
+ *   <li>Acquiring frames from streams
+ *   <li>Managing and notifying subscribers
+ *   <li>Handling errors and stream lifecycle
  * </ul>
  *
  * @author Enedis Smarties team

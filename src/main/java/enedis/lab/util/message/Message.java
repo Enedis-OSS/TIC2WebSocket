@@ -20,14 +20,16 @@ import java.util.Map;
 /**
  * Base class for all messages.
  *
- * <p>This class provides the core structure for messages, including type and name fields. It supports construction from maps and data dictionaries,
- * and can be extended for specific message types such as requests, responses, and events.
+ * <p>This class provides the core structure for messages, including type and name fields. It
+ * supports construction from maps and data dictionaries, and can be extended for specific message
+ * types such as requests, responses, and events.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Representing generic messages in the communication pipeline</li>
- *   <li>Providing a base for request, response, and event messages</li>
- *   <li>Supporting extensible message structures</li>
+ *   <li>Representing generic messages in the communication pipeline
+ *   <li>Providing a base for request, response, and event messages
+ *   <li>Supporting extensible message structures
  * </ul>
  *
  * @author Enedis Smarties team

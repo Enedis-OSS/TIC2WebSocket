@@ -18,16 +18,17 @@ import enedis.lab.util.message.exception.UnsupportedMessageException;
 /**
  * Central factory for decoding and dispatching messages in the TIC2WebSocket framework.
  *
- * <p>This class coordinates the decoding of messages by delegating to specialized sub-factories
- * for requests, responses, and events. It parses the message type and name, then dispatches to
- * the appropriate factory for further decoding and validation.
+ * <p>This class coordinates the decoding of messages by delegating to specialized sub-factories for
+ * requests, responses, and events. It parses the message type and name, then dispatches to the
+ * appropriate factory for further decoding and validation.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Decoding incoming JSON messages into typed objects</li>
- *   <li>Coordinating request, response, and event message handling</li>
- *   <li>Supporting extensible message processing pipelines</li>
- *   <li>Managing sub-factory references for modularity</li>
+ *   <li>Decoding incoming JSON messages into typed objects
+ *   <li>Coordinating request, response, and event message handling
+ *   <li>Supporting extensible message processing pipelines
+ *   <li>Managing sub-factory references for modularity
  * </ul>
  *
  * @author Enedis Smarties team
@@ -53,8 +54,8 @@ public class MessageFactory {
   /**
    * Creates a new MessageFactory with the specified sub-factories.
    *
-   * <p>This constructor initializes the factory with request, response, and event sub-factories
-   * for coordinated message decoding.
+   * <p>This constructor initializes the factory with request, response, and event sub-factories for
+   * coordinated message decoding.
    *
    * @param requestFactory the factory for decoding request messages
    * @param responseFactory the factory for decoding response messages
@@ -72,8 +73,8 @@ public class MessageFactory {
    * Decodes and dispatches a message from its text representation.
    *
    * <p>This method parses the provided text (typically JSON), determines the message type, and
-   * delegates decoding to the appropriate sub-factory. It throws specific exceptions for unsupported
-   * message types, invalid formats, or missing keys.
+   * delegates decoding to the appropriate sub-factory. It throws specific exceptions for
+   * unsupported message types, invalid formats, or missing keys.
    *
    * @param text the text representation of the message (usually JSON)
    * @return the decoded message object

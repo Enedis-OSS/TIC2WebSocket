@@ -13,14 +13,15 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Abstract class representing a generic periodic asynchronous task.
  *
- * <p>This class provides functionality for executing tasks at regular intervals,
- * typically used for background operations or scheduled actions.
+ * <p>This class provides functionality for executing tasks at regular intervals, typically used for
+ * background operations or scheduled actions.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Running periodic background jobs</li>
- *   <li>Scheduling recurring actions</li>
- *   <li>Extending for custom periodic logic</li>
+ *   <li>Running periodic background jobs
+ *   <li>Scheduling recurring actions
+ *   <li>Extending for custom periodic logic
  * </ul>
  *
  * @author Enedis Smarties team

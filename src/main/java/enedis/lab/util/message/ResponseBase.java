@@ -21,14 +21,15 @@ import java.util.Map;
  * Concrete base class for response messages with data payload.
  *
  * <p>This class extends {@link Response} to provide support for a data payload field, enabling
- * responses to carry additional structured data. It is used for responses that require more
- * complex content beyond basic status and error reporting.
+ * responses to carry additional structured data. It is used for responses that require more complex
+ * content beyond basic status and error reporting.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Returning structured data in response to client requests</li>
- *   <li>Supporting extensible response formats</li>
- *   <li>Providing a base for custom response types with data</li>
+ *   <li>Returning structured data in response to client requests
+ *   <li>Supporting extensible response formats
+ *   <li>Providing a base for custom response types with data
  * </ul>
  *
  * @author Enedis Smarties team

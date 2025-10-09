@@ -10,14 +10,15 @@ package enedis.lab.util;
 /**
  * Utility class for checking if values are within a specified numeric range.
  *
- * <p>This class provides methods to set minimum and maximum bounds and to check whether a given value
- * falls within the defined range. It is designed for general-purpose range validation.
+ * <p>This class provides methods to set minimum and maximum bounds and to check whether a given
+ * value falls within the defined range. It is designed for general-purpose range validation.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Validating input values against numeric constraints</li>
- *   <li>Ensuring values remain within allowed limits</li>
- *   <li>Supporting configuration or parameter validation</li>
+ *   <li>Validating input values against numeric constraints
+ *   <li>Ensuring values remain within allowed limits
+ *   <li>Supporting configuration or parameter validation
  * </ul>
  *
  * @author Enedis Smarties team

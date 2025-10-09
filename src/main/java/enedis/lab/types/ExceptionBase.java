@@ -10,12 +10,12 @@ package enedis.lab.types;
 /**
  * Generic exception base class.
  *
- * <p>This class provides a simple mechanism to associate an error code and an informational
- * message with an exception. It can be used as a parent class for more specific exception types
- * that require standardized error reporting and structured diagnostic data.</p>
+ * <p>This class provides a simple mechanism to associate an error code and an informational message
+ * with an exception. It can be used as a parent class for more specific exception types that
+ * require standardized error reporting and structured diagnostic data.
  *
- * <p>Both the code and info fields are intended to help identify and categorize the source of
- * the problem more precisely in distributed or modular systems.</p>
+ * <p>Both the code and info fields are intended to help identify and categorize the source of the
+ * problem more precisely in distributed or modular systems.
  *
  * @author Enedis Smarties team
  */

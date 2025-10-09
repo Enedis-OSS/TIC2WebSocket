@@ -15,11 +15,12 @@ package enedis.lab.util.message.exception;
  * of the message exception hierarchy used to signal specific errors in communication.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Detecting malformed or corrupted messages</li>
- *   <li>Reporting missing or unexpected fields</li>
- *   <li>Handling parsing failures due to format errors</li>
- *   <li>Chaining underlying exceptions for debugging</li>
+ *   <li>Detecting malformed or corrupted messages
+ *   <li>Reporting missing or unexpected fields
+ *   <li>Handling parsing failures due to format errors
+ *   <li>Chaining underlying exceptions for debugging
  * </ul>
  *
  * @author Enedis Smarties team
@@ -40,8 +41,8 @@ public class MessageInvalidFormatException extends MessageException {
   /**
    * Creates a new MessageInvalidFormatException with a detail message and underlying cause.
    *
-   * <p>This constructor is used when both a descriptive error message and the original cause
-   * of the error are available, providing complete context for debugging.
+   * <p>This constructor is used when both a descriptive error message and the original cause of the
+   * error are available, providing complete context for debugging.
    *
    * @param message the detail message explaining the error
    * @param cause the underlying exception that caused this error

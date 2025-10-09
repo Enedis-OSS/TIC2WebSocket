@@ -16,10 +16,11 @@ import java.util.Collection;
  * registered subscribers of events or results.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Running periodic background jobs with notifications</li>
- *   <li>Scheduling recurring actions and informing listeners</li>
- *   <li>Extending for custom periodic and notification logic</li>
+ *   <li>Running periodic background jobs with notifications
+ *   <li>Scheduling recurring actions and informing listeners
+ *   <li>Extending for custom periodic and notification logic
  * </ul>
  *
  * @param <T> the subscriber type

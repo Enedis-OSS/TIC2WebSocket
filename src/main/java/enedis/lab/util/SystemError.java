@@ -14,14 +14,16 @@ import org.apache.commons.lang3.SystemUtils;
 /**
  * Utility class for retrieving system error codes and messages.
  *
- * <p>This class provides static methods to obtain the last system error code and its associated message,
- * supporting multiple operating systems. It is designed for general-purpose error handling and diagnostics.
+ * <p>This class provides static methods to obtain the last system error code and its associated
+ * message, supporting multiple operating systems. It is designed for general-purpose error handling
+ * and diagnostics.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Retrieving the last system error code</li>
- *   <li>Obtaining human-readable error messages</li>
- *   <li>Supporting cross-platform error diagnostics</li>
+ *   <li>Retrieving the last system error code
+ *   <li>Obtaining human-readable error messages
+ *   <li>Supporting cross-platform error diagnostics
  * </ul>
  *
  * @author Enedis Smarties team

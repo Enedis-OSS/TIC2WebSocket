@@ -10,14 +10,16 @@ package enedis.lab.util.task;
 /**
  * Interface representing a generic asynchronous task.
  *
- * <p>This interface defines the contract for executing tasks, typically in a concurrent or event-driven
- * environment. Implementations may represent background jobs, scheduled actions, or event handlers.
+ * <p>This interface defines the contract for executing tasks, typically in a concurrent or
+ * event-driven environment. Implementations may represent background jobs, scheduled actions, or
+ * event handlers.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Running background operations</li>
- *   <li>Scheduling periodic or delayed actions</li>
- *   <li>Handling events or notifications</li>
+ *   <li>Running background operations
+ *   <li>Scheduling periodic or delayed actions
+ *   <li>Handling events or notifications
  * </ul>
  *
  * @author Enedis Smarties team

@@ -10,16 +10,17 @@ package enedis.lab.util.message.exception;
 /**
  * Exception for signaling errors during message processing in the TIC2WebSocket framework.
  *
- * <p>This exception serves as the base class for all message-related errors encountered while parsing,
- * validating, or handling messages.
- * It enables robust error reporting and propagation throughout the message handling pipeline.
+ * <p>This exception serves as the base class for all message-related errors encountered while
+ * parsing, validating, or handling messages. It enables robust error reporting and propagation
+ * throughout the message handling pipeline.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Reporting invalid message formats</li>
- *   <li>Handling missing or unsupported message types</li>
- *   <li>Signaling errors in message content or structure</li>
- *   <li>Chaining underlying exceptions for debugging</li>
+ *   <li>Reporting invalid message formats
+ *   <li>Handling missing or unsupported message types
+ *   <li>Signaling errors in message content or structure
+ *   <li>Chaining underlying exceptions for debugging
  * </ul>
  *
  * @author Enedis Smarties team
@@ -40,8 +41,8 @@ public class MessageException extends Exception {
   /**
    * Creates a new MessageException with a detail message and underlying cause.
    *
-   * <p>This constructor is used when both a descriptive error message and the original cause
-   * of the error are available, providing complete context for debugging.
+   * <p>This constructor is used when both a descriptive error message and the original cause of the
+   * error are available, providing complete context for debugging.
    *
    * @param message the detail message explaining the error
    * @param cause the underlying exception that caused this error

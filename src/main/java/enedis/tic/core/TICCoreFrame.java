@@ -24,13 +24,15 @@ import java.util.Map;
  * Class representing a core frame with identifier, mode, capture time, and content.
  *
  * <p>This class provides mechanisms for constructing, accessing, and managing frame information
- * including identifiers, modes, timestamps, and associated content. It is designed for general-purpose frame handling.
+ * including identifiers, modes, timestamps, and associated content. It is designed for
+ * general-purpose frame handling.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Representing frames with structured data</li>
- *   <li>Managing frame identifiers and modes</li>
- *   <li>Associating content and timestamps with frames</li>
+ *   <li>Representing frames with structured data
+ *   <li>Managing frame identifiers and modes
+ *   <li>Associating content and timestamps with frames
  * </ul>
  *
  * @author Enedis Smarties team

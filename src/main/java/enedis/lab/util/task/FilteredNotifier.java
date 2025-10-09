@@ -13,14 +13,15 @@ import java.util.function.Predicate;
 /**
  * Interface for managing filtered notifications to subscribers.
  *
- * <p>This interface defines methods for subscribing, unsubscribing, and querying subscribers
- * with associated filters. It supports flexible event delivery and observer patterns.
+ * <p>This interface defines methods for subscribing, unsubscribing, and querying subscribers with
+ * associated filters. It supports flexible event delivery and observer patterns.
  *
  * <p>Common use cases include:
+ *
  * <ul>
- *   <li>Selective event delivery based on filters</li>
- *   <li>Managing filtered lists of subscribers</li>
- *   <li>Supporting custom notification logic</li>
+ *   <li>Selective event delivery based on filters
+ *   <li>Managing filtered lists of subscribers
+ *   <li>Supporting custom notification logic
  * </ul>
  *
  * @param <F> the filter type
