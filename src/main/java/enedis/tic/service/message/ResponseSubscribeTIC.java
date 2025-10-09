@@ -17,28 +17,40 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ResponseSubscribeTIC class
+ * Response message for TIC subscription.
  *
- * <p>Generated
+ * <p>This class represents a response to a TIC subscription request. It provides constructors for
+ * various initialization scenarios and integrates with the response messaging system.
+ *
+ * <p>Key features include:
+ *
+ * <ul>
+ *   <li>Encapsulates response for TIC subscription
+ *   <li>Supports construction from map, DataDictionary, or explicit parameter list
+ *   <li>Validates and manages response parameters using key descriptors
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see Response
  */
 public class ResponseSubscribeTIC extends Response {
-  /** Message name */
+  /** Message name for this response. */
   public static final String NAME = "SubscribeTIC";
 
   private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
+  /** Constructs a response for TIC subscription with default values. */
   protected ResponseSubscribeTIC() {
     super();
     this.loadKeyDescriptors();
-
     this.kName.setAcceptedValues(NAME);
   }
 
   /**
-   * Constructor using map
+   * Constructs a response for TIC subscription from a map of values.
    *
-   * @param map
-   * @throws DataDictionaryException
+   * @param map the map containing response parameters
+   * @throws DataDictionaryException if validation fails
    */
   public ResponseSubscribeTIC(Map<String, Object> map) throws DataDictionaryException {
     this();
@@ -46,10 +58,10 @@ public class ResponseSubscribeTIC extends Response {
   }
 
   /**
-   * Constructor using datadictionary
+   * Constructs a response for TIC subscription from another DataDictionary instance.
    *
-   * @param other
-   * @throws DataDictionaryException
+   * @param other the DataDictionary to copy from
+   * @throws DataDictionaryException if validation fails
    */
   public ResponseSubscribeTIC(DataDictionary other) throws DataDictionaryException {
     this();
@@ -57,24 +69,27 @@ public class ResponseSubscribeTIC extends Response {
   }
 
   /**
-   * Constructor setting parameters to specific values
+   * Constructs a response for TIC subscription with explicit parameters.
    *
-   * @param dateTime
-   * @param errorCode
-   * @param errorMessage
-   * @throws DataDictionaryException
+   * @param dateTime the response date and time
+   * @param errorCode the error code, if any
+   * @param errorMessage the error message, if any
+   * @throws DataDictionaryException if validation fails
    */
   public ResponseSubscribeTIC(LocalDateTime dateTime, Number errorCode, String errorMessage)
       throws DataDictionaryException {
     this();
-
     this.setDateTime(dateTime);
     this.setErrorCode(errorCode);
     this.setErrorMessage(errorMessage);
-
     this.checkAndUpdate();
   }
 
+  /**
+   * Updates optional parameters for the response, ensuring the name is set.
+   *
+   * @throws DataDictionaryException if validation fails
+   */
   @Override
   protected void updateOptionalParameters() throws DataDictionaryException {
     if (!this.exists(KEY_NAME)) {
@@ -83,9 +98,13 @@ public class ResponseSubscribeTIC extends Response {
     super.updateOptionalParameters();
   }
 
+  /**
+   * Loads key descriptors for response parameters.
+   *
+   * <p>Initializes the descriptors and adds them to the response.
+   */
   private void loadKeyDescriptors() {
     try {
-
       this.addAllKeyDescriptor(this.keys);
     } catch (DataDictionaryException e) {
       throw new RuntimeException(e.getMessage(), e);

@@ -14,9 +14,30 @@ import enedis.tic.service.message.RequestReadTIC;
 import enedis.tic.service.message.RequestSubscribeTIC;
 import enedis.tic.service.message.RequestUnsubscribeTIC;
 
-/** TIC2WebSocket request factory */
+/**
+ * Factory for creating TIC2WebSocket request messages.
+ *
+ * <p>This class extends {@link RequestFactory} to register and instantiate request message types
+ * specific to the TIC2WebSocket protocol, including requests for TICs, modems, subscriptions, and
+ * reads.
+ *
+ * <p>Key features include:
+ *
+ * <ul>
+ *   <li>Registers all supported TIC2WebSocket request message classes
+ *   <li>Supports dynamic request creation by message name
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see RequestFactory
+ * @see RequestGetAvailableTICs
+ * @see RequestGetModemsInfo
+ * @see RequestReadTIC
+ * @see RequestSubscribeTIC
+ * @see RequestUnsubscribeTIC
+ */
 public class TIC2WebSocketRequestFactory extends RequestFactory {
-  /** Default constructor */
+  /** Constructs a new request factory and registers TIC2WebSocket request message types. */
   public TIC2WebSocketRequestFactory() {
     super();
     this.addMessageClass(RequestGetAvailableTICs.NAME, RequestGetAvailableTICs.class);

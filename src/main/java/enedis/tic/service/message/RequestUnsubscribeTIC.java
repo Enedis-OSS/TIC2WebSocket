@@ -18,32 +18,48 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * RequestUnsubscribeTIC class
+ * Request message for unsubscribing from TIC data in the TIC2WebSocket protocol.
  *
- * <p>Generated
+ * <p>This class represents a request to unsubscribe from TIC data for one or more identifiers. It
+ * provides constructors for various initialization scenarios and integrates with the request
+ * messaging system.
+ *
+ * <p>Key features include:
+ *
+ * <ul>
+ *   <li>Encapsulates request for TIC data unsubscription
+ *   <li>Supports construction from map, DataDictionary, or explicit identifier list
+ *   <li>Validates and manages request parameters using key descriptors
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see Request
+ * @see TICIdentifier
  */
 public class RequestUnsubscribeTIC extends Request {
+  /** Key for TIC identifier data in the request. */
   protected static final String KEY_DATA = "data";
 
-  /** Message name */
+  /** Message name for this request. */
   public static final String NAME = "UnsubscribeTIC";
 
   private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
+  /** Key descriptor for TIC identifier data. */
   protected KeyDescriptorList<TICIdentifier> kData;
 
+  /** Constructs a request for unsubscribing from TIC data with default values. */
   protected RequestUnsubscribeTIC() {
     super();
     this.loadKeyDescriptors();
-
     this.kName.setAcceptedValues(NAME);
   }
 
   /**
-   * Constructor using map
+   * Constructs a request for unsubscribing from TIC data from a map of values.
    *
-   * @param map
-   * @throws DataDictionaryException
+   * @param map the map containing request parameters
+   * @throws DataDictionaryException if validation fails
    */
   public RequestUnsubscribeTIC(Map<String, Object> map) throws DataDictionaryException {
     this();
@@ -51,10 +67,10 @@ public class RequestUnsubscribeTIC extends Request {
   }
 
   /**
-   * Constructor using datadictionary
+   * Constructs a request for unsubscribing from TIC data from another DataDictionary instance.
    *
-   * @param other
-   * @throws DataDictionaryException
+   * @param other the DataDictionary to copy from
+   * @throws DataDictionaryException if validation fails
    */
   public RequestUnsubscribeTIC(DataDictionary other) throws DataDictionaryException {
     this();
@@ -62,19 +78,22 @@ public class RequestUnsubscribeTIC extends Request {
   }
 
   /**
-   * Constructor setting parameters to specific values
+   * Constructs a request for unsubscribing from TIC data with a specific list of identifiers.
    *
-   * @param data
-   * @throws DataDictionaryException
+   * @param data the list of TIC identifiers
+   * @throws DataDictionaryException if validation fails
    */
   public RequestUnsubscribeTIC(List<TICIdentifier> data) throws DataDictionaryException {
     this();
-
     this.setData(data);
-
     this.checkAndUpdate();
   }
 
+  /**
+   * Updates optional parameters for the request, ensuring the name is set.
+   *
+   * @throws DataDictionaryException if validation fails
+   */
   @Override
   protected void updateOptionalParameters() throws DataDictionaryException {
     if (!this.exists(KEY_NAME)) {
@@ -84,9 +103,9 @@ public class RequestUnsubscribeTIC extends Request {
   }
 
   /**
-   * Get data
+   * Returns the list of TIC identifier data associated with this request.
    *
-   * @return the data
+   * @return the list of TIC identifiers
    */
   @SuppressWarnings("unchecked")
   public List<TICIdentifier> getData() {
@@ -94,19 +113,30 @@ public class RequestUnsubscribeTIC extends Request {
   }
 
   /**
-   * Set data
+   * Sets the list of TIC identifier data for this request.
    *
-   * @param data
-   * @throws DataDictionaryException
+   * @param data the list of TIC identifiers
+   * @throws DataDictionaryException if validation fails
    */
   public void setData(List<TICIdentifier> data) throws DataDictionaryException {
     this.setData((Object) data);
   }
 
+  /**
+   * Internal setter for TIC identifier data, with conversion and validation.
+   *
+   * @param data the TIC identifier list (Object or List<TICIdentifier>)
+   * @throws DataDictionaryException if validation fails
+   */
   protected void setData(Object data) throws DataDictionaryException {
     this.data.put(KEY_DATA, this.kData.convert(data));
   }
 
+  /**
+   * Loads key descriptors for request parameters.
+   *
+   * <p>Initializes the descriptor for TIC identifier data and adds it to the request.
+   */
   private void loadKeyDescriptors() {
     try {
       this.kData = new KeyDescriptorList<TICIdentifier>(KEY_DATA, false, TICIdentifier.class);

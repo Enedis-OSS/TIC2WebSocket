@@ -13,32 +13,42 @@ import enedis.lab.util.message.Request;
 import java.util.Map;
 
 /**
- * RequestGetAvailableTICs class
+ * Request message for retrieving available TICs.
  *
- * <p>Generated
+ * <p>This class represents a request to obtain the list of available TICs. It provides constructors
+ * for various initialization scenarios and integrates with the request messaging system.
+ *
+ * <p>Key features include:
+ *
+ * <ul>
+ *   <li>Encapsulates request for available TICs
+ *   <li>Supports construction from map, DataDictionary, or default values
+ *   <li>Validates and manages request parameters
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see Request
  */
 public class RequestGetAvailableTICs extends Request {
-  /** Message name */
+  /** Message name for this request. */
   public static final String NAME = "GetAvailableTICs";
 
   /**
-   * Default constructor
+   * Constructs a request for available TICs with default values.
    *
-   * @throws DataDictionaryException
+   * @throws DataDictionaryException if validation fails
    */
   public RequestGetAvailableTICs() throws DataDictionaryException {
     super();
-
     this.kName.setAcceptedValues(NAME);
-
     this.checkAndUpdate();
   }
 
   /**
-   * Constructor using map
+   * Constructs a request for available TICs from a map of values.
    *
-   * @param map
-   * @throws DataDictionaryException
+   * @param map the map containing request parameters
+   * @throws DataDictionaryException if validation fails
    */
   public RequestGetAvailableTICs(Map<String, Object> map) throws DataDictionaryException {
     this();
@@ -46,16 +56,21 @@ public class RequestGetAvailableTICs extends Request {
   }
 
   /**
-   * Constructor using datadictionary
+   * Constructs a request for available TICs from another DataDictionary instance.
    *
-   * @param other
-   * @throws DataDictionaryException
+   * @param other the DataDictionary to copy from
+   * @throws DataDictionaryException if validation fails
    */
   public RequestGetAvailableTICs(DataDictionary other) throws DataDictionaryException {
     this();
     this.copy(other);
   }
 
+  /**
+   * Updates optional parameters for the request, ensuring the name is set.
+   *
+   * @throws DataDictionaryException if validation fails
+   */
   @Override
   protected void updateOptionalParameters() throws DataDictionaryException {
     if (!this.exists(KEY_NAME)) {

@@ -19,32 +19,48 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ResponseGetModemsInfo class
+ * Response message for modem information.
  *
- * <p>Generated
+ * <p>This class represents a response containing the list of modem port descriptors. It provides
+ * constructors for various initialization scenarios and integrates with the response messaging
+ * system.
+ *
+ * <p>Key features include:
+ *
+ * <ul>
+ *   <li>Encapsulates response for modem information
+ *   <li>Supports construction from map, DataDictionary, or explicit parameter list
+ *   <li>Validates and manages response parameters using key descriptors
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see Response
+ * @see TICPortDescriptor
  */
 public class ResponseGetModemsInfo extends Response {
+  /** Key for modem port descriptor data in the response. */
   protected static final String KEY_DATA = "data";
 
-  /** Message name */
+  /** Message name for this response. */
   public static final String NAME = "GetModemsInfo";
 
   private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
+  /** Key descriptor for modem port descriptor data. */
   protected KeyDescriptorList<TICPortDescriptor> kData;
 
+  /** Constructs a response for modem information with default values. */
   protected ResponseGetModemsInfo() {
     super();
     this.loadKeyDescriptors();
-
     this.kName.setAcceptedValues(NAME);
   }
 
   /**
-   * Constructor using map
+   * Constructs a response for modem information from a map of values.
    *
-   * @param map
-   * @throws DataDictionaryException
+   * @param map the map containing response parameters
+   * @throws DataDictionaryException if validation fails
    */
   public ResponseGetModemsInfo(Map<String, Object> map) throws DataDictionaryException {
     this();
@@ -52,10 +68,10 @@ public class ResponseGetModemsInfo extends Response {
   }
 
   /**
-   * Constructor using datadictionary
+   * Constructs a response for modem information from another DataDictionary instance.
    *
-   * @param other
-   * @throws DataDictionaryException
+   * @param other the DataDictionary to copy from
+   * @throws DataDictionaryException if validation fails
    */
   public ResponseGetModemsInfo(DataDictionary other) throws DataDictionaryException {
     this();
@@ -63,27 +79,30 @@ public class ResponseGetModemsInfo extends Response {
   }
 
   /**
-   * Constructor setting parameters to specific values
+   * Constructs a response for modem information with explicit parameters.
    *
-   * @param dateTime
-   * @param errorCode
-   * @param errorMessage
-   * @param data
-   * @throws DataDictionaryException
+   * @param dateTime the response date and time
+   * @param errorCode the error code, if any
+   * @param errorMessage the error message, if any
+   * @param data the list of modem port descriptors
+   * @throws DataDictionaryException if validation fails
    */
   public ResponseGetModemsInfo(
       LocalDateTime dateTime, Number errorCode, String errorMessage, List<TICPortDescriptor> data)
       throws DataDictionaryException {
     this();
-
     this.setDateTime(dateTime);
     this.setErrorCode(errorCode);
     this.setErrorMessage(errorMessage);
     this.setData(data);
-
     this.checkAndUpdate();
   }
 
+  /**
+   * Updates optional parameters for the response, ensuring the name is set.
+   *
+   * @throws DataDictionaryException if validation fails
+   */
   @Override
   protected void updateOptionalParameters() throws DataDictionaryException {
     if (!this.exists(KEY_NAME)) {
@@ -93,9 +112,9 @@ public class ResponseGetModemsInfo extends Response {
   }
 
   /**
-   * Get data
+   * Returns the list of modem port descriptor data associated with this response.
    *
-   * @return the data
+   * @return the list of modem port descriptors
    */
   @SuppressWarnings("unchecked")
   public List<TICPortDescriptor> getData() {
@@ -103,19 +122,30 @@ public class ResponseGetModemsInfo extends Response {
   }
 
   /**
-   * Set data
+   * Sets the list of modem port descriptor data for this response.
    *
-   * @param data
-   * @throws DataDictionaryException
+   * @param data the list of modem port descriptors
+   * @throws DataDictionaryException if validation fails
    */
   public void setData(List<TICPortDescriptor> data) throws DataDictionaryException {
     this.setData((Object) data);
   }
 
+  /**
+   * Internal setter for modem port descriptor data, with conversion and validation.
+   *
+   * @param data the modem port descriptor list (Object or List<TICPortDescriptor>)
+   * @throws DataDictionaryException if validation fails
+   */
   protected void setData(Object data) throws DataDictionaryException {
     this.data.put(KEY_DATA, this.kData.convert(data));
   }
 
+  /**
+   * Loads key descriptors for response parameters.
+   *
+   * <p>Initializes the descriptor for modem port descriptor data and adds it to the response.
+   */
   private void loadKeyDescriptors() {
     try {
       this.kData =
