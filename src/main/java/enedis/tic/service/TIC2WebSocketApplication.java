@@ -27,9 +27,31 @@ import picocli.CommandLine;
 import picocli.CommandLine.IVersionProvider;
 import picocli.CommandLine.ParseResult;
 
-/** Class used to handle the application */
+/**
+ * Main application class for TIC2WebSocket.
+ *
+ * <p>This class manages the lifecycle of the TIC2WebSocket application, including initialization,
+ * configuration loading, command-line parsing, server startup and shutdown, and error handling.
+ * It integrates with the core TIC logic, client pool, request handler, and Netty server to provide
+ * a complete WebSocket-based interface for TIC data exchange.
+ *
+ * <p>Responsibilities include:
+ * <ul>
+ *   <li>Parsing command-line arguments and loading configuration
+ *   <li>Starting and stopping the TIC2WebSocket server and core
+ *   <li>Managing application state and error codes
+ *   <li>Handling logging configuration and shutdown hooks
+ *   <li>Providing entry point and main execution loop
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see TIC2WebSocketServer
+ * @see TIC2WebSocketClientPool
+ * @see TIC2WebSocketRequestHandler
+ * @see TICCore
+ */
 public class TIC2WebSocketApplication {
-  /** Project properties (see file project.properties) */
+  /** Project properties loaded from TIC2WebSocket.properties. */
   public static final Properties PROJECT_PROPERTIES = new Properties();
 
   static {
@@ -50,20 +72,22 @@ public class TIC2WebSocketApplication {
     }
   }
 
-  /** Project name ("project_name" from project.properties) */
+  /** Project name ("project_name" from project.properties). */
   public static final String NAME = PROJECT_PROPERTIES.getProperty("project_name", "");
 
-  /** Project version ("project_version" from project.properties) */
+  /** Project version ("project_version" from project.properties). */
   public static final String VERSION = PROJECT_PROPERTIES.getProperty("project_version", "");
 
-  /** Project description ("project_description" from project.properties) */
+  /** Project description ("project_description" from project.properties). */
   public static final String DESCRIPTION =
       PROJECT_PROPERTIES.getProperty("project_description", "");
 
   /**
-   * Program entry point
+   * Program entry point for TIC2WebSocket.
    *
-   * @param args Command line arguments
+   * <p>Initializes and runs the application, handling any startup errors.
+   *
+   * @param args command line arguments
    */
   public static void main(String[] args) {
     try {
@@ -89,9 +113,9 @@ public class TIC2WebSocketApplication {
   private TICCore ticCore;
 
   /**
-   * Application constructor
+   * Constructs a new TIC2WebSocketApplication instance.
    *
-   * @param args Command line arguments
+   * @param args command line arguments
    */
   public TIC2WebSocketApplication(String[] args) {
     this.commandLineArgs = args;
@@ -116,10 +140,12 @@ public class TIC2WebSocketApplication {
   }
 
   /**
-   * Application execution
+   * Executes the application main loop.
+   *
+   * <p>Initializes, starts, and manages the application lifecycle, including shutdown handling.
    *
    * @return 0 if success, else an error code
-   * @throws InterruptedException If the application thread gets interrupted
+   * @throws InterruptedException if the application thread is interrupted
    * @see TIC2WebSocketApplicationErrorCode
    */
   public int run() throws InterruptedException {
@@ -151,7 +177,9 @@ public class TIC2WebSocketApplication {
   }
 
   /**
-   * Application initialization
+   * Initializes the application and its components.
+   *
+   * <p>Parses command-line arguments, loads configuration, and prepares core components.
    *
    * @return 0 if success, else an error code
    * @see TIC2WebSocketApplicationErrorCode
@@ -193,7 +221,9 @@ public class TIC2WebSocketApplication {
   }
 
   /**
-   * Application start-up
+   * Starts the application and its main services.
+   *
+   * <p>Starts the TIC core and WebSocket server, and logs startup events.
    *
    * @return 0 if success, else an error code
    */
@@ -221,7 +251,7 @@ public class TIC2WebSocketApplication {
   }
 
   /**
-   * Application start-up indicator
+   * Indicates whether the application is currently started.
    *
    * @return true if the application is started, false otherwise
    */
@@ -230,7 +260,9 @@ public class TIC2WebSocketApplication {
   }
 
   /**
-   * Application stop
+   * Stops the application and releases resources.
+   *
+   * <p>Stops the WebSocket server and TIC core, and logs shutdown events.
    *
    * @return 0 if success, else an error code
    * @see TIC2WebSocketApplicationErrorCode
@@ -255,6 +287,13 @@ public class TIC2WebSocketApplication {
     return TIC2WebSocketApplicationErrorCode.NO_ERROR.code();
   }
 
+  /**
+   * Parses command-line arguments and validates them.
+   *
+   * <p>Logs errors for invalid arguments and returns appropriate error codes.
+   *
+   * @return 0 if success, else an error code
+   */
   private int parseCommandLine() {
     try {
       ParseResult parseResult = this.commandLineParser.parseArgs(this.commandLineArgs);
@@ -274,6 +313,14 @@ public class TIC2WebSocketApplication {
     return TIC2WebSocketApplicationErrorCode.NO_ERROR.code();
   }
 
+  /**
+   * Updates the logger configuration based on the specified log level.
+   *
+   * <p>Reconfigures Log4j and sets the application logger.
+   *
+   * @param level the log level to use
+   * @return 0 if success, else an error code
+   */
   private int updateLoggerConfiguration(Level level) {
     try {
       System.setProperty(
@@ -290,6 +337,13 @@ public class TIC2WebSocketApplication {
     return TIC2WebSocketApplicationErrorCode.NO_ERROR.code();
   }
 
+  /**
+   * Loads the application configuration from file.
+   *
+   * <p>Reads the configuration file and initializes the configuration object.
+   *
+   * @return 0 if success, else an error code
+   */
   private int loadConfiguration() {
     String configFile = null;
 

@@ -20,26 +20,56 @@ import io.netty.handler.logging.LoggingHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/** TIC2WebSocket Netty WebSocket Server */
+/**
+ * TIC2WebSocket Netty WebSocket Server.
+ *
+ * <p>This class manages the lifecycle of the WebSocket server, including startup,
+ * shutdown, and connection handling. It configures the Netty pipeline and integrates with the client pool
+ * and request handler to support real-time TIC data exchange over WebSocket.
+ *
+ * <p>Responsibilities include:
+ * <ul>
+ *   <li>Starting and stopping the WebSocket server
+ *   <li>Managing server channel and event loop groups
+ *   <li>Binding to the specified host and port
+ *   <li>Integrating with TIC2WebSocket client pool and request handler
+ *   <li>Logging server lifecycle events and errors
+ * </ul>
+ *
+ * <p>This class is intended to be used as the main entry point for launching the TIC2WebSocket server.
+ *
+ * @author Enedis Smarties team
+ * @see TIC2WebSocketClientPool
+ * @see TIC2WebSocketRequestHandler
+ * @see TIC2WebSocketChannelInitializer
+ */
 public class TIC2WebSocketServer {
+  /** Logger for server lifecycle and events. */
   private static final Logger logger = LogManager.getLogger(TIC2WebSocketServer.class);
 
+  /** Host address to bind the server. */
   private final String host;
+  /** Port to bind the server. */
   private final int port;
+  /** Pool managing active WebSocket clients. */
   private final TIC2WebSocketClientPool clientPool;
+  /** Handler for processing incoming requests. */
   private final TIC2WebSocketRequestHandler requestHandler;
 
+  /** Netty boss event loop group (accepts connections). */
   private EventLoopGroup bossGroup;
+  /** Netty worker event loop group (handles traffic). */
   private EventLoopGroup workerGroup;
+  /** Main server channel. */
   private Channel serverChannel;
 
   /**
-   * Constructor
+   * Constructs a new TIC2WebSocketServer.
    *
-   * @param host the host to bind to
-   * @param port the port to bind to
-   * @param clientPool the client pool
-   * @param requestHandler the request handler
+   * @param host the host address to bind the server
+   * @param port the port to bind the server
+   * @param clientPool the pool managing WebSocket clients
+   * @param requestHandler the handler for processing requests
    */
   public TIC2WebSocketServer(
       String host,
@@ -53,7 +83,10 @@ public class TIC2WebSocketServer {
   }
 
   /**
-   * Start the WebSocket server
+   * Starts the WebSocket server and binds to the configured host and port.
+   *
+   * <p>Initializes Netty event loop groups and configures the server pipeline. Logs startup events and
+   * handles errors during server initialization.
    *
    * @throws Exception if server startup fails
    */
@@ -82,7 +115,11 @@ public class TIC2WebSocketServer {
     }
   }
 
-  /** Stop the WebSocket server */
+  /**
+   * Stops the WebSocket server and releases resources.
+   *
+   * <p>Closes the server channel and gracefully shuts down event loop groups. Logs shutdown events.
+   */
   public void stop() {
     logger.info("Stopping TIC2WebSocket Netty server");
 
@@ -106,7 +143,9 @@ public class TIC2WebSocketServer {
   }
 
   /**
-   * Wait for the server to close
+   * Waits for the server channel to close.
+   *
+   * <p>Blocks until the server channel is closed, allowing for graceful shutdown.
    *
    * @throws InterruptedException if interrupted while waiting
    */

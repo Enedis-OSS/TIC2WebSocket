@@ -18,7 +18,29 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
-/** Channel initializer for TIC2WebSocket server */
+/**
+ * Netty channel initializer for configuring the WebSocket server pipeline.
+ *
+ * <p>This class sets up the Netty channel pipeline for incoming socket connections, adding HTTP and WebSocket
+ * handlers, compression, chunked writing, and custom request handling. It is responsible for preparing each
+ * channel to handle WebSocket communication and routing requests to the appropriate handler.
+ *
+ * <p>Main responsibilities:
+ * <ul>
+ *   <li>Configure HTTP and WebSocket protocol handlers</li>
+ *   <li>Enable compression and chunked writing for large messages</li>
+ *   <li>Route requests to the custom request handler</li>
+ *   <li>Manage client pool for active connections</li>
+ * </ul>
+ *
+ * <p>Typical usage:
+ * <ul>
+ *   <li>Instantiate with a client pool and request handler</li>
+ *   <li>Attach to a Netty server bootstrap for WebSocket support</li>
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ */
 public class TIC2WebSocketChannelInitializer extends ChannelInitializer<SocketChannel> {
   private static final String WEBSOCKET_PATH = "/";
 

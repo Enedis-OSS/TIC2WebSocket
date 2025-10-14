@@ -7,31 +7,53 @@
 
 package enedis.tic.service;
 
-/** Application error codes list */
+/**
+ * Enumeration of application error codes for TIC2WebSocket.
+ *
+ * <p>This enum defines error codes used throughout the TIC2WebSocket application to indicate
+ * specific error conditions, such as invalid command line arguments, configuration failures,
+ * and application state errors. Each error code is associated with an integer value for
+ * consistent error reporting and handling.
+ *
+ * <p>Common use cases include:
+ * <ul>
+ *   <li>Reporting application initialization and runtime errors
+ *   <li>Standardizing error codes for logging and responses
+ *   <li>Facilitating error handling in the main application logic
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ */
 public enum TIC2WebSocketApplicationErrorCode {
-  /** Success code */
+  /** No error (success). */
   NO_ERROR(0),
-  /** Command line invalid code */
+  /** Command line is invalid. */
   COMMAND_LINE_INVALID(1),
-  /** Update logger configuration code */
+  /** Logger configuration update failure. */
   UPDATE_LOGGER_CONFIGURATION_FAILURE(2),
-  /** Application already started code */
+  /** Application is already started. */
   APPLICATION_ALREADY_STARTED(3),
-  /** Application not started code */
+  /** Application is not started. */
   APPLICATION_NOT_STARTED(4),
-  /** Load configuration failure code */
+  /** Configuration loading failure. */
   LOAD_CONFIGURATION_FAILURE(5);
 
+  /** Integer value of the error code. */
   private int code;
 
+  /**
+   * Constructs an error code enum value.
+   *
+   * @param code the integer value of the error code
+   */
   private TIC2WebSocketApplicationErrorCode(int code) {
     this.code = code;
   }
 
   /**
-   * Return error code
+   * Returns the integer value of the error code.
    *
-   * @return code
+   * @return the error code value
    */
   public int code() {
     return this.code;
