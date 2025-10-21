@@ -270,7 +270,7 @@ public class TIC2WebSocketConfiguration extends ConfigurationBase {
           new KeyDescriptorNumberMinMax(KEY_SERVER_PORT, true, SERVER_PORT_MIN, SERVER_PORT_MAX);
       this.keys.add(this.kServerPort);
 
-      this.kTicMode = new KeyDescriptorEnum<>(KEY_TIC_MODE, false, TICMode.class);
+      this.kTicMode = new KeyDescriptorEnum<TICMode>(KEY_TIC_MODE, false, TICMode.class);
       this.keys.add(this.kTicMode);
 
       this.kTicPortNames =
