@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -7,204 +7,174 @@
 
 package enedis.lab.types.datadictionary;
 
+import enedis.lab.types.DataDictionaryException;
 import java.util.Arrays;
 import java.util.List;
 
-import enedis.lab.types.DataDictionaryException;
-
 /**
- * DataDictionary key descriptor base
+ * Abstract base class for key descriptors in a data dictionary.
  *
- * @param <T>
+ * <p>Provides common logic for key name, mandatory flag, accepted values, and value
+ * conversion/validation. Subclasses must implement the type-specific conversion logic.
+ *
+ * @param <T> the type of value associated with the key
+ * @author Enedis Smarties team
  */
-public abstract class KeyDescriptorBase<T> implements KeyDescriptor<T>
-{
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public abstract class KeyDescriptorBase<T> implements KeyDescriptor<T> {
+  /** The name of the key described by this descriptor. */
+  private String name;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /** Whether the key is mandatory in the data dictionary. */
+  private boolean mandatory;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /** List of accepted values for this key, or null if any value is accepted. */
+  protected List<T> acceptedValues;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructs a key descriptor with the given name and mandatory flag.
+   *
+   * @param name the key name (must not be null)
+   * @param mandatory true if the key is mandatory, false otherwise
+   */
+  public KeyDescriptorBase(String name, boolean mandatory) {
+    super();
+    this.name = name;
+    this.mandatory = mandatory;
+  }
 
-	private String		name;
-	private boolean		mandatory;
-	protected List<T>	acceptedValues;
+  /**
+   * Converts an object to the value type T for this key, checking accepted values if set.
+   *
+   * @param value the object to convert
+   * @return the converted value of type T
+   * @throws DataDictionaryException if the value is null and mandatory, or not accepted, or cannot
+   *     be converted
+   */
+  @Override
+  public final T convert(Object value) throws DataDictionaryException {
+    T convertedValue = null;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if (value == null) {
+      this.handleNullValue();
+      return null;
+    }
 
-	/**
-	 * Constructor setting all attributes
-	 *
-	 * @param name
-	 * @param mandatory
-	 */
-	public KeyDescriptorBase(String name, boolean mandatory)
-	{
-		super();
-		this.name = name;
-		this.mandatory = mandatory;
-	}
+    convertedValue = this.convertValue(value);
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE
-	/// KeyDescriptor
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    this.checkAcceptedValues(convertedValue);
 
-	@Override
-	public final T convert(Object value) throws DataDictionaryException
-	{
-		T convertedValue = null;
+    return convertedValue;
+  }
 
-		if (value == null)
-		{
-			this.handleNullValue();
-			return null;
-		}
+  /**
+   * Returns the string representation of a value of type T.
+   *
+   * @param value the value to convert to String
+   * @return the string representation, or null if value is null
+   */
+  @Override
+  public String toString(T value) {
+    if (value == null) {
+      return null;
+    }
 
-		convertedValue = this.convertValue(value);
+    return value.toString();
+  }
 
-		this.checkAcceptedValues(convertedValue);
+  /**
+   * Returns the name of the key described by this descriptor.
+   *
+   * @return the key name
+   */
+  @Override
+  public String getName() {
+    return this.name;
+  }
 
-		return convertedValue;
-	}
+  /**
+   * Sets the name of the key described by this descriptor.
+   *
+   * @param name the key name
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	@Override
-	public String toString(T value)
-	{
-		if (value == null)
-		{
-			return null;
-		}
+  /**
+   * Indicates whether the key is mandatory in the data dictionary.
+   *
+   * @return true if the key is mandatory, false otherwise
+   */
+  @Override
+  public boolean isMandatory() {
+    return this.mandatory;
+  }
 
-		return value.toString();
-	}
+  /**
+   * Sets whether the key is mandatory in the data dictionary.
+   *
+   * @param mandatory true to mark the key as mandatory, false otherwise
+   */
+  @Override
+  public void setMandatory(boolean mandatory) {
+    this.mandatory = mandatory;
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Sets the list of accepted values for this key.
+   *
+   * @param acceptedValues the accepted values for this key
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public void setAcceptedValues(T... acceptedValues) {
+    this.acceptedValues = Arrays.asList(acceptedValues);
+  }
 
-	/**
-	 * Get key name
-	 *
-	 * @return key name
-	 */
-	@Override
-	public String getName()
-	{
-		return this.name;
-	}
+  /**
+   * Converts an object to the value type T for this key (type-specific logic). Subclasses must
+   * implement this method.
+   *
+   * @param value the object to convert
+   * @return the converted value of type T
+   * @throws DataDictionaryException if the value cannot be converted
+   */
+  protected abstract T convertValue(Object value) throws DataDictionaryException;
 
-	/**
-	 * Set key name
-	 *
-	 * @param name
-	 */
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+  /**
+   * Handles the case where a null value is set for this key. Throws an exception if the key is
+   * mandatory.
+   *
+   * @throws DataDictionaryException if the key is mandatory
+   */
+  protected final void handleNullValue() throws DataDictionaryException {
+    if (this.isMandatory()) {
+      throw new DataDictionaryException("Cannot set null " + this.getName());
+    }
+  }
 
-	/**
-	 * Get mandatory flag
-	 *
-	 * @return mandatory flag
-	 */
-	@Override
-	public boolean isMandatory()
-	{
-		return this.mandatory;
-	}
+  /**
+   * Checks if the given value is among the accepted values for this key, if any are set. Throws an
+   * exception if the value is not accepted.
+   *
+   * @param value the value to check
+   * @throws DataDictionaryException if the value is not accepted
+   */
+  protected void checkAcceptedValues(T value) throws DataDictionaryException {
+    if (this.acceptedValues != null) {
+      boolean accepted = false;
 
-	/**
-	 * Set mandatory flag
-	 *
-	 * @param mandatory
-	 */
-	@Override
-	public void setMandatory(boolean mandatory)
-	{
-		this.mandatory = mandatory;
-	}
+      for (T v : this.acceptedValues) {
+        if (v.equals(value)) {
+          accepted = true;
+          break;
+        }
+      }
 
-	/**
-	 * Set mandatory value
-	 *
-	 * @param acceptedValues
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void setAcceptedValues(T... acceptedValues)
-	{
-		this.acceptedValues = Arrays.asList(acceptedValues);
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	protected abstract T convertValue(Object value) throws DataDictionaryException;
-
-	protected final void handleNullValue() throws DataDictionaryException
-	{
-		if (this.isMandatory())
-		{
-			throw new DataDictionaryException("Cannot set null " + this.getName());
-		}
-	}
-
-	protected void checkAcceptedValues(T value) throws DataDictionaryException
-	{
-		if (this.acceptedValues != null)
-		{
-			boolean accepted = false;
-
-			for (T v : this.acceptedValues)
-			{
-				if (v.equals(value))
-				{
-					accepted = true;
-					break;
-				}
-			}
-
-			if (!accepted)
-			{
-				throw new DataDictionaryException("Key " + this.getName() + " doesn't respect mandatory value");
-			}
-		}
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+      if (!accepted) {
+        throw new DataDictionaryException(
+            "Key " + this.getName() + " doesn't respect mandatory value");
+      }
+    }
+  }
 }

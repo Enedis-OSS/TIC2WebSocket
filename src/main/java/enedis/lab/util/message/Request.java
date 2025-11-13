@@ -7,149 +7,94 @@
 
 package enedis.lab.util.message;
 
+import enedis.lab.types.DataDictionary;
+import enedis.lab.types.DataDictionaryException;
+import enedis.lab.types.datadictionary.KeyDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import enedis.lab.types.DataDictionary;
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.types.datadictionary.KeyDescriptor;
-
 /**
- * Request class
- * 
- * Generated
+ * Abstract base class for request messages.
+ *
+ * <p>This class represents request messages. It enforces the accepted message type and provides
+ * support for request-specific fields. Subclasses can define additional request data and behavior.
+ *
+ * <p>Common use cases include:
+ *
+ * <ul>
+ *   <li>Representing client requests for data or actions
+ *   <li>Handling request validation and processing
+ *   <li>Extending for custom request types
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see Message
  */
-public abstract class Request extends Message
-{
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public abstract class Request extends Message {
+  private static final MessageType TYPE_ACCEPTED_VALUE = MessageType.REQUEST;
 
-	private static final MessageType	TYPE_ACCEPTED_VALUE	= MessageType.REQUEST;
+  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected Request() {
+    super();
+    this.loadKeyDescriptors();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    this.kType.setAcceptedValues(TYPE_ACCEPTED_VALUE);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructor using map
+   *
+   * @param map
+   * @throws DataDictionaryException
+   */
+  public Request(Map<String, Object> map) throws DataDictionaryException {
+    this();
+    this.copy(fromMap(map));
+  }
 
-	private List<KeyDescriptor<?>>		keys				= new ArrayList<KeyDescriptor<?>>();
+  /**
+   * Constructor using datadictionary
+   *
+   * @param other
+   * @throws DataDictionaryException
+   */
+  public Request(DataDictionary other) throws DataDictionaryException {
+    this();
+    this.copy(other);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructor setting parameters to specific values
+   *
+   * @param type
+   * @param name
+   * @throws DataDictionaryException
+   */
+  public Request(MessageType type, String name) throws DataDictionaryException {
+    this();
 
-	protected Request()
-	{
-		super();
-		this.loadKeyDescriptors();
+    this.setType(type);
+    this.setName(name);
 
-		this.kType.setAcceptedValues(TYPE_ACCEPTED_VALUE);
-	}
+    this.checkAndUpdate();
+  }
 
-	/**
-	 * Constructor using map
-	 *
-	 * @param map
-	 * @throws DataDictionaryException
-	 */
-	public Request(Map<String, Object> map) throws DataDictionaryException
-	{
-		this();
-		this.copy(fromMap(map));
-	}
+  @Override
+  protected void updateOptionalParameters() throws DataDictionaryException {
+    if (!this.exists(KEY_TYPE)) {
+      this.setType(TYPE_ACCEPTED_VALUE);
+    }
+    super.updateOptionalParameters();
+  }
 
-	/**
-	 * Constructor using datadictionary
-	 *
-	 * @param other
-	 * @throws DataDictionaryException
-	 */
-	public Request(DataDictionary other) throws DataDictionaryException
-	{
-		this();
-		this.copy(other);
-	}
+  private void loadKeyDescriptors() {
+    try {
 
-	/**
-	 * Constructor setting parameters to specific values
-	 *
-	 * @param type
-	 * @param name
-	 * @throws DataDictionaryException
-	 */
-	public Request(MessageType type, String name) throws DataDictionaryException
-	{
-		this();
-
-		this.setType(type);
-		this.setName(name);
-
-		this.checkAndUpdate();
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE 
-	/// Message
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	protected void updateOptionalParameters() throws DataDictionaryException
-	{
-		if (!this.exists(KEY_TYPE))
-		{
-			this.setType(TYPE_ACCEPTED_VALUE);
-		}
-		super.updateOptionalParameters();
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-
-	private void loadKeyDescriptors()
-	{
-		try
-		{
-
-			this.addAllKeyDescriptor(this.keys);
-		}
-		catch (DataDictionaryException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+      this.addAllKeyDescriptor(this.keys);
+    } catch (DataDictionaryException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
 }

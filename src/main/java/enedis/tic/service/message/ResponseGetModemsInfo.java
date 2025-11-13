@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -7,191 +7,154 @@
 
 package enedis.tic.service.message;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import enedis.lab.io.tic.TICPortDescriptor;
 import enedis.lab.types.DataDictionary;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.KeyDescriptor;
 import enedis.lab.types.datadictionary.KeyDescriptorList;
 import enedis.lab.util.message.Response;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
- * ResponseGetModemsInfo class
- * 
- * Generated
+ * Response message for modem information.
+ *
+ * <p>This class represents a response containing the list of modem port descriptors. It provides
+ * constructors for various initialization scenarios and integrates with the response messaging
+ * system.
+ *
+ * <p>Key features include:
+ *
+ * <ul>
+ *   <li>Encapsulates response for modem information
+ *   <li>Supports construction from map, DataDictionary, or explicit parameter list
+ *   <li>Validates and manages response parameters using key descriptors
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see Response
+ * @see TICPortDescriptor
  */
-public class ResponseGetModemsInfo extends Response
-{
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public class ResponseGetModemsInfo extends Response {
+  /** Key for modem port descriptor data in the response. */
+  protected static final String KEY_DATA = "data";
 
-	protected static final String					KEY_DATA	= "data";
+  /** Message name for this response. */
+  public static final String NAME = "GetModemsInfo";
 
-	/** Message name */
-	public static final String						NAME		= "GetModemsInfo";
+  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /** Key descriptor for modem port descriptor data. */
+  protected KeyDescriptorList<TICPortDescriptor> kData;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /** Constructs a response for modem information with default values. */
+  protected ResponseGetModemsInfo() {
+    super();
+    this.loadKeyDescriptors();
+    this.kName.setAcceptedValues(NAME);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructs a response for modem information from a map of values.
+   *
+   * @param map the map containing response parameters
+   * @throws DataDictionaryException if validation fails
+   */
+  public ResponseGetModemsInfo(Map<String, Object> map) throws DataDictionaryException {
+    this();
+    this.copy(fromMap(map));
+  }
 
-	private List<KeyDescriptor<?>>					keys		= new ArrayList<KeyDescriptor<?>>();
+  /**
+   * Constructs a response for modem information from another DataDictionary instance.
+   *
+   * @param other the DataDictionary to copy from
+   * @throws DataDictionaryException if validation fails
+   */
+  public ResponseGetModemsInfo(DataDictionary other) throws DataDictionaryException {
+    this();
+    this.copy(other);
+  }
 
-	protected KeyDescriptorList<TICPortDescriptor>	kData;
+  /**
+   * Constructs a response for modem information with explicit parameters.
+   *
+   * @param dateTime the response date and time
+   * @param errorCode the error code, if any
+   * @param errorMessage the error message, if any
+   * @param data the list of modem port descriptors
+   * @throws DataDictionaryException if validation fails
+   */
+  public ResponseGetModemsInfo(
+      LocalDateTime dateTime, Number errorCode, String errorMessage, List<TICPortDescriptor> data)
+      throws DataDictionaryException {
+    this();
+    this.setDateTime(dateTime);
+    this.setErrorCode(errorCode);
+    this.setErrorMessage(errorMessage);
+    this.setData(data);
+    this.checkAndUpdate();
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Updates optional parameters for the response, ensuring the name is set.
+   *
+   * @throws DataDictionaryException if validation fails
+   */
+  @Override
+  protected void updateOptionalParameters() throws DataDictionaryException {
+    if (!this.exists(KEY_NAME)) {
+      this.setName(NAME);
+    }
+    super.updateOptionalParameters();
+  }
 
-	protected ResponseGetModemsInfo()
-	{
-		super();
-		this.loadKeyDescriptors();
+  /**
+   * Returns the list of modem port descriptor data associated with this response.
+   *
+   * @return the list of modem port descriptors
+   */
+  @SuppressWarnings("unchecked")
+  public List<TICPortDescriptor> getData() {
+    return (List<TICPortDescriptor>) this.data.get(KEY_DATA);
+  }
 
-		this.kName.setAcceptedValues(NAME);
-	}
+  /**
+   * Sets the list of modem port descriptor data for this response.
+   *
+   * @param data the list of modem port descriptors
+   * @throws DataDictionaryException if validation fails
+   */
+  public void setData(List<TICPortDescriptor> data) throws DataDictionaryException {
+    this.setData((Object) data);
+  }
 
-	/**
-	 * Constructor using map
-	 *
-	 * @param map
-	 * @throws DataDictionaryException
-	 */
-	public ResponseGetModemsInfo(Map<String, Object> map) throws DataDictionaryException
-	{
-		this();
-		this.copy(fromMap(map));
-	}
+  /**
+   * Internal setter for modem port descriptor data, with conversion and validation.
+   *
+   * @param data the modem port descriptor list (Object or List<TICPortDescriptor>)
+   * @throws DataDictionaryException if validation fails
+   */
+  protected void setData(Object data) throws DataDictionaryException {
+    this.data.put(KEY_DATA, this.kData.convert(data));
+  }
 
-	/**
-	 * Constructor using datadictionary
-	 *
-	 * @param other
-	 * @throws DataDictionaryException
-	 */
-	public ResponseGetModemsInfo(DataDictionary other) throws DataDictionaryException
-	{
-		this();
-		this.copy(other);
-	}
+  /**
+   * Loads key descriptors for response parameters.
+   *
+   * <p>Initializes the descriptor for modem port descriptor data and adds it to the response.
+   */
+  private void loadKeyDescriptors() {
+    try {
+      this.kData =
+          new KeyDescriptorList<TICPortDescriptor>(KEY_DATA, false, TICPortDescriptor.class);
+      this.keys.add(this.kData);
 
-	/**
-	 * Constructor setting parameters to specific values
-	 *
-	 * @param dateTime
-	 * @param errorCode
-	 * @param errorMessage
-	 * @param data
-	 * @throws DataDictionaryException
-	 */
-	public ResponseGetModemsInfo(LocalDateTime dateTime, Number errorCode, String errorMessage, List<TICPortDescriptor> data) throws DataDictionaryException
-	{
-		this();
-
-		this.setDateTime(dateTime);
-		this.setErrorCode(errorCode);
-		this.setErrorMessage(errorMessage);
-		this.setData(data);
-
-		this.checkAndUpdate();
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE 
-	/// Response
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	protected void updateOptionalParameters() throws DataDictionaryException
-	{
-		if (!this.exists(KEY_NAME))
-		{
-			this.setName(NAME);
-		}
-		super.updateOptionalParameters();
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Get data
-	 *
-	 * @return the data
-	 */
-	@SuppressWarnings("unchecked")
-	public List<TICPortDescriptor> getData()
-	{
-		return (List<TICPortDescriptor>) this.data.get(KEY_DATA);
-	}
-
-	/**
-	 * Set data
-	 *
-	 * @param data
-	 * @throws DataDictionaryException
-	 */
-	public void setData(List<TICPortDescriptor> data) throws DataDictionaryException
-	{
-		this.setData((Object) data);
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	protected void setData(Object data) throws DataDictionaryException
-	{
-		this.data.put(KEY_DATA, this.kData.convert(data));
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-
-	private void loadKeyDescriptors()
-	{
-		try
-		{
-			this.kData = new KeyDescriptorList<TICPortDescriptor>(KEY_DATA, false, TICPortDescriptor.class);
-			this.keys.add(this.kData);
-
-			this.addAllKeyDescriptor(this.keys);
-		}
-		catch (DataDictionaryException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+      this.addAllKeyDescriptor(this.keys);
+    } catch (DataDictionaryException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
 }

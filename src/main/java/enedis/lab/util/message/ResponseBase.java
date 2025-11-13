@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -7,183 +7,134 @@
 
 package enedis.lab.util.message;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import enedis.lab.types.DataDictionary;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.DataDictionaryBase;
 import enedis.lab.types.datadictionary.KeyDescriptor;
 import enedis.lab.types.datadictionary.KeyDescriptorDataDictionary;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
- * ResponseBase class
- * 
- * Generated
+ * Concrete base class for response messages with data payload.
+ *
+ * <p>This class extends {@link Response} to provide support for a data payload field, enabling
+ * responses to carry additional structured data. It is used for responses that require more complex
+ * content beyond basic status and error reporting.
+ *
+ * <p>Common use cases include:
+ *
+ * <ul>
+ *   <li>Returning structured data in response to client requests
+ *   <li>Supporting extensible response formats
+ *   <li>Providing a base for custom response types with data
+ * </ul>
+ *
+ * @author Enedis Smarties team
+ * @see Response
  */
-public class ResponseBase extends Response
-{
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public class ResponseBase extends Response {
+  protected static final String KEY_DATA = "data";
 
-	protected static final String								KEY_DATA	= "data";
+  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected KeyDescriptorDataDictionary<DataDictionaryBase> kData;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected ResponseBase() {
+    super();
+    this.loadKeyDescriptors();
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructor using map
+   *
+   * @param map
+   * @throws DataDictionaryException
+   */
+  public ResponseBase(Map<String, Object> map) throws DataDictionaryException {
+    this();
+    this.copy(fromMap(map));
+  }
 
-	private List<KeyDescriptor<?>>								keys		= new ArrayList<KeyDescriptor<?>>();
+  /**
+   * Constructor using datadictionary
+   *
+   * @param other
+   * @throws DataDictionaryException
+   */
+  public ResponseBase(DataDictionary other) throws DataDictionaryException {
+    this();
+    this.copy(other);
+  }
 
-	protected KeyDescriptorDataDictionary<DataDictionaryBase>	kData;
+  /**
+   * Constructor setting parameters to specific values
+   *
+   * @param name
+   * @param dateTime
+   * @param errorCode
+   * @param errorMessage
+   * @param data
+   * @throws DataDictionaryException
+   */
+  public ResponseBase(
+      String name,
+      LocalDateTime dateTime,
+      Number errorCode,
+      String errorMessage,
+      DataDictionaryBase data)
+      throws DataDictionaryException {
+    this();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    this.setName(name);
+    this.setDateTime(dateTime);
+    this.setErrorCode(errorCode);
+    this.setErrorMessage(errorMessage);
+    this.setData(data);
 
-	protected ResponseBase()
-	{
-		super();
-		this.loadKeyDescriptors();
+    this.checkAndUpdate();
+  }
 
-	}
+  @Override
+  protected void updateOptionalParameters() throws DataDictionaryException {
+    super.updateOptionalParameters();
+  }
 
-	/**
-	 * Constructor using map
-	 *
-	 * @param map
-	 * @throws DataDictionaryException
-	 */
-	public ResponseBase(Map<String, Object> map) throws DataDictionaryException
-	{
-		this();
-		this.copy(fromMap(map));
-	}
+  /**
+   * Get data
+   *
+   * @return the data
+   */
+  public DataDictionaryBase getData() {
+    return (DataDictionaryBase) this.data.get(KEY_DATA);
+  }
 
-	/**
-	 * Constructor using datadictionary
-	 *
-	 * @param other
-	 * @throws DataDictionaryException
-	 */
-	public ResponseBase(DataDictionary other) throws DataDictionaryException
-	{
-		this();
-		this.copy(other);
-	}
+  /**
+   * Set data
+   *
+   * @param data
+   * @throws DataDictionaryException
+   */
+  public void setData(DataDictionaryBase data) throws DataDictionaryException {
+    this.setData((Object) data);
+  }
 
-	/**
-	 * Constructor setting parameters to specific values
-	 *
-	 * @param name
-	 * @param dateTime
-	 * @param errorCode
-	 * @param errorMessage
-	 * @param data
-	 * @throws DataDictionaryException
-	 */
-	public ResponseBase(String name, LocalDateTime dateTime, Number errorCode, String errorMessage, DataDictionaryBase data) throws DataDictionaryException
-	{
-		this();
+  protected void setData(Object data) throws DataDictionaryException {
+    this.data.put(KEY_DATA, this.kData.convert(data));
+  }
 
-		this.setName(name);
-		this.setDateTime(dateTime);
-		this.setErrorCode(errorCode);
-		this.setErrorMessage(errorMessage);
-		this.setData(data);
+  private void loadKeyDescriptors() {
+    try {
+      this.kData =
+          new KeyDescriptorDataDictionary<DataDictionaryBase>(
+              KEY_DATA, false, DataDictionaryBase.class);
+      this.keys.add(this.kData);
 
-		this.checkAndUpdate();
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE 
-	/// Response
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	protected void updateOptionalParameters() throws DataDictionaryException
-	{
-		super.updateOptionalParameters();
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Get data
-	 *
-	 * @return the data
-	 */
-	public DataDictionaryBase getData()
-	{
-		return (DataDictionaryBase) this.data.get(KEY_DATA);
-	}
-
-	/**
-	 * Set data
-	 *
-	 * @param data
-	 * @throws DataDictionaryException
-	 */
-	public void setData(DataDictionaryBase data) throws DataDictionaryException
-	{
-		this.setData((Object) data);
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	protected void setData(Object data) throws DataDictionaryException
-	{
-		this.data.put(KEY_DATA, this.kData.convert(data));
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-
-	private void loadKeyDescriptors()
-	{
-		try
-		{
-			this.kData = new KeyDescriptorDataDictionary<DataDictionaryBase>(KEY_DATA, false, DataDictionaryBase.class);
-			this.keys.add(this.kData);
-
-			this.addAllKeyDescriptor(this.keys);
-		}
-		catch (DataDictionaryException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+      this.addAllKeyDescriptor(this.keys);
+    } catch (DataDictionaryException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
 }

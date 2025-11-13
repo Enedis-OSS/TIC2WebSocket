@@ -8,14 +8,24 @@
 package enedis.lab.util.message;
 
 /**
- * Message type
+ * Enumeration of message types.
+ *
+ * <p>This enum defines the supported message types, including events, requests, and responses. It
+ * is used to categorize messages and control their processing in the communication pipeline.
+ *
+ * <ul>
+ *   <li>{@link #EVENT} - Event messages
+ *   <li>{@link #REQUEST} - Request messages
+ *   <li>{@link #RESPONSE} - Response messages
+ * </ul>
+ *
+ * @author Enedis Smarties team
  */
-public enum MessageType
-{
-	/** Event */
-	EVENT,
-	/** Request */
-	REQUEST,
-	/** Response */
-	RESPONSE;
+public enum MessageType {
+  /** Event */
+  EVENT,
+  /** Request */
+  REQUEST,
+  /** Response */
+  RESPONSE;
 }

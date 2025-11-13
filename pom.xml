@@ -6,26 +6,25 @@ SPDX-License-Identifier: Apache-2.0
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-v4_0_0.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-<!-- Project Information -->
+  <!-- Project Information -->
   <groupId>fr.enedis</groupId>
   <artifactId>TIC2WebSocket</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
   <description>
-	Tele Information Client (TIC) WebSocket Interface
+    Tele Information Client (TIC) WebSocket Interface
   </description>
   <organization>
     <name>Enedis</name>
     <url>http://www.enedis.fr/</url>
   </organization>
 
-<!-- Project Licenses -->
+  <!-- Project Licenses -->
   <licenses>
     <license>
       <name>Apache-2.0</name>
@@ -35,7 +34,7 @@ SPDX-License-Identifier: Apache-2.0
     </license>
   </licenses>
 
-<!-- Project Developers -->
+  <!-- Project Developers -->
   <developers>
     <developer>
       <name>Jehan BOUSCH</name>
@@ -61,25 +60,25 @@ SPDX-License-Identifier: Apache-2.0
     </developer>
   </developers>
 
-<!-- Project Contributors -->
-  <contributors/>
+  <!-- Project Contributors -->
+  <contributors />
 
-<!-- Project Mailing Lists -->
-  <mailingLists/>
+  <!-- Project Mailing Lists -->
+  <mailingLists />
 
-<!-- Project Source Control Management -->
-  <scm/>
+  <!-- Project Source Control Management -->
+  <scm />
 
-<!-- Project Issue Management -->
-  <issueManagement/>
+  <!-- Project Issue Management -->
+  <issueManagement />
 
-<!-- Project Continuous Integration Management -->
-  <ciManagement/>
+  <!-- Project Continuous Integration Management -->
+  <ciManagement />
 
-<!-- Project Distribution Management -->
-  <distributionManagement/>
+  <!-- Project Distribution Management -->
+  <distributionManagement />
 
-<!-- Project Properties -->
+  <!-- Project Properties -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
@@ -90,10 +89,10 @@ SPDX-License-Identifier: Apache-2.0
     <project_name>${project.name}</project_name>
     <project_version>${project.version}</project_version>
     <project_description>${project.description}</project_description>
-	<team_pics_dir>./images/team</team_pics_dir>
+    <team_pics_dir>./images/team</team_pics_dir>
   </properties>
 
-<!-- Project Dependencies -->
+  <!-- Project Dependencies -->
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -143,7 +142,7 @@ SPDX-License-Identifier: Apache-2.0
     </dependency>
   </dependencies>
 
-<!-- Project Build -->
+  <!-- Project Build -->
   <build>
     <plugins>
       <plugin>
@@ -312,10 +311,20 @@ SPDX-License-Identifier: Apache-2.0
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>2.43.0</version>
+        <configuration>
+          <java>
+            <googleJavaFormat />
+          </java>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
-<!-- Project Profiles -->
+  <!-- Project Profiles -->
   <reporting>
     <plugins>
       <plugin>
@@ -326,13 +335,13 @@ SPDX-License-Identifier: Apache-2.0
     </plugins>
   </reporting>
 
-<!-- Project Profiles -->
-  <profiles/>
+  <!-- Project Profiles -->
+  <profiles />
 
-<!-- Project Repositories -->
-  <repositories/>
+  <!-- Project Repositories -->
+  <repositories />
 
-<!-- Project Plugin Repositories -->
-  <pluginRepositories/>
+  <!-- Project Plugin Repositories -->
+  <pluginRepositories />
 
 </project>

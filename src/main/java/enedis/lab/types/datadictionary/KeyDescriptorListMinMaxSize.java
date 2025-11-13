@@ -7,164 +7,114 @@
 
 package enedis.lab.types.datadictionary;
 
-import java.util.List;
-
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.util.MinMaxChecker;
+import java.util.List;
 
 /**
- * DataDictionary key descriptor Number min max
- * 
- * @param <T>
+ * Key descriptor for list values with minimum and maximum size constraints.
+ *
+ * <p>This descriptor extends {@link KeyDescriptorList} to enforce that the list size is within
+ * specified bounds. It uses a {@link MinMaxChecker} to validate the size after conversion.
+ *
+ * @param <T> the type of item in the list
+ * @author Enedis Smarties team
  */
-public class KeyDescriptorListMinMaxSize<T> extends KeyDescriptorList<T>
-{
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public class KeyDescriptorListMinMaxSize<T> extends KeyDescriptorList<T> {
+  /** Utility for checking minimum and maximum list size constraints. */
+  private MinMaxChecker minMaxChecker;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructs a key descriptor for a list value with no size constraints.
+   *
+   * @param name the key name (must not be null)
+   * @param mandatory true if the key is mandatory, false otherwise
+   * @param itemClass the class of the item accepted in the list
+   */
+  public KeyDescriptorListMinMaxSize(String name, boolean mandatory, Class<T> itemClass) {
+    this(name, mandatory, itemClass, null, null);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructs a key descriptor for a list value with minimum and maximum size constraints.
+   *
+   * @param name the key name (must not be null)
+   * @param mandatory true if the key is mandatory, false otherwise
+   * @param itemClass the class of the item accepted in the list
+   * @param min the minimum allowed list size (nullable)
+   * @param max the maximum allowed list size (nullable)
+   */
+  public KeyDescriptorListMinMaxSize(
+      String name, boolean mandatory, Class<T> itemClass, Integer min, Integer max) {
+    super(name, mandatory, itemClass);
+    this.minMaxChecker = new MinMaxChecker(min, max);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Converts an object to a list of items of type T and checks the list size constraints.
+   *
+   * @param value the object to convert
+   * @return the converted list of items
+   * @throws DataDictionaryException if the value or any item cannot be converted, or if the list
+   *     size is out of bounds
+   */
+  @Override
+  public List<T> convertValue(Object value) throws DataDictionaryException {
+    List<T> convertedValue = super.convertValue(value);
+    this.check(convertedValue);
+    return convertedValue;
+  }
 
-	private MinMaxChecker minMaxChecker;
+  /**
+   * Returns the minimum allowed list size, or null if not set.
+   *
+   * @return the minimum allowed list size
+   */
+  public Integer getMin() {
+    return this.minMaxChecker.getMin().intValue();
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Sets the minimum allowed list size.
+   *
+   * @param min the minimum allowed list size
+   * @throws IllegalArgumentException if min is greater than max
+   */
+  public void setMin(Integer min) {
+    this.minMaxChecker.setMin(min);
+  }
 
-	/**
-	 * Default constructor
-	 * 
-	 * @param name
-	 * @param mandatory
-	 * @param itemClass
-	 */
-	public KeyDescriptorListMinMaxSize(String name, boolean mandatory, Class<T> itemClass)
-	{
-		this(name, mandatory, itemClass, null, null);
-	}
+  /**
+   * Returns the maximum allowed list size, or null if not set.
+   *
+   * @return the maximum allowed list size
+   */
+  public Integer getMax() {
+    return this.minMaxChecker.getMax().intValue();
+  }
 
-	/**
-	 * Constructor setting all attributes
-	 * 
-	 * @param name
-	 * @param mandatory
-	 * @param itemClass
-	 * @param min
-	 * @param max
-	 */
-	public KeyDescriptorListMinMaxSize(String name, boolean mandatory, Class<T> itemClass, Integer min, Integer max)
-	{
-		super(name, mandatory, itemClass);
-		this.minMaxChecker = new MinMaxChecker(min, max);
-	}
+  /**
+   * Sets the maximum allowed list size.
+   *
+   * @param max the maximum allowed list size
+   * @throws IllegalArgumentException if max is smaller than min
+   */
+  public void setMax(Integer max) {
+    this.minMaxChecker.setMax(max);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE
-	/// DataDictionaryKeyDescriptor<Number>
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	public List<T> convertValue(Object value) throws DataDictionaryException
-	{
-		List<T> convertedValue = super.convertValue(value);
-
-		this.check(convertedValue);
-
-		return convertedValue;
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Get min
-	 * 
-	 * @return min
-	 */
-	public Integer getMin()
-	{
-		return this.minMaxChecker.getMin().intValue();
-	}
-
-	/**
-	 * Set min
-	 * 
-	 * @param min
-	 * @throws IllegalArgumentException
-	 *             if min is greater than max
-	 */
-	public void setMin(Integer min)
-	{
-		this.minMaxChecker.setMin(min);
-	}
-
-	/**
-	 * Get max
-	 * 
-	 * @return max
-	 */
-	public Integer getMax()
-	{
-		return this.minMaxChecker.getMax().intValue();
-	}
-
-	/**
-	 * Set max
-	 * 
-	 * @param max
-	 * @throws IllegalArgumentException
-	 *             if max is smaller than min
-	 */
-	public void setMax(Integer max)
-	{
-		this.minMaxChecker.setMax(max);
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private void check(List<T> list) throws DataDictionaryException
-	{
-		if (list != null)
-		{
-			if (!this.minMaxChecker.check(list.size()))
-			{
-				throw new DataDictionaryException("Key " + this.getName() + ": value size (" + list.size() + ") out of bound");
-			}
-		}
-	}
+  /**
+   * Checks that the list size is within the allowed bounds.
+   *
+   * @param list the list to check
+   * @throws DataDictionaryException if the list size is out of bounds
+   */
+  private void check(List<T> list) throws DataDictionaryException {
+    if (list != null) {
+      if (!this.minMaxChecker.check(list.size())) {
+        throw new DataDictionaryException(
+            "Key " + this.getName() + ": value size (" + list.size() + ") out of bound");
+      }
+    }
+  }
 }

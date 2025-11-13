@@ -10,57 +10,62 @@ package enedis.lab.types.datadictionary;
 import enedis.lab.types.DataDictionaryException;
 
 /**
- * DataDictionary key descriptor interface
+ * Interface for describing a key in a data dictionary structure.
  *
- * @param <T>
+ * <p>A key descriptor defines the name, type, and validation rules for a key in a {@link
+ * enedis.lab.types.DataDictionary}. Implementations may specify accepted values, conversion logic,
+ * and whether the key is mandatory.
+ *
+ * @param <T> the type of value associated with the key
+ * @author Enedis Smarties team
  */
-public interface KeyDescriptor<T>
-{
-	/**
-	 * Get key name
-	 *
-	 * @return key name
-	 */
-	public String getName();
+public interface KeyDescriptor<T> {
 
-	/**
-	 * Get mandatory flag
-	 *
-	 * @return mandatory flag
-	 */
-	public boolean isMandatory();
+  /**
+   * Returns the name of the key described by this descriptor.
+   *
+   * @return the key name (never null)
+   */
+  String getName();
 
-	/**
-	 * Set mandatory flag
-	 *
-	 * @param mandatory
-	 */
-	public void setMandatory(boolean mandatory);
+  /**
+   * Indicates whether the key is mandatory in the data dictionary.
+   *
+   * @return true if the key is mandatory, false otherwise
+   */
+  boolean isMandatory();
 
-	/**
-	 * Set a list of accepted values
-	 *
-	 * @param acceptedValues
-	 */
-	@SuppressWarnings("unchecked")
-	public void setAcceptedValues(T... acceptedValues);
+  /**
+   * Sets whether the key is mandatory in the data dictionary.
+   *
+   * @param mandatory true to mark the key as mandatory, false otherwise
+   */
+  void setMandatory(boolean mandatory);
 
-	/**
-	 * Convert a Object value to a T value
-	 *
-	 * @param value
-	 *            object to convert
-	 * @return value converted to T type
-	 * @throws DataDictionaryException
-	 */
-	public T convert(Object value) throws DataDictionaryException;
+  /**
+   * Sets the list of accepted values for this key. If not set, any value of type T may be accepted
+   * depending on implementation.
+   *
+   * @param acceptedValues the accepted values for this key
+   */
+  @SuppressWarnings("unchecked")
+  void setAcceptedValues(T... acceptedValues);
 
-	/**
-	 * Convert a T value to String
-	 *
-	 * @param value
-	 *            value to convert to String
-	 * @return String representation of the value
-	 */
-	public String toString(T value);
+  /**
+   * Converts an object to the value type T for this key. Implementations should validate and
+   * convert the input as needed.
+   *
+   * @param value the object to convert
+   * @return the converted value of type T
+   * @throws DataDictionaryException if the value cannot be converted or is invalid
+   */
+  T convert(Object value) throws DataDictionaryException;
+
+  /**
+   * Converts a value of type T to its string representation.
+   *
+   * @param value the value to convert to String
+   * @return the string representation of the value
+   */
+  String toString(T value);
 }
