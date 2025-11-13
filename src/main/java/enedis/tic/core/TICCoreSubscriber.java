@@ -7,7 +7,7 @@
 
 package enedis.tic.core;
 
-import enedis.lab.util.task.Subscriber;
+import tic.util.task.Subscriber;
 
 /**
  * Interface for subscribing to core frame and error notifications.

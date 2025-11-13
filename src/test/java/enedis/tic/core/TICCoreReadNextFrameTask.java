@@ -7,7 +7,7 @@
 
 package enedis.tic.core;
 
-import enedis.lab.util.task.TaskBase;
+import tic.util.task.TaskBase;
 
 public class TICCoreReadNextFrameTask extends TaskBase {
   public TICCore ticCore;
