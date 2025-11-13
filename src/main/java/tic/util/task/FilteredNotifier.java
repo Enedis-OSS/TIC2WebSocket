@@ -13,99 +13,94 @@ import java.util.function.Predicate;
 /**
  * Interface for managing filtered notifications to subscribers.
  *
- * <p>
- * This interface defines methods for subscribing, unsubscribing, and querying
- * subscribers with
- * associated filters. It supports flexible event delivery and observer
- * patterns.
+ * <p>This interface defines methods for subscribing, unsubscribing, and querying subscribers with
+ * associated filters. It supports flexible event delivery and observer patterns.
  *
- * <p>
- * Common use cases include:
+ * <p>Common use cases include:
  *
  * <ul>
- * <li>Selective event delivery based on filters
- * <li>Managing filtered lists of subscribers
- * <li>Supporting custom notification logic
+ *   <li>Selective event delivery based on filters
+ *   <li>Managing filtered lists of subscribers
+ *   <li>Supporting custom notification logic
  * </ul>
  *
  * @param <F> the filter type
  * @param <T> the subscriber type
  */
 public interface FilteredNotifier<F, T extends Subscriber> extends Notifier<T> {
-    /**
-     * Add a subscriber with filter
-     *
-     * @param filter   the filter used for subscription
-     * @param listener the subscriber reference
-     * @throws Exception on subscription failure
-     */
-    public void subscribe(F filter, T listener) throws Exception;
+  /**
+   * Add a subscriber with filter
+   *
+   * @param filter the filter used for subscription
+   * @param listener the subscriber reference
+   * @throws Exception on subscription failure
+   */
+  public void subscribe(F filter, T listener) throws Exception;
 
-    /**
-     * Remove a subscriber with filter
-     *
-     * @param filter   the filter used for subscription
-     * @param listener the subscriber reference
-     * @throws Exception if filter or listener not found
-     */
-    public void unsubscribe(F filter, T listener) throws Exception;
+  /**
+   * Remove a subscriber with filter
+   *
+   * @param filter the filter used for subscription
+   * @param listener the subscriber reference
+   * @throws Exception if filter or listener not found
+   */
+  public void unsubscribe(F filter, T listener) throws Exception;
 
-    /**
-     * Check if the given filter has a given subscriber
-     *
-     * @param filter   the filter used for subscription
-     * @param listener the subscriber reference
-     * @return true if the given subscriber exists
-     */
-    public boolean hasSubscriber(F filter, T listener);
+  /**
+   * Check if the given filter has a given subscriber
+   *
+   * @param filter the filter used for subscription
+   * @param listener the subscriber reference
+   * @return true if the given subscriber exists
+   */
+  public boolean hasSubscriber(F filter, T listener);
 
-    /**
-     * Get subscribers associated with filter
-     *
-     * @param filter the filter used for subscription
-     * @return The subscribers collection
-     */
-    public Collection<T> getSubscribers(F filter);
+  /**
+   * Get subscribers associated with filter
+   *
+   * @param filter the filter used for subscription
+   * @return The subscribers collection
+   */
+  public Collection<T> getSubscribers(F filter);
 
-    /**
-     * Get subscribers including global and/or filters
-     *
-     * @param includeGlobal indicates if includes global subscribers
-     * @param includeFilter indicates if includes filters subscribers
-     * @return The subscribers collection
-     */
-    public Collection<T> getSubscribers(boolean includeGlobal, boolean includeFilter);
+  /**
+   * Get subscribers including global and/or filters
+   *
+   * @param includeGlobal indicates if includes global subscribers
+   * @param includeFilter indicates if includes filters subscribers
+   * @return The subscribers collection
+   */
+  public Collection<T> getSubscribers(boolean includeGlobal, boolean includeFilter);
 
-    /**
-     * Get subscribers associated with predicate filter
-     *
-     * @param predicate     the predicate used to test with filters used for
-     *                      subscription
-     * @param includeGlobal indicates if includes global subscribers
-     * @return The subscribers collection
-     */
-    public Collection<T> getSubscribers(Predicate<F> predicate, boolean includeGlobal);
+  /**
+   * Get subscribers associated with predicate filter
+   *
+   * @param predicate the predicate used to test with filters used for subscription
+   * @param includeGlobal indicates if includes global subscribers
+   * @return The subscribers collection
+   */
+  public Collection<T> getSubscribers(Predicate<F> predicate, boolean includeGlobal);
 
-    /**
-     * Check if the given filter has been set
-     *
-     * @param filter the filter used for subscription
-     * @return true if the given filter exists
-     */
-    public boolean hasFilter(F filter);
+  /**
+   * Check if the given filter has been set
+   *
+   * @param filter the filter used for subscription
+   * @return true if the given filter exists
+   */
+  public boolean hasFilter(F filter);
 
-    /**
-     * Get filters
-     *
-     * @return The filters collection
-     */
-    public Collection<F> getFilters();
+  /**
+   * Get filters
+   *
+   * @return The filters collection
+   */
+  public Collection<F> getFilters();
 
-    /**
-     * Get filters associated with listener
-     *
-     * @param listener the subscriber reference
-     * @return The filters collection
-     */
-    public Collection<F> getFilters(T listener);
+  /**
+   * Get filters associated with listener
+   *
+   * @param listener the subscriber reference
+   * @return The filters collection
+   */
+  public Collection<F> getFilters(T listener);
 }

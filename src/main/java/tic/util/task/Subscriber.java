@@ -10,10 +10,7 @@ package tic.util.task;
 /**
  * Interface representing a generic event subscriber.
  *
- * <p>
- * This interface is used as a contract for objects that can receive
- * notifications or events from
+ * <p>This interface is used as a contract for objects that can receive notifications or events from
  * a notifier. It is commonly used in observer and event-driven patterns.
  */
-public interface Subscriber {
-}
+public interface Subscriber {}
