@@ -7,210 +7,150 @@
 
 package enedis.lab.util.message;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import enedis.lab.types.DataDictionary;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.DataDictionaryBase;
 import enedis.lab.types.datadictionary.KeyDescriptor;
 import enedis.lab.types.datadictionary.KeyDescriptorEnum;
 import enedis.lab.types.datadictionary.KeyDescriptorString;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Message class
+ * Base class for all messages.
  *
- * Generated
+ * <p>This class provides the core structure for messages, including type and name fields. It
+ * supports construction from maps and data dictionaries, and can be extended for specific message
+ * types such as requests, responses, and events.
+ *
+ * <p>Common use cases include:
+ *
+ * <ul>
+ *   <li>Representing generic messages in the communication pipeline
+ *   <li>Providing a base for request, response, and event messages
+ *   <li>Supporting extensible message structures
+ * </ul>
+ *
+ * @author Enedis Smarties team
  */
-public class Message extends DataDictionaryBase
-{
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public class Message extends DataDictionaryBase {
+  /** Key type */
+  public static final String KEY_TYPE = "type";
 
-	/** Key type */
-	public static final String					KEY_TYPE	= "type";
-	/** Key name */
-	public static final String					KEY_NAME	= "name";
+  /** Key name */
+  public static final String KEY_NAME = "name";
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected KeyDescriptorEnum<MessageType> kType;
+  protected KeyDescriptorString kName;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected Message() {
+    super();
+    this.loadKeyDescriptors();
+  }
 
-	private List<KeyDescriptor<?>>				keys		= new ArrayList<KeyDescriptor<?>>();
+  /**
+   * Constructor using map
+   *
+   * @param map
+   * @throws DataDictionaryException
+   */
+  public Message(Map<String, Object> map) throws DataDictionaryException {
+    this();
+    this.copy(fromMap(map));
+  }
 
-	protected KeyDescriptorEnum<MessageType>	kType;
-	protected KeyDescriptorString				kName;
+  /**
+   * Constructor using datadictionary
+   *
+   * @param other
+   * @throws DataDictionaryException
+   */
+  public Message(DataDictionary other) throws DataDictionaryException {
+    this();
+    this.copy(other);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructor setting parameters to specific values
+   *
+   * @param type
+   * @param name
+   * @throws DataDictionaryException
+   */
+  public Message(MessageType type, String name) throws DataDictionaryException {
+    this();
 
-	protected Message()
-	{
-		super();
-		this.loadKeyDescriptors();
+    this.setType(type);
+    this.setName(name);
 
-	}
+    this.checkAndUpdate();
+  }
 
-	/**
-	 * Constructor using map
-	 *
-	 * @param map
-	 * @throws DataDictionaryException
-	 */
-	public Message(Map<String, Object> map) throws DataDictionaryException
-	{
-		this();
-		this.copy(fromMap(map));
-	}
+  @Override
+  protected void updateOptionalParameters() throws DataDictionaryException {
+    super.updateOptionalParameters();
+  }
 
-	/**
-	 * Constructor using datadictionary
-	 *
-	 * @param other
-	 * @throws DataDictionaryException
-	 */
-	public Message(DataDictionary other) throws DataDictionaryException
-	{
-		this();
-		this.copy(other);
-	}
+  /**
+   * Get type
+   *
+   * @return the type
+   */
+  public MessageType getType() {
+    return (MessageType) this.data.get(KEY_TYPE);
+  }
 
-	/**
-	 * Constructor setting parameters to specific values
-	 *
-	 * @param type
-	 * @param name
-	 * @throws DataDictionaryException
-	 */
-	public Message(MessageType type, String name) throws DataDictionaryException
-	{
-		this();
+  /**
+   * Get name
+   *
+   * @return the name
+   */
+  public String getName() {
+    return (String) this.data.get(KEY_NAME);
+  }
 
-		this.setType(type);
-		this.setName(name);
+  /**
+   * Set type
+   *
+   * @param type
+   * @throws DataDictionaryException
+   */
+  public void setType(MessageType type) throws DataDictionaryException {
+    this.setType((Object) type);
+  }
 
-		this.checkAndUpdate();
-	}
+  /**
+   * Set name
+   *
+   * @param name
+   * @throws DataDictionaryException
+   */
+  public void setName(String name) throws DataDictionaryException {
+    this.setName((Object) name);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE
-	/// DataDictionaryBase
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected void setType(Object type) throws DataDictionaryException {
+    this.data.put(KEY_TYPE, this.kType.convert(type));
+  }
 
-	@Override
-	protected void updateOptionalParameters() throws DataDictionaryException
-	{
-		super.updateOptionalParameters();
-	}
+  protected void setName(Object name) throws DataDictionaryException {
+    this.data.put(KEY_NAME, this.kName.convert(name));
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  private void loadKeyDescriptors() {
+    try {
+      this.kType = new KeyDescriptorEnum<MessageType>(KEY_TYPE, true, MessageType.class);
+      this.keys.add(this.kType);
 
-	/**
-	 * Get type
-	 *
-	 * @return the type
-	 */
-	public MessageType getType()
-	{
-		return (MessageType) this.data.get(KEY_TYPE);
-	}
+      this.kName = new KeyDescriptorString(KEY_NAME, true, false);
+      this.keys.add(this.kName);
 
-	/**
-	 * Get name
-	 *
-	 * @return the name
-	 */
-	public String getName()
-	{
-		return (String) this.data.get(KEY_NAME);
-	}
-
-	/**
-	 * Set type
-	 *
-	 * @param type
-	 * @throws DataDictionaryException
-	 */
-	public void setType(MessageType type) throws DataDictionaryException
-	{
-		this.setType((Object) type);
-	}
-
-	/**
-	 * Set name
-	 *
-	 * @param name
-	 * @throws DataDictionaryException
-	 */
-	public void setName(String name) throws DataDictionaryException
-	{
-		this.setName((Object) name);
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	protected void setType(Object type) throws DataDictionaryException
-	{
-		this.data.put(KEY_TYPE, this.kType.convert(type));
-	}
-
-	protected void setName(Object name) throws DataDictionaryException
-	{
-		this.data.put(KEY_NAME, this.kName.convert(name));
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private void loadKeyDescriptors()
-	{
-		try
-		{
-			this.kType = new KeyDescriptorEnum<MessageType>(KEY_TYPE, true, MessageType.class);
-			this.keys.add(this.kType);
-
-			this.kName = new KeyDescriptorString(KEY_NAME, true, false);
-			this.keys.add(this.kName);
-
-			this.addAllKeyDescriptor(this.keys);
-		}
-		catch (DataDictionaryException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+      this.addAllKeyDescriptor(this.keys);
+    } catch (DataDictionaryException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
 }

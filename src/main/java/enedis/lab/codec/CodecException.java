@@ -1,5 +1,5 @@
 // Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
-// 
+//
 // SPDX-FileContributor: Jehan BOUSCH
 // SPDX-FileContributor: Mathieu SABARTHES
 //
@@ -8,162 +8,103 @@
 package enedis.lab.codec;
 
 /**
- * Codec exception
+ * Exception thrown during codec operations.
+ *
+ * <p>This exception is used to signal errors occurring during data encoding and decoding processes.
+ *
+ * @author Enedis Smarties team
  */
-public class CodecException extends Exception
-{
+public class CodecException extends Exception {
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  private static final long serialVersionUID = 6029680699870915485L;
 
-	private static final long	serialVersionUID	= 6029680699870915485L;
+  private Object data;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /** Creates a new CodecException with no detail message. */
+  public CodecException() {
+    super();
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Creates a new CodecException with the specified detail message and cause.
+   *
+   * @param message the detail message (which is saved for later retrieval by the {@link
+   *     Throwable#getMessage()} method)
+   * @param cause the cause (which is saved for later retrieval by the {@link Throwable#getCause()}
+   *     method)
+   */
+  public CodecException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Creates a new CodecException with the specified detail message.
+   *
+   * @param message the detail message (which is saved for later retrieval by the {@link
+   *     Throwable#getMessage()} method)
+   */
+  public CodecException(String message) {
+    super(message);
+  }
 
-	private Object				data;
+  /**
+   * Creates a new CodecException with the specified detail message and data.
+   *
+   * @param message the detail message (which is saved for later retrieval by the {@link
+   *     Throwable#getMessage()} method)
+   * @param data additional data object associated with this exception
+   */
+  public CodecException(String message, Object data) {
+    super(message);
+    this.data = data;
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Creates a new CodecException with the specified cause.
+   *
+   * @param cause the cause (which is saved for later retrieval by the {@link Throwable#getCause()}
+   *     method)
+   */
+  public CodecException(Throwable cause) {
+    super(cause);
+  }
 
-	/**
-	 * Default constructor
-	 */
-	public CodecException()
-	{
-		super();
-	}
+  /**
+   * Creates and throws a CodecException for invalid value scenarios.
+   *
+   * @param info additional information about the invalid value
+   * @throws CodecException always thrown with message "Invalid value : " + info
+   */
+  public static void raiseInvalidValue(String info) throws CodecException {
+    throw new CodecException("Invalid value : " + info);
+  }
 
-	/**
-	 * Constructor
-	 *
-	 * @param message
-	 * @param cause
-	 */
-	public CodecException(String message, Throwable cause)
-	{
-		super(message, cause);
-	}
+  /**
+   * Creates and throws a CodecException for missing value scenarios.
+   *
+   * @param value the name or identifier of the missing value
+   * @throws CodecException always thrown with message "Missing value : " + value
+   */
+  public static void raiseMissingValue(String value) throws CodecException {
+    throw new CodecException("Missing value : " + value);
+  }
 
-	/**
-	 * Constructor
-	 *
-	 * @param message
-	 */
-	public CodecException(String message)
-	{
-		super(message);
-	}
+  /**
+   * Creates and throws a CodecException for data inconsistency scenarios.
+   *
+   * @param info additional information about the inconsistency
+   * @throws CodecException always thrown with message "Inconsistency : " + info
+   */
+  public static void raiseInconsistency(String info) throws CodecException {
+    throw new CodecException("Inconsistency : " + info);
+  }
 
-	/**
-	 * Constructor
-	 *
-	 * @param message
-	 * @param data
-	 */
-	public CodecException(String message, Object data)
-	{
-		super(message);
-		this.data = data;
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param cause
-	 */
-	public CodecException(Throwable cause)
-	{
-		super(cause);
-	}
-
-	/**
-	 * Raise CodecException invalid value
-	 *
-	 * @param info
-	 * @throws CodecException
-	 */
-	public static void raiseInvalidValue(String info) throws CodecException
-	{
-		throw new CodecException("Invalid value : " + info);
-	}
-
-	/**
-	 * Raise CodecException missing value
-	 *
-	 * @param value
-	 * @throws CodecException
-	 */
-	public static void raiseMissingValue(String value) throws CodecException
-	{
-		throw new CodecException("Missing value : " + value);
-	}
-
-	/**
-	 * Raise CodecException inconsistency
-	 *
-	 * @param info
-	 * @throws CodecException
-	 */
-	public static void raiseInconsistency(String info) throws CodecException
-	{
-		throw new CodecException("Inconsistency : " + info);
-	}
-
-	/**
-	 * Get data
-	 *
-	 * @return data
-	 */
-	public Object getData()
-	{
-		return this.data;
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE
-	/// interfaceName
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+  /**
+   * Returns the additional data object associated with this exception.
+   *
+   * @return the data object, or null if no data was provided
+   */
+  public Object getData() {
+    return this.data;
+  }
 }

@@ -10,38 +10,50 @@ package enedis.lab.util.task;
 import java.util.Collection;
 
 /**
- * Notifier interface
+ * Interface for managing subscribers and sending notifications.
  *
- * @param <T>
+ * <p>This interface defines methods for adding, removing, and querying subscribers, as well as
+ * retrieving the current set of subscribers. It is used as a generic contract for event-driven and
+ * observer patterns.
+ *
+ * <p>Common use cases include:
+ *
+ * <ul>
+ *   <li>Managing lists of listeners or observers
+ *   <li>Sending notifications to registered subscribers
+ *   <li>Supporting event-driven architectures
+ * </ul>
+ *
+ * @param <T> the subscriber type
+ * @author Enedis Smarties team
  */
-public interface Notifier<T extends Subscriber>
-{
-	/**
-	 * Add a subscriber
-	 *
-	 * @param subscriber
-	 */
-	public void subscribe(T subscriber);
+public interface Notifier<T extends Subscriber> {
+  /**
+   * Add a subscriber
+   *
+   * @param subscriber
+   */
+  public void subscribe(T subscriber);
 
-	/**
-	 * Remove a subscriber
-	 *
-	 * @param subscriber
-	 */
-	public void unsubscribe(T subscriber);
+  /**
+   * Remove a subscriber
+   *
+   * @param subscriber
+   */
+  public void unsubscribe(T subscriber);
 
-	/**
-	 * Check if the given subscriber has been added
-	 *
-	 * @param subscriber
-	 * @return true if the given subscriber has been added
-	 */
-	public boolean hasSubscriber(T subscriber);
+  /**
+   * Check if the given subscriber has been added
+   *
+   * @param subscriber
+   * @return true if the given subscriber has been added
+   */
+  public boolean hasSubscriber(T subscriber);
 
-	/**
-	 * Get subscribers
-	 *
-	 * @return The subscribers collection
-	 */
-	public Collection<T> getSubscribers();
+  /**
+   * Get subscribers
+   *
+   * @return The subscribers collection
+   */
+  public Collection<T> getSubscribers();
 }

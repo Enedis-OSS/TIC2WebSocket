@@ -7,11 +7,6 @@
 
 package enedis.tic.core;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.types.DataDictionary;
 import enedis.lab.types.DataDictionaryException;
@@ -20,264 +15,210 @@ import enedis.lab.types.datadictionary.KeyDescriptor;
 import enedis.lab.types.datadictionary.KeyDescriptorDataDictionary;
 import enedis.lab.types.datadictionary.KeyDescriptorEnum;
 import enedis.lab.types.datadictionary.KeyDescriptorLocalDateTime;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
- * TICCoreFrame class
+ * Class representing a core frame with identifier, mode, capture time, and content.
  *
- * Generated
+ * <p>This class provides mechanisms for constructing, accessing, and managing frame information
+ * including identifiers, modes, timestamps, and associated content. It is designed for
+ * general-purpose frame handling.
+ *
+ * <p>Common use cases include:
+ *
+ * <ul>
+ *   <li>Representing frames with structured data
+ *   <li>Managing frame identifiers and modes
+ *   <li>Associating content and timestamps with frames
+ * </ul>
+ *
+ * @author Enedis Smarties team
  */
-public class TICCoreFrame extends DataDictionaryBase
-{
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTANTS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public class TICCoreFrame extends DataDictionaryBase {
+  protected static final String KEY_IDENTIFIER = "identifier";
+  protected static final String KEY_MODE = "mode";
+  protected static final String KEY_CAPTURE_DATE_TIME = "captureDateTime";
+  protected static final String KEY_CONTENT = "content";
 
-	protected static final String								KEY_IDENTIFIER			= "identifier";
-	protected static final String								KEY_MODE				= "mode";
-	protected static final String								KEY_CAPTURE_DATE_TIME	= "captureDateTime";
-	protected static final String								KEY_CONTENT				= "content";
+  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// TYPES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected KeyDescriptorDataDictionary<TICIdentifier> kIdentifier;
+  protected KeyDescriptorEnum<TICMode> kMode;
+  protected KeyDescriptorLocalDateTime kCaptureDateTime;
+  protected KeyDescriptorDataDictionary<DataDictionaryBase> kContent;
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// STATIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  protected TICCoreFrame() {
+    super();
+    this.loadKeyDescriptors();
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// ATTRIBUTES
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Constructor using map
+   *
+   * @param map
+   * @throws DataDictionaryException
+   */
+  public TICCoreFrame(Map<String, Object> map) throws DataDictionaryException {
+    this();
+    this.copy(fromMap(map));
+  }
 
-	private List<KeyDescriptor<?>>								keys					= new ArrayList<KeyDescriptor<?>>();
+  /**
+   * Constructor using datadictionary
+   *
+   * @param other
+   * @throws DataDictionaryException
+   */
+  public TICCoreFrame(DataDictionary other) throws DataDictionaryException {
+    this();
+    this.copy(other);
+  }
 
-	protected KeyDescriptorDataDictionary<TICIdentifier>		kIdentifier;
-	protected KeyDescriptorEnum<TICMode>						kMode;
-	protected KeyDescriptorLocalDateTime						kCaptureDateTime;
-	protected KeyDescriptorDataDictionary<DataDictionaryBase>	kContent;
+  /**
+   * Constructor setting parameters to specific values
+   *
+   * @param identifier
+   * @param mode
+   * @param captureDateTime
+   * @param content
+   * @throws DataDictionaryException
+   */
+  public TICCoreFrame(
+      TICIdentifier identifier,
+      TICMode mode,
+      LocalDateTime captureDateTime,
+      DataDictionaryBase content)
+      throws DataDictionaryException {
+    this();
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// CONSTRUCTORS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    this.setIdentifier(identifier);
+    this.setMode(mode);
+    this.setCaptureDateTime(captureDateTime);
+    this.setContent(content);
 
-	protected TICCoreFrame()
-	{
-		super();
-		this.loadKeyDescriptors();
+    this.checkAndUpdate();
+  }
 
-	}
+  @Override
+  protected void updateOptionalParameters() throws DataDictionaryException {
+    super.updateOptionalParameters();
+  }
 
-	/**
-	 * Constructor using map
-	 *
-	 * @param map
-	 * @throws DataDictionaryException
-	 */
-	public TICCoreFrame(Map<String, Object> map) throws DataDictionaryException
-	{
-		this();
-		this.copy(fromMap(map));
-	}
+  /**
+   * Get identifier
+   *
+   * @return the identifier
+   */
+  public TICIdentifier getIdentifier() {
+    return (TICIdentifier) this.data.get(KEY_IDENTIFIER);
+  }
 
-	/**
-	 * Constructor using datadictionary
-	 *
-	 * @param other
-	 * @throws DataDictionaryException
-	 */
-	public TICCoreFrame(DataDictionary other) throws DataDictionaryException
-	{
-		this();
-		this.copy(other);
-	}
+  /**
+   * Get mode
+   *
+   * @return the mode
+   */
+  public TICMode getMode() {
+    return (TICMode) this.data.get(KEY_MODE);
+  }
 
-	/**
-	 * Constructor setting parameters to specific values
-	 *
-	 * @param identifier
-	 * @param mode
-	 * @param captureDateTime
-	 * @param content
-	 * @throws DataDictionaryException
-	 */
-	public TICCoreFrame(TICIdentifier identifier, TICMode mode, LocalDateTime captureDateTime, DataDictionaryBase content) throws DataDictionaryException
-	{
-		this();
+  /**
+   * Get capture date time
+   *
+   * @return the capture date time
+   */
+  public LocalDateTime getCaptureDateTime() {
+    return (LocalDateTime) this.data.get(KEY_CAPTURE_DATE_TIME);
+  }
 
-		this.setIdentifier(identifier);
-		this.setMode(mode);
-		this.setCaptureDateTime(captureDateTime);
-		this.setContent(content);
+  /**
+   * Get content
+   *
+   * @return the content
+   */
+  public DataDictionaryBase getContent() {
+    return (DataDictionaryBase) this.data.get(KEY_CONTENT);
+  }
 
-		this.checkAndUpdate();
-	}
+  /**
+   * Set identifier
+   *
+   * @param identifier
+   * @throws DataDictionaryException
+   */
+  public void setIdentifier(TICIdentifier identifier) throws DataDictionaryException {
+    this.setIdentifier((Object) identifier);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// INTERFACE
-	/// DataDictionaryBase
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Set mode
+   *
+   * @param mode
+   * @throws DataDictionaryException
+   */
+  public void setMode(TICMode mode) throws DataDictionaryException {
+    this.setMode((Object) mode);
+  }
 
-	@Override
-	protected void updateOptionalParameters() throws DataDictionaryException
-	{
-		super.updateOptionalParameters();
-	}
+  /**
+   * Set capture date time
+   *
+   * @param captureDateTime
+   * @throws DataDictionaryException
+   */
+  public void setCaptureDateTime(LocalDateTime captureDateTime) throws DataDictionaryException {
+    this.setCaptureDateTime((Object) captureDateTime);
+  }
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PUBLIC METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Set content
+   *
+   * @param content
+   * @throws DataDictionaryException
+   */
+  public void setContent(DataDictionaryBase content) throws DataDictionaryException {
+    this.setContent((Object) content);
+  }
 
-	/**
-	 * Get identifier
-	 *
-	 * @return the identifier
-	 */
-	public TICIdentifier getIdentifier()
-	{
-		return (TICIdentifier) this.data.get(KEY_IDENTIFIER);
-	}
+  protected void setIdentifier(Object identifier) throws DataDictionaryException {
+    this.data.put(KEY_IDENTIFIER, this.kIdentifier.convert(identifier));
+  }
 
-	/**
-	 * Get mode
-	 *
-	 * @return the mode
-	 */
-	public TICMode getMode()
-	{
-		return (TICMode) this.data.get(KEY_MODE);
-	}
+  protected void setMode(Object mode) throws DataDictionaryException {
+    this.data.put(KEY_MODE, this.kMode.convert(mode));
+  }
 
-	/**
-	 * Get capture date time
-	 *
-	 * @return the capture date time
-	 */
-	public LocalDateTime getCaptureDateTime()
-	{
-		return (LocalDateTime) this.data.get(KEY_CAPTURE_DATE_TIME);
-	}
+  protected void setCaptureDateTime(Object captureDateTime) throws DataDictionaryException {
+    this.data.put(KEY_CAPTURE_DATE_TIME, this.kCaptureDateTime.convert(captureDateTime));
+  }
 
-	/**
-	 * Get content
-	 *
-	 * @return the content
-	 */
-	public DataDictionaryBase getContent()
-	{
-		return (DataDictionaryBase) this.data.get(KEY_CONTENT);
-	}
+  protected void setContent(Object content) throws DataDictionaryException {
+    this.data.put(KEY_CONTENT, this.kContent.convert(content));
+  }
 
-	/**
-	 * Set identifier
-	 *
-	 * @param identifier
-	 * @throws DataDictionaryException
-	 */
-	public void setIdentifier(TICIdentifier identifier) throws DataDictionaryException
-	{
-		this.setIdentifier((Object) identifier);
-	}
+  private void loadKeyDescriptors() {
+    try {
+      this.kIdentifier =
+          new KeyDescriptorDataDictionary<TICIdentifier>(KEY_IDENTIFIER, true, TICIdentifier.class);
+      this.keys.add(this.kIdentifier);
 
-	/**
-	 * Set mode
-	 *
-	 * @param mode
-	 * @throws DataDictionaryException
-	 */
-	public void setMode(TICMode mode) throws DataDictionaryException
-	{
-		this.setMode((Object) mode);
-	}
+      this.kMode = new KeyDescriptorEnum<TICMode>(KEY_MODE, true, TICMode.class);
+      this.keys.add(this.kMode);
 
-	/**
-	 * Set capture date time
-	 *
-	 * @param captureDateTime
-	 * @throws DataDictionaryException
-	 */
-	public void setCaptureDateTime(LocalDateTime captureDateTime) throws DataDictionaryException
-	{
-		this.setCaptureDateTime((Object) captureDateTime);
-	}
+      this.kCaptureDateTime = new KeyDescriptorLocalDateTime(KEY_CAPTURE_DATE_TIME, true);
+      this.keys.add(this.kCaptureDateTime);
 
-	/**
-	 * Set content
-	 *
-	 * @param content
-	 * @throws DataDictionaryException
-	 */
-	public void setContent(DataDictionaryBase content) throws DataDictionaryException
-	{
-		this.setContent((Object) content);
-	}
+      this.kContent =
+          new KeyDescriptorDataDictionary<DataDictionaryBase>(
+              KEY_CONTENT, true, DataDictionaryBase.class);
+      this.keys.add(this.kContent);
 
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PROTECTED METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	protected void setIdentifier(Object identifier) throws DataDictionaryException
-	{
-		this.data.put(KEY_IDENTIFIER, this.kIdentifier.convert(identifier));
-	}
-
-	protected void setMode(Object mode) throws DataDictionaryException
-	{
-		this.data.put(KEY_MODE, this.kMode.convert(mode));
-	}
-
-	protected void setCaptureDateTime(Object captureDateTime) throws DataDictionaryException
-	{
-		this.data.put(KEY_CAPTURE_DATE_TIME, this.kCaptureDateTime.convert(captureDateTime));
-	}
-
-	protected void setContent(Object content) throws DataDictionaryException
-	{
-		this.data.put(KEY_CONTENT, this.kContent.convert(content));
-	}
-
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///
-	/// PRIVATE METHODS
-	///
-	/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private void loadKeyDescriptors()
-	{
-		try
-		{
-			this.kIdentifier = new KeyDescriptorDataDictionary<TICIdentifier>(KEY_IDENTIFIER, true, TICIdentifier.class);
-			this.keys.add(this.kIdentifier);
-
-			this.kMode = new KeyDescriptorEnum<TICMode>(KEY_MODE, true, TICMode.class);
-			this.keys.add(this.kMode);
-
-			this.kCaptureDateTime = new KeyDescriptorLocalDateTime(KEY_CAPTURE_DATE_TIME, true);
-			this.keys.add(this.kCaptureDateTime);
-
-			this.kContent = new KeyDescriptorDataDictionary<DataDictionaryBase>(KEY_CONTENT, true, DataDictionaryBase.class);
-			this.keys.add(this.kContent);
-
-			this.addAllKeyDescriptor(this.keys);
-		}
-		catch (DataDictionaryException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+      this.addAllKeyDescriptor(this.keys);
+    } catch (DataDictionaryException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
 }
