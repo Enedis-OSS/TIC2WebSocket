@@ -28,13 +28,13 @@ import enedis.lab.protocol.tic.frame.standard.TICFrameStandard;
 import enedis.lab.types.DataDictionary;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.DataDictionaryBase;
-import enedis.lab.util.task.Notifier;
-import enedis.lab.util.task.NotifierBase;
-import enedis.lab.util.task.Task;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tic.util.task.Notifier;
+import tic.util.task.NotifierBase;
+import tic.util.task.Task;
 
 /**
  * Core stream implementation for frame acquisition and subscriber notifications.

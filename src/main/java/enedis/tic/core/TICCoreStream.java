@@ -7,8 +7,8 @@
 
 package enedis.tic.core;
 
-import enedis.lab.util.task.Notifier;
-import enedis.lab.util.task.Task;
+import tic.util.task.Notifier;
+import tic.util.task.Task;
 
 /**
  * Interface for managing core streams, frame acquisition, and subscriber notifications.

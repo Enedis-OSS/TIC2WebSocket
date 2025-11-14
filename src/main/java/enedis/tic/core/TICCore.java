@@ -8,8 +8,8 @@
 package enedis.tic.core;
 
 import enedis.lab.io.tic.TICPortDescriptor;
-import enedis.lab.util.task.Task;
 import java.util.List;
+import tic.util.task.Task;
 
 /**
  * Core interface for managing frame reading and subscriber notifications.

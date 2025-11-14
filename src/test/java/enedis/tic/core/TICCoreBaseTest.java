@@ -14,7 +14,6 @@ import enedis.lab.mock.FunctionCall;
 import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.DataDictionaryBase;
-import enedis.lab.util.task.Task;
 import enedis.lab.util.time.Time;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +21,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import tic.util.task.Task;
 
 @SuppressWarnings("javadoc")
 public class TICCoreBaseTest {
@@ -118,7 +118,7 @@ public class TICCoreBaseTest {
     TICCoreReadNextFrameTask task = new TICCoreReadNextFrameTask(this.ticCore, identifier);
     task.start();
     this.waitTaskRunning(task);
-    this.waitReadNextFrameSubsbription();
+    this.waitReadNextFrameSubscription();
     TICCoreFrame frame =
         this.createFrame(identifier, TICMode.STANDARD, LocalDateTime.of(2020, 3, 3, 12, 59, 30, 0));
     stream.notifyOnData(frame);
@@ -244,7 +244,7 @@ public class TICCoreBaseTest {
     try {
       this.ticCore.subscribe(identifier, subscriber);
       Assert.fail(
-          "Subscribe should have trhown an exception since stream identifier does not match !");
+          "Subscribe should have thrown an exception since stream identifier does not match !");
     } catch (Exception e) {
       Assert.assertTrue(e instanceof TICCoreException);
       TICCoreException exception = (TICCoreException) e;
@@ -527,7 +527,7 @@ public class TICCoreBaseTest {
     }
   }
 
-  private void waitReadNextFrameSubsbription() {
+  private void waitReadNextFrameSubscription() {
     Time.sleep(100);
   }
 
