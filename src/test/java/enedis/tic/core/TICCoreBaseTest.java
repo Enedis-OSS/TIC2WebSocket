@@ -141,7 +141,7 @@ public class TICCoreBaseTest {
     TICCoreReadNextFrameTask task = new TICCoreReadNextFrameTask(this.ticCore, identifier);
     task.start();
     this.waitTaskRunning(task);
-    this.waitReadNextFrameSubsbription();
+    this.waitReadNextFrameSubscription();
     TICCoreError error =
         new TICCoreError(identifier, TICCoreErrorCode.OTHER_REASON.getCode(), "Cannot read stream");
     stream.notifyOnError(error);
@@ -189,7 +189,7 @@ public class TICCoreBaseTest {
     TICCoreReadNextFrameTask task = new TICCoreReadNextFrameTask(this.ticCore, identifier, 200);
     task.start();
     this.waitTaskRunning(task);
-    this.waitReadNextFrameSubsbription();
+    this.waitReadNextFrameSubscription();
     this.waitTaskTerminated(task);
     Assert.assertNull(task.frame);
     Assert.assertNotNull(task.exception);

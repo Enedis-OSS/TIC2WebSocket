@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.lab.io.usb;
+package tic.io.usb;
 
 import enedis.lab.io.PortFinder;
 import enedis.lab.types.DataArrayList;

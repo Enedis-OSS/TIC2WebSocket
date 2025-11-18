@@ -5,10 +5,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.lab.io.usb;
+package tic.io.usb;
 
 import enedis.lab.types.DataArrayList;
-import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.DataList;
 import org.usb4java.Context;
 import org.usb4java.Device;
@@ -114,7 +113,7 @@ public class USBPortFinderBase implements USBPortFinder {
                 serialNumber);
         // @formatter:on
         usbPortList.add(usbPort);
-      } catch (DataDictionaryException e) {
+      } catch (IllegalArgumentException e) {
       }
     }
 
