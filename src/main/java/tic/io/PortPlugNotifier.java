@@ -7,9 +7,9 @@
 
 package tic.io;
 
-import enedis.lab.types.DataArrayList;
-import enedis.lab.types.DataList;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import tic.util.task.TaskPeriodicWithSubscribers;
 import tic.util.time.Time;
@@ -43,7 +43,7 @@ import tic.util.time.Time;
 public class PortPlugNotifier<F extends PortFinder<T>, T>
     extends TaskPeriodicWithSubscribers<PlugSubscriber<T>> {
   private AtomicReference<F> finder = new AtomicReference<F>();
-  private DataList<T> descriptors = new DataArrayList<T>();
+  private List<T> descriptors = new ArrayList<T>();
 
   /**
    * Main utility method that runs a port plug monitoring loop.
@@ -126,7 +126,7 @@ public class PortPlugNotifier<F extends PortFinder<T>, T>
    */
   @Override
   protected void process() {
-    DataList<T> newDescriptors = this.finder.get().findAll();
+    List<T> newDescriptors = this.finder.get().findAll();
 
     this.checkAndNotifyIfUnplugged(newDescriptors);
     this.checkAndNotifyIfPlugged(newDescriptors);
@@ -142,7 +142,7 @@ public class PortPlugNotifier<F extends PortFinder<T>, T>
    *
    * @param newDescriptors the newly discovered list of port descriptors
    */
-  private void checkAndNotifyIfUnplugged(DataList<T> newDescriptors) {
+  private void checkAndNotifyIfUnplugged(List<T> newDescriptors) {
     Iterator<T> it = this.descriptors.iterator();
 
     while (it.hasNext()) {
@@ -161,7 +161,7 @@ public class PortPlugNotifier<F extends PortFinder<T>, T>
    *
    * @param newDescriptors the newly discovered list of port descriptors
    */
-  private void checkAndNotifyIfPlugged(DataList<T> newDescriptors) {
+  private void checkAndNotifyIfPlugged(List<T> newDescriptors) {
     Iterator<T> it = newDescriptors.iterator();
 
     while (it.hasNext()) {
@@ -180,7 +180,7 @@ public class PortPlugNotifier<F extends PortFinder<T>, T>
    *
    * @param newDescriptors the new list of port descriptors to cache
    */
-  private void updateDescriptors(DataList<T> newDescriptors) {
+  private void updateDescriptors(List<T> newDescriptors) {
     synchronized (this.descriptors) {
       this.descriptors.clear();
       this.descriptors.addAll(newDescriptors);

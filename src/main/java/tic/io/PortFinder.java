@@ -7,7 +7,7 @@
 
 package tic.io;
 
-import enedis.lab.types.DataList;
+import java.util.List;
 
 /**
  * Generic interface for discovering and enumerating ports on the system.
@@ -22,7 +22,7 @@ import enedis.lab.types.DataList;
  *
  * @param <T> the type of port descriptor returned by this finder
  * @author Enedis Smarties team
- * @see DataList
+ * @see List
  */
 public interface PortFinder<T> {
   /**
@@ -34,5 +34,5 @@ public interface PortFinder<T> {
    *
    * @return a list of port descriptors representing all discovered ports
    */
-  public DataList<T> findAll();
+  public List<T> findAll();
 }
