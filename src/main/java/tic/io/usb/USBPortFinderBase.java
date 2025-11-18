@@ -25,8 +25,7 @@ public class USBPortFinderBase implements USBPortFinder {
    */
   public static void main(String[] args) {
     List<USBPortDescriptor> descriptors = getInstance().findAll();
-
-    descriptors.forEach(System.out::println);
+    System.out.println(JSONEncoder.encode(descriptors));
   }
 
   /**
