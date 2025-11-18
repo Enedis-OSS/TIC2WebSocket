@@ -7,10 +7,9 @@
 
 package tic.io.usb;
 
-import enedis.lab.io.PortFinder;
-import enedis.lab.types.DataArrayList;
-import enedis.lab.types.DataList;
+import java.util.List;
 import java.util.stream.Collectors;
+import tic.io.PortFinder;
 
 /** Interface used to find all USB port descriptor */
 public interface USBPortFinder extends PortFinder<USBPortDescriptor> {
@@ -20,15 +19,12 @@ public interface USBPortFinder extends PortFinder<USBPortDescriptor> {
    * @param idProduct the USB product identifier
    * @return the USB descriptor data list of all USB device connected with the given product id
    */
-  public default DataList<USBPortDescriptor> findByProductId(int idProduct) {
-    DataList<USBPortDescriptor> descriptors = new DataArrayList<USBPortDescriptor>();
+  public default List<USBPortDescriptor> findByProductId(int idProduct) {
     // @formatter:off
-    descriptors.addAll(
-        this.findAll().stream()
-            .filter(d -> d.getIdProduct().intValue() == idProduct)
-            .collect(Collectors.toList()));
+    return this.findAll().stream()
+        .filter(d -> d.getIdProduct().intValue() == idProduct)
+        .collect(Collectors.toList());
     // @formatter:on
-    return descriptors;
   }
 
   /**
@@ -37,15 +33,12 @@ public interface USBPortFinder extends PortFinder<USBPortDescriptor> {
    * @param idVendor the USB vendor identifier
    * @return the USB descriptor data list of all USB device connected with the given vendor id
    */
-  public default DataList<USBPortDescriptor> findByVendorId(int idVendor) {
-    DataList<USBPortDescriptor> descriptors = new DataArrayList<USBPortDescriptor>();
+  public default List<USBPortDescriptor> findByVendorId(int idVendor) {
     // @formatter:off
-    descriptors.addAll(
-        this.findAll().stream()
-            .filter(d -> d.getIdVendor().intValue() == idVendor)
-            .collect(Collectors.toList()));
+    return this.findAll().stream()
+        .filter(d -> d.getIdVendor().intValue() == idVendor)
+        .collect(Collectors.toList());
     // @formatter:on
-    return descriptors;
   }
 
   /**
@@ -56,16 +49,12 @@ public interface USBPortFinder extends PortFinder<USBPortDescriptor> {
    * @return the USB descriptor data list of all USB device connected with the given product id and
    *     vendor id
    */
-  public default DataList<USBPortDescriptor> findByProductIdAndVendorId(
-      int idProduct, int idVendor) {
-    DataList<USBPortDescriptor> descriptors = new DataArrayList<USBPortDescriptor>();
+  public default List<USBPortDescriptor> findByProductIdAndVendorId(int idProduct, int idVendor) {
     // @formatter:off
-    descriptors.addAll(
-        this.findAll().stream()
-            .filter(d -> d.getIdProduct().intValue() == idProduct)
-            .filter(d -> d.getIdVendor().intValue() == idVendor)
-            .collect(Collectors.toList()));
+    return this.findAll().stream()
+        .filter(d -> d.getIdProduct().intValue() == idProduct)
+        .filter(d -> d.getIdVendor().intValue() == idVendor)
+        .collect(Collectors.toList());
     // @formatter:on
-    return descriptors;
   }
 }

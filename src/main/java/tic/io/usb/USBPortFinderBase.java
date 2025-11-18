@@ -7,8 +7,8 @@
 
 package tic.io.usb;
 
-import enedis.lab.types.DataArrayList;
-import enedis.lab.types.DataList;
+import java.util.ArrayList;
+import java.util.List;
 import org.usb4java.Context;
 import org.usb4java.Device;
 import org.usb4java.DeviceDescriptor;
@@ -24,9 +24,9 @@ public class USBPortFinderBase implements USBPortFinder {
    * @param args not used
    */
   public static void main(String[] args) {
-    DataList<USBPortDescriptor> descriptors = getInstance().findAll();
+    List<USBPortDescriptor> descriptors = getInstance().findAll();
 
-    System.out.println(descriptors.toString(2));
+    descriptors.forEach(System.out::println);
   }
 
   /**
@@ -47,8 +47,8 @@ public class USBPortFinderBase implements USBPortFinder {
   private USBPortFinderBase() {}
 
   @Override
-  public DataList<USBPortDescriptor> findAll() {
-    DataList<USBPortDescriptor> usbPortList = new DataArrayList<USBPortDescriptor>();
+  public List<USBPortDescriptor> findAll() {
+    List<USBPortDescriptor> usbPortList = new ArrayList<>();
 
     Context context = new Context();
     DeviceList deviceList = new DeviceList();
