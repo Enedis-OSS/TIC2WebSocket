@@ -6,8 +6,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 package tic.io.usb;
+import tic.util.descriptor.Descriptor;
 
-public class USBPortDescriptor {
+public class USBPortDescriptor extends Descriptor {
   private static final String KEY_BCD_DEVICE = "bcdDevice";
   private static final String KEY_BCD_USB = "bcdUSB";
   private static final String KEY_B_DESCRIPTOR_TYPE = "bDescriptorType";
@@ -262,7 +263,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBcdDevice(Number bcdDevice) {
-    this.bcdDevice = this.requireNumber(bcdDevice, KEY_BCD_DEVICE);
+    this.bcdDevice = this.validateNumber(bcdDevice, KEY_BCD_DEVICE);
   }
 
   /**
@@ -272,7 +273,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBcdUSB(Number bcdUSB) {
-    this.bcdUSB = this.requireNumber(bcdUSB, KEY_BCD_USB);
+    this.bcdUSB = this.validateNumber(bcdUSB, KEY_BCD_USB);
   }
 
   /**
@@ -282,7 +283,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBDescriptorType(Number bDescriptorType) {
-    this.bDescriptorType = this.requireNumber(bDescriptorType, KEY_B_DESCRIPTOR_TYPE);
+    this.bDescriptorType = this.validateNumber(bDescriptorType, KEY_B_DESCRIPTOR_TYPE);
   }
 
   /**
@@ -292,7 +293,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBDeviceClass(Number bDeviceClass) {
-    this.bDeviceClass = this.requireNumber(bDeviceClass, KEY_B_DEVICE_CLASS);
+    this.bDeviceClass = this.validateNumber(bDeviceClass, KEY_B_DEVICE_CLASS);
   }
 
   /**
@@ -302,7 +303,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBDeviceProtocol(Number bDeviceProtocol) {
-    this.bDeviceProtocol = this.requireNumber(bDeviceProtocol, KEY_B_DEVICE_PROTOCOL);
+    this.bDeviceProtocol = this.validateNumber(bDeviceProtocol, KEY_B_DEVICE_PROTOCOL);
   }
 
   /**
@@ -312,7 +313,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBDeviceSubClass(Number bDeviceSubClass) {
-    this.bDeviceSubClass = this.requireNumber(bDeviceSubClass, KEY_B_DEVICE_SUB_CLASS);
+    this.bDeviceSubClass = this.validateNumber(bDeviceSubClass, KEY_B_DEVICE_SUB_CLASS);
   }
 
   /**
@@ -322,7 +323,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBLength(Number bLength) {
-    this.bLength = this.requireNumber(bLength, KEY_B_LENGTH);
+    this.bLength = this.validateNumber(bLength, KEY_B_LENGTH);
   }
 
   /**
@@ -332,7 +333,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBMaxPacketSize0(Number bMaxPacketSize0) {
-    this.bMaxPacketSize0 = this.requireNumber(bMaxPacketSize0, KEY_B_MAX_PACKET_SIZE0);
+    this.bMaxPacketSize0 = this.validateNumber(bMaxPacketSize0, KEY_B_MAX_PACKET_SIZE0);
   }
 
   /**
@@ -342,7 +343,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBNumConfigurations(Number bNumConfigurations) {
-    this.bNumConfigurations = this.requireNumber(bNumConfigurations, KEY_B_NUM_CONFIGURATIONS);
+    this.bNumConfigurations = this.validateNumber(bNumConfigurations, KEY_B_NUM_CONFIGURATIONS);
   }
 
   /**
@@ -352,7 +353,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setIdProduct(Number idProduct) {
-    this.idProduct = this.requireNumber(idProduct, KEY_ID_PRODUCT);
+    this.idProduct = this.validateNumber(idProduct, KEY_ID_PRODUCT);
   }
 
   /**
@@ -362,7 +363,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setIdVendor(Number idVendor) {
-    this.idVendor = this.requireNumber(idVendor, KEY_ID_VENDOR);
+    this.idVendor = this.validateNumber(idVendor, KEY_ID_VENDOR);
   }
 
   /**
@@ -372,7 +373,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setIManufacturer(Number iManufacturer) {
-    this.iManufacturer = this.requireNumber(iManufacturer, KEY_I_MANUFACTURER);
+    this.iManufacturer = this.validateNumber(iManufacturer, KEY_I_MANUFACTURER);
   }
 
   /**
@@ -382,7 +383,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setIProduct(Number iProduct) {
-    this.iProduct = this.requireNumber(iProduct, KEY_I_PRODUCT);
+    this.iProduct = this.validateNumber(iProduct, KEY_I_PRODUCT);
   }
 
   /**
@@ -392,7 +393,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setISerialNumber(Number iSerialNumber) {
-    this.iSerialNumber = this.requireNumber(iSerialNumber, KEY_I_SERIAL_NUMBER);
+    this.iSerialNumber = this.validateNumber(iSerialNumber, KEY_I_SERIAL_NUMBER);
   }
 
   /**
@@ -402,7 +403,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setManufacturer(String manufacturer) {
-    this.manufacturer = this.normalizeString(manufacturer);
+    this.manufacturer = this.validateString(manufacturer, KEY_MANUFACTURER);
   }
 
   /**
@@ -412,7 +413,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setProduct(String product) {
-    this.product = this.normalizeString(product);
+    this.product = this.validateString(product, KEY_PRODUCT);
   }
 
   /**
@@ -422,21 +423,6 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setSerialNumber(String serialNumber) {
-    this.serialNumber = this.normalizeString(serialNumber);
-  }
-
-  private Number requireNumber(Number value, String key) {
-    if (value == null) {
-      throw new IllegalArgumentException("Value '" + key + "' cannot be null");
-    }
-    return value;
-  }
-
-  private String normalizeString(String value) {
-    if (value == null) {
-      return null;
-    }
-    String trimmed = value.trim();
-    return trimmed.isEmpty() ? null : trimmed;
+    this.serialNumber = this.validateString(serialNumber, KEY_SERIAL_NUMBER);
   }
 }

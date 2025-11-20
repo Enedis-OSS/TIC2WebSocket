@@ -13,7 +13,6 @@ import com.sun.jna.platform.linux.Udev.UdevDevice;
 import com.sun.jna.platform.linux.Udev.UdevEnumerate;
 import com.sun.jna.platform.linux.Udev.UdevListEntry;
 import enedis.lab.types.DataArrayList;
-import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.DataList;
 import java.io.File;
 import java.io.FileFilter;
@@ -167,8 +166,8 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
                   productName,
                   manufacturer,
                   serialNumber);
-        } catch (DataDictionaryException e) {
-          e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+          e.printStackTrace(System.err);
           Udev.INSTANCE.udev_device_unref(device);
           continue;
         }
@@ -183,8 +182,8 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
         try {
           serialPortDescriptor =
               new SerialPortDescriptor(null, location, null, null, null, null, null, null);
-        } catch (DataDictionaryException e) {
-          e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+          e.printStackTrace(System.err);
           Udev.INSTANCE.udev_device_unref(device);
           continue;
         }
@@ -297,8 +296,8 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
                 productName,
                 manufacturer,
                 serialNumber);
-      } catch (DataDictionaryException e) {
-        e.printStackTrace();
+      } catch (IllegalArgumentException e) {
+        e.printStackTrace(System.err);
         continue;
       }
       serialPortDescriptorList.add(serialPortDescriptor);
@@ -327,8 +326,8 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
       try {
         serialPortDescriptor =
             new SerialPortDescriptor(null, portName, null, null, null, null, null, null);
-      } catch (DataDictionaryException e) {
-        e.printStackTrace();
+      } catch (IllegalArgumentException e) {
+        e.printStackTrace(System.err);
         continue;
       }
       serialPortDescriptorList.add(serialPortDescriptor);

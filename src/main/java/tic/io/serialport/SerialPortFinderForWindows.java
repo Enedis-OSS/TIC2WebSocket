@@ -36,7 +36,6 @@ import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.platform.win32.WinReg.HKEY;
 import com.sun.jna.ptr.IntByReference;
 import enedis.lab.types.DataArrayList;
-import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.DataList;
 import java.util.ArrayList;
 import java.util.List;
@@ -175,7 +174,7 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
                   null,
                   manufacturer,
                   serialNumber);
-        } catch (DataDictionaryException e) {
+        } catch (IllegalArgumentException e) {
           e.printStackTrace(System.err);
           continue;
         }
@@ -191,7 +190,7 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
           SerialPortDescriptor serialPortDescriptor =
               new SerialPortDescriptor(null, portName, null, null, null, null, null, null);
           serialPortDescriptorList.add(serialPortDescriptor);
-        } catch (DataDictionaryException e) {
+        } catch (IllegalArgumentException e) {
           e.printStackTrace(System.err);
         }
       }
