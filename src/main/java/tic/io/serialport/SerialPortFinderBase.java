@@ -9,8 +9,6 @@ package tic.io.serialport;
 
 import java.util.List;
 import org.apache.commons.lang3.SystemUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * Cross-platform serial port finder implementation with automatic OS detection.
@@ -47,7 +45,7 @@ public class SerialPortFinderBase implements SerialPortFinder {
   public static void main(String[] args) {
     List<SerialPortDescriptor> descriptors = getInstance().findAll();
 
-    // TODO: Replace System.out.println(descriptors.toString(2));
+    System.out.println(SerialPortJsonEncoder.encode(descriptors));
   }
 
   /**
