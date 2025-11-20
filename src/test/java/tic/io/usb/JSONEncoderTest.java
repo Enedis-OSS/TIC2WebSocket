@@ -8,8 +8,10 @@
 package tic.io.usb;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.Arrays;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -17,48 +19,71 @@ import org.junit.Test;
 public class JSONEncoderTest {
 
   @Test
-  public void encodeShouldSerializeDescriptors() {
+  public void encodeShouldSerializeAllDescriptorFields() {
     // Given
-    USBPortDescriptor descriptor1 =
+    USBPortDescriptor descriptor =
         new USBPortDescriptor(
-            0x0100,
-            0x0200,
             1,
             2,
             3,
             4,
             5,
             6,
-            1,
-            0x1234,
-            0x5678,
-            1,
-            2,
-            3,
-            "toto",
-            "Product1",
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            "test_manufacturer",
+            "test_product",
             "SN123");
-    USBPortDescriptor descriptor2 =
-        new USBPortDescriptor(
-            0x0300, 0x0400, 1, 6, 7, 8, 9, 64, 2, 0x9876, 0x5432, 4, 5, 6, null, "Product2", null);
 
     // When
-    String json = JSONEncoder.encode(Arrays.asList(descriptor1, descriptor2), -1);
+    String jsonPayload = JSONEncoder.encode(Arrays.asList(descriptor), -1);
 
     // Then
-    JSONArray array = new JSONArray(json);
-    assertEquals(2, array.length());
+    JSONArray array = new JSONArray(jsonPayload);
+    assertEquals(1, array.length());
+    JSONObject json = array.getJSONObject(0);
+    assertEquals(1, json.getInt("bcdDevice"));
+    assertEquals(2, json.getInt("bcdUSB"));
+    assertEquals(3, json.getInt("bDescriptorType"));
+    assertEquals(4, json.getInt("bDeviceClass"));
+    assertEquals(5, json.getInt("bDeviceProtocol"));
+    assertEquals(6, json.getInt("bDeviceSubClass"));
+    assertEquals(7, json.getInt("bLength"));
+    assertEquals(8, json.getInt("bMaxPacketSize0"));
+    assertEquals(9, json.getInt("bNumConfigurations"));
+    assertEquals(10, json.getInt("idProduct"));
+    assertEquals(11, json.getInt("idVendor"));
+    assertEquals(12, json.getInt("iManufacturer"));
+    assertEquals(13, json.getInt("iProduct"));
+    assertEquals(14, json.getInt("iSerialNumber"));
+    assertEquals("test_manufacturer", json.getString("manufacturer"));
+    assertEquals("test_product", json.getString("product"));
+    assertEquals("SN123", json.getString("serialNumber"));
+  }
 
-    JSONObject first = array.getJSONObject(0);
-    assertEquals(0x0100, first.getInt("bcdDevice"));
-    assertEquals("Product1", first.getString("product"));
-    assertEquals("SN123", first.getString("serialNumber"));
+  @Test
+  public void encodeShouldOmitNullStringFields() {
+    // Given
+    USBPortDescriptor descriptor =
+        new USBPortDescriptor(
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, null, null, null);
 
-    JSONObject second = array.getJSONObject(1);
-    assertEquals(0x9876, second.getInt("idProduct"));
-    assertEquals("Product2", second.getString("product"));
-    // Serial number omitted because descriptor value is null
-    assertEquals(false, second.has("serialNumber"));
+    // When
+    String jsonPayload = JSONEncoder.encode(Arrays.asList(descriptor), -1);
+
+    // Then
+    JSONArray array = new JSONArray(jsonPayload);
+    assertEquals(1, array.length());
+    JSONObject json = array.getJSONObject(0);
+    assertFalse(json.has("manufacturer"));
+    assertFalse(json.has("product"));
+    assertFalse(json.has("serialNumber"));
   }
 
   @Test
