@@ -25,14 +25,14 @@ package tic.util;
  */
 public class ValueChecker {
 
-  protected Number validateNumber(Number value, String key, boolean allowNull) {
+  public static Number validateNumber(Number value, String key, boolean allowNull) {
     if (value == null && !allowNull) {
       throw new IllegalArgumentException("Value '" + key + "' cannot be null");
     }
     return value;
   }
 
-  protected Number validateNumber(Number value, String key, int min, int max, boolean allowNull) {
+  public static Number validateNumber(Number value, String key, int min, int max, boolean allowNull) {
     if (value == null && !allowNull) {
       throw new IllegalArgumentException("Value '" + key + "' cannot be null");
     }
@@ -43,7 +43,7 @@ public class ValueChecker {
     return value;
   }
 
-  protected String validateString(String value, String key, boolean allowNull) {
+  public static String validateString(String value, String key, boolean allowNull) {
     if (value == null && allowNull) {
       return null;
     }
