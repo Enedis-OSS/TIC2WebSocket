@@ -8,23 +8,23 @@
 package tic.io.usb;
 
 public class USBPortDescriptor {
-  protected static final String KEY_BCD_DEVICE = "bcdDevice";
-  protected static final String KEY_BCD_USB = "bcdUSB";
-  protected static final String KEY_B_DESCRIPTOR_TYPE = "bDescriptorType";
-  protected static final String KEY_B_DEVICE_CLASS = "bDeviceClass";
-  protected static final String KEY_B_DEVICE_PROTOCOL = "bDeviceProtocol";
-  protected static final String KEY_B_DEVICE_SUB_CLASS = "bDeviceSubClass";
-  protected static final String KEY_B_LENGTH = "bLength";
-  protected static final String KEY_B_MAX_PACKET_SIZE0 = "bMaxPacketSize0";
-  protected static final String KEY_B_NUM_CONFIGURATIONS = "bNumConfigurations";
-  protected static final String KEY_ID_PRODUCT = "idProduct";
-  protected static final String KEY_ID_VENDOR = "idVendor";
-  protected static final String KEY_I_MANUFACTURER = "iManufacturer";
-  protected static final String KEY_I_PRODUCT = "iProduct";
-  protected static final String KEY_I_SERIAL_NUMBER = "iSerialNumber";
-  protected static final String KEY_MANUFACTURER = "manufacturer";
-  protected static final String KEY_PRODUCT = "product";
-  protected static final String KEY_SERIAL_NUMBER = "serialNumber";
+  private static final String KEY_BCD_DEVICE = "bcdDevice";
+  private static final String KEY_BCD_USB = "bcdUSB";
+  private static final String KEY_B_DESCRIPTOR_TYPE = "bDescriptorType";
+  private static final String KEY_B_DEVICE_CLASS = "bDeviceClass";
+  private static final String KEY_B_DEVICE_PROTOCOL = "bDeviceProtocol";
+  private static final String KEY_B_DEVICE_SUB_CLASS = "bDeviceSubClass";
+  private static final String KEY_B_LENGTH = "bLength";
+  private static final String KEY_B_MAX_PACKET_SIZE0 = "bMaxPacketSize0";
+  private static final String KEY_B_NUM_CONFIGURATIONS = "bNumConfigurations";
+  private static final String KEY_ID_PRODUCT = "idProduct";
+  private static final String KEY_ID_VENDOR = "idVendor";
+  private static final String KEY_I_MANUFACTURER = "iManufacturer";
+  private static final String KEY_I_PRODUCT = "iProduct";
+  private static final String KEY_I_SERIAL_NUMBER = "iSerialNumber";
+  private static final String KEY_MANUFACTURER = "manufacturer";
+  private static final String KEY_PRODUCT = "product";
+  private static final String KEY_SERIAL_NUMBER = "serialNumber";
 
   private Number bcdDevice;
   private Number bcdUSB;
