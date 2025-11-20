@@ -18,6 +18,7 @@ public class JSONEncoderTest {
 
   @Test
   public void encodeShouldSerializeDescriptors() {
+    // Given
     USBPortDescriptor descriptor1 =
         new USBPortDescriptor(
             0x0100,
@@ -41,9 +42,11 @@ public class JSONEncoderTest {
         new USBPortDescriptor(
             0x0300, 0x0400, 1, 6, 7, 8, 9, 64, 2, 0x9876, 0x5432, 4, 5, 6, null, "Product2", null);
 
+    // When
     String json = JSONEncoder.encode(Arrays.asList(descriptor1, descriptor2), -1);
-    JSONArray array = new JSONArray(json);
 
+    // Then
+    JSONArray array = new JSONArray(json);
     assertEquals(2, array.length());
 
     JSONObject first = array.getJSONObject(0);
@@ -60,7 +63,13 @@ public class JSONEncoderTest {
 
   @Test
   public void encodeHandlesNullList() {
-    String json = JSONEncoder.encode(null);
+    // Given
+    List<USBPortDescriptor> list = null;
+
+    // When
+    String json = JSONEncoder.encode(list);
+
+    // Then
     assertEquals("[]", json.trim());
   }
 }
