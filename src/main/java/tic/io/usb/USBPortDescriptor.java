@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 package tic.io.usb;
-import tic.util.descriptor.Descriptor;
+import tic.util.ValueChecker;
 
-public class USBPortDescriptor extends Descriptor {
+public class USBPortDescriptor {
   private static final String KEY_BCD_DEVICE = "bcdDevice";
   private static final String KEY_BCD_USB = "bcdUSB";
   private static final String KEY_B_DESCRIPTOR_TYPE = "bDescriptorType";
@@ -263,7 +263,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBcdDevice(Number bcdDevice) {
-    this.bcdDevice = this.validateNumber(bcdDevice, KEY_BCD_DEVICE);
+    this.bcdDevice = ValueChecker.validateNumber(bcdDevice, KEY_BCD_DEVICE, false);
   }
 
   /**
@@ -273,7 +273,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBcdUSB(Number bcdUSB) {
-    this.bcdUSB = this.validateNumber(bcdUSB, KEY_BCD_USB);
+    this.bcdUSB = ValueChecker.validateNumber(bcdUSB, KEY_BCD_USB, false);
   }
 
   /**
@@ -283,7 +283,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBDescriptorType(Number bDescriptorType) {
-    this.bDescriptorType = this.validateNumber(bDescriptorType, KEY_B_DESCRIPTOR_TYPE);
+    this.bDescriptorType = ValueChecker.validateNumber(bDescriptorType, KEY_B_DESCRIPTOR_TYPE, false);
   }
 
   /**
@@ -293,7 +293,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBDeviceClass(Number bDeviceClass) {
-    this.bDeviceClass = this.validateNumber(bDeviceClass, KEY_B_DEVICE_CLASS);
+    this.bDeviceClass = ValueChecker.validateNumber(bDeviceClass, KEY_B_DEVICE_CLASS, false);
   }
 
   /**
@@ -303,7 +303,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBDeviceProtocol(Number bDeviceProtocol) {
-    this.bDeviceProtocol = this.validateNumber(bDeviceProtocol, KEY_B_DEVICE_PROTOCOL);
+    this.bDeviceProtocol = ValueChecker.validateNumber(bDeviceProtocol, KEY_B_DEVICE_PROTOCOL, false);
   }
 
   /**
@@ -313,7 +313,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBDeviceSubClass(Number bDeviceSubClass) {
-    this.bDeviceSubClass = this.validateNumber(bDeviceSubClass, KEY_B_DEVICE_SUB_CLASS);
+    this.bDeviceSubClass = ValueChecker.validateNumber(bDeviceSubClass, KEY_B_DEVICE_SUB_CLASS, false);
   }
 
   /**
@@ -323,7 +323,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBLength(Number bLength) {
-    this.bLength = this.validateNumber(bLength, KEY_B_LENGTH);
+    this.bLength = ValueChecker.validateNumber(bLength, KEY_B_LENGTH, false);
   }
 
   /**
@@ -333,7 +333,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBMaxPacketSize0(Number bMaxPacketSize0) {
-    this.bMaxPacketSize0 = this.validateNumber(bMaxPacketSize0, KEY_B_MAX_PACKET_SIZE0);
+    this.bMaxPacketSize0 = ValueChecker.validateNumber(bMaxPacketSize0, KEY_B_MAX_PACKET_SIZE0, false);
   }
 
   /**
@@ -343,7 +343,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBNumConfigurations(Number bNumConfigurations) {
-    this.bNumConfigurations = this.validateNumber(bNumConfigurations, KEY_B_NUM_CONFIGURATIONS);
+    this.bNumConfigurations = ValueChecker.validateNumber(bNumConfigurations, KEY_B_NUM_CONFIGURATIONS, false);
   }
 
   /**
@@ -353,7 +353,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setIdProduct(Number idProduct) {
-    this.idProduct = this.validateNumber(idProduct, KEY_ID_PRODUCT);
+    this.idProduct = ValueChecker.validateNumber(idProduct, KEY_ID_PRODUCT, false);
   }
 
   /**
@@ -363,7 +363,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setIdVendor(Number idVendor) {
-    this.idVendor = this.validateNumber(idVendor, KEY_ID_VENDOR);
+    this.idVendor = ValueChecker.validateNumber(idVendor, KEY_ID_VENDOR, false);
   }
 
   /**
@@ -373,7 +373,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setIManufacturer(Number iManufacturer) {
-    this.iManufacturer = this.validateNumber(iManufacturer, KEY_I_MANUFACTURER);
+    this.iManufacturer = ValueChecker.validateNumber(iManufacturer, KEY_I_MANUFACTURER, false);
   }
 
   /**
@@ -383,7 +383,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setIProduct(Number iProduct) {
-    this.iProduct = this.validateNumber(iProduct, KEY_I_PRODUCT);
+    this.iProduct = ValueChecker.validateNumber(iProduct, KEY_I_PRODUCT, false);
   }
 
   /**
@@ -393,7 +393,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setISerialNumber(Number iSerialNumber) {
-    this.iSerialNumber = this.validateNumber(iSerialNumber, KEY_I_SERIAL_NUMBER);
+    this.iSerialNumber = ValueChecker.validateNumber(iSerialNumber, KEY_I_SERIAL_NUMBER, false);
   }
 
   /**
@@ -403,7 +403,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setManufacturer(String manufacturer) {
-    this.manufacturer = this.validateString(manufacturer, KEY_MANUFACTURER);
+    this.manufacturer = ValueChecker.validateString(manufacturer, KEY_MANUFACTURER, true);
   }
 
   /**
@@ -413,7 +413,7 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setProduct(String product) {
-    this.product = this.validateString(product, KEY_PRODUCT);
+    this.product = ValueChecker.validateString(product, KEY_PRODUCT, true);
   }
 
   /**
@@ -423,6 +423,6 @@ public class USBPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setSerialNumber(String serialNumber) {
-    this.serialNumber = this.validateString(serialNumber, KEY_SERIAL_NUMBER);
+    this.serialNumber = ValueChecker.validateString(serialNumber, KEY_SERIAL_NUMBER, true);
   }
 }

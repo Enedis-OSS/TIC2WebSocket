@@ -7,7 +7,7 @@
 
 package tic.io.serialport;
 
-import tic.util.descriptor.Descriptor;
+import tic.util.ValueChecker;
 
 /**
  * Descriptor class for serial port information and USB device properties.
@@ -35,7 +35,7 @@ import tic.util.descriptor.Descriptor;
  *
  * @author Enedis Smarties team
  */
-public class SerialPortDescriptor extends Descriptor {
+public class SerialPortDescriptor {
   private static final String KEY_PORT_ID = "portId";
   private static final String KEY_PORT_NAME = "portName";
   private static final String KEY_DESCRIPTION = "description";
@@ -179,7 +179,7 @@ public class SerialPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if portId is invalid
    */
   public void setPortId(String portId) {
-    this.portId = validateString(portId, KEY_PORT_ID);
+    this.portId = ValueChecker.validateString(portId, KEY_PORT_ID, isNative() ? false : true);
   }
 
   /**
@@ -189,7 +189,7 @@ public class SerialPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if portName is invalid
    */
   public void setPortName(String portName) {
-    this.portName = validateString(portName, KEY_PORT_NAME);
+    this.portName = ValueChecker.validateString(portName, KEY_PORT_NAME, true);
   }
 
   /**
@@ -199,7 +199,7 @@ public class SerialPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if description is invalid
    */
   public void setDescription(String description) {
-    this.description = validateString(description, KEY_DESCRIPTION);
+    this.description = ValueChecker.validateString(description, KEY_DESCRIPTION, true);
   }
 
   /**
@@ -210,7 +210,12 @@ public class SerialPortDescriptor extends Descriptor {
    */
   public void setProductId(Number productId) {
     this.productId =
-        validateNumber(productId, KEY_PRODUCT_ID, USB_IDENTIFIER_MIN, USB_IDENTIFIER_MAX);
+        ValueChecker.validateNumber(
+            productId,
+            KEY_PRODUCT_ID,
+            USB_IDENTIFIER_MIN,
+            USB_IDENTIFIER_MAX,
+            isNative() ? false : true);
   }
 
   /**
@@ -220,7 +225,13 @@ public class SerialPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if vendorId is out of range [0-65535]
    */
   public void setVendorId(Number vendorId) {
-    this.vendorId = validateNumber(vendorId, KEY_VENDOR_ID, USB_IDENTIFIER_MIN, USB_IDENTIFIER_MAX);
+    this.vendorId =
+        ValueChecker.validateNumber(
+            vendorId,
+            KEY_VENDOR_ID,
+            USB_IDENTIFIER_MIN,
+            USB_IDENTIFIER_MAX,
+            isNative() ? false : true);
   }
 
   /**
@@ -230,7 +241,7 @@ public class SerialPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if productName is invalid
    */
   public void setProductName(String productName) {
-    this.productName = validateString(productName, KEY_PRODUCT_NAME);
+    this.productName = ValueChecker.validateString(productName, KEY_PRODUCT_NAME, true);
   }
 
   /**
@@ -240,7 +251,7 @@ public class SerialPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if manufacturer is invalid
    */
   public void setManufacturer(String manufacturer) {
-    this.manufacturer = validateString(manufacturer, KEY_MANUFACTURER);
+    this.manufacturer = ValueChecker.validateString(manufacturer, KEY_MANUFACTURER, true);
   }
 
   /**
@@ -250,7 +261,7 @@ public class SerialPortDescriptor extends Descriptor {
    * @throws IllegalArgumentException if serialNumber is invalid
    */
   public void setSerialNumber(String serialNumber) {
-    this.serialNumber = validateString(serialNumber, KEY_SERIAL_NUMBER);
+    this.serialNumber = ValueChecker.validateString(serialNumber, KEY_SERIAL_NUMBER, true);
   }
 
   /**
