@@ -7,7 +7,7 @@
 
 package tic.io;
 
-import enedis.lab.util.time.Time;
+import tic.util.time.Time;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
