@@ -16,7 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 
-public class JSONEncoderTest {
+public class USBPortJsonEncoderTest {
 
   @Test
   public void encodeShouldSerializeAllDescriptorFields() {
@@ -71,8 +71,7 @@ public class JSONEncoderTest {
   public void encodeShouldOmitNullStringFields() {
     // Given
     USBPortDescriptor descriptor =
-        new USBPortDescriptor(
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, null, null, null);
+        new USBPortDescriptor(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, null, null, null);
 
     // When
     String jsonPayload = USBPortJsonEncoder.encode(Arrays.asList(descriptor), -1);
