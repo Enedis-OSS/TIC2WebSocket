@@ -36,14 +36,14 @@ import tic.util.descriptor.Descriptor;
  * @author Enedis Smarties team
  */
 public class SerialPortDescriptor extends Descriptor {
-  protected static final String KEY_PORT_ID = "portId";
-  protected static final String KEY_PORT_NAME = "portName";
-  protected static final String KEY_DESCRIPTION = "description";
-  protected static final String KEY_PRODUCT_ID = "productId";
-  protected static final String KEY_VENDOR_ID = "vendorId";
-  protected static final String KEY_PRODUCT_NAME = "productName";
-  protected static final String KEY_MANUFACTURER = "manufacturer";
-  protected static final String KEY_SERIAL_NUMBER = "serialNumber";
+  private static final String KEY_PORT_ID = "portId";
+  private static final String KEY_PORT_NAME = "portName";
+  private static final String KEY_DESCRIPTION = "description";
+  private static final String KEY_PRODUCT_ID = "productId";
+  private static final String KEY_VENDOR_ID = "vendorId";
+  private static final String KEY_PRODUCT_NAME = "productName";
+  private static final String KEY_MANUFACTURER = "manufacturer";
+  private static final String KEY_SERIAL_NUMBER = "serialNumber";
 
   private static final int USB_IDENTIFIER_MIN = 0;
   private static final int USB_IDENTIFIER_MAX = 65535;
