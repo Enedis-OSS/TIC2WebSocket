@@ -1,3 +1,10 @@
+// Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
+//
+// SPDX-FileContributor: Jehan BOUSCH
+// SPDX-FileContributor: Mathieu SABARTHES
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package tic.util.descriptor;
 
 /**
@@ -21,14 +28,7 @@ public class Descriptor {
     }
     if (value.doubleValue() < min || value.doubleValue() > max) {
       throw new IllegalArgumentException(
-          "Value '"
-              + key
-              + "' must be in range ["
-              + min
-              + "-"
-              + max
-              + "], but got: "
-              + value);
+          "Value '" + key + "' must be in range [" + min + "-" + max + "], but got: " + value);
     }
     return value;
   }
