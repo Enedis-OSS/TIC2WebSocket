@@ -14,7 +14,6 @@ import enedis.lab.mock.FunctionCall;
 import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.DataDictionaryBase;
-import enedis.lab.util.time.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.After;
@@ -22,6 +21,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tic.util.task.Task;
+import tic.util.time.Time;
 
 @SuppressWarnings("javadoc")
 public class TICCoreBaseTest {
@@ -141,7 +141,7 @@ public class TICCoreBaseTest {
     TICCoreReadNextFrameTask task = new TICCoreReadNextFrameTask(this.ticCore, identifier);
     task.start();
     this.waitTaskRunning(task);
-    this.waitReadNextFrameSubsbription();
+    this.waitReadNextFrameSubscription();
     TICCoreError error =
         new TICCoreError(identifier, TICCoreErrorCode.OTHER_REASON.getCode(), "Cannot read stream");
     stream.notifyOnError(error);
@@ -189,7 +189,7 @@ public class TICCoreBaseTest {
     TICCoreReadNextFrameTask task = new TICCoreReadNextFrameTask(this.ticCore, identifier, 200);
     task.start();
     this.waitTaskRunning(task);
-    this.waitReadNextFrameSubsbription();
+    this.waitReadNextFrameSubscription();
     this.waitTaskTerminated(task);
     Assert.assertNull(task.frame);
     Assert.assertNotNull(task.exception);
