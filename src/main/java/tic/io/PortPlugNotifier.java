@@ -7,12 +7,12 @@
 
 package tic.io;
 
+import tic.util.time.Time;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import tic.util.task.TaskPeriodicWithSubscribers;
-import tic.util.time.Time;
 
 /**
  * Periodic monitor that detects and notifies when ports are plugged or unplugged.

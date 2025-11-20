@@ -10,9 +10,9 @@ package enedis.lab.io;
 import enedis.lab.types.DataArrayList;
 import enedis.lab.types.DataList;
 import enedis.lab.util.task.TaskPeriodicWithSubscribers;
-import enedis.lab.util.time.Time;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicReference;
+import tic.util.time.Time;
 
 /**
  * Periodic monitor that detects and notifies when ports are plugged or unplugged.

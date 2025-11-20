@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.lab.util.time;
+package tic.util.time;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
