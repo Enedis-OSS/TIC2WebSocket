@@ -7,8 +7,8 @@
 
 package enedis.lab.util.task;
 
-import enedis.lab.util.time.Time;
 import java.util.concurrent.atomic.AtomicLong;
+import tic.util.time.Time;
 
 /**
  * Abstract class representing a generic periodic asynchronous task.

@@ -14,8 +14,8 @@ import enedis.lab.io.channels.serialport.ChannelSerialPortErrorCode;
 import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.types.BytesArray;
 import enedis.lab.types.DataDictionaryException;
-import enedis.lab.util.time.Time;
 import java.util.Arrays;
+import tic.util.time.Time;
 
 /**
  * A specialized serial port channel implementation for TIC (Teleinformation Client) communication.

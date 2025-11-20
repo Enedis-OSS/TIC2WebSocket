@@ -15,7 +15,6 @@ import enedis.lab.io.tic.TICPortPlugNotifier;
 import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.types.DataArrayList;
 import enedis.lab.types.DataDictionaryException;
-import enedis.lab.util.time.Time;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +29,7 @@ import tic.util.task.FilteredNotifier;
 import tic.util.task.FilteredNotifierBase;
 import tic.util.task.Task;
 import tic.util.task.TaskBase;
+import tic.util.time.Time;
 
 /**
  * Core implementation for managing frame reading and subscriber notifications.
