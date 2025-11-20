@@ -7,8 +7,8 @@
 
 package tic.io.serialport;
 
-import enedis.lab.types.DataArrayList;
-import enedis.lab.types.DataList;
+import java.util.ArrayList;
+import java.util.List;
 import tic.io.PortFinder;
 
 /**
@@ -115,9 +115,9 @@ public interface SerialPortFinder extends PortFinder<SerialPortDescriptor> {
    * @param vendorId the USB device vendor identifier (VID) to match
    * @return a list of matching serial port descriptors (empty list if no matches found)
    */
-  public default DataList<SerialPortDescriptor> findByProductIdAndVendorId(
+  public default List<SerialPortDescriptor> findByProductIdAndVendorId(
       Number productId, Number vendorId) {
-    DataList<SerialPortDescriptor> descriptorList = new DataArrayList<SerialPortDescriptor>();
+    List<SerialPortDescriptor> descriptorList = new ArrayList<>();
 
     for (SerialPortDescriptor descriptor : this.findAll()) {
       if (descriptor.getProductId() == null && productId != null) {

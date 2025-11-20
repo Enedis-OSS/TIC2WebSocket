@@ -12,8 +12,6 @@ import com.sun.jna.platform.linux.Udev.UdevContext;
 import com.sun.jna.platform.linux.Udev.UdevDevice;
 import com.sun.jna.platform.linux.Udev.UdevEnumerate;
 import com.sun.jna.platform.linux.Udev.UdevListEntry;
-import enedis.lab.types.DataArrayList;
-import enedis.lab.types.DataList;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -90,9 +88,8 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
    * @return a list of all serial port descriptors found on the system
    */
   @Override
-  public DataList<SerialPortDescriptor> findAll() {
-    DataList<SerialPortDescriptor> serialPortDescriptorList =
-        new DataArrayList<SerialPortDescriptor>();
+  public List<SerialPortDescriptor> findAll() {
+    List<SerialPortDescriptor> serialPortDescriptorList = new ArrayList<>();
 
     serialPortDescriptorList = availablePortsByUdev();
     if (serialPortDescriptorList.isEmpty()) {
@@ -117,14 +114,13 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
    *
    * @return a list of serial port descriptors discovered via udev
    */
-  private static DataList<SerialPortDescriptor> availablePortsByUdev() {
+  private static List<SerialPortDescriptor> availablePortsByUdev() {
     UdevContext udev = Udev.INSTANCE.udev_new();
     UdevEnumerate enumerate = Udev.INSTANCE.udev_enumerate_new(udev);
     Udev.INSTANCE.udev_enumerate_add_match_subsystem(enumerate, "tty");
     Udev.INSTANCE.udev_enumerate_scan_devices(enumerate);
 
-    DataList<SerialPortDescriptor> serialPortDescriptorList =
-        new DataArrayList<SerialPortDescriptor>();
+    List<SerialPortDescriptor> serialPortDescriptorList = new ArrayList<>();
 
     for (UdevListEntry dev_list_entry = Udev.INSTANCE.udev_enumerate_get_list_entry(enumerate);
         dev_list_entry != null;
@@ -206,9 +202,8 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
    *
    * @return a list of serial port descriptors discovered via sysfs
    */
-  private static DataList<SerialPortDescriptor> availablePortsBySysfs() {
-    DataList<SerialPortDescriptor> serialPortDescriptorList =
-        new DataArrayList<SerialPortDescriptor>();
+  private static List<SerialPortDescriptor> availablePortsBySysfs() {
+    List<SerialPortDescriptor> serialPortDescriptorList = new ArrayList<>();
     File ttySysClassDir = new File("/sys/class/tty");
 
     if (!(ttySysClassDir.exists() && ttySysClassDir.canRead())) {
@@ -315,9 +310,8 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
    *
    * @return a list of serial port descriptors discovered by device file filtering
    */
-  private static DataList<SerialPortDescriptor> availablePortsByFiltersOfDevices() {
-    DataList<SerialPortDescriptor> serialPortDescriptorList =
-        new DataArrayList<SerialPortDescriptor>();
+  private static List<SerialPortDescriptor> availablePortsByFiltersOfDevices() {
+    List<SerialPortDescriptor> serialPortDescriptorList = new ArrayList<>();
 
     List<String> deviceFilePaths = filteredDeviceFilePaths();
     for (String deviceFilePath : deviceFilePaths) {

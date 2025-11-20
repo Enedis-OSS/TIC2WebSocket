@@ -35,8 +35,6 @@ import com.sun.jna.platform.win32.Win32Exception;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
 import com.sun.jna.platform.win32.WinReg.HKEY;
 import com.sun.jna.ptr.IntByReference;
-import enedis.lab.types.DataArrayList;
-import enedis.lab.types.DataList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,7 +112,7 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
    * @return a list of all serial port descriptors found on the system
    */
   @Override
-  public DataList<SerialPortDescriptor> findAll() {
+  public List<SerialPortDescriptor> findAll() {
     final class SetupToken {
       public GUID guid;
       public int flags;
@@ -134,8 +132,7 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
           new SetupToken(GUID_DEVINTERFACE_MODEM, DIGCF_PRESENT | DIGCF_DEVICEINTERFACE)
         };
 
-    DataList<SerialPortDescriptor> serialPortDescriptorList =
-        new DataArrayList<SerialPortDescriptor>();
+    List<SerialPortDescriptor> serialPortDescriptorList = new ArrayList<>();
 
     for (int i = 0; i < setupTokens.length; ++i) {
       HANDLE deviceInfoSet =
@@ -206,7 +203,7 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
    * @param portName the port name to search for
    * @return true if the port name is found in the list, false otherwise
    */
-  private static boolean anyOfPorts(DataList<SerialPortDescriptor> descriptors, String portName) {
+  private static boolean anyOfPorts(List<SerialPortDescriptor> descriptors, String portName) {
     if (descriptors == null) {
       return false;
     }

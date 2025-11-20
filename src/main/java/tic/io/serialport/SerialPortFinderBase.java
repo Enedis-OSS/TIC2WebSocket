@@ -7,8 +7,10 @@
 
 package tic.io.serialport;
 
-import enedis.lab.types.DataList;
+import java.util.List;
 import org.apache.commons.lang3.SystemUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Cross-platform serial port finder implementation with automatic OS detection.
@@ -43,9 +45,9 @@ public class SerialPortFinderBase implements SerialPortFinder {
    * @param args command-line arguments (not used)
    */
   public static void main(String[] args) {
-    DataList<SerialPortDescriptor> descriptors = getInstance().findAll();
+    List<SerialPortDescriptor> descriptors = getInstance().findAll();
 
-    System.out.println(descriptors.toString(2));
+    // TODO: Replace System.out.println(descriptors.toString(2));
   }
 
   /**
@@ -99,7 +101,7 @@ public class SerialPortFinderBase implements SerialPortFinder {
    * @return a list of all serial port descriptors available on the system
    */
   @Override
-  public DataList<SerialPortDescriptor> findAll() {
+  public List<SerialPortDescriptor> findAll() {
     return instance.findAll();
   }
 }
