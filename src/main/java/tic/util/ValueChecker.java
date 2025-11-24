@@ -26,15 +26,22 @@ package tic.util;
 public class ValueChecker {
 
   public static Number validateNumber(Number value, String key, boolean allowNull) {
-    if (value == null && !allowNull) {
-      throw new IllegalArgumentException("Value '" + key + "' cannot be null");
+    if (value == null) {
+      if (!allowNull) {
+        throw new IllegalArgumentException("Value '" + key + "' cannot be null");
+      }
+      return null;
     }
     return value;
   }
 
-  public static Number validateNumber(Number value, String key, int min, int max, boolean allowNull) {
-    if (value == null && !allowNull) {
-      throw new IllegalArgumentException("Value '" + key + "' cannot be null");
+  public static Number validateNumber(
+      Number value, String key, int min, int max, boolean allowNull) {
+    if (value == null) {
+      if (!allowNull) {
+        throw new IllegalArgumentException("Value '" + key + "' cannot be null");
+      }
+      return null;
     }
     if (value.doubleValue() < min || value.doubleValue() > max) {
       throw new IllegalArgumentException(
@@ -43,11 +50,12 @@ public class ValueChecker {
     return value;
   }
 
-  public static String validateString(String value, String key, boolean allowNull, boolean allowEmpty) {
+  public static String validateString(
+      String value, String key, boolean allowNull, boolean allowEmpty) {
     if (value == null && allowNull) {
       return null;
     }
-    
+
     if (value == null && !allowNull) {
       throw new IllegalArgumentException("Value '" + key + "' cannot be null");
     }
