@@ -10,7 +10,6 @@ package tic.io.modem;
 import enedis.lab.io.serialport.SerialPortDescriptor;
 import enedis.lab.io.serialport.SerialPortFinder;
 import enedis.lab.io.serialport.SerialPortFinderBase;
-import enedis.lab.types.DataDictionaryException;
 import java.util.ArrayList;
 import java.util.List;
 import tic.io.usb.USBPortDescriptor;
@@ -88,7 +87,7 @@ public class TICPortFinderBase implements TICPortFinder {
           try {
             TICPortDescriptor tic = new TICPortDescriptor(upd, modemType);
             ticSerialPort.add(tic);
-          } catch (DataDictionaryException e) {
+          } catch (IllegalArgumentException e) {
             // Ignore descriptors that fail validation
           }
         }
@@ -97,7 +96,7 @@ public class TICPortFinderBase implements TICPortFinder {
           try {
             TICPortDescriptor tic = new TICPortDescriptor(spd, modemType);
             ticSerialPort.add(tic);
-          } catch (DataDictionaryException e) {
+          } catch (IllegalArgumentException e) {
             // Ignore descriptors that fail validation
           }
         }
@@ -115,7 +114,7 @@ public class TICPortFinderBase implements TICPortFinder {
     if (serialPortDescriptor != null) {
       try {
         ticPortDescriptor = new TICPortDescriptor(serialPortDescriptor, null);
-      } catch (DataDictionaryException e) {
+      } catch (IllegalArgumentException e) {
         // Ignore descriptors that fail validation
       }
     }

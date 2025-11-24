@@ -7,53 +7,15 @@
 
 package tic.io.modem;
 
-import enedis.lab.io.serialport.SerialPortDescriptor;
-import enedis.lab.types.DataDictionary;
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.types.datadictionary.KeyDescriptor;
-import enedis.lab.types.datadictionary.KeyDescriptorEnum;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import tic.io.serialport.SerialPortDescriptor;
 import tic.io.usb.USBPortDescriptor;
 
-/**
- * TICPortDescriptor class
- *
- * <p>Generated
- */
+/** Descriptor of a TIC port */
 public class TICPortDescriptor extends SerialPortDescriptor {
-  protected static final String KEY_MODEM_TYPE = "modemType";
-
-  private final List<KeyDescriptor<?>> keys = new ArrayList<>();
-
-  protected KeyDescriptorEnum<TICModemType> kModemType;
+  private TICModemType modemType;
 
   protected TICPortDescriptor() {
     super();
-    this.loadKeyDescriptors();
-  }
-
-  /**
-   * Constructor using map
-   *
-   * @param map
-   * @throws DataDictionaryException
-   */
-  public TICPortDescriptor(Map<String, Object> map) throws DataDictionaryException {
-    this();
-    this.copy(fromMap(map));
-  }
-
-  /**
-   * Constructor using datadictionary
-   *
-   * @param other
-   * @throws DataDictionaryException
-   */
-  public TICPortDescriptor(DataDictionary other) throws DataDictionaryException {
-    this();
-    this.copy(other);
   }
 
   /**
@@ -66,7 +28,6 @@ public class TICPortDescriptor extends SerialPortDescriptor {
    * @param manufacturer
    * @param serialNumber
    * @param modemType
-   * @throws DataDictionaryException
    */
   public TICPortDescriptor(
       String portId,
@@ -75,8 +36,7 @@ public class TICPortDescriptor extends SerialPortDescriptor {
       String productName,
       String manufacturer,
       String serialNumber,
-      TICModemType modemType)
-      throws DataDictionaryException {
+      TICModemType modemType) {
     this();
 
     this.setPortId(portId);
@@ -86,8 +46,6 @@ public class TICPortDescriptor extends SerialPortDescriptor {
     this.setManufacturer(manufacturer);
     this.setSerialNumber(serialNumber);
     this.setModemType(modemType);
-
-    this.checkAndUpdate();
   }
 
   /**
@@ -95,11 +53,24 @@ public class TICPortDescriptor extends SerialPortDescriptor {
    *
    * @param serialPortDescriptor
    * @param modemType
-   * @throws DataDictionaryException
    */
-  public TICPortDescriptor(SerialPortDescriptor serialPortDescriptor, TICModemType modemType)
-      throws DataDictionaryException {
+  public TICPortDescriptor(SerialPortDescriptor serialPortDescriptor, TICModemType modemType) {
     this();
+  }
+
+  /**
+   * Constructor setting parameters to specific values for legacy descriptors
+   *
+   * @param serialPortDescriptor legacy descriptor from the historical API
+   * @param modemType modem type
+   */
+  public TICPortDescriptor(
+      enedis.lab.io.serialport.SerialPortDescriptor serialPortDescriptor,
+      TICModemType modemType) {
+    this();
+    if (serialPortDescriptor == null) {
+      throw new IllegalArgumentException("Serial port descriptor cannot be null");
+    }
 
     this.checkProductId(serialPortDescriptor.getProductId(), modemType);
     this.checkVendorId(serialPortDescriptor.getVendorId(), modemType);
@@ -113,8 +84,6 @@ public class TICPortDescriptor extends SerialPortDescriptor {
     this.setManufacturer(serialPortDescriptor.getManufacturer());
     this.setSerialNumber(serialPortDescriptor.getSerialNumber());
     this.setModemType(modemType);
-
-    this.checkAndUpdate();
   }
 
   /**
@@ -122,11 +91,13 @@ public class TICPortDescriptor extends SerialPortDescriptor {
    *
    * @param usbPortDescriptor
    * @param modemType
-   * @throws DataDictionaryException
    */
-  public TICPortDescriptor(USBPortDescriptor usbPortDescriptor, TICModemType modemType)
-      throws DataDictionaryException {
+  public TICPortDescriptor(USBPortDescriptor usbPortDescriptor, TICModemType modemType) {
     this();
+
+    if (usbPortDescriptor == null) {
+      throw new IllegalArgumentException("USB port descriptor cannot be null");
+    }
 
     this.checkProductId(usbPortDescriptor.getIdProduct(), modemType);
     this.checkVendorId(usbPortDescriptor.getIdVendor(), modemType);
@@ -137,22 +108,6 @@ public class TICPortDescriptor extends SerialPortDescriptor {
     this.setManufacturer(usbPortDescriptor.getManufacturer());
     this.setSerialNumber(usbPortDescriptor.getSerialNumber());
     this.setModemType(modemType);
-
-    this.checkAndUpdate();
-  }
-
-  @Override
-  protected void updateOptionalParameters() throws DataDictionaryException {
-    if (this.exists(KEY_MODEM_TYPE)) {
-      if (this.getModemType() != null) {
-        this.setProductId(this.getModemType().getProductId());
-        this.setVendorId(this.getModemType().getVendorId());
-      } else {
-        this.setProductId(null);
-        this.setVendorId(null);
-      }
-    }
-    super.updateOptionalParameters();
   }
 
   /**
@@ -161,17 +116,16 @@ public class TICPortDescriptor extends SerialPortDescriptor {
    * @return the modem type
    */
   public TICModemType getModemType() {
-    return (TICModemType) this.data.get(KEY_MODEM_TYPE);
+    return this.modemType;
   }
 
   /**
    * Set modem type
    *
    * @param modemType
-   * @throws DataDictionaryException
    */
-  public void setModemType(TICModemType modemType) throws DataDictionaryException {
-    this.setModemType((Object) modemType);
+  public void setModemType(TICModemType modemType) {
+    this.modemType = modemType;
     if (modemType != null) {
       this.setProductId(modemType.getProductId());
       this.setVendorId(modemType.getVendorId());
@@ -181,38 +135,18 @@ public class TICPortDescriptor extends SerialPortDescriptor {
     }
   }
 
-  protected void setModemType(Object modemType) throws DataDictionaryException {
-    if (modemType == null) {
-      this.data.put(KEY_MODEM_TYPE, null);
-    } else {
-      this.data.put(KEY_MODEM_TYPE, this.kModemType.convert(modemType));
-    }
-  }
-
-  private void checkProductId(Number productId, TICModemType modemType)
-      throws DataDictionaryException {
+  private void checkProductId(Number productId, TICModemType modemType) {
     if (modemType != null
         && productId != null
         && productId.intValue() != modemType.getProductId()) {
-      throw new DataDictionaryException("TIC modem productId is inconsistent with the given one");
+      throw new IllegalArgumentException("TIC modem productId is inconsistent with the given one");
     }
   }
 
-  private void checkVendorId(Number vendorId, TICModemType modemType)
-      throws DataDictionaryException {
+  private void checkVendorId(Number vendorId, TICModemType modemType) {
     if (modemType != null && vendorId != null && vendorId.intValue() != modemType.getVendorId()) {
-      throw new DataDictionaryException("TIC modem vendorId is inconsistent with the given one");
+      throw new IllegalArgumentException("TIC modem vendorId is inconsistent with the given one");
     }
   }
 
-  private void loadKeyDescriptors() {
-    try {
-      this.kModemType = new KeyDescriptorEnum<>(KEY_MODEM_TYPE, false, TICModemType.class);
-      this.keys.add(this.kModemType);
-
-      this.addAllKeyDescriptor(this.keys);
-    } catch (DataDictionaryException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
-  }
 }
