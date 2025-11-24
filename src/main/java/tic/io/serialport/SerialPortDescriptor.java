@@ -179,7 +179,7 @@ public class SerialPortDescriptor {
    * @throws IllegalArgumentException if portId is invalid
    */
   public void setPortId(String portId) {
-    this.portId = ValueChecker.validateString(portId, KEY_PORT_ID, false, false);
+    this.portId = ValueChecker.validateString(portId, KEY_PORT_ID, true, false);
   }
 
   /**
