@@ -179,7 +179,7 @@ public class SerialPortDescriptor {
    * @throws IllegalArgumentException if portId is invalid
    */
   public void setPortId(String portId) {
-    this.portId = ValueChecker.validateString(portId, KEY_PORT_ID, isNative() ? false : true);
+    this.portId = ValueChecker.validateString(portId, KEY_PORT_ID, false, false);
   }
 
   /**
@@ -189,7 +189,7 @@ public class SerialPortDescriptor {
    * @throws IllegalArgumentException if portName is invalid
    */
   public void setPortName(String portName) {
-    this.portName = ValueChecker.validateString(portName, KEY_PORT_NAME, true);
+    this.portName = ValueChecker.validateString(portName, KEY_PORT_NAME, true, true);
   }
 
   /**
@@ -199,7 +199,7 @@ public class SerialPortDescriptor {
    * @throws IllegalArgumentException if description is invalid
    */
   public void setDescription(String description) {
-    this.description = ValueChecker.validateString(description, KEY_DESCRIPTION, true);
+    this.description = ValueChecker.validateString(description, KEY_DESCRIPTION, true, false);
   }
 
   /**
@@ -215,7 +215,7 @@ public class SerialPortDescriptor {
             KEY_PRODUCT_ID,
             USB_IDENTIFIER_MIN,
             USB_IDENTIFIER_MAX,
-            isNative() ? false : true);
+            false);
   }
 
   /**
@@ -231,7 +231,7 @@ public class SerialPortDescriptor {
             KEY_VENDOR_ID,
             USB_IDENTIFIER_MIN,
             USB_IDENTIFIER_MAX,
-            isNative() ? false : true);
+            false);
   }
 
   /**
@@ -241,7 +241,7 @@ public class SerialPortDescriptor {
    * @throws IllegalArgumentException if productName is invalid
    */
   public void setProductName(String productName) {
-    this.productName = ValueChecker.validateString(productName, KEY_PRODUCT_NAME, true);
+    this.productName = ValueChecker.validateString(productName, KEY_PRODUCT_NAME, true, false);
   }
 
   /**
@@ -251,7 +251,7 @@ public class SerialPortDescriptor {
    * @throws IllegalArgumentException if manufacturer is invalid
    */
   public void setManufacturer(String manufacturer) {
-    this.manufacturer = ValueChecker.validateString(manufacturer, KEY_MANUFACTURER, true);
+    this.manufacturer = ValueChecker.validateString(manufacturer, KEY_MANUFACTURER, true, false);
   }
 
   /**
@@ -261,7 +261,7 @@ public class SerialPortDescriptor {
    * @throws IllegalArgumentException if serialNumber is invalid
    */
   public void setSerialNumber(String serialNumber) {
-    this.serialNumber = ValueChecker.validateString(serialNumber, KEY_SERIAL_NUMBER, true);
+    this.serialNumber = ValueChecker.validateString(serialNumber, KEY_SERIAL_NUMBER, true, false);
   }
 
   /**

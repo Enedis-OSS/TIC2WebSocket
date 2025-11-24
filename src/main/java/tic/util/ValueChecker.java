@@ -43,13 +43,17 @@ public class ValueChecker {
     return value;
   }
 
-  public static String validateString(String value, String key, boolean allowNull) {
+  public static String validateString(String value, String key, boolean allowNull, boolean allowEmpty) {
     if (value == null && allowNull) {
       return null;
     }
     
     if (value == null && !allowNull) {
       throw new IllegalArgumentException("Value '" + key + "' cannot be null");
+    }
+
+    if (!allowEmpty && value.trim().isEmpty()) {
+      throw new IllegalArgumentException("Value '" + key + "' cannot be empty");
     }
 
     String trimmed = value.trim();
