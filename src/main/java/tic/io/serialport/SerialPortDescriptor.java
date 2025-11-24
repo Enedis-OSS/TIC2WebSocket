@@ -215,7 +215,7 @@ public class SerialPortDescriptor {
             KEY_PRODUCT_ID,
             USB_IDENTIFIER_MIN,
             USB_IDENTIFIER_MAX,
-            false);
+            true);
   }
 
   /**
@@ -231,7 +231,7 @@ public class SerialPortDescriptor {
             KEY_VENDOR_ID,
             USB_IDENTIFIER_MIN,
             USB_IDENTIFIER_MAX,
-            false);
+            true);
   }
 
   /**
