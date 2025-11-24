@@ -7,9 +7,9 @@
 
 package tic.io.modem;
 
-import org.json.JSONObject;
 import tic.io.PlugSubscriber;
 import tic.io.PortPlugNotifier;
+import java.util.Arrays;
 
 /** Class used to notify when a TIC port has been plugged or unplugged */
 public class TICPortPlugNotifier extends PortPlugNotifier<TICPortFinder, TICPortDescriptor> {
@@ -28,17 +28,18 @@ public class TICPortPlugNotifier extends PortPlugNotifier<TICPortFinder, TICPort
         new PlugSubscriber<TICPortDescriptor>() {
           @Override
           public void onPlugged(TICPortDescriptor descriptor) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put(notifier.getClass().getSimpleName() + ".onPlugged", descriptor.toJSON());
-            System.out.println(jsonObject.toString(DEFAULT_JSON_INDENTATION) + "\n");
+            String payload =
+                TICPortJsonEncoder.encode(
+                    new java.util.ArrayList<>(Arrays.asList(descriptor)), DEFAULT_JSON_INDENTATION);
+            System.out.println(payload + "\n");
           }
 
           @Override
           public void onUnplugged(TICPortDescriptor descriptor) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put(
-                notifier.getClass().getSimpleName() + ".onUnplugged", descriptor.toJSON());
-            System.out.println(jsonObject.toString(DEFAULT_JSON_INDENTATION) + "\n");
+            String payload =
+                TICPortJsonEncoder.encode(
+                    new java.util.ArrayList<>(Arrays.asList(descriptor)), DEFAULT_JSON_INDENTATION);
+            System.out.println(payload + "\n");
           }
         };
     /* 3. Run program printing when an TIC port has been plugged or unplugged until CTRL+C is pressed */
