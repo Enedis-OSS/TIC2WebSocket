@@ -403,7 +403,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setManufacturer(String manufacturer) {
-    this.manufacturer = ValueChecker.validateString(manufacturer, KEY_MANUFACTURER, true);
+    this.manufacturer = ValueChecker.validateString(manufacturer, KEY_MANUFACTURER, true, false);
   }
 
   /**
@@ -413,7 +413,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setProduct(String product) {
-    this.product = ValueChecker.validateString(product, KEY_PRODUCT, true);
+    this.product = ValueChecker.validateString(product, KEY_PRODUCT, true,false);
   }
 
   /**
@@ -423,6 +423,6 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setSerialNumber(String serialNumber) {
-    this.serialNumber = ValueChecker.validateString(serialNumber, KEY_SERIAL_NUMBER, true);
+    this.serialNumber = ValueChecker.validateString(serialNumber, KEY_SERIAL_NUMBER, true, false);
   }
 }
