@@ -20,11 +20,9 @@ public interface USBPortFinder extends PortFinder<USBPortDescriptor> {
    * @return the USB descriptor data list of all USB device connected with the given product id
    */
   public default List<USBPortDescriptor> findByProductId(int idProduct) {
-    // @formatter:off
     return this.findAll().stream()
         .filter(d -> d.getIdProduct().intValue() == idProduct)
         .collect(Collectors.toList());
-    // @formatter:on
   }
 
   /**
@@ -34,11 +32,9 @@ public interface USBPortFinder extends PortFinder<USBPortDescriptor> {
    * @return the USB descriptor data list of all USB device connected with the given vendor id
    */
   public default List<USBPortDescriptor> findByVendorId(int idVendor) {
-    // @formatter:off
     return this.findAll().stream()
         .filter(d -> d.getIdVendor().intValue() == idVendor)
         .collect(Collectors.toList());
-    // @formatter:on
   }
 
   /**
@@ -50,11 +46,9 @@ public interface USBPortFinder extends PortFinder<USBPortDescriptor> {
    *     vendor id
    */
   public default List<USBPortDescriptor> findByProductIdAndVendorId(int idProduct, int idVendor) {
-    // @formatter:off
     return this.findAll().stream()
         .filter(d -> d.getIdProduct().intValue() == idProduct)
         .filter(d -> d.getIdVendor().intValue() == idVendor)
         .collect(Collectors.toList());
-    // @formatter:on
   }
 }
