@@ -13,10 +13,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /** Utility class to convert USB port descriptors to their JSON representation. */
-public final class JSONEncoder {
+public final class USBPortJsonEncoder {
   private static final int DEFAULT_INDENT = 2;
 
-  private JSONEncoder() {}
+  private USBPortJsonEncoder() {}
 
   /**
    * Encodes the provided USB descriptors list into a JSON string using the default indentation
