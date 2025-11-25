@@ -7,9 +7,9 @@
 
 package tic.io.modem;
 
-import enedis.lab.io.serialport.SerialPortDescriptor;
-import enedis.lab.io.serialport.SerialPortFinder;
-import enedis.lab.io.serialport.SerialPortFinderBase;
+import tic.io.serialport.SerialPortDescriptor;
+import tic.io.serialport.SerialPortFinder;
+import tic.io.serialport.SerialPortFinderBase;
 import java.util.ArrayList;
 import java.util.List;
 import tic.io.usb.USBPortDescriptor;
@@ -27,7 +27,7 @@ public class TICPortFinderBase implements TICPortFinder {
    */
   public static void main(String[] args) {
     List<TICPortDescriptor> descriptors = getInstance().findAll();
-    // TODO: replace System.out.println(descriptors.toString(2));
+    System.out.println(TICPortJsonEncoder.encode(descriptors, DEFAULT_JSON_INDENT));
   }
 
   /**
