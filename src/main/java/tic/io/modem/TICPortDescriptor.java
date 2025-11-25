@@ -64,9 +64,7 @@ public class TICPortDescriptor extends SerialPortDescriptor {
    * @param serialPortDescriptor legacy descriptor from the historical API
    * @param modemType modem type
    */
-  public TICPortDescriptor(
-      enedis.lab.io.serialport.SerialPortDescriptor serialPortDescriptor,
-      TICModemType modemType) {
+  public TICPortDescriptor(SerialPortDescriptor serialPortDescriptor, TICModemType modemType) {
     this();
     if (serialPortDescriptor == null) {
       throw new IllegalArgumentException("Serial port descriptor cannot be null");
@@ -148,5 +146,4 @@ public class TICPortDescriptor extends SerialPortDescriptor {
       throw new IllegalArgumentException("TIC modem vendorId is inconsistent with the given one");
     }
   }
-
 }
