@@ -31,7 +31,7 @@ public class TICPortPlugNotifier extends PortPlugNotifier<TICPortFinder, TICPort
             String payload =
                 TICPortJsonEncoder.encode(
                     new java.util.ArrayList<>(Arrays.asList(descriptor)), DEFAULT_JSON_INDENTATION);
-            System.out.println(payload + "\n");
+            System.out.println("onPlugged event:\n" + payload + "\n");
           }
 
           @Override
@@ -39,7 +39,7 @@ public class TICPortPlugNotifier extends PortPlugNotifier<TICPortFinder, TICPort
             String payload =
                 TICPortJsonEncoder.encode(
                     new java.util.ArrayList<>(Arrays.asList(descriptor)), DEFAULT_JSON_INDENTATION);
-            System.out.println(payload + "\n");
+            System.out.println("onUnplugged event:\n" + payload + "\n");
           }
         };
     /* 3. Run program printing when an TIC port has been plugged or unplugged until CTRL+C is pressed */
