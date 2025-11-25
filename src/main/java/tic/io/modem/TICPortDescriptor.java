@@ -66,8 +66,6 @@ public class TICPortDescriptor extends SerialPortDescriptor {
     this.setPortId(serialPortDescriptor.getPortId());
     this.setPortName(serialPortDescriptor.getPortName());
     this.setDescription(serialPortDescriptor.getDescription());
-    this.setProductId(serialPortDescriptor.getProductId());
-    this.setVendorId(serialPortDescriptor.getVendorId());
     this.setProductName(serialPortDescriptor.getProductName());
     this.setManufacturer(serialPortDescriptor.getManufacturer());
     this.setSerialNumber(serialPortDescriptor.getSerialNumber());
@@ -90,8 +88,6 @@ public class TICPortDescriptor extends SerialPortDescriptor {
     this.checkProductId(usbPortDescriptor.getIdProduct(), modemType);
     this.checkVendorId(usbPortDescriptor.getIdVendor(), modemType);
 
-    this.setProductId(usbPortDescriptor.getIdProduct());
-    this.setVendorId(usbPortDescriptor.getIdVendor());
     this.setProductName(usbPortDescriptor.getProduct());
     this.setManufacturer(usbPortDescriptor.getManufacturer());
     this.setSerialNumber(usbPortDescriptor.getSerialNumber());
