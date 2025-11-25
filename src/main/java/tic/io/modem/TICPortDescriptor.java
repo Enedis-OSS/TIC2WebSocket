@@ -49,16 +49,6 @@ public class TICPortDescriptor extends SerialPortDescriptor {
   }
 
   /**
-   * Constructor setting parameters to specific values
-   *
-   * @param serialPortDescriptor
-   * @param modemType
-   */
-  public TICPortDescriptor(SerialPortDescriptor serialPortDescriptor, TICModemType modemType) {
-    this();
-  }
-
-  /**
    * Constructor setting parameters to specific values for legacy descriptors
    *
    * @param serialPortDescriptor legacy descriptor from the historical API
