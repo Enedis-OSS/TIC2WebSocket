@@ -7,27 +7,27 @@
 
 package tic.io.modem;
 
+import java.util.ArrayList;
+import java.util.List;
 import tic.io.serialport.SerialPortDescriptor;
 import tic.io.serialport.SerialPortFinder;
 import tic.io.serialport.SerialPortFinderBase;
-import java.util.ArrayList;
-import java.util.List;
 import tic.io.usb.USBPortDescriptor;
 import tic.io.usb.USBPortFinder;
 import tic.io.usb.USBPortFinderBase;
 
-/** Class used to find all TIC port descriptor */
-public class TICPortFinderBase implements TICPortFinder {
+/** Class used to find all modem descriptors */
+public class ModemFinderBase implements ModemFinder {
   private static final int DEFAULT_JSON_INDENT = 2;
 
   /**
-   * Program writing the TIC port descriptor list (JSON format) on the output stream
+   * Program writing the modem descriptor list (JSON format) on the output stream
    *
    * @param args not used
    */
   public static void main(String[] args) {
-    List<TICPortDescriptor> descriptors = getInstance().findAll();
-    System.out.println(TICPortJsonEncoder.encode(descriptors, DEFAULT_JSON_INDENT));
+    List<ModemDescriptor> descriptors = getInstance().findAll();
+    System.out.println(ModemJsonEncoder.encode(descriptors, DEFAULT_JSON_INDENT));
   }
 
   /**
@@ -35,20 +35,20 @@ public class TICPortFinderBase implements TICPortFinder {
    *
    * @return Unique instance
    */
-  public static TICPortFinderBase getInstance() {
+  public static ModemFinderBase getInstance() {
     if (instance == null) {
-      instance = new TICPortFinderBase();
+      instance = new ModemFinderBase();
     }
 
     return instance;
   }
 
-  private static TICPortFinderBase instance;
+  private static ModemFinderBase instance;
 
   private final SerialPortFinder serialPortFinder;
   private final USBPortFinder usbPortFinder;
 
-  private TICPortFinderBase() {
+  private ModemFinderBase() {
     this(SerialPortFinderBase.getInstance(), USBPortFinderBase.getInstance());
   }
 
@@ -58,7 +58,7 @@ public class TICPortFinderBase implements TICPortFinder {
    * @param serialPortFinder the serial port finder interface
    * @param usbPortFinder the USB port finder interface
    */
-  public TICPortFinderBase(SerialPortFinder serialPortFinder, USBPortFinder usbPortFinder) {
+  public ModemFinderBase(SerialPortFinder serialPortFinder, USBPortFinder usbPortFinder) {
     if (serialPortFinder == null) {
       throw new IllegalArgumentException("Cannot set null serial port finder");
     }
@@ -70,10 +70,10 @@ public class TICPortFinderBase implements TICPortFinder {
   }
 
   @Override
-  public List<TICPortDescriptor> findAll() {
-    List<TICPortDescriptor> ticSerialPort = new ArrayList<>();
+  public List<ModemDescriptor> findAll() {
+    List<ModemDescriptor> descriptors = new ArrayList<>();
 
-    for (TICModemType modemType : TICModemType.values()) {
+    for (ModemType modemType : ModemType.values()) {
       List<SerialPortDescriptor> tmpSerialPort =
           this.serialPortFinder.findByProductIdAndVendorId(
               modemType.getProductId(), modemType.getVendorId());
@@ -85,8 +85,8 @@ public class TICPortFinderBase implements TICPortFinder {
 
         for (USBPortDescriptor upd : tmpUSBPort) {
           try {
-            TICPortDescriptor tic = new TICPortDescriptor(upd, modemType);
-            ticSerialPort.add(tic);
+            ModemDescriptor descriptor = new ModemDescriptor(upd, modemType);
+            descriptors.add(descriptor);
           } catch (IllegalArgumentException e) {
             // Ignore descriptors that fail validation
           }
@@ -94,8 +94,8 @@ public class TICPortFinderBase implements TICPortFinder {
       } else {
         for (SerialPortDescriptor spd : tmpSerialPort) {
           try {
-            TICPortDescriptor tic = new TICPortDescriptor(spd, modemType);
-            ticSerialPort.add(tic);
+            ModemDescriptor descriptor = new ModemDescriptor(spd, modemType);
+            descriptors.add(descriptor);
           } catch (IllegalArgumentException e) {
             // Ignore descriptors that fail validation
           }
@@ -103,22 +103,22 @@ public class TICPortFinderBase implements TICPortFinder {
       }
     }
 
-    return ticSerialPort;
+    return descriptors;
   }
 
   @Override
-  public TICPortDescriptor findNative(String portName) {
-    TICPortDescriptor ticPortDescriptor = null;
+  public ModemDescriptor findNative(String portName) {
+    ModemDescriptor modemDescriptor = null;
     SerialPortDescriptor serialPortDescriptor = this.serialPortFinder.findNative(portName);
 
     if (serialPortDescriptor != null) {
       try {
-        ticPortDescriptor = new TICPortDescriptor(serialPortDescriptor, null);
+        modemDescriptor = new ModemDescriptor(serialPortDescriptor, null);
       } catch (IllegalArgumentException e) {
         // Ignore descriptors that fail validation
       }
     }
 
-    return ticPortDescriptor;
+    return modemDescriptor;
   }
 }

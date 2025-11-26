@@ -7,8 +7,8 @@
 
 package tic.io.modem;
 
-/** TIC Modem type */
-public enum TICModemType {
+/** Supported modem types. */
+public enum ModemType {
   /** Modem michaud */
   MICHAUD(0x6001, 0x0403),
   /** Télé info */
@@ -17,7 +17,7 @@ public enum TICModemType {
   private final int productId;
   private final int vendorId;
 
-  TICModemType(int productId, int vendorId) {
+  ModemType(int productId, int vendorId) {
     this.productId = productId;
     this.vendorId = vendorId;
   }

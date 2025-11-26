@@ -17,23 +17,23 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 
-public class TICPortJsonEncoderTest {
+public class ModemJsonEncoderTest {
 
   @Test
   public void encodeShouldSerializeAllFields() {
     // Given
-    TICPortDescriptor descriptor =
-        new TICPortDescriptor(
+    ModemDescriptor descriptor =
+        new ModemDescriptor(
             "ABCD1",
             "COM7",
             "USB Serial Port",
             "test_product",
             "test_manufacturer",
             "SN123",
-            TICModemType.MICHAUD);
+            ModemType.MICHAUD);
 
     // When
-    String jsonPayload = TICPortJsonEncoder.encode(Arrays.asList(descriptor), -1);
+    String jsonPayload = ModemJsonEncoder.encode(Arrays.asList(descriptor), -1);
 
     // Then
     JSONArray array = new JSONArray(jsonPayload);
@@ -42,24 +42,23 @@ public class TICPortJsonEncoderTest {
     assertEquals("ABCD1", json.getString("portId"));
     assertEquals("COM7", json.getString("portName"));
     assertEquals("USB Serial Port", json.getString("description"));
-    assertEquals(TICModemType.MICHAUD.getProductId(), json.getInt("productId"));
-    assertEquals(TICModemType.MICHAUD.getVendorId(), json.getInt("vendorId"));
+    assertEquals(ModemType.MICHAUD.getProductId(), json.getInt("productId"));
+    assertEquals(ModemType.MICHAUD.getVendorId(), json.getInt("vendorId"));
     assertEquals("test_product", json.getString("productName"));
     assertEquals("test_manufacturer", json.getString("manufacturer"));
     assertEquals("SN123", json.getString("serialNumber"));
-    assertEquals(TICModemType.MICHAUD.name(), json.getString("modemType"));
+    assertEquals(ModemType.MICHAUD.name(), json.getString("modemType"));
   }
 
   @Test
   public void encodeShouldHandleNullModemType() {
     // Given
-    TICPortDescriptor descriptor =
-        new TICPortDescriptor(null, "COM8", null, null, null, null, null);
+    ModemDescriptor descriptor = new ModemDescriptor(null, "COM8", null, null, null, null, null);
     descriptor.setProductId(1234);
     descriptor.setVendorId(5678);
 
     // When
-    String jsonPayload = TICPortJsonEncoder.encode(Collections.singletonList(descriptor), -1);
+    String jsonPayload = ModemJsonEncoder.encode(Collections.singletonList(descriptor), -1);
 
     // Then
     JSONArray array = new JSONArray(jsonPayload);
@@ -73,10 +72,10 @@ public class TICPortJsonEncoderTest {
   @Test
   public void encodeHandlesNullList() {
     // Given
-    List<TICPortDescriptor> descriptors = null;
+    List<ModemDescriptor> descriptors = null;
 
     // When
-    String json = TICPortJsonEncoder.encode(descriptors);
+    String json = ModemJsonEncoder.encode(descriptors);
 
     // Then
     assertEquals("[]", json.trim());

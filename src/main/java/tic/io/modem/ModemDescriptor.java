@@ -10,11 +10,11 @@ package tic.io.modem;
 import tic.io.serialport.SerialPortDescriptor;
 import tic.io.usb.USBPortDescriptor;
 
-/** Descriptor of a TIC port */
-public class TICPortDescriptor extends SerialPortDescriptor {
-  private TICModemType modemType;
+/** Descriptor of a modem. */
+public class ModemDescriptor extends SerialPortDescriptor {
+  private ModemType modemType;
 
-  protected TICPortDescriptor() {
+  protected ModemDescriptor() {
     super();
   }
 
@@ -29,14 +29,14 @@ public class TICPortDescriptor extends SerialPortDescriptor {
    * @param serialNumber
    * @param modemType
    */
-  public TICPortDescriptor(
+    public ModemDescriptor(
       String portId,
       String portName,
       String description,
       String productName,
       String manufacturer,
       String serialNumber,
-      TICModemType modemType) {
+      ModemType modemType) {
     this();
 
     this.setPortId(portId);
@@ -54,7 +54,7 @@ public class TICPortDescriptor extends SerialPortDescriptor {
    * @param serialPortDescriptor legacy descriptor from the historical API
    * @param modemType modem type
    */
-  public TICPortDescriptor(SerialPortDescriptor serialPortDescriptor, TICModemType modemType) {
+  public ModemDescriptor(SerialPortDescriptor serialPortDescriptor, ModemType modemType) {
     this();
     if (serialPortDescriptor == null) {
       throw new IllegalArgumentException("Serial port descriptor cannot be null");
@@ -78,7 +78,7 @@ public class TICPortDescriptor extends SerialPortDescriptor {
    * @param usbPortDescriptor
    * @param modemType
    */
-  public TICPortDescriptor(USBPortDescriptor usbPortDescriptor, TICModemType modemType) {
+  public ModemDescriptor(USBPortDescriptor usbPortDescriptor, ModemType modemType) {
     this();
 
     if (usbPortDescriptor == null) {
@@ -99,7 +99,7 @@ public class TICPortDescriptor extends SerialPortDescriptor {
    *
    * @return the modem type
    */
-  public TICModemType getModemType() {
+  public ModemType getModemType() {
     return this.modemType;
   }
 
@@ -108,7 +108,7 @@ public class TICPortDescriptor extends SerialPortDescriptor {
    *
    * @param modemType
    */
-  public void setModemType(TICModemType modemType) {
+  public void setModemType(ModemType modemType) {
     this.modemType = modemType;
     if (modemType != null) {
       this.setProductId(modemType.getProductId());
@@ -119,17 +119,17 @@ public class TICPortDescriptor extends SerialPortDescriptor {
     }
   }
 
-  private void checkProductId(Number productId, TICModemType modemType) {
+  private void checkProductId(Number productId, ModemType modemType) {
     if (modemType != null
         && productId != null
         && productId.intValue() != modemType.getProductId()) {
-      throw new IllegalArgumentException("TIC modem productId is inconsistent with the given one");
+      throw new IllegalArgumentException("Modem productId is inconsistent with the given one");
     }
   }
 
-  private void checkVendorId(Number vendorId, TICModemType modemType) {
+  private void checkVendorId(Number vendorId, ModemType modemType) {
     if (modemType != null && vendorId != null && vendorId.intValue() != modemType.getVendorId()) {
-      throw new IllegalArgumentException("TIC modem vendorId is inconsistent with the given one");
+      throw new IllegalArgumentException("Modem vendorId is inconsistent with the given one");
     }
   }
 }

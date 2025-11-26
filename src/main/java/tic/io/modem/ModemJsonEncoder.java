@@ -12,33 +12,33 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/** Utility class to convert TIC port descriptors to their JSON representation. */
-public final class TICPortJsonEncoder {
+/** Utility class to convert modem descriptors to their JSON representation. */
+public final class ModemJsonEncoder {
   private static final int DEFAULT_INDENT = 2;
 
-  private TICPortJsonEncoder() {}
+  private ModemJsonEncoder() {}
 
   /**
-   * Encodes the provided TIC port descriptors list into a JSON string using the default indentation
+   * Encodes the provided modem descriptor list into a JSON string using the default indentation
    * factor (2 spaces).
    *
    * @param descriptors descriptors to encode; {@code null} is treated as an empty list
    * @return the JSON string
    */
-  public static String encode(List<TICPortDescriptor> descriptors) {
+  public static String encode(List<ModemDescriptor> descriptors) {
     return encode(descriptors, DEFAULT_INDENT);
   }
 
   /**
-   * Encodes the provided TIC port descriptors list into a JSON string.
+   * Encodes the provided modem descriptor list into a JSON string.
    *
    * @param descriptors descriptors to encode; {@code null} is treated as an empty list
    * @param indentFactor indentation factor forwarded to {@link JSONArray#toString(int)}. If the
    *     value is negative the compact form is returned
    * @return the JSON string
    */
-  public static String encode(List<TICPortDescriptor> descriptors, int indentFactor) {
-    List<TICPortDescriptor> safeDescriptors =
+  public static String encode(List<ModemDescriptor> descriptors, int indentFactor) {
+    List<ModemDescriptor> safeDescriptors =
         descriptors == null ? Collections.emptyList() : descriptors;
 
     JSONArray array = new JSONArray();
