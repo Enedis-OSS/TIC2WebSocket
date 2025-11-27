@@ -7,9 +7,6 @@
 
 package enedis.tic.core;
 
-import enedis.lab.io.tic.TICModemType;
-import enedis.lab.io.tic.TICPortDescriptor;
-import enedis.lab.io.tic.TICPortFinderMock;
 import enedis.lab.mock.FunctionCall;
 import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.types.DataDictionaryException;
@@ -20,6 +17,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import tic.io.modem.ModemDescriptor;
+import tic.io.modem.ModemFinderMock;
+import tic.io.modem.ModemType;
 import tic.util.task.Task;
 import tic.util.time.Time;
 
@@ -27,13 +27,13 @@ import tic.util.time.Time;
 public class TICCoreBaseTest {
   private static final int NOTIFICATION_TIMEOUT = 1000;
 
-  private TICPortFinderMock ticPortFinder;
+  private ModemFinderMock ticPortFinder;
   private long plugNotifierPeriod;
   private TICCoreBase ticCore;
 
   @Before
   public void startTICCore() throws TICCoreException {
-    this.ticPortFinder = new TICPortFinderMock();
+    this.ticPortFinder = new ModemFinderMock();
     this.plugNotifierPeriod = 50;
     this.ticCore =
         new TICCoreBase(
@@ -59,10 +59,10 @@ public class TICCoreBaseTest {
     Assert.assertNotNull(availableTICs);
     Assert.assertEquals(0, availableTICs.size());
 
-    TICPortDescriptor descriptor1 =
-        new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD);
-    TICPortDescriptor descriptor2 =
-        new TICPortDescriptor("2", "COM4", null, null, null, null, TICModemType.TELEINFO);
+    ModemDescriptor descriptor1 =
+        new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD);
+    ModemDescriptor descriptor2 =
+        new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO);
     this.plugModem(descriptor1);
     this.plugModem(descriptor2);
 
@@ -82,14 +82,14 @@ public class TICCoreBaseTest {
 
   @Test
   public void test_getModemsInfo() throws TICCoreException, DataDictionaryException {
-    List<TICPortDescriptor> modemsInfo = this.ticCore.getModemsInfo();
+    List<ModemDescriptor> modemsInfo = this.ticCore.getModemsInfo();
     Assert.assertNotNull(modemsInfo);
     Assert.assertEquals(0, modemsInfo.size());
 
-    TICPortDescriptor descriptor1 =
-        new TICPortDescriptor(null, "COM3", null, null, null, null, TICModemType.MICHAUD);
-    TICPortDescriptor descriptor2 =
-        new TICPortDescriptor(null, "COM4", null, null, null, null, TICModemType.TELEINFO);
+    ModemDescriptor descriptor1 =
+        new ModemDescriptor(null, "COM3", null, null, null, null, ModemType.MICHAUD);
+    ModemDescriptor descriptor2 =
+        new ModemDescriptor(null, "COM4", null, null, null, null, ModemType.TELEINFO);
     this.plugModem(descriptor1);
     this.plugModem(descriptor2);
 
@@ -109,8 +109,7 @@ public class TICCoreBaseTest {
   @Test
   public void test_readNextFrame_ok() throws TICCoreException, DataDictionaryException {
     TICIdentifier identifier =
-        this.plugModem(
-            new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream = TICCoreStreamMock.streams.get(0);
     Assert.assertEquals(identifier, stream.getIdentifier());
@@ -132,8 +131,7 @@ public class TICCoreBaseTest {
   public void test_readNextFrame_error_OTHER_REASON()
       throws TICCoreException, DataDictionaryException {
     TICIdentifier identifier =
-        this.plugModem(
-            new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream = TICCoreStreamMock.streams.get(0);
     Assert.assertEquals(identifier, stream.getIdentifier());
@@ -158,8 +156,7 @@ public class TICCoreBaseTest {
   public void test_readNextFrame_error_STREAM_IDENTIFIER_NOT_FOUND()
       throws TICCoreException, DataDictionaryException {
     TICIdentifier identifier =
-        this.plugModem(
-            new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream = TICCoreStreamMock.streams.get(0);
     Assert.assertEquals(identifier, stream.getIdentifier());
@@ -180,8 +177,7 @@ public class TICCoreBaseTest {
   @Test
   public void test_readNextFrame_timeout() throws TICCoreException, DataDictionaryException {
     TICIdentifier identifier =
-        this.plugModem(
-            new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream = TICCoreStreamMock.streams.get(0);
     Assert.assertEquals(identifier, stream.getIdentifier());
@@ -214,8 +210,7 @@ public class TICCoreBaseTest {
   @Test
   public void test_subscribe_withIdentifier_ok() throws TICCoreException, DataDictionaryException {
     TICIdentifier identifier =
-        this.plugModem(
-            new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
 
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(identifier, subscriber);
@@ -225,8 +220,7 @@ public class TICCoreBaseTest {
   public void test_unsubscribe_withIdentifier_ok()
       throws TICCoreException, DataDictionaryException {
     TICIdentifier identifier =
-        this.plugModem(
-            new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
 
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(identifier, subscriber);
@@ -236,8 +230,7 @@ public class TICCoreBaseTest {
   @Test
   public void test_subscribe_withIdentifier_notFound()
       throws TICCoreException, DataDictionaryException {
-    this.plugModem(
-        new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+    this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
 
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     TICIdentifier identifier = new TICIdentifier(null, "COM4", null);
@@ -255,10 +248,10 @@ public class TICCoreBaseTest {
 
   @Test
   public void test_onError_whenUnplugModem() throws TICCoreException, DataDictionaryException {
-    TICPortDescriptor descriptor1 =
-        new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD);
-    TICPortDescriptor descriptor2 =
-        new TICPortDescriptor("2", "COM4", null, null, null, null, TICModemType.TELEINFO);
+    ModemDescriptor descriptor1 =
+        new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD);
+    ModemDescriptor descriptor2 =
+        new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO);
     TICIdentifier identifier1 = this.plugModem(descriptor1);
     TICIdentifier identifier2 = this.plugModem(descriptor2);
 
@@ -317,8 +310,7 @@ public class TICCoreBaseTest {
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(subscriber);
 
-    this.plugModem(
-        new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+    this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream1 = TICCoreStreamMock.streams.get(0);
     TICCoreFrame frame1 =
@@ -329,8 +321,7 @@ public class TICCoreBaseTest {
     Assert.assertEquals(1, subscriber.onDataCalls.size());
     Assert.assertTrue(frame1 == subscriber.onDataCalls.get(0).frame);
 
-    this.plugModem(
-        new TICPortDescriptor("2", "COM4", null, null, null, null, TICModemType.TELEINFO));
+    this.plugModem(new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO));
     TICCoreStreamMock stream2 = TICCoreStreamMock.streams.get(1);
     TICCoreFrame frame2 =
         this.createFrame(
@@ -345,8 +336,7 @@ public class TICCoreBaseTest {
   @Test
   public void test_onData_withIdentifier() throws TICCoreException, DataDictionaryException {
     TICIdentifier identifier =
-        this.plugModem(
-            new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(identifier, subscriber);
 
@@ -360,8 +350,7 @@ public class TICCoreBaseTest {
     Assert.assertEquals(1, subscriber.onDataCalls.size());
     Assert.assertTrue(frame1 == subscriber.onDataCalls.get(0).frame);
 
-    this.plugModem(
-        new TICPortDescriptor("2", "COM4", null, null, null, null, TICModemType.MICHAUD));
+    this.plugModem(new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.MICHAUD));
     TICCoreStreamMock stream2 = TICCoreStreamMock.streams.get(1);
     TICCoreFrame frame2 =
         this.createFrame(
@@ -377,8 +366,7 @@ public class TICCoreBaseTest {
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(subscriber);
 
-    this.plugModem(
-        new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+    this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream1 = TICCoreStreamMock.streams.get(0);
     TICCoreError error1 =
@@ -389,8 +377,7 @@ public class TICCoreBaseTest {
     Assert.assertEquals(1, subscriber.onErrorCalls.size());
     Assert.assertTrue(error1 == subscriber.onErrorCalls.get(0).error);
 
-    this.plugModem(
-        new TICPortDescriptor("2", "COM4", null, null, null, null, TICModemType.TELEINFO));
+    this.plugModem(new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO));
     TICCoreStreamMock stream2 = TICCoreStreamMock.streams.get(1);
     TICCoreError error2 =
         new TICCoreError(
@@ -407,8 +394,7 @@ public class TICCoreBaseTest {
   @Test
   public void test_onError_withIdentifier() throws TICCoreException, DataDictionaryException {
     TICIdentifier identifier =
-        this.plugModem(
-            new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
 
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(identifier, subscriber);
@@ -423,8 +409,7 @@ public class TICCoreBaseTest {
     Assert.assertEquals(1, subscriber.onErrorCalls.size());
     Assert.assertTrue(error1 == subscriber.onErrorCalls.get(0).error);
 
-    this.plugModem(
-        new TICPortDescriptor("2", "COM4", null, null, null, null, TICModemType.TELEINFO));
+    this.plugModem(new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO));
     TICCoreStreamMock stream2 = TICCoreStreamMock.streams.get(1);
     TICCoreError error2 =
         new TICCoreError(
@@ -440,11 +425,10 @@ public class TICCoreBaseTest {
   @Test
   public void test_getIdentifiers() throws TICCoreException, DataDictionaryException {
     TICIdentifier identifier1 =
-        this.plugModem(
-            new TICPortDescriptor("1", "COM3", null, null, null, null, TICModemType.MICHAUD));
+        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     TICIdentifier identifier2 =
         this.plugModem(
-            new TICPortDescriptor("2", "COM4", null, null, null, null, TICModemType.TELEINFO));
+            new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO));
 
     TICCoreSubscriberMock subscriber1 = new TICCoreSubscriberMock();
     TICCoreSubscriberMock subscriber2 = new TICCoreSubscriberMock();
@@ -485,14 +469,14 @@ public class TICCoreBaseTest {
     Assert.assertEquals(0, indentifierList3.size());
   }
 
-  private TICIdentifier plugModem(TICPortDescriptor descriptor) throws DataDictionaryException {
+  private TICIdentifier plugModem(ModemDescriptor descriptor) throws DataDictionaryException {
     this.ticPortFinder.addDescriptor(descriptor);
     this.waitPlugNotifierUpdate();
 
     return new TICIdentifier(descriptor.getPortId(), descriptor.getPortName(), null);
   }
 
-  private void unplugModem(TICPortDescriptor descriptor) {
+  private void unplugModem(ModemDescriptor descriptor) {
     this.ticPortFinder.removeDescriptor(descriptor);
     this.waitPlugNotifierUpdate();
   }

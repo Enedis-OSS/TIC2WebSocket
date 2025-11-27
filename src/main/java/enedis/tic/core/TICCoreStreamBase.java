@@ -14,8 +14,6 @@ import enedis.lab.io.datastreams.DataStreamDirection;
 import enedis.lab.io.datastreams.DataStreamException;
 import enedis.lab.io.datastreams.DataStreamListener;
 import enedis.lab.io.datastreams.DataStreamStatus;
-import enedis.lab.io.tic.TICPortDescriptor;
-import enedis.lab.io.tic.TICPortFinderBase;
 import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.protocol.tic.channels.ChannelTICSerialPort;
 import enedis.lab.protocol.tic.channels.ChannelTICSerialPortConfiguration;
@@ -32,9 +30,10 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tic.io.modem.ModemDescriptor;
+import tic.io.modem.ModemFinderBase;
 import tic.util.task.Notifier;
 import tic.util.task.NotifierBase;
-import tic.util.task.Task;
 
 /**
  * Core stream implementation for frame acquisition and subscriber notifications.
@@ -62,10 +61,10 @@ public class TICCoreStreamBase implements TICCoreStream, DataStreamListener {
 
   public TICCoreStreamBase(String portId, String portName, TICMode ticMode)
       throws TICCoreException {
-    TICPortDescriptor descriptor = null;
+    ModemDescriptor descriptor = null;
 
     if (portId != null) {
-      descriptor = TICPortFinderBase.getInstance().findByPortId(portId);
+      descriptor = ModemFinderBase.getInstance().findByPortId(portId);
       if (descriptor == null) {
         TICCoreException exception =
             new TICCoreException(
@@ -75,9 +74,9 @@ public class TICCoreStreamBase implements TICCoreStream, DataStreamListener {
         throw exception;
       }
     } else if (portName != null) {
-      descriptor = TICPortFinderBase.getInstance().findByPortName(portName);
+      descriptor = ModemFinderBase.getInstance().findByPortName(portName);
       if (descriptor == null) {
-        descriptor = TICPortFinderBase.getInstance().findNative(portName);
+        descriptor = ModemFinderBase.getInstance().findNative(portName);
         if (descriptor == null) {
           TICCoreException exception =
               new TICCoreException(

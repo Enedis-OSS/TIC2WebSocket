@@ -7,8 +7,8 @@
 
 package enedis.tic.core;
 
-import enedis.lab.io.tic.TICPortDescriptor;
 import java.util.List;
+import tic.io.modem.ModemDescriptor;
 import tic.util.task.Task;
 
 /**
@@ -40,7 +40,7 @@ public interface TICCore extends Task {
    *
    * @return The collection of TIC port descriptors
    */
-  public List<TICPortDescriptor> getModemsInfo();
+  public List<ModemDescriptor> getModemsInfo();
 
   /**
    * Read next frame
