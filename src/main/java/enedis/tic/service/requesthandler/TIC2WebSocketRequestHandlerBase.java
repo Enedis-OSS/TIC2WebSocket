@@ -7,7 +7,6 @@
 
 package enedis.tic.service.requesthandler;
 
-import enedis.lab.io.tic.TICPortDescriptor;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.util.message.Request;
 import enedis.lab.util.message.Response;
@@ -35,15 +34,18 @@ import java.util.List;
 import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tic.io.modem.ModemDescriptor;
 
 /**
  * Base implementation of the TIC2WebSocket request handler.
  *
- * <p>This class provides the default logic for handling TIC2WebSocket requests, including subscription,
- * unsubscription, reading TIC frames, and retrieving available TICs and modem information. It integrates
- * with the TICCore to perform operations and generate appropriate responses for each request type.
+ * <p>This class provides the default logic for handling TIC2WebSocket requests, including
+ * subscription, unsubscription, reading TIC frames, and retrieving available TICs and modem
+ * information. It integrates with the TICCore to perform operations and generate appropriate
+ * responses for each request type.
  *
  * <p>Responsibilities include:
+ *
  * <ul>
  *   <li>Dispatching and processing supported TIC2WebSocket requests
  *   <li>Managing client subscriptions and unsubscriptions
@@ -60,6 +62,7 @@ import org.apache.logging.log4j.Logger;
 public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHandler {
   /** Logger for request handling and errors. */
   private Logger logger;
+
   /** TICCore instance for data operations. */
   private TICCore ticCore;
 
@@ -151,7 +154,7 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
    * @return the response containing modem information or an error
    */
   private Response handleGetModemsInfoRequest(RequestGetModemsInfo request) {
-    List<TICPortDescriptor> modemsInfo = this.ticCore.getModemsInfo();
+    List<ModemDescriptor> modemsInfo = this.ticCore.getModemsInfo();
 
     Response response = null;
     try {
@@ -218,7 +221,7 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
    * @return the response indicating subscription success or failure
    */
   private Response handleSubscribeTICRequest(
-    RequestSubscribeTIC request, TIC2WebSocketClient client) {
+      RequestSubscribeTIC request, TIC2WebSocketClient client) {
     Response response = null;
     Optional<List<TICIdentifier>> ticIdentifiers = Optional.ofNullable(request.getData());
 
@@ -262,14 +265,15 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
   /**
    * Determines new TIC subscriptions requested by the client.
    *
-   * <p>Compares current subscriptions with requested identifiers and returns only new subscriptions.
+   * <p>Compares current subscriptions with requested identifiers and returns only new
+   * subscriptions.
    *
    * @param currentSubscriptions the client's current subscriptions
    * @param askedTicIdentifiers the requested TIC identifiers
    * @return a list of new TIC identifiers to subscribe
    */
   private List<TICIdentifier> getNewSubcriptions(
-    List<TICIdentifier> currentSubscriptions, List<TICIdentifier> askedTicIdentifiers) {
+      List<TICIdentifier> currentSubscriptions, List<TICIdentifier> askedTicIdentifiers) {
     List<TICIdentifier> newSubscriptions = new ArrayList<TICIdentifier>();
 
     for (TICIdentifier askedTicIdentifier : askedTicIdentifiers) {
@@ -295,7 +299,7 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
    * @return the response indicating unsubscription success or failure
    */
   private Response handleUnsubscribeTICRequest(
-    RequestUnsubscribeTIC request, TIC2WebSocketClient client) {
+      RequestUnsubscribeTIC request, TIC2WebSocketClient client) {
     Response response = null;
     Optional<List<TICIdentifier>> ticIdentifiers = Optional.ofNullable(request.getData());
 
@@ -341,7 +345,7 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
    * @return the error response
    */
   private Response createErrorResponse(
-    String name, TIC2WebSocketEndPointErrorCode code, String message) {
+      String name, TIC2WebSocketEndPointErrorCode code, String message) {
     try {
       return new ResponseBase(name, LocalDateTime.now(), code.value(), message, null);
     } catch (DataDictionaryException e) {

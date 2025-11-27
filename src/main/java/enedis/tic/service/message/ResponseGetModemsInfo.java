@@ -7,7 +7,6 @@
 
 package enedis.tic.service.message;
 
-import enedis.lab.io.tic.TICPortDescriptor;
 import enedis.lab.types.DataDictionary;
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.KeyDescriptor;
@@ -17,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import tic.io.modem.ModemDescriptor;
 
 /**
  * Response message for modem information.
@@ -35,7 +35,7 @@ import java.util.Map;
  *
  * @author Enedis Smarties team
  * @see Response
- * @see TICPortDescriptor
+ * @see ModemDescriptor
  */
 public class ResponseGetModemsInfo extends Response {
   /** Key for modem port descriptor data in the response. */
@@ -47,7 +47,7 @@ public class ResponseGetModemsInfo extends Response {
   private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
 
   /** Key descriptor for modem port descriptor data. */
-  protected KeyDescriptorList<TICPortDescriptor> kData;
+  protected KeyDescriptorList<ModemDescriptor> kData;
 
   /** Constructs a response for modem information with default values. */
   protected ResponseGetModemsInfo() {
@@ -88,7 +88,7 @@ public class ResponseGetModemsInfo extends Response {
    * @throws DataDictionaryException if validation fails
    */
   public ResponseGetModemsInfo(
-      LocalDateTime dateTime, Number errorCode, String errorMessage, List<TICPortDescriptor> data)
+      LocalDateTime dateTime, Number errorCode, String errorMessage, List<ModemDescriptor> data)
       throws DataDictionaryException {
     this();
     this.setDateTime(dateTime);
@@ -117,8 +117,8 @@ public class ResponseGetModemsInfo extends Response {
    * @return the list of modem port descriptors
    */
   @SuppressWarnings("unchecked")
-  public List<TICPortDescriptor> getData() {
-    return (List<TICPortDescriptor>) this.data.get(KEY_DATA);
+  public List<ModemDescriptor> getData() {
+    return (List<ModemDescriptor>) this.data.get(KEY_DATA);
   }
 
   /**
@@ -127,14 +127,14 @@ public class ResponseGetModemsInfo extends Response {
    * @param data the list of modem port descriptors
    * @throws DataDictionaryException if validation fails
    */
-  public void setData(List<TICPortDescriptor> data) throws DataDictionaryException {
+  public void setData(List<ModemDescriptor> data) throws DataDictionaryException {
     this.setData((Object) data);
   }
 
   /**
    * Internal setter for modem port descriptor data, with conversion and validation.
    *
-   * @param data the modem port descriptor list (Object or List<TICPortDescriptor>)
+   * @param data the modem descriptor list (Object or List<ModemDescriptor>)
    * @throws DataDictionaryException if validation fails
    */
   protected void setData(Object data) throws DataDictionaryException {
@@ -148,8 +148,7 @@ public class ResponseGetModemsInfo extends Response {
    */
   private void loadKeyDescriptors() {
     try {
-      this.kData =
-          new KeyDescriptorList<TICPortDescriptor>(KEY_DATA, false, TICPortDescriptor.class);
+      this.kData = new KeyDescriptorList<ModemDescriptor>(KEY_DATA, false, ModemDescriptor.class);
       this.keys.add(this.kData);
 
       this.addAllKeyDescriptor(this.keys);
