@@ -8,28 +8,25 @@
 package enedis.lab.io;
 
 import enedis.lab.mock.FunctionCall;
-import enedis.lab.types.DataArrayList;
-import enedis.lab.types.DataList;
 import java.util.ArrayList;
 import java.util.List;
+import tic.io.PortFinder;
 
 @SuppressWarnings("javadoc")
 public class PortFinderMock<T> implements PortFinder<T> {
-  public List<FunctionCall> findAllCalls = new ArrayList<FunctionCall>();
-  public DataList<T> descriptorList = new DataArrayList<T>();
+  public List<FunctionCall> findAllCalls = new ArrayList<>();
+  public List<T> descriptorList = new ArrayList<>();
 
-  public PortFinderMock() {
-    this.descriptorList = new DataArrayList<T>();
-  }
+  public PortFinderMock() {}
 
   @Override
-  public DataList<T> findAll() {
+  public List<T> findAll() {
     this.findAllCalls.add(new FunctionCall());
     return this.getDescriptors();
   }
 
-  public DataList<T> getDescriptors() {
-    DataList<T> descriptors = new DataArrayList<T>();
+  public List<T> getDescriptors() {
+    List<T> descriptors = new ArrayList<>();
 
     synchronized (this.descriptorList) {
       descriptors.addAll(this.descriptorList);
@@ -38,7 +35,7 @@ public class PortFinderMock<T> implements PortFinder<T> {
     return descriptors;
   }
 
-  public DataList<T> setDescriptors(DataList<T> descriptors) {
+  public List<T> setDescriptors(List<T> descriptors) {
     synchronized (this.descriptorList) {
       this.descriptorList.clear();
       this.descriptorList.addAll(descriptors);

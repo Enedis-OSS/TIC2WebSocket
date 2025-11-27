@@ -8,24 +8,28 @@
 package enedis.lab.io.tic;
 
 import enedis.lab.io.PortFinderMock;
-import enedis.lab.types.DataArrayList;
+import tic.io.modem.ModemDescriptor;
+import tic.io.modem.ModemFinder;
+
+import enedis.lab.types.DataArrayList;  
 import enedis.lab.types.DataList;
+import java.util.List;
 
 @SuppressWarnings("javadoc")
-public class TICPortFinderMock extends PortFinderMock<TICPortDescriptor> implements TICPortFinder {
-  public DataList<TICPortDescriptor> nativeDescriptorList = new DataArrayList<TICPortDescriptor>();
+public class ModemFinderMock extends PortFinderMock<ModemDescriptor> implements ModemFinder {
+  public DataList<ModemDescriptor> nativeDescriptorList = new DataArrayList<ModemDescriptor>();
 
-  public TICPortFinderMock() {
+  public ModemFinderMock() {
     super();
   }
 
-  public TICPortFinderMock(TICPortDescriptor... descriptors) {
-    this.setDescriptors(DataArrayList.asList(descriptors));
+  public ModemFinderMock(List<ModemDescriptor> descriptors) {
+    this.setDescriptors(descriptors);
   }
 
   @Override
-  public TICPortDescriptor findNative(String portName) {
-    for (TICPortDescriptor descriptor : this.nativeDescriptorList) {
+  public ModemDescriptor findNative(String portName) {
+    for (ModemDescriptor descriptor : this.nativeDescriptorList) {
       if (descriptor.getPortName() == null && portName == null) {
         return descriptor;
       }
