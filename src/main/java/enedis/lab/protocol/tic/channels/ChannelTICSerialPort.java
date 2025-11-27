@@ -9,8 +9,8 @@ package enedis.lab.protocol.tic.channels;
 
 import enedis.lab.io.channels.ChannelConfiguration;
 import enedis.lab.io.channels.ChannelException;
-import enedis.lab.io.channels.serialport.ChannelSerialPort;
-import enedis.lab.io.channels.serialport.ChannelSerialPortErrorCode;
+import enedis.lab.protocol.tic.channels.serialport.ChannelSerialPort;
+import enedis.lab.protocol.tic.channels.serialport.ChannelSerialPortErrorCode;
 import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.types.BytesArray;
 import enedis.lab.types.DataDictionaryException;

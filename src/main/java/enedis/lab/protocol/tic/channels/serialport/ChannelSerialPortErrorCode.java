@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.lab.io.channels.serialport;
+package enedis.lab.protocol.tic.channels.serialport;
 
 /**
  * Enumeration of error codes for serial port channel operations.

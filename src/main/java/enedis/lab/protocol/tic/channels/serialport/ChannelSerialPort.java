@@ -5,12 +5,14 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.lab.io.channels.serialport;
+package enedis.lab.protocol.tic.channels.serialport;
 
 import enedis.lab.io.channels.ChannelConfiguration;
 import enedis.lab.io.channels.ChannelException;
 import enedis.lab.io.channels.ChannelPhysical;
 import enedis.lab.io.channels.ChannelStatus;
+import enedis.lab.io.channels.serialport.ChannelSerialPortConfiguration;
+import enedis.lab.io.channels.serialport.Parity;
 import enedis.lab.io.serialport.SerialPortDescriptor;
 import enedis.lab.io.serialport.SerialPortFinderBase;
 import enedis.lab.types.DataDictionaryException;
