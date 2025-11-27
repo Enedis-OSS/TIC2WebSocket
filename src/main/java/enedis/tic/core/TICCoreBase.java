@@ -48,7 +48,7 @@ import tic.util.time.Time;
  * @author Enedis Smarties team
  */
 public class TICCoreBase
-    implements TICCore, Task, TICCoreSubscriber, PlugSubscriber<TICPortDescriptor> {
+    implements TICCore, TICCoreSubscriber, PlugSubscriber<TICPortDescriptor> {
   private static final int PLUG_NOTIFIER_POLLING_PERIOD = 100;
   private static final int READ_NEXT_FRAME_TIMEOUT = 30000;
   private static final int READ_NEXT_FRAME_POLLING_PERIOD = 100;

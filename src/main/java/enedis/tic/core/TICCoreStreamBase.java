@@ -52,7 +52,7 @@ import tic.util.task.Task;
  *
  * @author Enedis Smarties team
  */
-public class TICCoreStreamBase implements TICCoreStream, Task, DataStreamListener {
+public class TICCoreStreamBase implements TICCoreStream, DataStreamListener {
 
   private TICIdentifier identifier;
   private DataStreamBase stream;
