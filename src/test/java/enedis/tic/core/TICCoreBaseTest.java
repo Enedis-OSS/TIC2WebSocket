@@ -54,11 +54,22 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_getAvailableTICs() throws TICCoreException, DataDictionaryException {
-    List<TICIdentifier> availableTICs = this.ticCore.getAvailableTICs();
+  public void test_getAvailableTICs_empty() {
+    // Given
+    List<TICIdentifier> availableTICs;
+
+    // When
+    availableTICs = this.ticCore.getAvailableTICs();
+
+    // Then
     Assert.assertNotNull(availableTICs);
     Assert.assertEquals(0, availableTICs.size());
+  }
 
+  @Test
+  public void test_getAvailableTICs_plug() throws TICCoreException, DataDictionaryException {
+    // Given
+    List<TICIdentifier> availableTICs;
     ModemDescriptor descriptor1 =
         new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD);
     ModemDescriptor descriptor2 =
@@ -66,26 +77,54 @@ public class TICCoreBaseTest {
     this.plugModem(descriptor1);
     this.plugModem(descriptor2);
 
+    // When
     availableTICs = this.ticCore.getAvailableTICs();
+
+    // Then
     Assert.assertNotNull(availableTICs);
     Assert.assertEquals(2, availableTICs.size());
     Assert.assertTrue(availableTICs.contains(new TICIdentifier("1", "COM3", null)));
     Assert.assertTrue(availableTICs.contains(new TICIdentifier("2", "COM4", null)));
-
-    this.unplugModem(descriptor2);
-
-    availableTICs = this.ticCore.getAvailableTICs();
-    Assert.assertNotNull(availableTICs);
-    Assert.assertEquals(1, availableTICs.size());
-    Assert.assertTrue(availableTICs.contains(new TICIdentifier("1", "COM3", null)));
   }
 
   @Test
-  public void test_getModemsInfo() throws TICCoreException, DataDictionaryException {
-    List<ModemDescriptor> modemsInfo = this.ticCore.getModemsInfo();
+  void test_getAvailableTICs_unplug() throws TICCoreException, DataDictionaryException {
+    // Given
+    List<TICIdentifier> availableTICs;
+    ModemDescriptor descriptor1 =
+        new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD);
+    ModemDescriptor descriptor2 =
+        new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO);
+    this.plugModem(descriptor1);
+    this.plugModem(descriptor2);
+
+    // When
+    this.unplugModem(descriptor1);
+    availableTICs = this.ticCore.getAvailableTICs();
+
+    // Then
+    Assert.assertNotNull(availableTICs);
+    Assert.assertEquals(1, availableTICs.size());
+    Assert.assertTrue(availableTICs.contains(new TICIdentifier("2", "COM4", null)));
+  }
+
+  @Test
+  void test_getModemsInfo_empty() {
+    // Given
+    List<ModemDescriptor> modemsInfo;
+
+    // When
+    modemsInfo = this.ticCore.getModemsInfo();
+
+    // Then
     Assert.assertNotNull(modemsInfo);
     Assert.assertEquals(0, modemsInfo.size());
+  }
 
+  @Test
+  public void test_getModemsInfo_plug() throws TICCoreException, DataDictionaryException {
+    // Given
+    List<ModemDescriptor> modemsInfo;
     ModemDescriptor descriptor1 =
         new ModemDescriptor(null, "COM3", null, null, null, null, ModemType.MICHAUD);
     ModemDescriptor descriptor2 =
@@ -93,35 +132,55 @@ public class TICCoreBaseTest {
     this.plugModem(descriptor1);
     this.plugModem(descriptor2);
 
+    // When
     modemsInfo = this.ticCore.getModemsInfo();
+
+    // Then
     Assert.assertNotNull(modemsInfo);
     Assert.assertEquals(2, modemsInfo.size());
     Assert.assertTrue(modemsInfo.contains(descriptor1));
     Assert.assertTrue(modemsInfo.contains(descriptor2));
+  }
 
-    this.unplugModem(descriptor2);
+  @Test
+  void test_getModemsInfo_unplug() throws TICCoreException, DataDictionaryException {
+    // Given
+    List<ModemDescriptor> modemsInfo;
+    ModemDescriptor descriptor1 =
+        new ModemDescriptor(null, "COM3", null, null, null, null, ModemType.MICHAUD);
+    ModemDescriptor descriptor2 =
+        new ModemDescriptor(null, "COM4", null, null, null, null, ModemType.TELEINFO);
+    this.plugModem(descriptor1);
+    this.plugModem(descriptor2);
+
+    // When
+    this.unplugModem(descriptor1);
     modemsInfo = this.ticCore.getModemsInfo();
+
+    // Then
     Assert.assertNotNull(modemsInfo);
     Assert.assertEquals(1, modemsInfo.size());
-    Assert.assertTrue(modemsInfo.contains(descriptor1));
+    Assert.assertTrue(modemsInfo.contains(descriptor2));
   }
 
   @Test
   public void test_readNextFrame_ok() throws TICCoreException, DataDictionaryException {
+    // Given
     TICIdentifier identifier =
         this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
-    Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream = TICCoreStreamMock.streams.get(0);
-    Assert.assertEquals(identifier, stream.getIdentifier());
-
     TICCoreReadNextFrameTask task = new TICCoreReadNextFrameTask(this.ticCore, identifier);
     task.start();
     this.waitTaskRunning(task);
     this.waitReadNextFrameSubscription();
     TICCoreFrame frame =
         this.createFrame(identifier, TICMode.STANDARD, LocalDateTime.of(2020, 3, 3, 12, 59, 30, 0));
+
+    // When
     stream.notifyOnData(frame);
     this.waitTaskTerminated(task);
+
+    // Then
     Assert.assertNull(task.exception);
     Assert.assertNotNull(task.frame);
     Assert.assertTrue(task.frame == frame);
@@ -130,20 +189,23 @@ public class TICCoreBaseTest {
   @Test
   public void test_readNextFrame_error_OTHER_REASON()
       throws TICCoreException, DataDictionaryException {
+    // Given
     TICIdentifier identifier =
         this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
-    Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream = TICCoreStreamMock.streams.get(0);
-    Assert.assertEquals(identifier, stream.getIdentifier());
-
     TICCoreReadNextFrameTask task = new TICCoreReadNextFrameTask(this.ticCore, identifier);
+    TICCoreError error =
+        new TICCoreError(identifier, TICCoreErrorCode.OTHER_REASON.getCode(), "Cannot read stream");
+
     task.start();
     this.waitTaskRunning(task);
     this.waitReadNextFrameSubscription();
-    TICCoreError error =
-        new TICCoreError(identifier, TICCoreErrorCode.OTHER_REASON.getCode(), "Cannot read stream");
+
+    // When
     stream.notifyOnError(error);
     this.waitTaskTerminated(task);
+
+    // Then
     Assert.assertNull(task.frame);
     Assert.assertNotNull(task.exception);
     Assert.assertTrue(task.exception instanceof TICCoreException);
@@ -155,17 +217,17 @@ public class TICCoreBaseTest {
   @Test
   public void test_readNextFrame_error_STREAM_IDENTIFIER_NOT_FOUND()
       throws TICCoreException, DataDictionaryException {
-    TICIdentifier identifier =
-        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
-    Assert.assertEquals(1, TICCoreStreamMock.streams.size());
-    TICCoreStreamMock stream = TICCoreStreamMock.streams.get(0);
-    Assert.assertEquals(identifier, stream.getIdentifier());
-
+    // Given
+    this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     TICCoreReadNextFrameTask task =
         new TICCoreReadNextFrameTask(this.ticCore, new TICIdentifier("2", "COM3", null));
+
+    // When
     task.start();
     this.waitTaskRunning(task);
     this.waitTaskTerminated(task);
+
+    // Then
     Assert.assertNull(task.frame);
     Assert.assertNotNull(task.exception);
     Assert.assertTrue(task.exception instanceof TICCoreException);
@@ -176,17 +238,18 @@ public class TICCoreBaseTest {
 
   @Test
   public void test_readNextFrame_timeout() throws TICCoreException, DataDictionaryException {
+    // Given
     TICIdentifier identifier =
         this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
-    Assert.assertEquals(1, TICCoreStreamMock.streams.size());
-    TICCoreStreamMock stream = TICCoreStreamMock.streams.get(0);
-    Assert.assertEquals(identifier, stream.getIdentifier());
-
     TICCoreReadNextFrameTask task = new TICCoreReadNextFrameTask(this.ticCore, identifier, 200);
+
+    // When
     task.start();
     this.waitTaskRunning(task);
     this.waitReadNextFrameSubscription();
     this.waitTaskTerminated(task);
+
+    // Then
     Assert.assertNull(task.frame);
     Assert.assertNotNull(task.exception);
     Assert.assertTrue(task.exception instanceof TICCoreException);
@@ -195,66 +258,117 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_subscribe_any() throws TICCoreException, DataDictionaryException {
+  public void test_subscribe_any() {
+    // Given
+    Exception exception = null;
+    TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
+
+    // When
+    try {
+      this.ticCore.subscribe(subscriber);
+    } catch (Exception e) {
+      exception = e;
+    }
+
+    // Then
+    Assert.assertNull(exception);
+  }
+
+  @Test
+  public void test_unsubscribe_any() {
+    // Given
+    Exception exception = null;
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(subscriber);
+
+    // When
+    try {
+      this.ticCore.unsubscribe(subscriber);
+    } catch (Exception e) {
+      exception = e;
+    }
+
+    // Then
+    Assert.assertNull(exception);
   }
 
   @Test
-  public void test_unsubscribe_any() throws TICCoreException, DataDictionaryException {
+  public void test_subscribe_withIdentifier_ok() {
+    // Given
+    Exception exception = null;
+    ModemDescriptor descriptor =
+        new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD);
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
-    this.ticCore.subscribe(subscriber);
-    this.ticCore.unsubscribe(subscriber);
+    TICIdentifier identifier;
+
+    // When
+    try {
+      identifier = this.plugModem(descriptor);
+      this.ticCore.subscribe(identifier, subscriber);
+    } catch (Exception e) {
+      exception = e;
+    }
+
+    // Then
+    Assert.assertNull(exception);
   }
 
   @Test
-  public void test_subscribe_withIdentifier_ok() throws TICCoreException, DataDictionaryException {
-    TICIdentifier identifier =
-        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
-
+  public void test_unsubscribe_withIdentifier_ok() {
+    // Given
+    Exception exception = null;
+    ModemDescriptor descriptor =
+        new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD);
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
-    this.ticCore.subscribe(identifier, subscriber);
-  }
+    TICIdentifier identifier;
 
-  @Test
-  public void test_unsubscribe_withIdentifier_ok()
-      throws TICCoreException, DataDictionaryException {
-    TICIdentifier identifier =
-        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
+    // When
+    try {
+      identifier = this.plugModem(descriptor);
+      this.ticCore.subscribe(identifier, subscriber);
+      this.ticCore.unsubscribe(identifier, subscriber);
+    } catch (Exception e) {
+      exception = e;
+    }
 
-    TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
-    this.ticCore.subscribe(identifier, subscriber);
-    this.ticCore.unsubscribe(identifier, subscriber);
+    // Then
+    Assert.assertNull(exception);
   }
 
   @Test
   public void test_subscribe_withIdentifier_notFound()
       throws TICCoreException, DataDictionaryException {
+    // Given
+    Exception exception = null;
     this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
-
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     TICIdentifier identifier = new TICIdentifier(null, "COM4", null);
+
+    // When
     try {
       this.ticCore.subscribe(identifier, subscriber);
       Assert.fail(
           "Subscribe should have thrown an exception since stream identifier does not match !");
     } catch (Exception e) {
-      Assert.assertTrue(e instanceof TICCoreException);
-      TICCoreException exception = (TICCoreException) e;
-      Assert.assertEquals(
-          TICCoreErrorCode.STREAM_IDENTIFIER_NOT_FOUND.getCode(), exception.getErrorCode());
+      exception = e;
     }
+
+    // Then
+    Assert.assertTrue(exception instanceof TICCoreException);
+    TICCoreException ticCoreException = (TICCoreException) exception;
+    Assert.assertEquals(
+        TICCoreErrorCode.STREAM_IDENTIFIER_NOT_FOUND.getCode(), ticCoreException.getErrorCode());
   }
 
   @Test
   public void test_onError_whenUnplugModem() throws TICCoreException, DataDictionaryException {
+    // Given
     ModemDescriptor descriptor1 =
         new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD);
     ModemDescriptor descriptor2 =
         new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO);
     TICIdentifier identifier1 = this.plugModem(descriptor1);
     TICIdentifier identifier2 = this.plugModem(descriptor2);
-
     TICCoreSubscriberMock subscriber1 = new TICCoreSubscriberMock();
     TICCoreSubscriberMock subscriber2 = new TICCoreSubscriberMock();
     TICCoreSubscriberMock subscriber3 = new TICCoreSubscriberMock();
@@ -266,7 +380,10 @@ public class TICCoreBaseTest {
     this.ticCore.subscribe(identifier2, subscriber4);
     this.ticCore.subscribe(identifier2, subscriber5);
 
+    // When
     this.unplugModem(descriptor1);
+
+    // Then
     this.waitSubscriberNotification(subscriber1.onErrorCalls, 1);
     Assert.assertEquals(1, subscriber1.onErrorCalls.size());
     Assert.assertEquals(
@@ -285,7 +402,10 @@ public class TICCoreBaseTest {
     Assert.assertEquals(0, subscriber4.onErrorCalls.size());
     Assert.assertEquals(0, subscriber5.onErrorCalls.size());
 
+    // When
     this.unplugModem(descriptor2);
+
+    // Then
     this.waitSubscriberNotification(subscriber4.onErrorCalls, 1);
     Assert.assertEquals(1, subscriber4.onErrorCalls.size());
     Assert.assertEquals(
@@ -306,167 +426,195 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_onData_any() throws TICCoreException, DataDictionaryException {
+  public void test_onData_any_oneModem() throws TICCoreException, DataDictionaryException {
+    // Given
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(subscriber);
-
     this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
-    Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream1 = TICCoreStreamMock.streams.get(0);
     TICCoreFrame frame1 =
         this.createFrame(
             stream1.getIdentifier(), TICMode.STANDARD, LocalDateTime.of(2020, 3, 3, 12, 59, 30, 0));
+
+    // When
     stream1.notifyOnData(frame1);
     this.waitSubscriberNotification(subscriber.onDataCalls, 1);
+
+    // Then
     Assert.assertEquals(1, subscriber.onDataCalls.size());
     Assert.assertTrue(frame1 == subscriber.onDataCalls.get(0).frame);
+  }
 
+  @Test
+  public void test_onData_any_twoModems() throws TICCoreException, DataDictionaryException {
+    // Given
+    TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
+    this.ticCore.subscribe(subscriber);
+    this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     this.plugModem(new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO));
+    TICCoreStreamMock stream1 = TICCoreStreamMock.streams.get(0);
     TICCoreStreamMock stream2 = TICCoreStreamMock.streams.get(1);
+    TICCoreFrame frame1 =
+        this.createFrame(
+            stream1.getIdentifier(), TICMode.STANDARD, LocalDateTime.of(2020, 3, 3, 12, 59, 30, 0));
     TICCoreFrame frame2 =
         this.createFrame(
             stream2.getIdentifier(), TICMode.HISTORIC, LocalDateTime.of(2017, 2, 14, 9, 37, 12, 0));
+
+    // When
+    stream1.notifyOnData(frame1);
+    this.waitSubscriberNotification(subscriber.onDataCalls, 1);
     stream2.notifyOnData(frame2);
     this.waitSubscriberNotification(subscriber.onDataCalls, 2);
+
+    // Then
     Assert.assertEquals(2, subscriber.onDataCalls.size());
     Assert.assertTrue(frame1 == subscriber.onDataCalls.get(0).frame);
     Assert.assertTrue(frame2 == subscriber.onDataCalls.get(1).frame);
   }
 
   @Test
-  public void test_onData_withIdentifier() throws TICCoreException, DataDictionaryException {
+  public void test_onData_withIdentifier_oneModem()
+      throws TICCoreException, DataDictionaryException {
+    // Given
     TICIdentifier identifier =
         this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(identifier, subscriber);
-
-    Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream1 = TICCoreStreamMock.streams.get(0);
     TICCoreFrame frame1 =
         this.createFrame(
             stream1.getIdentifier(), TICMode.STANDARD, LocalDateTime.of(2020, 3, 3, 12, 59, 30, 0));
+
+    // When
     stream1.notifyOnData(frame1);
     this.waitSubscriberNotification(subscriber.onDataCalls, 1);
+
+    // Then
     Assert.assertEquals(1, subscriber.onDataCalls.size());
     Assert.assertTrue(frame1 == subscriber.onDataCalls.get(0).frame);
+  }
 
+  @Test
+  public void test_onData_withIdentifier_twoModems()
+      throws TICCoreException, DataDictionaryException {
+    // Given
+    TICIdentifier identifier =
+        this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     this.plugModem(new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.MICHAUD));
+    TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
+    this.ticCore.subscribe(identifier, subscriber);
+    TICCoreStreamMock stream1 = TICCoreStreamMock.streams.get(0);
     TICCoreStreamMock stream2 = TICCoreStreamMock.streams.get(1);
+    TICCoreFrame frame1 =
+        this.createFrame(
+            stream1.getIdentifier(), TICMode.STANDARD, LocalDateTime.of(2020, 3, 3, 12, 59, 30, 0));
     TICCoreFrame frame2 =
         this.createFrame(
             stream2.getIdentifier(), TICMode.HISTORIC, LocalDateTime.of(2017, 2, 14, 9, 37, 12, 0));
+
+    // When
+    stream1.notifyOnData(frame1);
+    this.waitSubscriberNotification(subscriber.onDataCalls, 1);
     stream2.notifyOnData(frame2);
     this.waitSubscriberNotification(subscriber.onDataCalls, 1);
+
+    // Then
     Assert.assertEquals(1, subscriber.onDataCalls.size());
     Assert.assertTrue(frame1 == subscriber.onDataCalls.get(0).frame);
   }
 
   @Test
   public void test_onError_any() throws TICCoreException, DataDictionaryException {
+    // Given
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(subscriber);
-
     this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
-    Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream1 = TICCoreStreamMock.streams.get(0);
     TICCoreError error1 =
         new TICCoreError(
             stream1.getIdentifier(), TICCoreErrorCode.OTHER_REASON.getCode(), "Cannot read stream");
+              
+    // When
     stream1.notifyOnError(error1);
     this.waitSubscriberNotification(subscriber.onErrorCalls, 1);
+        
+    // Then
     Assert.assertEquals(1, subscriber.onErrorCalls.size());
     Assert.assertTrue(error1 == subscriber.onErrorCalls.get(0).error);
-
-    this.plugModem(new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO));
-    TICCoreStreamMock stream2 = TICCoreStreamMock.streams.get(1);
-    TICCoreError error2 =
-        new TICCoreError(
-            stream2.getIdentifier(),
-            TICCoreErrorCode.OTHER_REASON.getCode(),
-            "Error reading stream COM4");
-    stream2.notifyOnError(error2);
-    this.waitSubscriberNotification(subscriber.onErrorCalls, 2);
-    Assert.assertEquals(2, subscriber.onErrorCalls.size());
-    Assert.assertTrue(error1 == subscriber.onErrorCalls.get(0).error);
-    Assert.assertTrue(error2 == subscriber.onErrorCalls.get(1).error);
   }
 
   @Test
   public void test_onError_withIdentifier() throws TICCoreException, DataDictionaryException {
+    // Given
     TICIdentifier identifier =
         this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
-
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(identifier, subscriber);
-
-    Assert.assertEquals(1, TICCoreStreamMock.streams.size());
     TICCoreStreamMock stream1 = TICCoreStreamMock.streams.get(0);
     TICCoreError error1 =
         new TICCoreError(
             stream1.getIdentifier(), TICCoreErrorCode.OTHER_REASON.getCode(), "Cannot read stream");
+
+    // When
     stream1.notifyOnError(error1);
     this.waitSubscriberNotification(subscriber.onErrorCalls, 1);
-    Assert.assertEquals(1, subscriber.onErrorCalls.size());
-    Assert.assertTrue(error1 == subscriber.onErrorCalls.get(0).error);
 
-    this.plugModem(new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO));
-    TICCoreStreamMock stream2 = TICCoreStreamMock.streams.get(1);
-    TICCoreError error2 =
-        new TICCoreError(
-            stream2.getIdentifier(),
-            TICCoreErrorCode.OTHER_REASON.getCode(),
-            "Error reading stream COM4");
-    stream2.notifyOnError(error2);
-    this.waitSubscriberNotification(subscriber.onErrorCalls, 1);
+    // Then
     Assert.assertEquals(1, subscriber.onErrorCalls.size());
     Assert.assertTrue(error1 == subscriber.onErrorCalls.get(0).error);
   }
 
   @Test
   public void test_getIdentifiers() throws TICCoreException, DataDictionaryException {
+    // Given
     TICIdentifier identifier1 =
         this.plugModem(new ModemDescriptor("1", "COM3", null, null, null, null, ModemType.MICHAUD));
     TICIdentifier identifier2 =
         this.plugModem(
             new ModemDescriptor("2", "COM4", null, null, null, null, ModemType.TELEINFO));
-
+    
     TICCoreSubscriberMock subscriber1 = new TICCoreSubscriberMock();
     TICCoreSubscriberMock subscriber2 = new TICCoreSubscriberMock();
     TICCoreSubscriberMock subscriber3 = new TICCoreSubscriberMock();
+    List<TICIdentifier> indentifierList1_subscribed;
+    List<TICIdentifier> indentifierList2_subscribed;
+    List<TICIdentifier> indentifierList3_subscribed;
+    List<TICIdentifier> indentifierList1_unsubscribed;
+    List<TICIdentifier> indentifierList2_unsubscribed;
+    List<TICIdentifier> indentifierList3_unsubscribed;
 
+    // When
     this.ticCore.subscribe(subscriber1);
-    List<TICIdentifier> indentifierList1 = this.ticCore.getIndentifiers(subscriber1);
-    Assert.assertNotNull(indentifierList1);
-    Assert.assertEquals(2, indentifierList1.size());
-    Assert.assertTrue(indentifierList1.contains(identifier1));
-    Assert.assertTrue(indentifierList1.contains(identifier2));
-
+    indentifierList1_subscribed = this.ticCore.getIndentifiers(subscriber1);
     this.ticCore.subscribe(identifier1, subscriber2);
-    List<TICIdentifier> indentifierList2 = this.ticCore.getIndentifiers(subscriber2);
-    Assert.assertNotNull(indentifierList2);
-    Assert.assertEquals(1, indentifierList2.size());
-    Assert.assertTrue(indentifierList2.contains(identifier1));
-
+    indentifierList2_subscribed = this.ticCore.getIndentifiers(subscriber2);
     this.ticCore.subscribe(identifier2, subscriber3);
-    List<TICIdentifier> indentifierList3 = this.ticCore.getIndentifiers(subscriber3);
-    Assert.assertNotNull(indentifierList3);
-    Assert.assertEquals(1, indentifierList3.size());
-    Assert.assertTrue(indentifierList3.contains(identifier2));
-
+    indentifierList3_subscribed = this.ticCore.getIndentifiers(subscriber3);
     this.ticCore.unsubscribe(subscriber1);
-    indentifierList1 = this.ticCore.getIndentifiers(subscriber1);
-    Assert.assertNotNull(indentifierList1);
-    Assert.assertEquals(0, indentifierList1.size());
-
+    indentifierList1_unsubscribed = this.ticCore.getIndentifiers(subscriber1);
     this.ticCore.unsubscribe(identifier1, subscriber2);
-    indentifierList2 = this.ticCore.getIndentifiers(subscriber2);
-    Assert.assertNotNull(indentifierList2);
-    Assert.assertEquals(0, indentifierList2.size());
-
+    indentifierList2_unsubscribed = this.ticCore.getIndentifiers(subscriber2);
     this.ticCore.unsubscribe(identifier2, subscriber3);
-    indentifierList3 = this.ticCore.getIndentifiers(subscriber3);
-    Assert.assertNotNull(indentifierList3);
-    Assert.assertEquals(0, indentifierList3.size());
+    indentifierList3_unsubscribed = this.ticCore.getIndentifiers(subscriber3);
+
+    // Then
+    Assert.assertNotNull(indentifierList1_subscribed);
+    Assert.assertEquals(2, indentifierList1_subscribed.size());
+    Assert.assertTrue(indentifierList1_subscribed.contains(identifier1));
+    Assert.assertTrue(indentifierList1_subscribed.contains(identifier2));
+    Assert.assertNotNull(indentifierList2_subscribed);
+    Assert.assertEquals(1, indentifierList2_subscribed.size());
+    Assert.assertTrue(indentifierList2_subscribed.contains(identifier1));
+    Assert.assertNotNull(indentifierList3_subscribed);
+    Assert.assertEquals(1, indentifierList3_subscribed.size());
+    Assert.assertTrue(indentifierList3_subscribed.contains(identifier2));
+    Assert.assertNotNull(indentifierList1_unsubscribed);
+    Assert.assertEquals(0, indentifierList1_unsubscribed.size());
+    Assert.assertNotNull(indentifierList2_unsubscribed);
+    Assert.assertEquals(0, indentifierList2_unsubscribed.size());
+    Assert.assertNotNull(indentifierList3_unsubscribed);
+    Assert.assertEquals(0, indentifierList3_unsubscribed.size());
   }
 
   private TICIdentifier plugModem(ModemDescriptor descriptor) throws DataDictionaryException {
