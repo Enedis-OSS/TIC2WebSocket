@@ -88,7 +88,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  void test_getAvailableTICs_unplug() throws TICCoreException, DataDictionaryException {
+  public void test_getAvailableTICs_unplug() throws TICCoreException, DataDictionaryException {
     // Given
     List<TICIdentifier> availableTICs;
     ModemDescriptor descriptor1 =
@@ -109,7 +109,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  void test_getModemsInfo_empty() {
+  public void test_getModemsInfo_empty() {
     // Given
     List<ModemDescriptor> modemsInfo;
 
@@ -143,7 +143,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  void test_getModemsInfo_unplug() throws TICCoreException, DataDictionaryException {
+  public void test_getModemsInfo_unplug() throws TICCoreException, DataDictionaryException {
     // Given
     List<ModemDescriptor> modemsInfo;
     ModemDescriptor descriptor1 =
