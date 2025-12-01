@@ -8,16 +8,14 @@
 package enedis.lab.io.tic;
 
 import enedis.lab.io.PortFinderMock;
+import java.util.ArrayList;
+import java.util.List;
 import tic.io.modem.ModemDescriptor;
 import tic.io.modem.ModemFinder;
 
-import enedis.lab.types.DataArrayList;  
-import enedis.lab.types.DataList;
-import java.util.List;
-
 @SuppressWarnings("javadoc")
 public class ModemFinderMock extends PortFinderMock<ModemDescriptor> implements ModemFinder {
-  public DataList<ModemDescriptor> nativeDescriptorList = new DataArrayList<ModemDescriptor>();
+  public List<ModemDescriptor> nativeDescriptorList = new ArrayList<>();
 
   public ModemFinderMock() {
     super();
