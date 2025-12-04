@@ -47,7 +47,7 @@ public enum TICStartPattern {
      * 
      * @return the length as an integer
      */
-    public int length() {
-        return hexValue.length;
+    public static int length() {
+        return 6;
     }
 }
