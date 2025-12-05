@@ -1,6 +1,6 @@
-package tic.frame;
+package tic.frame.group;
 
-public class TICGroup {
+public abstract class TICGroup {
     private String label;
     private String value;
     private boolean isValid;

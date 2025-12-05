@@ -8,6 +8,8 @@
 package tic.frame;
 
 import enedis.lab.protocol.tic.TICMode;
+import tic.frame.group.TICGroup;
+
 import java.util.ArrayList;
 import java.util.List;
 
