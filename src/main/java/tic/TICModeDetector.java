@@ -48,9 +48,9 @@ public class TICModeDetector {
    */
   public static TICMode findModeFromGroupBuffer(byte[] groupBuffer) {
     for (int i = 0; i < groupBuffer.length; i++) {
-      if (groupBuffer[i] == TICSeparator.HISTORIC.getHexValue()) {
+      if (groupBuffer[i] == TICSeparator.HISTORIC.getByteValue()) {
         return TICMode.HISTORIC;
-      } else if (groupBuffer[i] == TICSeparator.STANDARD.getHexValue()) {
+      } else if (groupBuffer[i] == TICSeparator.STANDARD.getByteValue()) {
         return TICMode.STANDARD;
       }
     }
