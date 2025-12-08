@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 package tic.io.usb;
+
+import java.util.Objects;
 import tic.util.ValueChecker;
 
 public class USBPortDescriptor {
@@ -101,6 +103,56 @@ public class USBPortDescriptor {
     this.setManufacturer(manufacturer);
     this.setProduct(product);
     this.setSerialNumber(serialNumber);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof USBPortDescriptor)) {
+      return false;
+    }
+    USBPortDescriptor other = (USBPortDescriptor) obj;
+    return Objects.equals(this.bcdDevice, other.bcdDevice)
+        && Objects.equals(this.bcdUSB, other.bcdUSB)
+        && Objects.equals(this.bDescriptorType, other.bDescriptorType)
+        && Objects.equals(this.bDeviceClass, other.bDeviceClass)
+        && Objects.equals(this.bDeviceProtocol, other.bDeviceProtocol)
+        && Objects.equals(this.bDeviceSubClass, other.bDeviceSubClass)
+        && Objects.equals(this.bLength, other.bLength)
+        && Objects.equals(this.bMaxPacketSize0, other.bMaxPacketSize0)
+        && Objects.equals(this.bNumConfigurations, other.bNumConfigurations)
+        && Objects.equals(this.idProduct, other.idProduct)
+        && Objects.equals(this.idVendor, other.idVendor)
+        && Objects.equals(this.iManufacturer, other.iManufacturer)
+        && Objects.equals(this.iProduct, other.iProduct)
+        && Objects.equals(this.iSerialNumber, other.iSerialNumber)
+        && Objects.equals(this.manufacturer, other.manufacturer)
+        && Objects.equals(this.product, other.product)
+        && Objects.equals(this.serialNumber, other.serialNumber);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        this.bcdDevice,
+        this.bcdUSB,
+        this.bDescriptorType,
+        this.bDeviceClass,
+        this.bDeviceProtocol,
+        this.bDeviceSubClass,
+        this.bLength,
+        this.bMaxPacketSize0,
+        this.bNumConfigurations,
+        this.idProduct,
+        this.idVendor,
+        this.iManufacturer,
+        this.iProduct,
+        this.iSerialNumber,
+        this.manufacturer,
+        this.product,
+        this.serialNumber);
   }
 
   /**
@@ -283,7 +335,8 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBDescriptorType(Number bDescriptorType) {
-    this.bDescriptorType = ValueChecker.validateNumber(bDescriptorType, KEY_B_DESCRIPTOR_TYPE, false);
+    this.bDescriptorType =
+        ValueChecker.validateNumber(bDescriptorType, KEY_B_DESCRIPTOR_TYPE, false);
   }
 
   /**
@@ -303,7 +356,8 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBDeviceProtocol(Number bDeviceProtocol) {
-    this.bDeviceProtocol = ValueChecker.validateNumber(bDeviceProtocol, KEY_B_DEVICE_PROTOCOL, false);
+    this.bDeviceProtocol =
+        ValueChecker.validateNumber(bDeviceProtocol, KEY_B_DEVICE_PROTOCOL, false);
   }
 
   /**
@@ -313,7 +367,8 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBDeviceSubClass(Number bDeviceSubClass) {
-    this.bDeviceSubClass = ValueChecker.validateNumber(bDeviceSubClass, KEY_B_DEVICE_SUB_CLASS, false);
+    this.bDeviceSubClass =
+        ValueChecker.validateNumber(bDeviceSubClass, KEY_B_DEVICE_SUB_CLASS, false);
   }
 
   /**
@@ -333,7 +388,8 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBMaxPacketSize0(Number bMaxPacketSize0) {
-    this.bMaxPacketSize0 = ValueChecker.validateNumber(bMaxPacketSize0, KEY_B_MAX_PACKET_SIZE0, false);
+    this.bMaxPacketSize0 =
+        ValueChecker.validateNumber(bMaxPacketSize0, KEY_B_MAX_PACKET_SIZE0, false);
   }
 
   /**
@@ -343,7 +399,8 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setBNumConfigurations(Number bNumConfigurations) {
-    this.bNumConfigurations = ValueChecker.validateNumber(bNumConfigurations, KEY_B_NUM_CONFIGURATIONS, false);
+    this.bNumConfigurations =
+        ValueChecker.validateNumber(bNumConfigurations, KEY_B_NUM_CONFIGURATIONS, false);
   }
 
   /**
@@ -413,7 +470,7 @@ public class USBPortDescriptor {
    * @throws IllegalArgumentException if validation fails
    */
   public void setProduct(String product) {
-    this.product = ValueChecker.validateString(product, KEY_PRODUCT, true,false);
+    this.product = ValueChecker.validateString(product, KEY_PRODUCT, true, false);
   }
 
   /**
