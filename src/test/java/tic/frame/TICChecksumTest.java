@@ -10,52 +10,16 @@ package tic.frame;
 import org.junit.Assert;
 import org.junit.Test;
 
+import tic.TICMode;
+
 public class TICChecksumTest {
   @Test
-  public void test_computeChecksum_emptyArray() {
+  public void test_computeChecksum_historic() {
     // Given
-    byte[] data = new byte[0];
-
+    byte[] data = "ADCO 031664001115 ".getBytes();
     // When
-    byte checksum = TICChecksum.computeChecksum(data);
-
+    int checksum = TICChecksum.computeChecksum(data, TICMode.HISTORIC);
     // Then
-    Assert.assertEquals(0, checksum);
-  }
-
-  @Test
-  public void test_computeChecksum_singleByte() {
-    // Given
-    byte[] data = new byte[] {(byte) 0x5A};
-
-    // When
-    byte checksum = TICChecksum.computeChecksum(data);
-
-    // Then
-    Assert.assertEquals((byte) 0x5A, checksum);
-  }
-
-  @Test
-  public void test_computeChecksum_multipleBytes() {
-    // Given
-    byte[] data = new byte[] {(byte) 0x01, (byte) 0x02, (byte) 0x03};
-
-    // When
-    byte checksum = TICChecksum.computeChecksum(data);
-
-    // Then
-    Assert.assertEquals(0, checksum);
-  }
-
-  @Test
-  public void test_computeChecksum_negativeBytes() {
-    // Given
-    byte[] data = new byte[] {(byte) 0xFF, (byte) 0x0F, (byte) 0xF0};
-
-    // When
-    byte checksum = TICChecksum.computeChecksum(data);
-
-    // Then
-    Assert.assertEquals((byte) 0x00, checksum);
+    Assert.assertEquals((int)'3', checksum);
   }
 }
