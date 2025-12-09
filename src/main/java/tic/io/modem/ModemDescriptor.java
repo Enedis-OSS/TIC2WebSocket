@@ -7,6 +7,7 @@
 
 package tic.io.modem;
 
+import java.util.Objects;
 import tic.io.serialport.SerialPortDescriptor;
 import tic.io.usb.USBPortDescriptor;
 
@@ -29,7 +30,7 @@ public class ModemDescriptor extends SerialPortDescriptor {
    * @param serialNumber
    * @param modemType
    */
-    public ModemDescriptor(
+  public ModemDescriptor(
       String portId,
       String portName,
       String description,
@@ -92,6 +93,26 @@ public class ModemDescriptor extends SerialPortDescriptor {
     this.setManufacturer(usbPortDescriptor.getManufacturer());
     this.setSerialNumber(usbPortDescriptor.getSerialNumber());
     this.setModemType(modemType);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof ModemDescriptor)) {
+      return false;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    ModemDescriptor other = (ModemDescriptor) obj;
+    return this.modemType == other.modemType;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), this.modemType);
   }
 
   /**

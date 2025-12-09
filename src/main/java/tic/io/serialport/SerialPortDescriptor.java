@@ -7,6 +7,7 @@
 
 package tic.io.serialport;
 
+import java.util.Objects;
 import tic.util.ValueChecker;
 
 /**
@@ -98,6 +99,38 @@ public class SerialPortDescriptor {
     this.setProductName(productName);
     this.setManufacturer(manufacturer);
     this.setSerialNumber(serialNumber);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof SerialPortDescriptor)) {
+      return false;
+    }
+    SerialPortDescriptor other = (SerialPortDescriptor) obj;
+    return Objects.equals(this.portId, other.portId)
+        && Objects.equals(this.portName, other.portName)
+        && Objects.equals(this.description, other.description)
+        && Objects.equals(this.productId, other.productId)
+        && Objects.equals(this.vendorId, other.vendorId)
+        && Objects.equals(this.productName, other.productName)
+        && Objects.equals(this.manufacturer, other.manufacturer)
+        && Objects.equals(this.serialNumber, other.serialNumber);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        this.portId,
+        this.portName,
+        this.description,
+        this.productId,
+        this.vendorId,
+        this.productName,
+        this.manufacturer,
+        this.serialNumber);
   }
 
   /**
@@ -211,11 +244,7 @@ public class SerialPortDescriptor {
   public void setProductId(Number productId) {
     this.productId =
         ValueChecker.validateNumber(
-            productId,
-            KEY_PRODUCT_ID,
-            USB_IDENTIFIER_MIN,
-            USB_IDENTIFIER_MAX,
-            true);
+            productId, KEY_PRODUCT_ID, USB_IDENTIFIER_MIN, USB_IDENTIFIER_MAX, true);
   }
 
   /**
@@ -227,11 +256,7 @@ public class SerialPortDescriptor {
   public void setVendorId(Number vendorId) {
     this.vendorId =
         ValueChecker.validateNumber(
-            vendorId,
-            KEY_VENDOR_ID,
-            USB_IDENTIFIER_MIN,
-            USB_IDENTIFIER_MAX,
-            true);
+            vendorId, KEY_VENDOR_ID, USB_IDENTIFIER_MIN, USB_IDENTIFIER_MAX, true);
   }
 
   /**
