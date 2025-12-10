@@ -5,12 +5,12 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package tic.frame;
+package tic.frame.checksum;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import tic.frame.checksum.TICChecksum;
+import tic.frame.TICMode;
 
 public class TICChecksumTest {
   @Test
