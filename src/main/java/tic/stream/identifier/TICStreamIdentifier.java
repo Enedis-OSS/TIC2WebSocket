@@ -5,21 +5,21 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package tic.io.serialport.identifier;
+package tic.stream.identifier;
 
-/** Class representing a serial port identifier, which can be either by name or by ID. */
-public class SerialPortIdentifier {
+/** Class representing a TIC stream identifier, which can be either by name or by ID. */
+public class TICStreamIdentifier {
   private SerialPortName portName;
   private SerialPortId portId;
-  private SerialPortIdentifierType type;
+  private TICStreamIdentifierType type;
 
-  public SerialPortIdentifier(SerialPortName portName) {
-    this.type = SerialPortIdentifierType.PORT_NAME;
+  public TICStreamIdentifier(SerialPortName portName) {
+    this.type = TICStreamIdentifierType.PORT_NAME;
     this.setPortName(portName);
   }
 
-  public SerialPortIdentifier(SerialPortId portId) {
-    this.type = SerialPortIdentifierType.PORT_ID;
+  public TICStreamIdentifier(SerialPortId portId) {
+    this.type = TICStreamIdentifierType.PORT_ID;
     this.setPortId(portId);
   }
 
@@ -31,12 +31,12 @@ public class SerialPortIdentifier {
     return this.portId.getPortId();
   }
 
-  public SerialPortIdentifierType getType() {
+  public TICStreamIdentifierType getType() {
     return this.type;
   }
 
   private void setPortName(SerialPortName portName) {
-    if (this.type == SerialPortIdentifierType.PORT_ID) {
+    if (this.type == TICStreamIdentifierType.PORT_ID) {
       throw new IllegalStateException("Cannot set port name when identifier type is PORT_ID");
     }
     if (portName == null) {
@@ -46,7 +46,7 @@ public class SerialPortIdentifier {
   }
 
   private void setPortId(SerialPortId portId) {
-    if (this.type == SerialPortIdentifierType.PORT_NAME) {
+    if (this.type == TICStreamIdentifierType.PORT_NAME) {
       throw new IllegalStateException("Cannot set port ID when identifier type is PORT_NAME");
     }
     if (portId == null) {

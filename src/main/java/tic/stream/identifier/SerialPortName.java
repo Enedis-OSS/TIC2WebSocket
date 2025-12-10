@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package tic.io.serialport.identifier;
+package tic.stream.identifier;
 
 /**
  * Class representing a serial port identified by its name.
