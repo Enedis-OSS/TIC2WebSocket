@@ -31,10 +31,15 @@ public class TICModeDetector {
    * @throws TICException if the buffer is too short or invalid
    */
   public static TICMode findModeFromFrameBuffer(byte[] frameBuffer) throws TICException {
+    if (frameBuffer == null) {
+      throw new TICException(
+          "Tic frame buffer is null, unable to determine TIC Mode!",
+          TICError.TIC_READER_FRAME_DECODE_FAILED);
+    }
     byte[] frameBufferStart = new byte[TICStartPattern.length()];
     if (frameBuffer.length < frameBufferStart.length) {
       throw new TICException(
-          "Tic frame read 0x" + bytesToHex(frameBuffer) + " too short to determine TIC Mode !",
+          "Tic frame read 0x" + bytesToHex(frameBuffer) + " too short to determine TIC Mode!",
           TICError.TIC_READER_FRAME_DECODE_FAILED);
     }
     System.arraycopy(frameBuffer, 0, frameBufferStart, 0, frameBufferStart.length);
@@ -55,6 +60,9 @@ public class TICModeDetector {
    * @return the detected {@link TICMode}, or null if not recognized
    */
   public static TICMode findModeFromGroupBuffer(byte[] groupBuffer) {
+    if (groupBuffer == null) {
+      return null;
+    }
     for (int i = 0; i < groupBuffer.length; i++) {
       if (groupBuffer[i] == TICSeparator.HISTORIC.getByteValue()) {
         return TICMode.HISTORIC;
