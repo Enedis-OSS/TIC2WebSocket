@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author Enedis Smarties team
  */
-public abstract class TICFrame {
+public class TICFrame {
 
   private TICMode mode = TICMode.UNKNOWN;
   private List<TICGroup> groupList = new ArrayList<>();
