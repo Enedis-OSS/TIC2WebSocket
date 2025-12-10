@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package tic;
+package tic.frame;
 
 /** 
  * Enumeration of TIC modes.

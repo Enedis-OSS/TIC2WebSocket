@@ -9,7 +9,7 @@ package tic.frame;
 
 import org.junit.Assert;
 import org.junit.Test;
-import tic.TICMode;
+
 import tic.frame.checksum.TICChecksumOffset;
 
 public class TICChecksumOffsetTest {

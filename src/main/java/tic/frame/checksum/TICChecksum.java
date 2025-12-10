@@ -7,7 +7,7 @@
 
 package tic.frame.checksum;
 
-import tic.TICMode;
+import tic.frame.TICMode;
 
 public class TICChecksum {
 

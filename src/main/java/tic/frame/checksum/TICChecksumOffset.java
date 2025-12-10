@@ -7,8 +7,8 @@
 
 package tic.frame.checksum;
 
-import tic.TICMode;
-import tic.TICModeDetector;
+import tic.frame.TICMode;
+import tic.frame.TICModeDetector;
 
 public class TICChecksumOffset {
   public static final int OFFSET_BEGIN = 1;

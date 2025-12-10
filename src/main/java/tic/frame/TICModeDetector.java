@@ -5,11 +5,12 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package tic;
+package tic.frame;
 
 import enedis.lab.protocol.tic.frame.TICError;
 import enedis.lab.protocol.tic.frame.standard.TICException;
 import java.util.Arrays;
+
 import tic.frame.constants.TICSeparator;
 import tic.frame.constants.TICStartPattern;
 
