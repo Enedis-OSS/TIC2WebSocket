@@ -7,7 +7,7 @@
 
 package tic.frame.group;
 
-public abstract class TICGroup {
+public class TICGroup {
   private String label;
   private String value;
   private boolean isValid;
