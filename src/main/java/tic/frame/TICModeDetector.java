@@ -9,10 +9,10 @@ package tic.frame;
 
 import enedis.lab.protocol.tic.frame.TICError;
 import enedis.lab.protocol.tic.frame.standard.TICException;
-import java.util.Arrays;
+import tic.frame.delimiter.TICSeparator;
+import tic.frame.delimiter.TICStartPattern;
 
-import tic.frame.constants.TICSeparator;
-import tic.frame.constants.TICStartPattern;
+import java.util.Arrays;
 
 /**
  * Utility class for detecting TIC modes from frame or group buffers.

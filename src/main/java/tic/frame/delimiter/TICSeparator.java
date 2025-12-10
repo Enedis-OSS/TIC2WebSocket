@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package tic.frame.constants;
+package tic.frame.delimiter;
 
 /** Enumeration representing TIC frame separators for different TIC modes. */
 public enum TICSeparator {

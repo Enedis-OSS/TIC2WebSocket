@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package tic.frame.constants;
+package tic.frame.delimiter;
 
 /** 
  * Enumeration representing TIC frame start patterns for different TIC modes.
