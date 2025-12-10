@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package tic.stream;
+package tic.stream.configuration;
 
 import enedis.lab.protocol.tic.TICMode;
 import tic.stream.identifier.TICStreamIdentifier;
@@ -16,8 +16,8 @@ import tic.stream.identifier.TICStreamIdentifier;
  * @author Enedis Smarties team
  */
 public class TICStreamConfiguration {
-  private final static TICMode DEFAULT_TIC_MODE = TICMode.AUTO;
-  private final static int DEFAULT_TIMEOUT = 10;
+  protected final static TICMode DEFAULT_TIC_MODE = TICMode.AUTO;
+  protected final static int DEFAULT_TIMEOUT = 10;
   private final static int MAX_TIMEOUT = Integer.MAX_VALUE;
 
   private TICMode ticMode = DEFAULT_TIC_MODE;
