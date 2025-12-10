@@ -30,6 +30,15 @@ public class TICFrame {
    * @param mode the TIC mode
    */
   public TICFrame(TICMode mode) {
+    if (mode == null) {
+      throw new IllegalArgumentException("mode must not be null");
+    }
+    if (mode == TICMode.AUTO) {
+      throw new IllegalArgumentException("TICFrame cannot be created with AUTO mode");
+    }
+    if (mode == TICMode.UNKNOWN) {
+      throw new IllegalArgumentException("TICFrame cannot be created with UNKNOWN mode");
+    }
     this.mode = mode;
   }
 
