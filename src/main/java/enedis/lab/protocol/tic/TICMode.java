@@ -68,6 +68,10 @@ public enum TICMode {
     if (Arrays.equals(frameBufferStart, HISTORIC_BUFFER_START)) {
       return HISTORIC;
     } else {
+      if (STANDARD_BUFFER_START.length != HISTORIC_BUFFER_START.length) {
+        frameBufferStart = new byte[STANDARD_BUFFER_START.length];
+        System.arraycopy(frameBuffer, 0, frameBufferStart, 0, frameBufferStart.length);
+      }
       if (Arrays.equals(frameBufferStart, STANDARD_BUFFER_START)) {
         return STANDARD;
       }
