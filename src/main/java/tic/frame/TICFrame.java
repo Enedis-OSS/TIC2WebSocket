@@ -8,10 +8,9 @@
 package tic.frame;
 
 import enedis.lab.protocol.tic.TICMode;
-import tic.frame.group.TICGroup;
-
 import java.util.ArrayList;
 import java.util.List;
+import tic.frame.group.TICGroup;
 
 /**
  * Abstract base class for TIC frames.
@@ -24,9 +23,6 @@ public class TICFrame {
 
   private TICMode mode = TICMode.UNKNOWN;
   private List<TICGroup> groupList = new ArrayList<>();
-
-  /** Constructs an empty TIC frame with an empty group list. */
-  public TICFrame() {}
 
   /**
    * Constructs a TIC frame with the specified mode.
