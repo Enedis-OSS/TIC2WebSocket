@@ -15,7 +15,7 @@ public class TICChecksumOffset {
   public static final int OFFSET_END_HISTORIC = 3; // excluding <space><checksum><cr>
   public static final int OFFSET_END_STANDARD = 2; // excluding <checksum><cr>
 
-  public TICChecksumOffset() {}
+  private TICChecksumOffset() {}
 
   /**
    * Gets the begin offset for checksum computation.

@@ -11,6 +11,9 @@ import tic.frame.TICMode;
 
 public class TICChecksum {
 
+  private TICChecksum() {
+  }
+
   /**
    * Computes the checksum for the given byte array.
    *
