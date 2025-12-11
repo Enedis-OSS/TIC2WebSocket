@@ -19,7 +19,7 @@ public class TICStream extends TaskPeriodicWithSubscribers<Subscriber>{
     // TODO: set TICMode from configuration
   }
 
-  public byte[] read()  {
+  public byte[] read() {
     return null;
   }
 
