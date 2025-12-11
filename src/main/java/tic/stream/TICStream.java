@@ -7,7 +7,7 @@
 
 package tic.stream;
 
-import enedis.lab.protocol.tic.frame.TICFrame;
+import tic.frame.TICFrame;
 import tic.stream.configuration.TICStreamConfiguration;
 import tic.util.task.Subscriber;
 import tic.util.task.TaskPeriodicWithSubscribers;
