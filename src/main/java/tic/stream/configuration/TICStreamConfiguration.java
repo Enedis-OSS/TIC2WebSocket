@@ -7,7 +7,7 @@
 
 package tic.stream.configuration;
 
-import enedis.lab.protocol.tic.TICMode;
+import tic.frame.TICMode;
 import tic.stream.identifier.TICStreamIdentifier;
 
 /**
