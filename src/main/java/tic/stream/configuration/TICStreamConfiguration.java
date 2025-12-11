@@ -18,7 +18,6 @@ import tic.stream.identifier.TICStreamIdentifier;
 public class TICStreamConfiguration {
   protected final static TICMode DEFAULT_TIC_MODE = TICMode.AUTO;
   protected final static int DEFAULT_TIMEOUT = 10;
-  private final static int MAX_TIMEOUT = Integer.MAX_VALUE;
 
   private TICMode ticMode = DEFAULT_TIC_MODE;
   private TICStreamIdentifier identifier;
@@ -95,9 +94,6 @@ public class TICStreamConfiguration {
   private void checkTimeout(int timeout) {
     if (timeout <= 0) {
       throw new IllegalArgumentException("Timeout must be a positive integer");
-    }
-    if (timeout > MAX_TIMEOUT) {
-      throw new IllegalArgumentException("Timeout exceeds maximum integer value");
     }
   }
 }
