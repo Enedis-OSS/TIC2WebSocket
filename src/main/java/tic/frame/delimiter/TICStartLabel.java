@@ -10,7 +10,7 @@ package tic.frame.delimiter;
 /** 
  * Enumeration representing TIC frame start patterns for different TIC modes.
  */
-public enum TICStartPattern {
+public enum TICStartLabel {
     /** Start pattern (STX, LF, A, D, C, O) for historic TIC frames. */
     HISTORIC (new byte[] {2, 10, 65, 68, 67, 79}),
     /** Start pattern (STX, LF, A, D, S, C) for standard TIC frames. */
@@ -23,7 +23,7 @@ public enum TICStartPattern {
      *
      * @param hexValue the byte array representing the start pattern
      */
-    private TICStartPattern(byte[] hexValue) {
+    private TICStartLabel(byte[] hexValue) {
         this.hexValue = hexValue;
     }
 

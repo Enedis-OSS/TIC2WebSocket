@@ -10,7 +10,7 @@ package tic.frame;
 import enedis.lab.protocol.tic.frame.TICError;
 import enedis.lab.protocol.tic.frame.standard.TICException;
 import tic.frame.delimiter.TICSeparator;
-import tic.frame.delimiter.TICStartPattern;
+import tic.frame.delimiter.TICStartLabel;
 
 import java.util.Arrays;
 
@@ -36,17 +36,17 @@ public class TICModeDetector {
           "Tic frame buffer is null, unable to determine TIC Mode!",
           TICError.TIC_READER_FRAME_DECODE_FAILED);
     }
-    byte[] frameBufferStart = new byte[TICStartPattern.length()];
+    byte[] frameBufferStart = new byte[TICStartLabel.length()];
     if (frameBuffer.length < frameBufferStart.length) {
       throw new TICException(
           "Tic frame read 0x" + bytesToHex(frameBuffer) + " too short to determine TIC Mode!",
           TICError.TIC_READER_FRAME_DECODE_FAILED);
     }
     System.arraycopy(frameBuffer, 0, frameBufferStart, 0, frameBufferStart.length);
-    if (Arrays.equals(frameBufferStart, TICStartPattern.HISTORIC.getHexValue())) {
+    if (Arrays.equals(frameBufferStart, TICStartLabel.HISTORIC.getHexValue())) {
       return TICMode.HISTORIC;
     } else {
-      if (Arrays.equals(frameBufferStart, TICStartPattern.STANDARD.getHexValue())) {
+      if (Arrays.equals(frameBufferStart, TICStartLabel.STANDARD.getHexValue())) {
         return TICMode.STANDARD;
       }
       return null;
