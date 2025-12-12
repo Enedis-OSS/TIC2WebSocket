@@ -12,16 +12,16 @@ package tic.frame.delimiter;
  */
 public enum TICStartLabel {
     /** Start pattern (STX, LF, A, D, C, O) for historic TIC frames. */
-    HISTORIC (new byte[] {2, 10, 65, 68, 67, 79}),
+    HISTORIC (new byte[] {TICPattern.STX, TICPattern.LF, 65, 68, 67, 79}),
     /** Start pattern (STX, LF, A, D, S, C) for standard TIC frames. */
-    STANDARD (new byte[] {2, 10, 65, 68, 83, 67});
+    STANDARD (new byte[] {TICPattern.STX, TICPattern.LF, 65, 68, 83, 67});
 
     private final byte[] hexValue;
 
     /** 
-     * Constructs a TICStartPattern with the specified hexadecimal value.
-     *
-     * @param hexValue the byte array representing the start pattern
+     * Constructor to initialize the TICStartLabel with its hexadecimal value.
+     * 
+     * @param hexValue the hexadecimal value as a byte array
      */
     private TICStartLabel(byte[] hexValue) {
         this.hexValue = hexValue;
@@ -30,14 +30,14 @@ public enum TICStartLabel {
     /** 
      * Gets the hexadecimal value of the start pattern.
      * 
-     * @return the hexadecimal value as a byte array
+     * @return the hexadecimal byte array
      */
     public byte[] getHexValue() {
         return hexValue;
     }
 
     /** 
-     * Gets the ASCII character representation of the start pattern.
+     * Gets the ASCII representation of the start pattern.
      * 
      * @return the ASCII character array
      */
