@@ -7,7 +7,6 @@
 
 package tic.frame;
 
-import enedis.lab.protocol.tic.TICMode;
 import java.util.ArrayList;
 import java.util.List;
 import tic.frame.group.TICGroup;
@@ -111,5 +110,10 @@ public class TICFrame {
       }
     }
     return false;
+  }
+
+  @Override
+  public String toString() {
+    return "mode=" + mode + ", groupList=" + groupList;
   }
 }

@@ -82,4 +82,9 @@ public class TICGroup {
   public String getValue() {
     return value;
   }
+
+  @Override
+  public String toString() {
+    return "(label=" + label + ", value=" + value + ", isValid=" + isValid + ")";
+  }
 }

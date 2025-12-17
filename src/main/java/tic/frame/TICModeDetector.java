@@ -7,12 +7,9 @@
 
 package tic.frame;
 
-import enedis.lab.protocol.tic.frame.TICError;
-import enedis.lab.protocol.tic.frame.standard.TICException;
+import java.util.Arrays;
 import tic.frame.delimiter.TICSeparator;
 import tic.frame.delimiter.TICStartPattern;
-
-import java.util.Arrays;
 
 /**
  * Utility class for detecting TIC modes from frame or group buffers.
@@ -30,17 +27,14 @@ public class TICModeDetector {
    * @return the detected {@link TICMode}, or null if not recognized
    * @throws TICException if the buffer is too short or invalid
    */
-  public static TICMode findModeFromFrameBuffer(byte[] frameBuffer) throws TICException {
+  public static TICMode findModeFromFrameBuffer(byte[] frameBuffer) {
     if (frameBuffer == null) {
-      throw new TICException(
-          "Tic frame buffer is null, unable to determine TIC Mode!",
-          TICError.TIC_READER_FRAME_DECODE_FAILED);
+      throw new IllegalArgumentException("Tic frame buffer is null, unable to determine TIC Mode!");
     }
     byte[] frameBufferStart = new byte[TICStartPattern.length()];
     if (frameBuffer.length < frameBufferStart.length) {
-      throw new TICException(
-          "Tic frame read 0x" + bytesToHex(frameBuffer) + " too short to determine TIC Mode!",
-          TICError.TIC_READER_FRAME_DECODE_FAILED);
+      throw new IllegalArgumentException(
+          "Tic frame buffer 0x" + bytesToHex(frameBuffer) + " too short to determine TIC Mode!");
     }
     System.arraycopy(frameBuffer, 0, frameBufferStart, 0, frameBufferStart.length);
     if (Arrays.equals(frameBufferStart, TICStartPattern.HISTORIC.getHexValue())) {
@@ -64,9 +58,9 @@ public class TICModeDetector {
       return null;
     }
     for (int i = 0; i < groupBuffer.length; i++) {
-      if (groupBuffer[i] == TICSeparator.HISTORIC.getByteValue()) {
+      if (groupBuffer[i] == TICSeparator.HISTORIC.getValue()) {
         return TICMode.HISTORIC;
-      } else if (groupBuffer[i] == TICSeparator.STANDARD.getByteValue()) {
+      } else if (groupBuffer[i] == TICSeparator.STANDARD.getValue()) {
         return TICMode.STANDARD;
       }
     }
