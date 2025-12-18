@@ -20,7 +20,7 @@ import tic.frame.group.TICGroup;
  */
 public class TICFrame {
 
-  private TICMode mode = TICMode.UNKNOWN;
+  private TICMode mode = null;
   private List<TICGroup> groupList = new ArrayList<>();
 
   /**
@@ -30,13 +30,10 @@ public class TICFrame {
    */
   public TICFrame(TICMode mode) {
     if (mode == null) {
-      throw new IllegalArgumentException("mode must not be null");
+      throw new IllegalArgumentException("TICFrame mode must not be null");
     }
     if (mode == TICMode.AUTO) {
       throw new IllegalArgumentException("TICFrame cannot be created with AUTO mode");
-    }
-    if (mode == TICMode.UNKNOWN) {
-      throw new IllegalArgumentException("TICFrame cannot be created with UNKNOWN mode");
     }
     this.mode = mode;
   }
@@ -104,16 +101,11 @@ public class TICFrame {
    * @return true if a group with the specified label exists, false otherwise
    */
   public boolean containsGroupLabel(String label) {
-    for (TICGroup group : this.groupList) {
-      if (group.getLabel().equals(label)) {
-        return true;
-      }
-    }
-    return false;
+    return (this.getGroup(label) != null) ? true : false;
   }
 
   @Override
   public String toString() {
-    return "mode=" + mode + ", groupList=" + groupList;
+    return "mode=" + this.mode + ", groupList=" + this.groupList;
   }
 }

@@ -36,12 +36,21 @@ public enum TICSeparator {
     return value;
   }
 
+  /**
+   * Gets the separator value corresponding to the given TIC mode.
+   *
+   * @param mode the TIC mode
+   * @return the separator value as a byte
+   */
   public static byte getValueFromMode(TICMode mode) {
+    if (mode == null) {
+      throw new IllegalArgumentException("cannot get separator value from null mode");
+    }
     if (mode == TICMode.HISTORIC) {
       return HISTORIC.getValue();
     } else if (mode == TICMode.STANDARD) {
       return STANDARD.getValue();
     }
-    return 0;
+    throw new IllegalArgumentException("cannot get separator value from " + mode.name() + " mode");
   }
 }

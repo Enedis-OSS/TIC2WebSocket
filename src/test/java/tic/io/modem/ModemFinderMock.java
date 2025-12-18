@@ -7,7 +7,7 @@
 
 package tic.io.modem;
 
-import enedis.lab.io.PortFinderMock;
+import tic.io.PortFinderMock;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

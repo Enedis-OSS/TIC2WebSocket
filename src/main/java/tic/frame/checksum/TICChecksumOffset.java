@@ -69,15 +69,15 @@ public class TICChecksumOffset {
     if (mode == TICMode.AUTO) {
       mode = TICModeDetector.findModeFromGroupBuffer(buffer);
     }
+    if( mode == null) {
+      throw new IllegalArgumentException("Unable to determine TIC mode from group buffer");
+    }
     int length = endOffset - beginOffset + 1;
-    switch (mode) {
-      case HISTORIC:
-        return beginOffset + (length - OFFSET_END_HISTORIC);
-      case STANDARD:
-        return beginOffset + (length - OFFSET_END_STANDARD);
-      default:
-        throw new IllegalArgumentException(
-            "Unknown TIC mode for offset end determination: " + mode);
+    if (mode == TICMode.HISTORIC) {
+      return beginOffset + (length - OFFSET_END_HISTORIC);
+    }
+    else  {
+      return beginOffset + (length - OFFSET_END_STANDARD);
     }
   }
 

@@ -20,12 +20,14 @@ import tic.frame.delimiter.TICStartPattern;
  * @author Enedis Smarties team
  */
 public class TICModeDetector {
+
+  private TICModeDetector() {}
+
   /**
    * Detects the TIC mode from the given frame buffer.
    *
    * @param frameBuffer the byte array containing the frame start
    * @return the detected {@link TICMode}, or null if not recognized
-   * @throws TICException if the buffer is too short or invalid
    */
   public static TICMode findModeFromFrameBuffer(byte[] frameBuffer) {
     if (frameBuffer == null) {
@@ -37,10 +39,10 @@ public class TICModeDetector {
           "Tic frame buffer 0x" + bytesToHex(frameBuffer) + " too short to determine TIC Mode!");
     }
     System.arraycopy(frameBuffer, 0, frameBufferStart, 0, frameBufferStart.length);
-    if (Arrays.equals(frameBufferStart, TICStartPattern.HISTORIC.getHexValue())) {
+    if (Arrays.equals(frameBufferStart, TICStartPattern.HISTORIC.getValue())) {
       return TICMode.HISTORIC;
     } else {
-      if (Arrays.equals(frameBufferStart, TICStartPattern.STANDARD.getHexValue())) {
+      if (Arrays.equals(frameBufferStart, TICStartPattern.STANDARD.getValue())) {
         return TICMode.STANDARD;
       }
       return null;
@@ -55,7 +57,7 @@ public class TICModeDetector {
    */
   public static TICMode findModeFromGroupBuffer(byte[] groupBuffer) {
     if (groupBuffer == null) {
-      return null;
+      throw new IllegalArgumentException("Tic group buffer is null, unable to determine TIC Mode!");
     }
     for (int i = 0; i < groupBuffer.length; i++) {
       if (groupBuffer[i] == TICSeparator.HISTORIC.getValue()) {
