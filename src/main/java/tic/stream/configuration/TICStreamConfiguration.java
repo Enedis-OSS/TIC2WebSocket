@@ -78,9 +78,6 @@ public class TICStreamConfiguration {
     if (ticMode == null) {
       throw new IllegalArgumentException("TIC mode cannot be null");
     }
-    if (ticMode != TICMode.STANDARD && ticMode != TICMode.HISTORIC && ticMode != TICMode.AUTO) {
-      throw new IllegalArgumentException("Invalid TIC mode: " + ticMode);
-    }
   }
 
   private void checkIdentifier(TICStreamIdentifier identifier) {
