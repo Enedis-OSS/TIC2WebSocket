@@ -10,7 +10,7 @@ package tic.frame.delimiter;
 public enum TICGroupDelimiter {
   /** Begin byte (Line Feed, 0x0A) for TIC groups. */
   BEGIN((byte) 0x0A),
-  /** Begin byte (Carriage Return, 0x0D) for TIC groups. */
+  /** End byte (Carriage Return, 0x0D) for TIC groups. */
   END((byte) 0x0D);
 
   private final byte value;

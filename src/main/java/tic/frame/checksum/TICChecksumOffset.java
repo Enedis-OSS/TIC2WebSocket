@@ -7,6 +7,7 @@
 
 package tic.frame.checksum;
 
+import java.util.Objects;
 import tic.frame.TICMode;
 import tic.frame.TICModeDetector;
 
@@ -32,7 +33,7 @@ public class TICChecksumOffset {
   }
 
   public static int getOffsetChecksum(byte[] groupBuffer) {
-    checkBuffer(groupBuffer);
+    Objects.requireNonNull(groupBuffer, "groupBuffer must not be null");
     return getOffsetChecksum(groupBuffer, groupBuffer.length - 1);
   }
 
@@ -45,7 +46,7 @@ public class TICChecksumOffset {
    * @return the end offset for checksum computation, or null if mode is unknown
    */
   public static int getOffsetEnd(byte[] groupBuffer, TICMode mode) {
-    checkBuffer(groupBuffer);
+    Objects.requireNonNull(groupBuffer, "groupBuffer must not be null");
     return getOffsetEnd(groupBuffer, mode, 0, groupBuffer.length - 1);
   }
 
@@ -69,21 +70,14 @@ public class TICChecksumOffset {
     if (mode == TICMode.AUTO) {
       mode = TICModeDetector.findModeFromGroupBuffer(buffer);
     }
-    if( mode == null) {
+    if (mode == null) {
       throw new IllegalArgumentException("Unable to determine TIC mode from group buffer");
     }
     int length = endOffset - beginOffset + 1;
     if (mode == TICMode.HISTORIC) {
       return beginOffset + (length - OFFSET_END_HISTORIC);
-    }
-    else  {
+    } else {
       return beginOffset + (length - OFFSET_END_STANDARD);
-    }
-  }
-
-  public static void checkBuffer(byte[] buffer) {
-    if (buffer == null) {
-      throw new IllegalArgumentException("groupBuffer must not be null");
     }
   }
 
@@ -95,7 +89,7 @@ public class TICChecksumOffset {
    * @param offsetEnd the end offset for checksum computation
    */
   public static void checkBufferOffsets(byte[] buffer, int offsetBegin, int offsetEnd) {
-    checkBuffer(buffer);
+    Objects.requireNonNull(buffer, "groupBuffer must not be null");
     if (offsetBegin < 0) {
       throw new IllegalArgumentException(
           "Invalid offsetBegin for checksum computation (must be positive)");

@@ -10,7 +10,7 @@ package tic.frame.delimiter;
 public enum TICFrameDelimiter {
   /** Begin byte (STX, 0x02) for TIC frames. */
   BEGIN((byte) 0x02),
-  /** Begin byte (STX, 0x02) for TIC frames. */
+  /** End byte (ETX, 0x03) for TIC frames. */
   END((byte) 0x03);
 
   private final byte value;

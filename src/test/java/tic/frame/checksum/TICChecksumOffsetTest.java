@@ -84,9 +84,9 @@ public class TICChecksumOffsetTest {
   @Test
   public void test_getOffsetEnd_with_nullBuffer() {
     // When
-    IllegalArgumentException exception =
+    NullPointerException exception =
         Assert.assertThrows(
-            IllegalArgumentException.class,
+            NullPointerException.class,
             () -> TICChecksumOffset.getOffsetEnd(null, TICMode.STANDARD));
 
     // Then
