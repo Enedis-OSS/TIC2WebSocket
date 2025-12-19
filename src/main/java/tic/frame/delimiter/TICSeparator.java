@@ -7,25 +7,24 @@
 
 package tic.frame.delimiter;
 
+import tic.frame.TICMode;
+
 /** Enumeration representing TIC frame separators for different TIC modes. */
 public enum TICSeparator {
-  /** Separator character (space, 0x20) for historic TIC frames. */
-  HISTORIC(' ', (byte) 0x20),
-  /** Separator character (tab, 0x09) for standard TIC frames. */
-  STANDARD('\t', (byte) 0x09);
+  /** Separator character (SPACE = 0x20) for historic TIC frames. */
+  HISTORIC((byte) 0x20),
+  /** Separator character (TAB = 0x09) for standard TIC frames. */
+  STANDARD((byte) 0x09);
 
-  private final byte byteValue;
-  private final char asciiValue;
+  private final byte value;
 
   /**
-   * Constructs a TICSeparator with the specified ASCII and hexadecimal values.
+   * Constructs a TICSeparator with the specified hexadecimal value.
    *
-   * @param asciiValue the ASCII character value of the separator
-   * @param byteValue the hexadecimal byte value of the separator
+   * @param value the hexadecimal byte value of the separator
    */
-  private TICSeparator(char asciiValue, byte byteValue) {
-    this.asciiValue = asciiValue;
-    this.byteValue = byteValue;
+  private TICSeparator(byte value) {
+    this.value = value;
   }
 
   /**
@@ -33,16 +32,25 @@ public enum TICSeparator {
    *
    * @return the hexadecimal value as a byte
    */
-  public byte getByteValue() {
-    return byteValue;
+  public byte getValue() {
+    return value;
   }
 
   /**
-   * Gets the ASCII character value of the separator.
+   * Gets the separator value corresponding to the given TIC mode.
    *
-   * @return the ASCII character
+   * @param mode the TIC mode
+   * @return the separator value as a byte
    */
-  public char getAsciiValue() {
-    return asciiValue;
+  public static byte getValueFromMode(TICMode mode) {
+    if (mode == null) {
+      throw new IllegalArgumentException("cannot get separator value from null mode");
+    }
+    if (mode == TICMode.HISTORIC) {
+      return HISTORIC.getValue();
+    } else if (mode == TICMode.STANDARD) {
+      return STANDARD.getValue();
+    }
+    throw new IllegalArgumentException("cannot get separator value from " + mode.name() + " mode");
   }
 }
