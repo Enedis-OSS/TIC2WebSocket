@@ -102,15 +102,7 @@ public class TICStreamModeDetector {
   }
 
   private byte[] getExpectedStartBytes(TICMode ticMode) {
-    if (ticMode == null) {
-      return null;
-    }
-    if (ticMode == TICMode.HISTORIC) {
-      return TICStartPattern.HISTORIC.getValue();
-    } else if (ticMode == TICMode.STANDARD) {
-      return TICStartPattern.STANDARD.getValue();
-    }
-    return null;
+    return TICStartPattern.getValueFromMode(ticMode);
   }
 
   private boolean checkHistoricMode(byte[] ticFrame) {
