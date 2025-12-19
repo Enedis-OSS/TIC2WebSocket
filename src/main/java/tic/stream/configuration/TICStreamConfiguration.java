@@ -16,8 +16,8 @@ import tic.stream.identifier.TICStreamIdentifier;
  * @author Enedis Smarties team
  */
 public class TICStreamConfiguration {
-  protected final static TICMode DEFAULT_TIC_MODE = TICMode.AUTO;
-  protected final static int DEFAULT_TIMEOUT = 10;
+  public final static TICMode DEFAULT_TIC_MODE = TICMode.AUTO;
+  public final static int DEFAULT_TIMEOUT = 10;
 
   private TICMode ticMode = DEFAULT_TIC_MODE;
   private TICStreamIdentifier identifier;
