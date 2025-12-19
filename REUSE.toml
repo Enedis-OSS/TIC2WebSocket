@@ -6,10 +6,11 @@
 
 version = 1
 
-# A simple glob of all files in resources/img/
+# A simple glob of all .txt and .json files in the project
 [[annotations]]
 path = [
-    "**/*.txt"
+    "**/*.txt",
+    "**/*.json"
 ]
 SPDX-FileCopyrightText = "2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>"
 SPDX-License-Identifier = "Apache-2.0"
