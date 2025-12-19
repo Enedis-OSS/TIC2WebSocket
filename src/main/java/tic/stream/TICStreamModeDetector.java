@@ -15,7 +15,6 @@ import tic.frame.delimiter.TICStartPattern;
 
 public class TICStreamModeDetector {
   private static final Logger logger = LogManager.getLogger(TICStreamModeDetector.class);
-  private static final int START_LABEL_LENGTH = TICStartPattern.length();
   private TICMode selectedMode;
   private TICMode currentMode;
   private TICStreamReader streamReader;
@@ -92,12 +91,12 @@ public class TICStreamModeDetector {
   }
 
   private boolean checkMode(TICMode ticMode, byte[] ticFrame) {
-    if (ticFrame == null || ticFrame.length <= START_LABEL_LENGTH) {
+    if (ticFrame == null || ticFrame.length <= TICStartPattern.length()) {
       return false;
     }
 
     byte[] expectedStart = this.getExpectedStartBytes(ticMode);
-    byte[] ticFrameStart = Arrays.copyOf(ticFrame, START_LABEL_LENGTH);
+    byte[] ticFrameStart = Arrays.copyOf(ticFrame, TICStartPattern.length());
 
     return Arrays.equals(ticFrameStart, expectedStart);
   }
