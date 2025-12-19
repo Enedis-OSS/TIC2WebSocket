@@ -4,12 +4,11 @@ import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import tic.frame.TICMode;
-import tic.frame.delimiter.TICStartLabel;
+import tic.frame.delimiter.TICStartPattern;
 
 public class TICStreamModeDetector {
   private static final Logger logger = LogManager.getLogger(TICStreamModeDetector.class);
-  private static final int START_LABEL_LENGTH = TICStartLabel.length();
-
+  private static final int START_LABEL_LENGTH = TICStartPattern.length();
   private TICMode selectedMode;
   private TICMode currentMode;
   private TICStreamReader streamReader;
@@ -92,9 +91,9 @@ public class TICStreamModeDetector {
       return null;
     }
     if (ticMode == TICMode.HISTORIC) {
-      return TICStartLabel.HISTORIC.getBytes();
+      return TICStartPattern.HISTORIC.getValue();
     } else if (ticMode == TICMode.STANDARD) {
-      return TICStartLabel.STANDARD.getBytes();
+      return TICStartPattern.STANDARD.getValue();
     }
     return null;
   }

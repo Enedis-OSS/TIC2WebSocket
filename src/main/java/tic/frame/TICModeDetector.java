@@ -33,7 +33,7 @@ public class TICModeDetector {
     if (frameBuffer == null) {
       throw new IllegalArgumentException("Tic frame buffer is null, unable to determine TIC Mode!");
     }
-    byte[] frameBufferStart = new byte[TICStartLabel.length()];
+    byte[] frameBufferStart = new byte[TICStartPattern.length()];
     if (frameBuffer.length < frameBufferStart.length) {
       throw new IllegalArgumentException(
           "Tic frame buffer 0x" + bytesToHex(frameBuffer) + " too short to determine TIC Mode!");

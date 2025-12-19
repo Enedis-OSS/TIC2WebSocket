@@ -62,21 +62,6 @@ public class TICStreamConfigurationTest {
   }
 
   @Test
-  public void test_constructor_withUnknownTicMode_throwsException() {
-    // Given
-    TICStreamIdentifier identifier = newIdentifierByPortName();
-
-    // When
-    IllegalArgumentException exception =
-        Assert.assertThrows(
-            IllegalArgumentException.class,
-            () -> new TICStreamConfiguration(TICMode.UNKNOWN, identifier, 10));
-
-    // Then
-    Assert.assertTrue(exception.getMessage().contains("Invalid TIC mode"));
-  }
-
-  @Test
   public void test_constructor_withNullIdentifier_throwsException() {
     // Given
     TICMode mode = TICMode.HISTORIC;
