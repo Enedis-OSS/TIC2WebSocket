@@ -11,7 +11,8 @@ import jssc.SerialPort;
 import jssc.SerialPortException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import tic.frame.delimiter.TICPattern;
+
+import tic.frame.delimiter.TICFrameDelimiter;
 import tic.util.time.Time;
 
 public class TICStreamReader {
@@ -138,11 +139,11 @@ public class TICStreamReader {
   }
 
   private boolean isStartDelimiter(char value) {
-    return value == TICPattern.STX;
+    return value == TICFrameDelimiter.BEGIN.getValue();
   }
 
   private boolean isEndDelimiter(char value) {
-    return value == TICPattern.ETX;
+      return value == TICFrameDelimiter.END.getValue();
   }
 
   /** Reads the specified number of bytes from the serial port input buffer. */
