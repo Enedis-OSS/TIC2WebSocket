@@ -9,10 +9,9 @@ package tic.frame;
 
 import enedis.lab.protocol.tic.frame.TICError;
 import enedis.lab.protocol.tic.frame.standard.TICException;
+import java.util.Arrays;
 import tic.frame.delimiter.TICSeparator;
 import tic.frame.delimiter.TICStartLabel;
-
-import java.util.Arrays;
 
 /**
  * Utility class for detecting TIC modes from frame or group buffers.
@@ -43,10 +42,10 @@ public class TICModeDetector {
           TICError.TIC_READER_FRAME_DECODE_FAILED);
     }
     System.arraycopy(frameBuffer, 0, frameBufferStart, 0, frameBufferStart.length);
-    if (Arrays.equals(frameBufferStart, TICStartLabel.HISTORIC.getHexValue())) {
+    if (Arrays.equals(frameBufferStart, TICStartLabel.HISTORIC.getBytes())) {
       return TICMode.HISTORIC;
     } else {
-      if (Arrays.equals(frameBufferStart, TICStartLabel.STANDARD.getHexValue())) {
+      if (Arrays.equals(frameBufferStart, TICStartLabel.STANDARD.getBytes())) {
         return TICMode.STANDARD;
       }
       return null;
