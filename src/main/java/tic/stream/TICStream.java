@@ -14,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import tic.frame.TICFrame;
 import tic.frame.TICMode;
-import tic.frame.group.TICGroup;
+import tic.frame.codec.TICFrameCodec;
 import tic.io.serialport.SerialPortDescriptor;
 import tic.io.serialport.SerialPortFinder;
 import tic.io.serialport.SerialPortFinderBase;
@@ -110,12 +110,12 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
 
   // Synchronous
   public TICFrame getNextFrame() {
-    @SuppressWarnings("unused")
     byte[] ticFrameAsByte = this.streamReader.read();
-    // TODO: Call codec to transform into TICFrame object
-    TICFrame tf = new TICFrame(TICMode.STANDARD);
-    tf.addGroup(new TICGroup("ADSC", "1234567890"));
-    return tf;
+    if (ticFrameAsByte == null) {
+      return null;
+    }
+    TICFrame ticFrame = TICFrameCodec.decode(ticFrameAsByte);
+    return ticFrame;
   }
 
   // Asynchronous
@@ -141,8 +141,6 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
 
     try {
       TICFrame ticFrame = this.getNextFrame();
-
-      System.out.println("TIC Frame read: " + ticFrame);
 
       if (ticFrame == null) {
         this.onReadTimeout();
@@ -187,7 +185,8 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
     this.notifyOnErrorDetected("TIC read timeout");
     try {
       this.streamReader.reset();
-    } catch (Exception e) {}
+    } catch (Exception e) {
+    }
     
     this.currentMode = null;
   }
