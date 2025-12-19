@@ -70,16 +70,14 @@ public class TICStreamModeDetector {
     try {
       byte[] ticFrame = this.streamReader.read();
 
-      if (this.checkHistoricMode(ticFrame)) {
-        logger.debug("TIC Mode HISTORIC detected");
-        this.currentMode = TICMode.HISTORIC;
-        return this.currentMode;
-      }
-
-      if (this.checkStandardMode(ticFrame)) {
-        logger.debug("TIC Mode STANDARD detected");
-        this.currentMode = TICMode.STANDARD;
-        return this.currentMode;
+      for (TICMode ticMode : TICMode.values()) {
+        if (ticMode != TICMode.AUTO) {
+          if (this.checkMode(ticMode, ticFrame)) {
+            logger.debug("TIC Mode " + ticMode + " detected");
+            this.currentMode = ticMode;
+            return this.currentMode;
+          }
+        }
       }
 
       logger.debug("TIC Mode not detected");
@@ -103,13 +101,5 @@ public class TICStreamModeDetector {
 
   private byte[] getExpectedStartBytes(TICMode ticMode) {
     return TICStartPattern.getValueFromMode(ticMode);
-  }
-
-  private boolean checkHistoricMode(byte[] ticFrame) {
-    return this.checkMode(TICMode.HISTORIC, ticFrame);
-  }
-
-  private boolean checkStandardMode(byte[] ticFrame) {
-    return this.checkMode(TICMode.STANDARD, ticFrame);
   }
 }
