@@ -34,22 +34,30 @@ public class TICStreamReader {
    * Small CLI helper that opens a TIC stream with inline configuration and prints the first
    * received frame to the console.
    *
-   * <p>Usage: {@code java tic.stream.TICStreamReader <PORT_NAME>}
+   * <p>Usage: {@code java tic.stream.TICStreamReader <PORT_NAME> <BAUDRATE>}
    */
   public static void main(String[] args) {
-    if (args.length < 1) {
-      System.err.println("Usage: java tic.stream.TICStreamReader <PORT_NAME>");
+    if (args.length < 2) {
+      System.err.println("Usage: java tic.stream.TICStreamReader <PORT_NAME> <BAUDRATE>");
       System.exit(1);
     }
 
     String portName = args[0];
 
-    int baudrate = 9600;
+    int baudrate;
+    try {
+      baudrate = Integer.parseInt(args[1]);
+    } catch (NumberFormatException exception) {
+      System.err.println("Invalid baudrate value: " + args[1]);
+      System.exit(1);
+      return;
+    }
     int timeout = 10000;
 
     TICStreamReader streamReader = new TICStreamReader(portName, baudrate, timeout);
 
-    System.out.println("Listening TIC stream on PORT_NAME=" + portName);
+    System.out.println(
+      "Listening TIC stream on PORT_NAME=" + portName + " at baudrate=" + baudrate);
     try {
       byte[] frame = streamReader.read();
       if (frame == null) {
