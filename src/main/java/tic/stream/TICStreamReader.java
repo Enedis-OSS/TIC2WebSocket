@@ -200,7 +200,7 @@ public class TICStreamReader {
   }
 
   /** Closes the serial port if opened. */
-  protected synchronized void close() {
+  public synchronized void close() {
     if (this.serialPort == null) {
       return;
     }
