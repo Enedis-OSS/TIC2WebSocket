@@ -109,7 +109,20 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
   private void initializeStreamReader() {
     String portName = this.resolvePortName();
     int baudrate = this.resolveBaudrate(this.configuration.getTicMode());
+    if (this.streamReader != null) {
+      try {
+        this.streamReader.close();
+      } catch (Exception e) {
+        logger.warn("Failed to close existing TIC stream reader: {}", e.getMessage());
+      }
+    }
     this.streamReader = new TICStreamReader(portName, baudrate, timeoutMillis);
+
+    if (this.streamModeDetector == null) {
+      this.initializeStreamModeDetector();
+    } else {
+      this.streamModeDetector.setStreamReader(this.streamReader);
+    }
   }
 
   private void initializeStreamModeDetector() {
@@ -198,7 +211,7 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
       this.streamReader.reset();
     } catch (Exception e) {
     }
-    
+
     this.currentMode = null;
   }
 

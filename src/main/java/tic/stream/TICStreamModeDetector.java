@@ -19,6 +19,14 @@ public class TICStreamModeDetector {
   }
 
   /**
+   * Updates the stream reader reference so auto-detection keeps using the active reader after a
+   * reconnect/reset.
+   */
+  public void setStreamReader(TICStreamReader streamReader) {
+    this.streamReader = streamReader;
+  }
+
+  /**
    * Gets the current TIC mode being used by the channel. Returns the detected mode if available,
    * otherwise returns the selected mode from configuration.
    *
@@ -56,15 +64,16 @@ public class TICStreamModeDetector {
     try {
       byte[] ticFrame = this.streamReader.read();
 
-
       if (this.checkHistoricMode(ticFrame)) {
         logger.debug("TIC Mode HISTORIC detected");
-        return TICMode.HISTORIC;
+        this.currentMode = TICMode.HISTORIC;
+        return this.currentMode;
       }
 
       if (this.checkStandardMode(ticFrame)) {
         logger.debug("TIC Mode STANDARD detected");
-        return TICMode.STANDARD;
+        this.currentMode = TICMode.STANDARD;
+        return this.currentMode;
       }
 
       logger.debug("TIC Mode not detected");

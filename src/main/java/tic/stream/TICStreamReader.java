@@ -10,6 +10,7 @@ import tic.util.time.Time;
 public class TICStreamReader {
 
   private static final Logger logger = LogManager.getLogger(TICStream.class);
+  private String portName;
   private SerialPort serialPort;
   private int timeoutMillis;
   private int baudrate;
@@ -23,7 +24,7 @@ public class TICStreamReader {
   private static final int PARITY = SerialPort.PARITY_EVEN;
 
   public TICStreamReader(String portName, int baudrate, int timeoutMillis) {
-    this.serialPort = new SerialPort(portName);
+    this.portName = portName;
     this.baudrate = baudrate;
     this.pollingPeriod = RECEIVE_DATA_POLLING_PERIOD;
     this.timeoutMillis = timeoutMillis;
@@ -175,7 +176,7 @@ public class TICStreamReader {
     }
 
     if (this.serialPort == null) {
-      throw new IllegalStateException("Serial port is not initialized");
+      this.serialPort = new SerialPort(this.portName);
     }
 
     try {
@@ -191,7 +192,7 @@ public class TICStreamReader {
   }
 
   /** Closes the serial port if opened. */
-  private synchronized void close() {
+  protected synchronized void close() {
     if (this.serialPort == null) {
       return;
     }
