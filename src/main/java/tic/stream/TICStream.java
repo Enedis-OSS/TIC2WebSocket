@@ -56,7 +56,18 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
           new TICStreamListener() {
             @Override
             public void onFrame(TICFrame frame) {
-              System.out.println("TIC frame received: " + frame);
+              String serialNumber;
+              if (frame.containsGroupLabel("ADSC")) {
+                serialNumber = frame.getGroup("ADSC").getValue();
+              } else if (frame.containsGroupLabel("ADCO")) {
+                serialNumber = frame.getGroup("ADCO").getValue();
+              } else {
+                System.err.println("Received TIC frame without ADSC/ADCO group");
+                return;
+              }
+              String date = frame.getGroup("DATE").getValue();
+
+              System.out.println("SerialNumber=" + serialNumber + ", DATE=" + date);
             }
 
             @Override
