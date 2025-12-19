@@ -62,7 +62,7 @@ public class TICGroup {
    * @param isValid true if the group is valid, false otherwise
    */
   public boolean isValid() {
-    return isValid;
+    return this.isValid;
   }
 
   /**
@@ -71,7 +71,7 @@ public class TICGroup {
    * @return the label of the group
    */
   public String getLabel() {
-    return label;
+    return this.label;
   }
 
   /**
@@ -80,6 +80,11 @@ public class TICGroup {
    * @return the value of the group
    */
   public String getValue() {
-    return value;
+    return this.value;
+  }
+
+  @Override
+  public String toString() {
+    return "(label=" + this.label + ", value=" + this.value + ", isValid=" + this.isValid + ")";
   }
 }

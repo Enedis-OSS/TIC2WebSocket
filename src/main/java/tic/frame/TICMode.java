@@ -7,14 +7,12 @@
 
 package tic.frame;
 
-/** 
+/**
  * Enumeration of TIC modes.
  *
  * @author Enedis Smarties team
  */
 public enum TICMode {
-  /** Unknown mode. */
-  UNKNOWN,
   /** Standard mode. */
   STANDARD,
   /** Historic mode. */

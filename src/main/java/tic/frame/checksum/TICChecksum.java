@@ -11,7 +11,22 @@ import tic.frame.TICMode;
 
 public class TICChecksum {
 
-  private TICChecksum() {
+  private TICChecksum() {}
+
+  /**
+   * Verifies the checksum for the given byte array.
+   *
+   * @param groupBuffer the byte array to verify the checksum for. Starting with <lf> and ending
+   *     with <cr>
+   * @param mode the TIC mode used. If auto mode is used, the mode will be detected from the group
+   *     buffer
+   * @return true if the checksum is valid, false otherwise
+   */
+  public static boolean verifyChecksum(byte[] groupBuffer, TICMode mode) {
+    int offsetBegin = TICChecksumOffset.getOffsetBegin();
+    int offsetEnd = TICChecksumOffset.getOffsetEnd(groupBuffer, mode);
+
+    return verifyChecksum(groupBuffer, offsetBegin, offsetEnd);
   }
 
   /**
@@ -31,21 +46,38 @@ public class TICChecksum {
   }
 
   /**
+   * Verifies the checksum for the given byte array between the specified offsets.
+   *
+   * @param groupBuffer the byte array to verify the checksum for. Starting with <lf> and ending
+   *     with <cr>
+   * @param offsetBegin tthe begin offset for checksum computation
+   * @param offsetEnd the end offset for checksum computation
+   * @return true if the checksum is valid, false otherwise
+   */
+  private static boolean verifyChecksum(byte[] groupBuffer, int offsetBegin, int offsetEnd) {
+    int computedChecksum = computeChecksum(groupBuffer, offsetBegin, offsetEnd);
+    int offsetChecksum = TICChecksumOffset.getOffsetChecksum(groupBuffer);
+    int receivedChecksum = groupBuffer[offsetChecksum] & 0xFF;
+
+    return computedChecksum == receivedChecksum;
+  }
+
+  /**
    * Computes the checksum for the given byte array between the specified offsets.
    *
-   * @param groupBuffer the byte array to compute the checksum for. Starting with <lf> and ending
-   *     with <cr>
+   * @param buffer the byte array to compute the checksum for. Starting with <lf> and ending with
+   *     <cr>
    * @param offsetBegin the begin offset for checksum computation
    * @param offsetEnd the end offset for checksum computation
    * @return the computed checksum byte
    */
-  private static int computeChecksum(byte[] groupBuffer, int offsetBegin, int offsetEnd) {
+  private static int computeChecksum(byte[] buffer, int offsetBegin, int offsetEnd) {
     int crc = 0;
 
-    TICChecksumOffset.checkBufferOffsets(groupBuffer, offsetBegin, offsetEnd);
+    TICChecksumOffset.checkBufferOffsets(buffer, offsetBegin, offsetEnd);
 
     for (int i = offsetBegin; i < offsetEnd; i++) {
-      crc = computeUpdate(crc, groupBuffer[i]);
+      crc = computeUpdate(crc, buffer[i]);
     }
 
     return computeEnd(crc);
@@ -58,7 +90,7 @@ public class TICChecksum {
    * @param octet current byte of the TIC group
    * @return checksum updated
    */
-  public static int computeUpdate(int crc, byte octet) {
+  private static int computeUpdate(int crc, byte octet) {
     return crc + (octet & 0xff);
   }
 
@@ -68,7 +100,7 @@ public class TICChecksum {
    * @param crc current checksum value
    * @return checksum computed
    */
-  public static int computeEnd(int crc) {
+  private static int computeEnd(int crc) {
     return (crc & 0x3F) + 0x20;
   }
 }

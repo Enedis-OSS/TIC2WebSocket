@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
+# SPDX-FileContributor: Jehan BOUSCH
+# SPDX-FileContributor: Mathieu SABARTHES
+#
+# SPDX-License-Identifier: Apache-2.0
+
+version = 1
+
+# A simple glob of all files in resources/img/
+[[annotations]]
+path = [
+    "**/*.txt"
+]
+SPDX-FileCopyrightText = "2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>"
+SPDX-License-Identifier = "Apache-2.0"
