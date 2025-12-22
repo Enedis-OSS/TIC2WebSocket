@@ -1,0 +1,8 @@
+{
+  "ticMode": "STANDARD",
+  "timeout": 42,
+  "identifier": {
+    "type": "PORT_NAME",
+    "value": "COM9"
+  }
+}

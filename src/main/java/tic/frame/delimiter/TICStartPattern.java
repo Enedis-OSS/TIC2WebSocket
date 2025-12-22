@@ -7,6 +7,8 @@
 
 package tic.frame.delimiter;
 
+import tic.frame.TICMode;
+
 /** Enumeration representing TIC frame start patterns for different TIC modes. */
 public enum TICStartPattern {
   /** Start pattern (STX, LF, A, D, C, O, SPACE) for historic TIC frames. */
@@ -32,6 +34,27 @@ public enum TICStartPattern {
    */
   public byte[] getValue() {
     return value;
+  }
+
+  /**
+   * Gets the start pattern value corresponding to the given TIC mode.
+   *
+   * @param mode the TIC mode
+   * @return the byte array representing the start pattern for the specified mode
+   * @throws IllegalArgumentException if the TIC mode is unsupported
+   */
+  public static byte[] getValueFromMode(TICMode mode) {
+    if (mode == null) {
+      return null;
+    }
+    switch (mode) {
+      case HISTORIC:
+        return HISTORIC.getValue();
+      case STANDARD:
+        return STANDARD.getValue();
+      default:
+        return null;
+    }
   }
 
   /**

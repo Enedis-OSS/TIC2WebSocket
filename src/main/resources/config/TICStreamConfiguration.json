@@ -1,0 +1,8 @@
+{
+  "ticMode": "AUTO",
+  "timeout": 10,
+  "identifier": {
+    "type": "PORT_NAME",
+    "value": "COM1"
+  }
+}
