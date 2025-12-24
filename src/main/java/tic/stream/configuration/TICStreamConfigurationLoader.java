@@ -7,18 +7,14 @@
 
 package tic.stream.configuration;
 
-import tic.frame.TICMode;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import tic.frame.TICMode;
 import tic.stream.identifier.SerialPortId;
 import tic.stream.identifier.SerialPortName;
 import tic.stream.identifier.TICStreamIdentifier;
@@ -27,37 +23,33 @@ import tic.stream.identifier.TICStreamIdentifierType;
 public final class TICStreamConfigurationLoader {
   private static final int DEFAULT_TIMEOUT_SECONDS = 10;
 
-  private TICStreamConfigurationLoader() {
-  }
+  private TICStreamConfigurationLoader() {}
 
-  /** Load TIC stream configuration from a JSON file.
+  /**
+   * Load TIC stream configuration from a JSON file.
    *
    * @param filepath the path to the configuration file
    * @return the loaded TIC stream configuration
    * @throws IllegalStateException if there is an error loading or parsing the configuration
    */
   public static TICStreamConfiguration load(String filepath) {
-    try (Reader reader = resolveConfigurationReader(filepath)) {
-      JSONObject rootObject = new JSONObject(new JSONTokener(reader));
+    try {
+      String json = readFileAsString(filepath);
+      JSONObject rootObject = new JSONObject(new JSONTokener(json));
 
       TICMode ticMode = parseTicMode(rootObject);
       int timeout = parseTimeout(rootObject);
       TICStreamIdentifier identifier = parseIdentifier(rootObject);
 
       return new TICStreamConfiguration(ticMode, identifier, timeout);
-    } catch (IOException | JSONException exception) {
+    } catch (NullPointerException | IOException | JSONException exception) {
       throw new IllegalStateException("Unable to load TIC stream configuration", exception);
     }
   }
 
-  private static Reader resolveConfigurationReader(String filepath) throws IOException {
-    if (filepath != null && !filepath.isEmpty()) {
-      Path path = Paths.get(filepath);
-      InputStream fileStream = Files.newInputStream(path);
-      return new InputStreamReader(fileStream, StandardCharsets.UTF_8);
-    } else {
-      throw new IOException("Configuration file path is not provided");
-    }
+  private static final String readFileAsString(String filepath) throws IOException {
+    Path path = Paths.get(filepath);
+    return new String(Files.readAllBytes(path));
   }
 
   private static TICMode parseTicMode(JSONObject root) {

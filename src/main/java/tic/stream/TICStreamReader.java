@@ -11,7 +11,9 @@ import jssc.SerialPort;
 import jssc.SerialPortException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import tic.frame.TICFrame;
+import tic.frame.codec.TICFrameCodec;
+import tic.frame.codec.TICFrameJsonEncoder;
 import tic.frame.delimiter.TICFrameDelimiter;
 import tic.util.time.Time;
 
@@ -65,15 +67,16 @@ public class TICStreamReader {
     TICStreamReader streamReader = new TICStreamReader(portName, baudrate, timeout);
 
     System.out.println(
-      "Listening TIC stream on PORT_NAME=" + portName + " at baudrate=" + baudrate);
+        "Listening TIC stream on PORT_NAME=" + portName + " at baudrate=" + baudrate);
     try {
-      byte[] frame = streamReader.read();
-      if (frame == null) {
+      byte[] frameBuffer = streamReader.read();
+      if (frameBuffer == null) {
         System.err.println("No TIC frame received within timeout (" + timeout + "s)");
         System.exit(3);
       } else {
-        String payload = new String(frame);
-        System.out.println("TIC frame read:\n" + payload);
+        TICFrame frame = TICFrameCodec.decode(frameBuffer);
+        String jsonFrame = TICFrameJsonEncoder.encode(frame);
+        System.out.println("TIC frame read:\n" + jsonFrame);
         System.exit(0);
       }
     } catch (Exception exception) {
@@ -143,7 +146,7 @@ public class TICStreamReader {
   }
 
   private boolean isEndDelimiter(char value) {
-      return value == TICFrameDelimiter.END.getValue();
+    return value == TICFrameDelimiter.END.getValue();
   }
 
   /** Reads the specified number of bytes from the serial port input buffer. */

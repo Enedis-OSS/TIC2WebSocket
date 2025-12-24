@@ -1,0 +1,50 @@
+{
+  "mode": "HISTORIC",
+  "groupList": [
+    {
+      "label": "ADCO",
+      "value": "812164417227",
+      "isValid": true
+    },
+    {
+      "label": "OPTARIF",
+      "value": "BASE",
+      "isValid": true
+    },
+    {
+      "label": "ISOUSC",
+      "value": "15",
+      "isValid": true
+    },
+    {
+      "label": "BASE",
+      "value": "000000104",
+      "isValid": true
+    },
+    {
+      "label": "PTEC",
+      "value": "TH..",
+      "isValid": true
+    },
+    {
+      "label": "IINST",
+      "value": "000",
+      "isValid": true
+    },
+    {
+      "label": "IMAX",
+      "value": "000",
+      "isValid": true
+    },
+    {
+      "label": "PAPP",
+      "value": "00000",
+      "isValid": true
+    },
+    {
+      "label": "MOTDETAT",
+      "value": "000000",
+      "isValid": false
+    }
+  ]
+}

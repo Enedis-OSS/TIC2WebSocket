@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import tic.frame.TICFrame;
 import tic.frame.TICMode;
 import tic.frame.codec.TICFrameCodec;
+import tic.frame.codec.TICFrameJsonEncoder;
 import tic.io.serialport.SerialPortDescriptor;
 import tic.io.serialport.SerialPortFinder;
 import tic.io.serialport.SerialPortFinderBase;
@@ -56,18 +57,8 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
           new TICStreamListener() {
             @Override
             public void onFrame(TICFrame frame) {
-              String serialNumber;
-              if (frame.containsGroupLabel("ADSC")) {
-                serialNumber = frame.getGroup("ADSC").getValue();
-              } else if (frame.containsGroupLabel("ADCO")) {
-                serialNumber = frame.getGroup("ADCO").getValue();
-              } else {
-                System.err.println("Received TIC frame without ADSC/ADCO group");
-                return;
-              }
-              String date = frame.getGroup("DATE").getValue();
 
-              System.out.println("SerialNumber=" + serialNumber + ", DATE=" + date);
+              System.out.println("TIC stream frame:\n" + TICFrameJsonEncoder.encode(frame) + "\n");
             }
 
             @Override

@@ -1,0 +1,18 @@
+[
+    {
+        "iSerialNumber": 14,
+        "bDeviceProtocol": 5,
+        "bDescriptorType": 3,
+        "bDeviceClass": 4,
+        "iProduct": 13,
+        "idVendor": 11,
+        "bMaxPacketSize0": 8,
+        "bNumConfigurations": 9,
+        "bDeviceSubClass": 6,
+        "idProduct": 10,
+        "bcdUSB": 2,
+        "bLength": 7,
+        "iManufacturer": 12,
+        "bcdDevice": 1
+    }
+]

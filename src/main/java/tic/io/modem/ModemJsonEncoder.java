@@ -42,7 +42,8 @@ public final class ModemJsonEncoder {
         descriptors == null ? Collections.emptyList() : descriptors;
 
     JSONArray array = new JSONArray();
-    safeDescriptors.forEach(descriptor -> array.put(new JSONObject(encode(descriptor, -1))));
+    safeDescriptors.forEach(
+        descriptor -> array.put(new JSONObject(encode(descriptor, indentFactor))));
 
     return indentFactor < 0 ? array.toString() : array.toString(indentFactor);
   }
@@ -68,19 +69,17 @@ public final class ModemJsonEncoder {
    */
   public static String encode(ModemDescriptor descriptor, int indentFactor) {
     JSONObject jsonObject = new JSONObject();
-          jsonObject.put("portId", descriptor.getPortId());
-          jsonObject.put("portName", descriptor.getPortName());
-          jsonObject.put("description", descriptor.getDescription());
-          jsonObject.put("productId", descriptor.getProductId());
-          jsonObject.put("vendorId", descriptor.getVendorId());
-          jsonObject.put("productName", descriptor.getProductName());
-          jsonObject.put("manufacturer", descriptor.getManufacturer());
-          jsonObject.put("serialNumber", descriptor.getSerialNumber());
-          jsonObject.put(
-              "modemType",
-              descriptor.getModemType() == null
-                  ? JSONObject.NULL
-                  : descriptor.getModemType().name());
-          return jsonObject.toString(indentFactor);
+    jsonObject.put("portId", descriptor.getPortId());
+    jsonObject.put("portName", descriptor.getPortName());
+    jsonObject.put("description", descriptor.getDescription());
+    jsonObject.put("productId", descriptor.getProductId());
+    jsonObject.put("vendorId", descriptor.getVendorId());
+    jsonObject.put("productName", descriptor.getProductName());
+    jsonObject.put("manufacturer", descriptor.getManufacturer());
+    jsonObject.put("serialNumber", descriptor.getSerialNumber());
+    jsonObject.put(
+        "modemType",
+        descriptor.getModemType() == null ? JSONObject.NULL : descriptor.getModemType().name());
+    return indentFactor < 0 ? jsonObject.toString() : jsonObject.toString(indentFactor);
   }
 }

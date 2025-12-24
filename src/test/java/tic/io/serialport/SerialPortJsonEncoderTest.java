@@ -7,44 +7,37 @@
 
 package tic.io.serialport;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.JSONException;
 import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import tic.ResourceLoader;
 
 public class SerialPortJsonEncoderTest {
 
   @Test
-  public void encodeShouldSerializeAllFields() {
+  public void encodeShouldSerializeAllFields()
+      throws JSONException, IOException, URISyntaxException {
     // Given
     SerialPortDescriptor descriptor =
         new SerialPortDescriptor(
             "ABCD1", "COM7", "USB Serial Port", 1, 2, "test_product", "test_manufacturer", "SN123");
 
     // When
-    String jsonPayload = SerialPortJsonEncoder.encode(Arrays.asList(descriptor), -1);
+    String actualJsonText = SerialPortJsonEncoder.encode(Arrays.asList(descriptor), -1);
 
     // Then
-    JSONArray array = new JSONArray(jsonPayload);
-    assertEquals(1, array.length());
-    JSONObject json = array.getJSONObject(0);
-    assertEquals("ABCD1", json.getString("portId"));
-    assertEquals("COM7", json.getString("portName"));
-    assertEquals("USB Serial Port", json.getString("description"));
-    assertEquals(1, json.getInt("productId"));
-    assertEquals(2, json.getInt("vendorId"));
-    assertEquals("test_product", json.getString("productName"));
-    assertEquals("test_manufacturer", json.getString("manufacturer"));
-    assertEquals("SN123", json.getString("serialNumber"));
+    String expectedJsonText = ResourceLoader.readString("/tic/io/serialport/AllFields.json");
+    JSONAssert.assertEquals(expectedJsonText, actualJsonText, false);
   }
 
   @Test
-  public void encodeShouldOmitNullifiedStrings() {
+  public void encodeShouldOmitNullifiedStrings()
+      throws JSONException, IOException, URISyntaxException {
     // Given
     SerialPortDescriptor descriptor = new SerialPortDescriptor();
     descriptor.setPortId("ABCD1");
@@ -57,28 +50,23 @@ public class SerialPortJsonEncoderTest {
     descriptor.setSerialNumber(null);
 
     // When
-    String jsonPayload = SerialPortJsonEncoder.encode(Collections.singletonList(descriptor), -1);
+    String actualJsonText = SerialPortJsonEncoder.encode(Collections.singletonList(descriptor), 1);
 
     // Then
-    JSONArray array = new JSONArray(jsonPayload);
-    assertEquals(1, array.length());
-    JSONObject json = array.getJSONObject(0);
-    assertFalse(json.has("portName"));
-    assertFalse(json.has("description"));
-    assertFalse(json.has("productName"));
-    assertFalse(json.has("manufacturer"));
-    assertFalse(json.has("serialNumber"));
+    String expectedJsonText = ResourceLoader.readString("/tic/io/serialport/NullifiedStrings.json");
+    JSONAssert.assertEquals(expectedJsonText, actualJsonText, false);
   }
 
   @Test
-  public void encodeHandlesNullList() {
+  public void encodeHandlesNullList() throws IOException, URISyntaxException, JSONException {
     // Given
     List<SerialPortDescriptor> descriptors = null;
 
     // When
-    String json = SerialPortJsonEncoder.encode(descriptors);
+    String actualJsonText = SerialPortJsonEncoder.encode(descriptors);
 
     // Then
-    assertEquals("[]", json.trim());
+    String expectedJsonText = ResourceLoader.readString("/tic/io/serialport/NullList.json");
+    JSONAssert.assertEquals(expectedJsonText, actualJsonText, false);
   }
 }
