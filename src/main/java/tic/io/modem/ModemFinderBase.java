@@ -12,9 +12,9 @@ import java.util.List;
 import tic.io.serialport.SerialPortDescriptor;
 import tic.io.serialport.SerialPortFinder;
 import tic.io.serialport.SerialPortFinderBase;
-import tic.io.usb.USBPortDescriptor;
-import tic.io.usb.USBPortFinder;
-import tic.io.usb.USBPortFinderBase;
+import tic.io.usb.UsbPortDescriptor;
+import tic.io.usb.UsbPortFinder;
+import tic.io.usb.UsbPortFinderBase;
 
 /** Class used to find all modem descriptors */
 public class ModemFinderBase implements ModemFinder {
@@ -46,10 +46,10 @@ public class ModemFinderBase implements ModemFinder {
   private static ModemFinderBase instance;
 
   private final SerialPortFinder serialPortFinder;
-  private final USBPortFinder usbPortFinder;
+  private final UsbPortFinder usbPortFinder;
 
   private ModemFinderBase() {
-    this(SerialPortFinderBase.getInstance(), USBPortFinderBase.getInstance());
+    this(SerialPortFinderBase.getInstance(), UsbPortFinderBase.getInstance());
   }
 
   /**
@@ -58,7 +58,7 @@ public class ModemFinderBase implements ModemFinder {
    * @param serialPortFinder the serial port finder interface
    * @param usbPortFinder the USB port finder interface
    */
-  public ModemFinderBase(SerialPortFinder serialPortFinder, USBPortFinder usbPortFinder) {
+  public ModemFinderBase(SerialPortFinder serialPortFinder, UsbPortFinder usbPortFinder) {
     if (serialPortFinder == null) {
       throw new IllegalArgumentException("Cannot set null serial port finder");
     }
@@ -79,11 +79,11 @@ public class ModemFinderBase implements ModemFinder {
               modemType.getProductId(), modemType.getVendorId());
 
       if (tmpSerialPort.isEmpty()) {
-        List<USBPortDescriptor> tmpUSBPort =
+        List<UsbPortDescriptor> tmpUSBPort =
             this.usbPortFinder.findByProductIdAndVendorId(
                 modemType.getProductId(), modemType.getVendorId());
 
-        for (USBPortDescriptor upd : tmpUSBPort) {
+        for (UsbPortDescriptor upd : tmpUSBPort) {
           try {
             ModemDescriptor descriptor = new ModemDescriptor(upd, modemType);
             descriptors.add(descriptor);

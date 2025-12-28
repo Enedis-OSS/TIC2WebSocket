@@ -9,7 +9,7 @@ package tic.io.modem;
 
 import java.util.Objects;
 import tic.io.serialport.SerialPortDescriptor;
-import tic.io.usb.USBPortDescriptor;
+import tic.io.usb.UsbPortDescriptor;
 
 /** Descriptor of a modem. */
 public class ModemDescriptor extends SerialPortDescriptor {
@@ -79,19 +79,19 @@ public class ModemDescriptor extends SerialPortDescriptor {
    * @param usbPortDescriptor
    * @param modemType
    */
-  public ModemDescriptor(USBPortDescriptor usbPortDescriptor, ModemType modemType) {
+  public ModemDescriptor(UsbPortDescriptor usbPortDescriptor, ModemType modemType) {
     this();
 
     if (usbPortDescriptor == null) {
       throw new IllegalArgumentException("USB port descriptor cannot be null");
     }
 
-    this.checkProductId(usbPortDescriptor.getIdProduct(), modemType);
-    this.checkVendorId(usbPortDescriptor.getIdVendor(), modemType);
+    this.checkProductId(usbPortDescriptor.idProduct(), modemType);
+    this.checkVendorId(usbPortDescriptor.idVendor(), modemType);
 
-    this.setProductName(usbPortDescriptor.getProduct());
-    this.setManufacturer(usbPortDescriptor.getManufacturer());
-    this.setSerialNumber(usbPortDescriptor.getSerialNumber());
+    this.setProductName(usbPortDescriptor.product());
+    this.setManufacturer(usbPortDescriptor.manufacturer());
+    this.setSerialNumber(usbPortDescriptor.serialNumber());
     this.setModemType(modemType);
   }
 

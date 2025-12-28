@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
 import tic.io.PortFinder;
 
 /** Interface used to find all USB port descriptor */
-public interface USBPortFinder extends PortFinder<USBPortDescriptor> {
+public interface UsbPortFinder extends PortFinder<UsbPortDescriptor> {
   /**
    * Find USB device with the given product id
    *
    * @param idProduct the USB product identifier
    * @return the USB descriptor data list of all USB device connected with the given product id
    */
-  public default List<USBPortDescriptor> findByProductId(int idProduct) {
+  public default List<UsbPortDescriptor> findByProductId(short idProduct) {
     return this.findAll().stream()
-        .filter(d -> d.getIdProduct().intValue() == idProduct)
+        .filter(d -> d.idProduct() == idProduct)
         .collect(Collectors.toList());
   }
 
@@ -31,9 +31,9 @@ public interface USBPortFinder extends PortFinder<USBPortDescriptor> {
    * @param idVendor the USB vendor identifier
    * @return the USB descriptor data list of all USB device connected with the given vendor id
    */
-  public default List<USBPortDescriptor> findByVendorId(int idVendor) {
+  public default List<UsbPortDescriptor> findByVendorId(short idVendor) {
     return this.findAll().stream()
-        .filter(d -> d.getIdVendor().intValue() == idVendor)
+        .filter(d -> d.idVendor() == idVendor)
         .collect(Collectors.toList());
   }
 
@@ -45,10 +45,11 @@ public interface USBPortFinder extends PortFinder<USBPortDescriptor> {
    * @return the USB descriptor data list of all USB device connected with the given product id and
    *     vendor id
    */
-  public default List<USBPortDescriptor> findByProductIdAndVendorId(int idProduct, int idVendor) {
+  public default List<UsbPortDescriptor> findByProductIdAndVendorId(
+      short idProduct, short idVendor) {
     return this.findAll().stream()
-        .filter(d -> d.getIdProduct().intValue() == idProduct)
-        .filter(d -> d.getIdVendor().intValue() == idVendor)
+        .filter(d -> d.idProduct() == idProduct)
+        .filter(d -> d.idVendor() == idVendor)
         .collect(Collectors.toList());
   }
 }

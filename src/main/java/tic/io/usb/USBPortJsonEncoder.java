@@ -13,10 +13,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /** Utility class to convert USB port descriptors to their JSON representation. */
-public final class USBPortJsonEncoder {
+public final class UsbPortJsonEncoder {
   private static final int DEFAULT_INDENT = 2;
 
-  private USBPortJsonEncoder() {}
+  private UsbPortJsonEncoder() {}
 
   /**
    * Encodes the provided USB descriptors list into a JSON string using the default indentation
@@ -25,7 +25,7 @@ public final class USBPortJsonEncoder {
    * @param descriptors descriptors to encode; {@code null} is treated as an empty list
    * @return the JSON string
    */
-  public static String encode(List<USBPortDescriptor> descriptors) {
+  public static String encode(List<UsbPortDescriptor> descriptors) {
     return encode(descriptors, DEFAULT_INDENT);
   }
 
@@ -37,31 +37,31 @@ public final class USBPortJsonEncoder {
    *     value is negative the compact form is returned
    * @return the JSON string
    */
-  public static String encode(List<USBPortDescriptor> descriptors, int indentFactor) {
-    List<USBPortDescriptor> safeDescriptors =
+  public static String encode(List<UsbPortDescriptor> descriptors, int indentFactor) {
+    List<UsbPortDescriptor> safeDescriptors =
         descriptors == null ? Collections.emptyList() : descriptors;
 
     JSONArray array = new JSONArray();
     safeDescriptors.forEach(
         descriptor -> {
           JSONObject jsonObject = new JSONObject();
-          jsonObject.put("bcdDevice", descriptor.getBcdDevice());
-          jsonObject.put("bcdUSB", descriptor.getBcdUSB());
-          jsonObject.put("bDescriptorType", descriptor.getBDescriptorType());
-          jsonObject.put("bDeviceClass", descriptor.getBDeviceClass());
-          jsonObject.put("bDeviceProtocol", descriptor.getBDeviceProtocol());
-          jsonObject.put("bDeviceSubClass", descriptor.getBDeviceSubClass());
-          jsonObject.put("bLength", descriptor.getBLength());
-          jsonObject.put("bMaxPacketSize0", descriptor.getBMaxPacketSize0());
-          jsonObject.put("bNumConfigurations", descriptor.getBNumConfigurations());
-          jsonObject.put("idProduct", descriptor.getIdProduct());
-          jsonObject.put("idVendor", descriptor.getIdVendor());
-          jsonObject.put("iManufacturer", descriptor.getIManufacturer());
-          jsonObject.put("iProduct", descriptor.getIProduct());
-          jsonObject.put("iSerialNumber", descriptor.getISerialNumber());
-          jsonObject.put("manufacturer", descriptor.getManufacturer());
-          jsonObject.put("product", descriptor.getProduct());
-          jsonObject.put("serialNumber", descriptor.getSerialNumber());
+          jsonObject.put("bcdDevice", descriptor.bcdDevice());
+          jsonObject.put("bcdUSB", descriptor.bcdUSB());
+          jsonObject.put("bDescriptorType", descriptor.bDescriptorType());
+          jsonObject.put("bDeviceClass", descriptor.bDeviceClass());
+          jsonObject.put("bDeviceProtocol", descriptor.bDeviceProtocol());
+          jsonObject.put("bDeviceSubClass", descriptor.bDeviceSubClass());
+          jsonObject.put("bLength", descriptor.bLength());
+          jsonObject.put("bMaxPacketSize0", descriptor.bMaxPacketSize0());
+          jsonObject.put("bNumConfigurations", descriptor.bNumConfigurations());
+          jsonObject.put("idProduct", descriptor.idProduct());
+          jsonObject.put("idVendor", descriptor.idVendor());
+          jsonObject.put("iManufacturer", descriptor.iManufacturer());
+          jsonObject.put("iProduct", descriptor.iProduct());
+          jsonObject.put("iSerialNumber", descriptor.iSerialNumber());
+          jsonObject.put("manufacturer", descriptor.manufacturer());
+          jsonObject.put("product", descriptor.product());
+          jsonObject.put("serialNumber", descriptor.serialNumber());
           array.put(jsonObject);
         });
 

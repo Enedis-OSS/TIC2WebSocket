@@ -17,37 +17,28 @@ import org.usb4java.DeviceList;
 import org.usb4java.LibUsb;
 
 /** Class used to find all USB port descriptor */
-public class USBPortFinderBase implements USBPortFinder {
-  /**
-   * Program writing the USB port descriptor list (JSON format) on the output stream
-   *
-   * @param args not used
-   */
-  public static void main(String[] args) {
-    List<USBPortDescriptor> descriptors = getInstance().findAll();
-    System.out.println(USBPortJsonEncoder.encode(descriptors));
-  }
+public class UsbPortFinderBase implements UsbPortFinder {
 
   /**
    * Get instance
    *
    * @return Unique instance
    */
-  public static USBPortFinderBase getInstance() {
+  public static UsbPortFinderBase getInstance() {
     if (instance == null) {
-      instance = new USBPortFinderBase();
+      instance = new UsbPortFinderBase();
     }
 
     return instance;
   }
 
-  private static USBPortFinderBase instance;
+  private static UsbPortFinderBase instance;
 
-  private USBPortFinderBase() {}
+  private UsbPortFinderBase() {}
 
   @Override
-  public List<USBPortDescriptor> findAll() {
-    List<USBPortDescriptor> usbPortList = new ArrayList<>();
+  public List<UsbPortDescriptor> findAll() {
+    List<UsbPortDescriptor> usbPortList = new ArrayList<>();
 
     Context context = new Context();
     DeviceList deviceList = new DeviceList();
@@ -90,27 +81,26 @@ public class USBPortFinderBase implements USBPortFinder {
       }
 
       try {
-        // @formatter:off
-        USBPortDescriptor usbPort =
-            new USBPortDescriptor(
-                descriptor.bcdDevice() & 0xFFFF,
-                descriptor.bcdUSB() & 0xFFFF,
-                descriptor.bDescriptorType() & 0xFF,
-                descriptor.bDeviceClass() & 0xFF,
-                descriptor.bDeviceProtocol() & 0xFF,
-                descriptor.bDeviceSubClass() & 0xFF,
-                descriptor.bLength() & 0xFF,
-                descriptor.bMaxPacketSize0() & 0xFF,
-                descriptor.bNumConfigurations() & 0xFF,
-                descriptor.idProduct() & 0xFFFF,
-                descriptor.idVendor() & 0xFFFF,
-                descriptor.iManufacturer() & 0xFF,
-                descriptor.iProduct() & 0xFF,
-                descriptor.iSerialNumber() & 0xFF,
-                manufacturer,
-                productName,
-                serialNumber);
-        // @formatter:on
+        UsbPortDescriptor usbPort =
+            new UsbPortDescriptor.Builder()
+                .bcdDevice(descriptor.bcdDevice())
+                .bcdUSB(descriptor.bcdUSB())
+                .bDescriptorType(descriptor.bDescriptorType())
+                .bDeviceClass(descriptor.bDeviceClass())
+                .bDeviceProtocol(descriptor.bDeviceProtocol())
+                .bDeviceSubClass(descriptor.bDeviceSubClass())
+                .bLength(descriptor.bLength())
+                .bMaxPacketSize0(descriptor.bMaxPacketSize0())
+                .bNumConfigurations(descriptor.bNumConfigurations())
+                .idProduct(descriptor.idProduct())
+                .idVendor(descriptor.idVendor())
+                .iManufacturer(descriptor.iManufacturer())
+                .iProduct(descriptor.iProduct())
+                .iSerialNumber(descriptor.iSerialNumber())
+                .manufacturer(manufacturer)
+                .product(productName)
+                .serialNumber(serialNumber)
+                .build();
         usbPortList.add(usbPort);
       } catch (IllegalArgumentException e) {
       }

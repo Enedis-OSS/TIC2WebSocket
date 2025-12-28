@@ -16,34 +16,35 @@ import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import tic.ResourceLoader;
 
-public class USBPortJsonEncoderTest {
+public class UsbPortJsonEncoderTest {
 
   @Test
   public void encodeShouldSerializeAllDescriptorFields()
       throws JSONException, IOException, URISyntaxException {
     // Given
-    USBPortDescriptor descriptor =
-        new USBPortDescriptor(
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            "test_manufacturer",
-            "test_product",
-            "SN123");
+    UsbPortDescriptor descriptor =
+        new UsbPortDescriptor.Builder()
+            .bcdDevice((short) 1)
+            .bcdUSB((short) 2)
+            .bDescriptorType((byte) 3)
+            .bDeviceClass((byte) 4)
+            .bDeviceProtocol((byte) 5)
+            .bDeviceSubClass((byte) 6)
+            .bLength((byte) 7)
+            .bMaxPacketSize0((byte) 8)
+            .bNumConfigurations((byte) 9)
+            .idProduct((short) 10)
+            .idVendor((short) 11)
+            .iManufacturer((byte) 12)
+            .iProduct((byte) 13)
+            .iSerialNumber((byte) 14)
+            .manufacturer("test_manufacturer")
+            .product("test_product")
+            .serialNumber("SN123")
+            .build();
 
     // When
-    String actualJsonText = USBPortJsonEncoder.encode(Arrays.asList(descriptor), -1);
+    String actualJsonText = UsbPortJsonEncoder.encode(Arrays.asList(descriptor), -1);
 
     // Then
     String expectedJsonText = ResourceLoader.readString("/tic/io/usb/AllDescriptorFields.json");
@@ -54,11 +55,29 @@ public class USBPortJsonEncoderTest {
   public void encodeShouldOmitNullStringFields()
       throws JSONException, IOException, URISyntaxException {
     // Given
-    USBPortDescriptor descriptor =
-        new USBPortDescriptor(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, null, null, null);
+    UsbPortDescriptor descriptor =
+        new UsbPortDescriptor.Builder()
+            .bcdDevice((short) 1)
+            .bcdUSB((short) 2)
+            .bDescriptorType((byte) 3)
+            .bDeviceClass((byte) 4)
+            .bDeviceProtocol((byte) 5)
+            .bDeviceSubClass((byte) 6)
+            .bLength((byte) 7)
+            .bMaxPacketSize0((byte) 8)
+            .bNumConfigurations((byte) 9)
+            .idProduct((short) 10)
+            .idVendor((short) 11)
+            .iManufacturer((byte) 12)
+            .iProduct((byte) 13)
+            .iSerialNumber((byte) 14)
+            .manufacturer(null)
+            .product(null)
+            .serialNumber(null)
+            .build();
 
     // When
-    String actualJsonText = USBPortJsonEncoder.encode(Arrays.asList(descriptor), -1);
+    String actualJsonText = UsbPortJsonEncoder.encode(Arrays.asList(descriptor), -1);
 
     // Then
     String expectedJsonText = ResourceLoader.readString("/tic/io/usb/WithNullStringFields.json");
@@ -68,10 +87,10 @@ public class USBPortJsonEncoderTest {
   @Test
   public void encodeHandlesNullList() throws IOException, URISyntaxException, JSONException {
     // Given
-    List<USBPortDescriptor> list = null;
+    List<UsbPortDescriptor> list = null;
 
     // When
-    String actualJsonText = USBPortJsonEncoder.encode(list);
+    String actualJsonText = UsbPortJsonEncoder.encode(list);
 
     // Then
     String expectedJsonText = ResourceLoader.readString("/tic/io/usb/NullList.json");

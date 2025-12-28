@@ -10,14 +10,14 @@ package tic.io.modem;
 /** Supported modem types. */
 public enum ModemType {
   /** Modem michaud */
-  MICHAUD(0x6001, 0x0403),
+  MICHAUD((short) 0x6001, (short) 0x0403),
   /** Télé info */
-  TELEINFO(0x6015, 0x0403);
+  TELEINFO((short) 0x6015, (short) 0x0403);
 
-  private final int productId;
-  private final int vendorId;
+  private final short productId;
+  private final short vendorId;
 
-  ModemType(int productId, int vendorId) {
+  ModemType(short productId, short vendorId) {
     this.productId = productId;
     this.vendorId = vendorId;
   }
@@ -27,7 +27,7 @@ public enum ModemType {
    *
    * @return product id
    */
-  public int getProductId() {
+  public short getProductId() {
     return this.productId;
   }
 
@@ -36,7 +36,7 @@ public enum ModemType {
    *
    * @return vendor id
    */
-  public int getVendorId() {
+  public short getVendorId() {
     return this.vendorId;
   }
 }
