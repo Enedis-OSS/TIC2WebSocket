@@ -381,7 +381,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
     try {
       stream =
           this.streamConstructor.newInstance(
-              descriptor.portId(), descriptor.portName(), this.streamMode);
+              descriptor.portId(), descriptor.portName(), this.streamMode, this.modemFinder);
 
       stream.subscribe(this);
 

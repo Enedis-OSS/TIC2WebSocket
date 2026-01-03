@@ -9,6 +9,8 @@ package enedis.tic.core;
 
 import enedis.lab.protocol.tic.TICMode;
 import enedis.lab.types.DataDictionaryException;
+import tic.io.modem.ModemFinder;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -20,7 +22,7 @@ public class TICCoreStreamMock implements TICCoreStream {
   public boolean running;
   public TICIdentifier identifier;
 
-  public TICCoreStreamMock(String portId, String portName, TICMode mode)
+  public TICCoreStreamMock(String portId, String portName, TICMode mode, ModemFinder finder)
       throws DataDictionaryException {
     super();
     this.subscribers = new HashSet<TICCoreSubscriber>();
