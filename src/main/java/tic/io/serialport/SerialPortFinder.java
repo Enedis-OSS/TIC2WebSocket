@@ -38,7 +38,7 @@ public interface SerialPortFinder extends PortFinder<SerialPortDescriptor> {
    */
   public default SerialPortDescriptor findByPortId(String portId) {
     return this.findAll().stream()
-        .filter(k -> (k.getPortId() != null) ? k.getPortId().equals(portId) : portId == null)
+        .filter(k -> (k.portId() != null) ? k.portId().equals(portId) : portId == null)
         .findFirst()
         .orElse(null);
   }
@@ -55,8 +55,7 @@ public interface SerialPortFinder extends PortFinder<SerialPortDescriptor> {
    */
   public default SerialPortDescriptor findByPortName(String portName) {
     return this.findAll().stream()
-        .filter(
-            k -> (k.getPortName() != null) ? k.getPortName().equals(portName) : portName == null)
+        .filter(k -> (k.portName() != null) ? k.portName().equals(portName) : portName == null)
         .findFirst()
         .orElse(null);
   }
@@ -73,7 +72,7 @@ public interface SerialPortFinder extends PortFinder<SerialPortDescriptor> {
    */
   public default SerialPortDescriptor findNative(String portName) {
     return this.findAll().stream()
-        .filter(k -> k.isNative() && k.getPortName().equals(portName))
+        .filter(k -> k.isNative() && k.portName().equals(portName))
         .findFirst()
         .orElse(null);
   }
@@ -116,18 +115,17 @@ public interface SerialPortFinder extends PortFinder<SerialPortDescriptor> {
    * @return a list of matching serial port descriptors (empty list if no matches found)
    */
   public default List<SerialPortDescriptor> findByProductIdAndVendorId(
-      Number productId, Number vendorId) {
+      Short productId, Short vendorId) {
     List<SerialPortDescriptor> descriptorList = new ArrayList<>();
 
     for (SerialPortDescriptor descriptor : this.findAll()) {
-      if (descriptor.getProductId() == null && productId != null) {
+      if (descriptor.productId() == null && productId != null) {
         continue;
       }
-      if (descriptor.getVendorId() == null && vendorId != null) {
+      if (descriptor.vendorId() == null && vendorId != null) {
         continue;
       }
-      if (descriptor.getProductId().equals(productId)
-          && descriptor.getVendorId().equals(vendorId)) {
+      if (descriptor.productId().equals(productId) && descriptor.vendorId().equals(vendorId)) {
         descriptorList.add(descriptor);
       }
     }

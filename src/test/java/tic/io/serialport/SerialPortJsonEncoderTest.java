@@ -24,8 +24,16 @@ public class SerialPortJsonEncoderTest {
       throws JSONException, IOException, URISyntaxException {
     // Given
     SerialPortDescriptor descriptor =
-        new SerialPortDescriptor(
-            "ABCD1", "COM7", "USB Serial Port", 1, 2, "test_product", "test_manufacturer", "SN123");
+        new SerialPortDescriptor.Builder()
+            .portId("ABCD1")
+            .portName("COM7")
+            .description("USB Serial Port")
+            .productId((short) 1)
+            .vendorId((short) 2)
+            .productName("test_product")
+            .manufacturer("test_manufacturer")
+            .serialNumber("SN123")
+            .build();
 
     // When
     String actualJsonText = SerialPortJsonEncoder.encode(Arrays.asList(descriptor), -1);
@@ -39,15 +47,17 @@ public class SerialPortJsonEncoderTest {
   public void encodeShouldOmitNullifiedStrings()
       throws JSONException, IOException, URISyntaxException {
     // Given
-    SerialPortDescriptor descriptor = new SerialPortDescriptor();
-    descriptor.setPortId("ABCD1");
-    descriptor.setPortName(null);
-    descriptor.setDescription(null);
-    descriptor.setProductId(1);
-    descriptor.setVendorId(2);
-    descriptor.setProductName(null);
-    descriptor.setManufacturer(null);
-    descriptor.setSerialNumber(null);
+    SerialPortDescriptor descriptor =
+        new SerialPortDescriptor.Builder()
+            .portId("ABCD1")
+            .portName(null)
+            .description(null)
+            .productId((short) 1)
+            .vendorId((short) 2)
+            .productName(null)
+            .manufacturer(null)
+            .serialNumber(null)
+            .build();
 
     // When
     String actualJsonText = SerialPortJsonEncoder.encode(Collections.singletonList(descriptor), 1);

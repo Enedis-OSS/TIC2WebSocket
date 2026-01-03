@@ -148,20 +148,21 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
         String portId = devicePortId(device);
         String manufacturer = deviceManufacturer(device);
         String serialNumber = deviceSerialNumber(device);
-        Number vendorIdentifier = deviceVendorIdentifier(device);
-        Number productIdentifier = deviceProductIdentifier(device);
+        Short vendorIdentifier = deviceVendorIdentifier(device);
+        Short productIdentifier = deviceProductIdentifier(device);
         String productName = deviceProductName(device);
         try {
           serialPortDescriptor =
-              new SerialPortDescriptor(
-                  portId,
-                  location,
-                  description,
-                  productIdentifier,
-                  vendorIdentifier,
-                  productName,
-                  manufacturer,
-                  serialNumber);
+              new SerialPortDescriptor.Builder()
+                  .portId(portId)
+                  .portName(location)
+                  .description(description)
+                  .productId(productIdentifier)
+                  .vendorId(vendorIdentifier)
+                  .productName(productName)
+                  .manufacturer(manufacturer)
+                  .serialNumber(serialNumber)
+                  .build();
         } catch (IllegalArgumentException e) {
           e.printStackTrace(System.err);
           Udev.INSTANCE.udev_device_unref(device);
@@ -177,7 +178,16 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
         }
         try {
           serialPortDescriptor =
-              new SerialPortDescriptor(null, location, null, null, null, null, null, null);
+              new SerialPortDescriptor.Builder()
+                  .portId(null)
+                  .portName(location)
+                  .description(null)
+                  .productId(null)
+                  .vendorId(null)
+                  .productName(null)
+                  .manufacturer(null)
+                  .serialNumber(null)
+                  .build();
         } catch (IllegalArgumentException e) {
           e.printStackTrace(System.err);
           Udev.INSTANCE.udev_device_unref(device);
@@ -248,8 +258,8 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
       String description = null;
       String manufacturer = null;
       String serialNumber = null;
-      Number vendorIdentifier = null;
-      Number productIdentifier = null;
+      Short vendorIdentifier = null;
+      Short productIdentifier = null;
       String productName = null;
       do {
         if (description == null) {
@@ -282,15 +292,16 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
       } while (targetDir != null);
       try {
         serialPortDescriptor =
-            new SerialPortDescriptor(
-                null,
-                portName,
-                description,
-                productIdentifier,
-                vendorIdentifier,
-                productName,
-                manufacturer,
-                serialNumber);
+            new SerialPortDescriptor.Builder()
+                .portId(null)
+                .portName(portName)
+                .description(description)
+                .productId(productIdentifier)
+                .vendorId(vendorIdentifier)
+                .productName(productName)
+                .manufacturer(manufacturer)
+                .serialNumber(serialNumber)
+                .build();
       } catch (IllegalArgumentException e) {
         e.printStackTrace(System.err);
         continue;
@@ -319,7 +330,16 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
       String portName = portNameFromSystemLocation(deviceFilePath);
       try {
         serialPortDescriptor =
-            new SerialPortDescriptor(null, portName, null, null, null, null, null, null);
+            new SerialPortDescriptor.Builder()
+                .portId(null)
+                .portName(portName)
+                .description(null)
+                .productId(null)
+                .vendorId(null)
+                .productName(null)
+                .manufacturer(null)
+                .serialNumber(null)
+                .build();
       } catch (IllegalArgumentException e) {
         e.printStackTrace(System.err);
         continue;
@@ -458,11 +478,11 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
     return deviceProperty(new File(targetDir, "manufacturer").getAbsolutePath());
   }
 
-  private static Number deviceProductIdentifier(UdevDevice dev) {
-    Number identifierValue;
+  private static Short deviceProductIdentifier(UdevDevice dev) {
+    Short identifierValue;
     try {
       String indentifierText = deviceProperty(dev, "ID_MODEL_ID");
-      identifierValue = (indentifierText != null) ? Integer.parseInt(indentifierText, 16) : null;
+      identifierValue = (indentifierText != null) ? Short.parseShort(indentifierText, 16) : null;
     } catch (Exception e) {
       identifierValue = null;
     }
@@ -477,30 +497,30 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
     return deviceProperty(new File(targetDir, "product").getAbsolutePath());
   }
 
-  private static Number deviceProductIdentifier(File targetDir) {
+  private static Short deviceProductIdentifier(File targetDir) {
     String indentifierText = deviceProperty(new File(targetDir, "idProduct").getAbsolutePath());
 
     if (indentifierText == null) {
       indentifierText = deviceProperty(new File(targetDir, "device").getAbsolutePath());
     }
-    Number identifierValue;
+    Short identifierValue;
     try {
-      identifierValue = (indentifierText != null) ? Integer.parseInt(indentifierText, 16) : null;
+      identifierValue = (indentifierText != null) ? Short.parseShort(indentifierText, 16) : null;
     } catch (Exception e) {
       identifierValue = null;
     }
     return identifierValue;
   }
 
-  private static Number deviceVendorIdentifier(File targetDir) {
+  private static Short deviceVendorIdentifier(File targetDir) {
     String indentifierText = deviceProperty(new File(targetDir, "idVendor").getAbsolutePath());
 
     if (indentifierText == null) {
       indentifierText = deviceProperty(new File(targetDir, "vendor").getAbsolutePath());
     }
-    Number identifierValue;
+    Short identifierValue;
     try {
-      identifierValue = (indentifierText != null) ? Integer.parseInt(indentifierText, 16) : null;
+      identifierValue = (indentifierText != null) ? Short.parseShort(indentifierText, 16) : null;
     } catch (Exception e) {
       identifierValue = null;
     }
@@ -511,11 +531,11 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
     return deviceProperty(new File(targetDir, "serial").getAbsolutePath());
   }
 
-  private static Number deviceVendorIdentifier(UdevDevice dev) {
-    Number identifierValue;
+  private static Short deviceVendorIdentifier(UdevDevice dev) {
+    Short identifierValue;
     try {
       String indentifierText = deviceProperty(dev, "ID_VENDOR_ID");
-      identifierValue = (indentifierText != null) ? Integer.parseInt(indentifierText, 16) : null;
+      identifierValue = (indentifierText != null) ? Short.parseShort(indentifierText, 16) : null;
     } catch (Exception e) {
       identifierValue = null;
     }

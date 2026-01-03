@@ -16,27 +16,9 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_instance_with_all_parameters() {
     // Given
-    UsbPortDescriptor.Builder builder =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123");
+
     // When
-    UsbPortDescriptor descriptor = builder.build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     // Then
     Assert.assertEquals(1, descriptor.bcdDevice());
@@ -1034,26 +1016,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_same_instance() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
     // When
     boolean match = descriptor.equals(descriptor);
 
@@ -1064,47 +1027,9 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_identical_object() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
-    UsbPortDescriptor otherDescriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor otherDescriptor = createStandardDescriptor();
     // When
     boolean match = descriptor.equals(otherDescriptor);
 
@@ -1115,26 +1040,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_object_type() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
     // When
     boolean match = descriptor.equals((Object) TICMode.HISTORIC);
 
@@ -1145,29 +1051,10 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_bcdDevice() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
             .bcdUSB((short) 2)
             .bDescriptorType((byte) 3)
             .bDeviceClass((byte) 4)
@@ -1195,26 +1082,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_bcdUSB() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1245,26 +1113,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_bDescriptorType() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1295,26 +1144,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_bDeviceClass() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1345,26 +1175,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_bDeviceProtocol() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1395,26 +1206,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_bDeviceSubClass() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1445,26 +1237,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_bLength() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1495,26 +1268,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_bMaxPacketSize0() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1545,26 +1299,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_bNumConfigurations() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1595,26 +1330,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_idProduct() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1645,26 +1361,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_idVendor() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1695,26 +1392,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_iManufacturer() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1745,26 +1423,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_iProduct() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1795,26 +1454,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_iSerialNumber() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1845,26 +1485,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_manufacturer() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1896,26 +1517,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_product() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1947,26 +1549,7 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_equals_with_different_serialNumber() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
 
     UsbPortDescriptor otherDescriptor =
         new UsbPortDescriptor.Builder()
@@ -1998,31 +1581,36 @@ public class UsbPortDescriptorTest {
   @Test
   public void test_hashCode() {
     // Given
-    UsbPortDescriptor descriptor =
-        new UsbPortDescriptor.Builder()
-            .bcdDevice((short) 1)
-            .bcdUSB((short) 2)
-            .bDescriptorType((byte) 3)
-            .bDeviceClass((byte) 4)
-            .bDeviceProtocol((byte) 5)
-            .bDeviceSubClass((byte) 6)
-            .bLength((byte) 7)
-            .bMaxPacketSize0((byte) 8)
-            .bNumConfigurations((byte) 9)
-            .idProduct((short) 10)
-            .idVendor((short) 11)
-            .iManufacturer((byte) 12)
-            .iProduct((byte) 13)
-            .iSerialNumber((byte) 14)
-            .manufacturer("test_manufacturer")
-            .product("test_product")
-            .serialNumber("SN123")
-            .build();
+    UsbPortDescriptor descriptor = createStandardDescriptor();
+    UsbPortDescriptor sameDescriptor = createStandardDescriptor();
 
     // When
     int hashCode = descriptor.hashCode();
+    int sameHashCode = sameDescriptor.hashCode();
 
     // Then
-    Assert.assertEquals(-50826581, hashCode);
+    Assert.assertEquals(sameHashCode, hashCode);
+  }
+
+  private UsbPortDescriptor createStandardDescriptor() {
+    return new UsbPortDescriptor.Builder()
+        .bcdDevice((short) 1)
+        .bcdUSB((short) 2)
+        .bDescriptorType((byte) 3)
+        .bDeviceClass((byte) 4)
+        .bDeviceProtocol((byte) 5)
+        .bDeviceSubClass((byte) 6)
+        .bLength((byte) 7)
+        .bMaxPacketSize0((byte) 8)
+        .bNumConfigurations((byte) 9)
+        .idProduct((short) 10)
+        .idVendor((short) 11)
+        .iManufacturer((byte) 12)
+        .iProduct((byte) 13)
+        .iSerialNumber((byte) 14)
+        .manufacturer("test_manufacturer")
+        .product("test_product")
+        .serialNumber("SN123")
+        .build();
   }
 }

@@ -1,3 +1,10 @@
+// Copyright (C) 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
+//
+// SPDX-FileContributor: Jehan BOUSCH
+// SPDX-FileContributor: Mathieu SABARTHES
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package tic.diagnostic.usb;
 
 import java.util.List;
@@ -13,7 +20,11 @@ public class UsbPortFinderApp {
    * @param args not used
    */
   public static void main(String[] args) {
-    List<UsbPortDescriptor> descriptors = UsbPortFinderBase.getInstance().findAll();
-    System.out.println(UsbPortJsonEncoder.encode(descriptors));
+    try {
+      List<UsbPortDescriptor> descriptors = UsbPortFinderBase.getInstance().findAll();
+      System.out.println(UsbPortJsonEncoder.encode(descriptors));
+    } catch (Exception exception) {
+      System.err.println(exception.getMessage());
+    }
   }
 }

@@ -27,7 +27,7 @@ public enum ModemType {
    *
    * @return product id
    */
-  public short getProductId() {
+  public short productId() {
     return this.productId;
   }
 
@@ -36,7 +36,7 @@ public enum ModemType {
    *
    * @return vendor id
    */
-  public short getVendorId() {
+  public short vendorId() {
     return this.vendorId;
   }
 }

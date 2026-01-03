@@ -23,14 +23,15 @@ public class ModemJsonEncoderTest {
   public void test_encode_AllFields() throws JSONException, IOException, URISyntaxException {
     // Given
     ModemDescriptor descriptor =
-        new ModemDescriptor(
-            "ABCD1",
-            "COM7",
-            "USB Serial Port",
-            "test_product",
-            "test_manufacturer",
-            "SN123",
-            ModemType.MICHAUD);
+        new ModemDescriptor.Builder<>()
+            .portId("ABCD1")
+            .portName("COM7")
+            .description("USB Serial Port")
+            .productName("test_product")
+            .manufacturer("test_manufacturer")
+            .serialNumber("SN123")
+            .modemType(ModemType.MICHAUD)
+            .build();
 
     // When
     String actualJsonText = ModemJsonEncoder.encode(Arrays.asList(descriptor), -1);
@@ -44,14 +45,15 @@ public class ModemJsonEncoderTest {
   public void test_encode_Descriptor() throws JSONException, IOException, URISyntaxException {
     // Given
     ModemDescriptor descriptor =
-        new ModemDescriptor(
-            "ABCD1",
-            "COM7",
-            "USB Serial Port",
-            "test_product",
-            "test_manufacturer",
-            "SN123",
-            ModemType.MICHAUD);
+        new ModemDescriptor.Builder<>()
+            .portId("ABCD1")
+            .portName("COM7")
+            .description("USB Serial Port")
+            .productName("test_product")
+            .manufacturer("test_manufacturer")
+            .serialNumber("SN123")
+            .modemType(ModemType.MICHAUD)
+            .build();
 
     // When
     String actualJsonText = ModemJsonEncoder.encode(descriptor);
@@ -65,9 +67,12 @@ public class ModemJsonEncoderTest {
   public void encodeShouldHandleNullModemType()
       throws JSONException, IOException, URISyntaxException {
     // Given
-    ModemDescriptor descriptor = new ModemDescriptor(null, "COM8", null, null, null, null, null);
-    descriptor.setProductId(1234);
-    descriptor.setVendorId(5678);
+    ModemDescriptor descriptor =
+        new ModemDescriptor.Builder<>()
+            .portName("COM8")
+            .productId((short) 1234)
+            .vendorId((short) 5678)
+            .build();
 
     // When
     String actualJsonText = ModemJsonEncoder.encode(Collections.singletonList(descriptor), 1);

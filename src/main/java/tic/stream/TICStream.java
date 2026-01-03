@@ -241,9 +241,9 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
       throw new IllegalStateException("Unsupported identifier type " + identifier.getType());
     }
 
-    if (descriptor.getPortName() == null || descriptor.getPortName().isEmpty()) {
+    if (descriptor.portName() == null || descriptor.portName().isEmpty()) {
       throw new IllegalStateException("Resolved descriptor lacks a port name");
     }
-    return descriptor.getPortName();
+    return descriptor.portName();
   }
 }

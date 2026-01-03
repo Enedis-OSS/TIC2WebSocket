@@ -158,19 +158,20 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
         String manufacturer = deviceManufacturer(deviceInfoSet, deviceInfoData);
         String instanceIdentifier = deviceInstanceIdentifier(deviceInfoData.DevInst);
         String serialNumber = deviceSerialNumber(instanceIdentifier, deviceInfoData.DevInst);
-        Number vendorIdentifier = deviceVendorIdentifier(instanceIdentifier);
-        Number productIdentifier = deviceProductIdentifier(instanceIdentifier);
+        Short vendorIdentifier = deviceVendorIdentifier(instanceIdentifier);
+        Short productIdentifier = deviceProductIdentifier(instanceIdentifier);
         try {
           serialPortDescriptor =
-              new SerialPortDescriptor(
-                  address,
-                  portName,
-                  description,
-                  productIdentifier,
-                  vendorIdentifier,
-                  null,
-                  manufacturer,
-                  serialNumber);
+              new SerialPortDescriptor.Builder<>()
+                  .portId(address)
+                  .portName(portName)
+                  .description(description)
+                  .productId(productIdentifier)
+                  .vendorId(vendorIdentifier)
+                  .productName(null)
+                  .manufacturer(manufacturer)
+                  .serialNumber(serialNumber)
+                  .build();
         } catch (IllegalArgumentException e) {
           e.printStackTrace(System.err);
           continue;
@@ -185,7 +186,16 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
       if (!anyOfPorts(serialPortDescriptorList, portName)) {
         try {
           SerialPortDescriptor serialPortDescriptor =
-              new SerialPortDescriptor(null, portName, null, null, null, null, null, null);
+              new SerialPortDescriptor.Builder<>()
+                  .portId(null)
+                  .portName(portName)
+                  .description(null)
+                  .productId(null)
+                  .vendorId(null)
+                  .productName(null)
+                  .manufacturer(null)
+                  .serialNumber(null)
+                  .build();
           serialPortDescriptorList.add(serialPortDescriptor);
         } catch (IllegalArgumentException e) {
           e.printStackTrace(System.err);
@@ -208,14 +218,14 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
       return false;
     }
     for (SerialPortDescriptor descriptor : descriptors) {
-      if (descriptor.getPortName() == null) {
+      if (descriptor.portName() == null) {
         if (portName != null) {
           continue;
         } else {
           return true;
         }
       }
-      if (descriptor.getPortName().equals(portName)) {
+      if (descriptor.portName().equals(portName)) {
         return true;
       }
     }
@@ -261,10 +271,10 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
     return (address != null) ? address.toString() : null;
   }
 
-  private static Number deviceVendorIdentifier(String instanceIdentifier) {
+  private static Short deviceVendorIdentifier(String instanceIdentifier) {
     final int vendorIdentifierSize = 4;
 
-    Number result = parseDeviceIdentifier(instanceIdentifier, "VID_", vendorIdentifierSize);
+    Short result = parseDeviceIdentifier(instanceIdentifier, "VID_", vendorIdentifierSize);
     if (result == null) {
       result = parseDeviceIdentifier(instanceIdentifier, "VEN_", vendorIdentifierSize);
     }
@@ -272,10 +282,10 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
     return result;
   }
 
-  private static Number deviceProductIdentifier(String instanceIdentifier) {
+  private static Short deviceProductIdentifier(String instanceIdentifier) {
     final int productIdentifierSize = 4;
 
-    Number result = parseDeviceIdentifier(instanceIdentifier, "PID_", productIdentifierSize);
+    Short result = parseDeviceIdentifier(instanceIdentifier, "PID_", productIdentifierSize);
     if (result == null) {
       result = parseDeviceIdentifier(instanceIdentifier, "DEV_", productIdentifierSize);
     }
@@ -361,7 +371,7 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
     return instanceIdentifier.substring(firstbound + 1, lastbound);
   }
 
-  private static Number parseDeviceIdentifier(
+  private static Short parseDeviceIdentifier(
       String instanceIdentifier, String identifierPrefix, int identifierSize) {
     int index = instanceIdentifier.indexOf(identifierPrefix);
 
@@ -371,9 +381,9 @@ public class SerialPortFinderForWindows implements SerialPortFinder {
     String indentifierText =
         instanceIdentifier.substring(
             index + identifierPrefix.length(), index + identifierPrefix.length() + identifierSize);
-    Number identifierValue;
+    Short identifierValue;
     try {
-      identifierValue = Integer.parseInt(indentifierText, 16);
+      identifierValue = Short.parseShort(indentifierText, 16);
     } catch (Exception e) {
       identifierValue = null;
     }

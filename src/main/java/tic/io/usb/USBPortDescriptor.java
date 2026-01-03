@@ -36,7 +36,7 @@ public class UsbPortDescriptor {
   private String product;
   private String serialNumber;
 
-  /** Builder class for constructing USBPortDescriptor instances. */
+  /** Builder class for constructing UsbPortDescriptor instances. */
   public static class Builder {
     private short bcdDevice;
     private short bcdUSB;
@@ -250,11 +250,9 @@ public class UsbPortDescriptor {
      * @throws IllegalArgumentException if any required field is invalid
      */
     public UsbPortDescriptor build() {
-      String manufacturer =
-          ValueChecker.validateString(this.manufacturer, "manufacturer", true, false);
-      String product = ValueChecker.validateString(this.product, "product", true, false);
-      String serialNumber =
-          ValueChecker.validateString(this.serialNumber, "serialNumber", true, false);
+      ValueChecker.validateString(this.manufacturer, "manufacturer", true, false);
+      ValueChecker.validateString(this.product, "product", true, false);
+      ValueChecker.validateString(this.serialNumber, "serialNumber", true, false);
 
       return new UsbPortDescriptor(
           this.bcdDevice,
@@ -271,9 +269,9 @@ public class UsbPortDescriptor {
           this.iManufacturer,
           this.iProduct,
           this.iSerialNumber,
-          manufacturer,
-          product,
-          serialNumber);
+          this.manufacturer,
+          this.product,
+          this.serialNumber);
     }
   }
 

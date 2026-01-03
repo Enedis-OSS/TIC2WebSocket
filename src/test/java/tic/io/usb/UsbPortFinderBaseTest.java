@@ -11,8 +11,8 @@ public class UsbPortFinderBaseTest {
     // Given
 
     // When
-    UsbPortFinderBase instance1 = UsbPortFinderBase.getInstance();
-    UsbPortFinderBase instance2 = UsbPortFinderBase.getInstance();
+    UsbPortFinder instance1 = UsbPortFinderBase.getInstance();
+    UsbPortFinder instance2 = UsbPortFinderBase.getInstance();
 
     // Then
     Assert.assertNotNull(instance1);
@@ -41,6 +41,7 @@ public class UsbPortFinderBaseTest {
 
     // Then
     Assert.assertNotNull(descriptors);
+    Assert.assertEquals(0, descriptors.size());
   }
 
   @Test
@@ -52,10 +53,11 @@ public class UsbPortFinderBaseTest {
 
     // Then
     Assert.assertNotNull(descriptors);
+    Assert.assertEquals(0, descriptors.size());
   }
 
   @Test
-  public void test_indByProductIdAndVendorId() {
+  public void test_findByProductIdAndVendorId() {
     // Given
     short idProduct = 0;
     short idVendor = 0;
@@ -65,5 +67,6 @@ public class UsbPortFinderBaseTest {
 
     // Then
     Assert.assertNotNull(descriptors);
+    Assert.assertEquals(0, descriptors.size());
   }
 }

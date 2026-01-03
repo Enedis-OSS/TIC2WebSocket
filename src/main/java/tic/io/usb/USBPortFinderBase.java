@@ -24,7 +24,7 @@ public class UsbPortFinderBase implements UsbPortFinder {
    *
    * @return Unique instance
    */
-  public static UsbPortFinderBase getInstance() {
+  public static UsbPortFinder getInstance() {
     if (instance == null) {
       instance = new UsbPortFinderBase();
     }
@@ -32,7 +32,7 @@ public class UsbPortFinderBase implements UsbPortFinder {
     return instance;
   }
 
-  private static UsbPortFinderBase instance;
+  private static UsbPortFinder instance;
 
   private UsbPortFinderBase() {}
 

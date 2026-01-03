@@ -31,7 +31,7 @@ import java.util.Collection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import tic.io.modem.ModemDescriptor;
-import tic.io.modem.ModemFinderBase;
+import tic.io.modem.ModemFinder;
 import tic.util.task.Notifier;
 import tic.util.task.NotifierBase;
 
@@ -59,12 +59,12 @@ public class TICCoreStreamBase implements TICCoreStream, DataStreamListener {
   private Notifier<TICCoreSubscriber> notifier;
   private static Logger logger = LogManager.getLogger();
 
-  public TICCoreStreamBase(String portId, String portName, TICMode ticMode)
+  public TICCoreStreamBase(String portId, String portName, TICMode ticMode, ModemFinder modemFinder)
       throws TICCoreException {
     ModemDescriptor descriptor = null;
 
     if (portId != null) {
-      descriptor = ModemFinderBase.getInstance().findByPortId(portId);
+      descriptor = modemFinder.findByPortId(portId);
       if (descriptor == null) {
         TICCoreException exception =
             new TICCoreException(
@@ -74,9 +74,9 @@ public class TICCoreStreamBase implements TICCoreStream, DataStreamListener {
         throw exception;
       }
     } else if (portName != null) {
-      descriptor = ModemFinderBase.getInstance().findByPortName(portName);
+      descriptor = modemFinder.findByPortName(portName);
       if (descriptor == null) {
-        descriptor = ModemFinderBase.getInstance().findNative(portName);
+        descriptor = modemFinder.findNative(portName);
         if (descriptor == null) {
           TICCoreException exception =
               new TICCoreException(
@@ -107,13 +107,13 @@ public class TICCoreStreamBase implements TICCoreStream, DataStreamListener {
       this.channel =
           new ChannelTICSerialPort(
               new ChannelTICSerialPortConfiguration(
-                  "Channel@" + descriptor.getPortName(), portName, ticMode));
+                  "Channel@" + descriptor.portName(), portName, ticMode));
       this.stream =
           new TICInputStream(
               new TICStreamConfiguration(
-                  "Stream@" + descriptor.getPortName(),
+                  "Stream@" + descriptor.portName(),
                   DataStreamDirection.INPUT,
-                  "Channel@" + descriptor.getPortName(),
+                  "Channel@" + descriptor.portName(),
                   ticMode));
       this.stream.setChannel(this.channel);
       this.notifier = new NotifierBase<TICCoreSubscriber>();

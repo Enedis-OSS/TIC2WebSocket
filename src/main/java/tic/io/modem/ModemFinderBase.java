@@ -11,46 +11,34 @@ import java.util.ArrayList;
 import java.util.List;
 import tic.io.serialport.SerialPortDescriptor;
 import tic.io.serialport.SerialPortFinder;
-import tic.io.serialport.SerialPortFinderBase;
 import tic.io.usb.UsbPortDescriptor;
 import tic.io.usb.UsbPortFinder;
-import tic.io.usb.UsbPortFinderBase;
 
 /** Class used to find all modem descriptors */
 public class ModemFinderBase implements ModemFinder {
-  private static final int DEFAULT_JSON_INDENT = 2;
 
   /**
-   * Program writing the modem descriptor list (JSON format) on the output stream
+   * Create ModemFinder instance
    *
-   * @param args not used
+   * @param serialPortFinder the SerialPortFinder instance
+   * @param usbPortFinder the UsbPortFinder instance
+   * @return ModemFinder instance created
+   * @throws IllegalArgumentException if any input instance is null
    */
-  public static void main(String[] args) {
-    List<ModemDescriptor> descriptors = getInstance().findAll();
-    System.out.println(ModemJsonEncoder.encode(descriptors, DEFAULT_JSON_INDENT));
-  }
+  public static ModemFinder create(SerialPortFinder serialPortFinder, UsbPortFinder usbPortFinder) {
 
-  /**
-   * Get instance
-   *
-   * @return Unique instance
-   */
-  public static ModemFinderBase getInstance() {
-    if (instance == null) {
-      instance = new ModemFinderBase();
+    if (serialPortFinder == null) {
+      throw new IllegalArgumentException("Cannot set null serial port finder");
+    }
+    if (usbPortFinder == null) {
+      throw new IllegalArgumentException("Cannot set null USB port finder");
     }
 
-    return instance;
+    return new ModemFinderBase(serialPortFinder, usbPortFinder);
   }
-
-  private static ModemFinderBase instance;
 
   private final SerialPortFinder serialPortFinder;
   private final UsbPortFinder usbPortFinder;
-
-  private ModemFinderBase() {
-    this(SerialPortFinderBase.getInstance(), UsbPortFinderBase.getInstance());
-  }
 
   /**
    * Constructor with finder parameters
@@ -58,13 +46,7 @@ public class ModemFinderBase implements ModemFinder {
    * @param serialPortFinder the serial port finder interface
    * @param usbPortFinder the USB port finder interface
    */
-  public ModemFinderBase(SerialPortFinder serialPortFinder, UsbPortFinder usbPortFinder) {
-    if (serialPortFinder == null) {
-      throw new IllegalArgumentException("Cannot set null serial port finder");
-    }
-    if (usbPortFinder == null) {
-      throw new IllegalArgumentException("Cannot set null USB port finder");
-    }
+  private ModemFinderBase(SerialPortFinder serialPortFinder, UsbPortFinder usbPortFinder) {
     this.serialPortFinder = serialPortFinder;
     this.usbPortFinder = usbPortFinder;
   }
@@ -76,16 +58,17 @@ public class ModemFinderBase implements ModemFinder {
     for (ModemType modemType : ModemType.values()) {
       List<SerialPortDescriptor> tmpSerialPort =
           this.serialPortFinder.findByProductIdAndVendorId(
-              modemType.getProductId(), modemType.getVendorId());
+              modemType.productId(), modemType.vendorId());
 
       if (tmpSerialPort.isEmpty()) {
         List<UsbPortDescriptor> tmpUSBPort =
             this.usbPortFinder.findByProductIdAndVendorId(
-                modemType.getProductId(), modemType.getVendorId());
+                modemType.productId(), modemType.vendorId());
 
         for (UsbPortDescriptor upd : tmpUSBPort) {
           try {
-            ModemDescriptor descriptor = new ModemDescriptor(upd, modemType);
+            ModemDescriptor descriptor =
+                new ModemDescriptor.Builder<>().copy(upd).modemType(modemType).build();
             descriptors.add(descriptor);
           } catch (IllegalArgumentException e) {
             // Ignore descriptors that fail validation
@@ -94,7 +77,8 @@ public class ModemFinderBase implements ModemFinder {
       } else {
         for (SerialPortDescriptor spd : tmpSerialPort) {
           try {
-            ModemDescriptor descriptor = new ModemDescriptor(spd, modemType);
+            ModemDescriptor descriptor =
+                new ModemDescriptor.Builder<>().copy(spd).modemType(modemType).build();
             descriptors.add(descriptor);
           } catch (IllegalArgumentException e) {
             // Ignore descriptors that fail validation
@@ -113,7 +97,7 @@ public class ModemFinderBase implements ModemFinder {
 
     if (serialPortDescriptor != null) {
       try {
-        modemDescriptor = new ModemDescriptor(serialPortDescriptor, null);
+        modemDescriptor = new ModemDescriptor.Builder<>().copy(serialPortDescriptor).build();
       } catch (IllegalArgumentException e) {
         // Ignore descriptors that fail validation
       }
