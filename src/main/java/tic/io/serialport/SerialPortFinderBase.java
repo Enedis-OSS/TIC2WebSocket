@@ -55,6 +55,8 @@ public class SerialPortFinderBase implements SerialPortFinder {
       return SerialPortFinderForWindows.getInstance();
     } else if (SystemUtils.IS_OS_LINUX) {
       return SerialPortFinderForLinux.getInstance();
+    } else if (SystemUtils.IS_OS_MAC_OSX) {
+      return SerialPortFinderForMacOsX.getInstance();
     } else {
       throw new RuntimeException(
           "Operating system "
