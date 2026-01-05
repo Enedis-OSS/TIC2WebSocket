@@ -68,7 +68,10 @@ public class ModemFinderBase implements ModemFinder {
         for (UsbPortDescriptor upd : tmpUSBPort) {
           try {
             ModemDescriptor descriptor =
-                new ModemDescriptor.Builder<>().copy(upd).modemType(modemType).build();
+                new ModemDescriptor.Builder<>()
+                .copy(upd)
+                .modemType(modemType)
+                .build();
             descriptors.add(descriptor);
           } catch (IllegalArgumentException e) {
             // Ignore descriptors that fail validation
@@ -78,7 +81,10 @@ public class ModemFinderBase implements ModemFinder {
         for (SerialPortDescriptor spd : tmpSerialPort) {
           try {
             ModemDescriptor descriptor =
-                new ModemDescriptor.Builder<>().copy(spd).modemType(modemType).build();
+                new ModemDescriptor.Builder<>()
+                .copy(spd)
+                .modemType(modemType)
+                .build();
             descriptors.add(descriptor);
           } catch (IllegalArgumentException e) {
             // Ignore descriptors that fail validation
