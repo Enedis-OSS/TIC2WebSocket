@@ -18,7 +18,7 @@ public class SerialPortFinderApp {
    * Main method that outputs all serial port descriptors in JSON format.
    *
    * <p>This utility method can be used to quickly inspect available serial ports on the system. The
-   * output is formatted JSON with an indentation of 2 spaces.
+   * output is JSON-formatted with an indentation of 2 spaces.
    *
    * @param args command-line arguments (not used)
    */

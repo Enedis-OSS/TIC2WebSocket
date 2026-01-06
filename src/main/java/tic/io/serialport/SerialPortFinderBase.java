@@ -45,6 +45,7 @@ public class SerialPortFinderBase implements SerialPortFinder {
    * <ul>
    *   <li>Windows - returns Windows-specific finder
    *   <li>Linux - returns Linux-specific finder
+   *   <li>Mac OS X - returns Mac OS X-specific finder
    * </ul>
    *
    * @return the singleton SerialPortFinder instance for the current OS

@@ -74,7 +74,7 @@ public class SerialPortFinderForMacOsX implements SerialPortFinder {
     if (serialPortDictionary == null) {
       return serialPortDescriptorList;
     }
-    // Ajouter le filtre de type
+
     CFStringRef key = CFStringRef.createCFString(kIOSerialBSDTypeKey);
     CFStringRef value = CFStringRef.createCFString(kIOSerialBSDAllTypes);
 

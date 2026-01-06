@@ -17,7 +17,9 @@ import tic.stream.identifier.TICStreamIdentifier;
  */
 public class TICStreamConfiguration {
 
+  public static final TICMode DEFAULT_TIC_MODE = TICMode.AUTO;
   public static final int DEFAULT_TIMEOUT = 10;
+
   private TICMode ticMode;
   private TICStreamIdentifier identifier;
   private int timeout;

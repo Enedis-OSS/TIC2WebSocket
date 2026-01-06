@@ -21,7 +21,6 @@ import tic.stream.identifier.TICStreamIdentifier;
 import tic.stream.identifier.TICStreamIdentifierType;
 
 public final class TICStreamConfigurationLoader {
-  private static final int DEFAULT_TIMEOUT_SECONDS = 10;
 
   private TICStreamConfigurationLoader() {}
 
@@ -53,12 +52,12 @@ public final class TICStreamConfigurationLoader {
   }
 
   private static TICMode parseTicMode(JSONObject root) {
-    String modeValue = root.optString("ticMode", TICMode.AUTO.name());
+    String modeValue = root.optString("ticMode", TICStreamConfiguration.DEFAULT_TIC_MODE.name());
     return TICMode.valueOf(modeValue.toUpperCase());
   }
 
   private static int parseTimeout(JSONObject root) {
-    int timeout = root.optInt("timeout", DEFAULT_TIMEOUT_SECONDS);
+    int timeout = root.optInt("timeout", TICStreamConfiguration.DEFAULT_TIMEOUT);
     if (timeout <= 0) {
       throw new IllegalArgumentException("Timeout must be a positive integer");
     }

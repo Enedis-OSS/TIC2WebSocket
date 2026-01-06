@@ -47,7 +47,7 @@ public class SerialPortDescriptor {
   private String manufacturer;
   private String serialNumber;
 
-  /** Builder class for constructing UsbPortDescriptor instances. */
+  /** Builder class for constructing SerialPortDescriptor instances. */
   public static class Builder<T extends Builder<T>> {
     protected String portId;
     protected String portName;

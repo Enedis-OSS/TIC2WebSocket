@@ -48,7 +48,7 @@ public class TICStreamConfigurationLoaderTest {
 
     // Then
     Assert.assertEquals(TICMode.AUTO, configuration.getTicMode());
-    Assert.assertEquals(TICStreamConfiguration.DEFAULT_TIMEOUT, configuration.getTimeout());
+    Assert.assertEquals(10, configuration.getTimeout());
     Assert.assertEquals("12345", configuration.getIdentifier().getPortId());
   }
 
