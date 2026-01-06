@@ -24,7 +24,7 @@ public class SerialPortJsonEncoderTest {
       throws JSONException, IOException, URISyntaxException {
     // Given
     SerialPortDescriptor descriptor =
-        new SerialPortDescriptor.Builder()
+        new SerialPortDescriptor.Builder<>()
             .portId("ABCD1")
             .portName("COM7")
             .description("USB Serial Port")
@@ -48,7 +48,7 @@ public class SerialPortJsonEncoderTest {
       throws JSONException, IOException, URISyntaxException {
     // Given
     SerialPortDescriptor descriptor =
-        new SerialPortDescriptor.Builder()
+        new SerialPortDescriptor.Builder<>()
             .portId("ABCD1")
             .portName(null)
             .description(null)
