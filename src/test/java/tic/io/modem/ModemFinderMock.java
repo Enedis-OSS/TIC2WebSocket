@@ -30,10 +30,10 @@ public class ModemFinderMock extends PortFinderMock<ModemDescriptor> implements 
   @Override
   public ModemDescriptor findNative(String portName) {
     for (ModemDescriptor descriptor : this.nativeDescriptorList) {
-      if (descriptor.getPortName() == null && portName == null) {
+      if (descriptor.portName() == null && portName == null) {
         return descriptor;
       }
-      if (descriptor.getPortName() != null && descriptor.getPortName().equals(portName)) {
+      if (descriptor.portName() != null && descriptor.portName().equals(portName)) {
         return descriptor;
       }
     }

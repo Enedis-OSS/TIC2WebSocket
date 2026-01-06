@@ -45,16 +45,15 @@ public enum TICStartPattern {
    */
   public static byte[] getValueFromMode(TICMode mode) {
     if (mode == null) {
-      return null;
+      throw new IllegalArgumentException("cannot get start pattern value from null mode");
     }
-    switch (mode) {
-      case HISTORIC:
-        return HISTORIC.getValue();
-      case STANDARD:
-        return STANDARD.getValue();
-      default:
-        return null;
+    if (mode == TICMode.HISTORIC) {
+      return HISTORIC.getValue();
+    } else if (mode == TICMode.STANDARD) {
+      return STANDARD.getValue();
     }
+    throw new IllegalArgumentException(
+        "cannot get start pattern value from " + mode.name() + " mode");
   }
 
   /**

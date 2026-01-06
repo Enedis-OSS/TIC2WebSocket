@@ -20,7 +20,7 @@ public interface ModemFinder extends PortFinder<ModemDescriptor> {
    */
   public default ModemDescriptor findByPortId(String portId) {
     return this.findAll().stream()
-        .filter(p -> (p.getPortId() != null) ? p.getPortId().equals(portId) : portId == null)
+        .filter(p -> (p.portId() != null) ? p.portId().equals(portId) : portId == null)
         .findFirst()
         .orElse(null);
   }
@@ -34,7 +34,7 @@ public interface ModemFinder extends PortFinder<ModemDescriptor> {
   public default ModemDescriptor findByPortName(String portName) {
     return this.findAll().stream()
         .filter(
-            p -> (p.getPortName() != null) ? p.getPortName().equals(portName) : portName == null)
+            p -> (p.portName() != null) ? p.portName().equals(portName) : portName == null)
         .findFirst()
         .orElse(null);
   }

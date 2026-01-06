@@ -32,21 +32,6 @@ import org.apache.commons.lang3.SystemUtils;
  * @see SerialPortDescriptor
  */
 public class SerialPortFinderBase implements SerialPortFinder {
-  private static SerialPortFinder instance;
-
-  /**
-   * Main method that outputs all serial port descriptors in JSON format.
-   *
-   * <p>This utility method can be used to quickly inspect available serial ports on the system. The
-   * output is formatted JSON with an indentation of 2 spaces.
-   *
-   * @param args command-line arguments (not used)
-   */
-  public static void main(String[] args) {
-    List<SerialPortDescriptor> descriptors = getInstance().findAll();
-
-    System.out.println(SerialPortJsonEncoder.encode(descriptors));
-  }
 
   /**
    * Returns the singleton instance of the serial port finder.
@@ -60,27 +45,26 @@ public class SerialPortFinderBase implements SerialPortFinder {
    * <ul>
    *   <li>Windows - returns Windows-specific finder
    *   <li>Linux - returns Linux-specific finder
+   *   <li>Mac OS X - returns Mac OS X-specific finder
    * </ul>
    *
    * @return the singleton SerialPortFinder instance for the current OS
    * @throws RuntimeException if the current operating system is not supported
    */
   public static SerialPortFinder getInstance() {
-    if (instance == null) {
-      if (SystemUtils.IS_OS_WINDOWS) {
-        instance = SerialPortFinderForWindows.getInstance();
-      } else if (SystemUtils.IS_OS_LINUX) {
-        instance = SerialPortFinderForLinux.getInstance();
-      } else {
-        throw new RuntimeException(
-            "Operating system "
-                + SystemUtils.OS_NAME
-                + " is not handled by "
-                + SerialPortFinderBase.class.getName());
-      }
+    if (SystemUtils.IS_OS_WINDOWS) {
+      return SerialPortFinderForWindows.getInstance();
+    } else if (SystemUtils.IS_OS_LINUX) {
+      return SerialPortFinderForLinux.getInstance();
+    } else if (SystemUtils.IS_OS_MAC_OSX) {
+      return SerialPortFinderForMacOsX.getInstance();
+    } else {
+      throw new RuntimeException(
+          "Operating system "
+              + SystemUtils.OS_NAME
+              + " is not handled by "
+              + SerialPortFinderBase.class.getName());
     }
-
-    return instance;
   }
 
   /**
@@ -100,6 +84,6 @@ public class SerialPortFinderBase implements SerialPortFinder {
    */
   @Override
   public List<SerialPortDescriptor> findAll() {
-    return instance.findAll();
+    return getInstance().findAll();
   }
 }

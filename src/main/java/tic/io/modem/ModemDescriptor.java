@@ -9,90 +9,90 @@ package tic.io.modem;
 
 import java.util.Objects;
 import tic.io.serialport.SerialPortDescriptor;
-import tic.io.usb.USBPortDescriptor;
+import tic.io.usb.UsbPortDescriptor;
 
 /** Descriptor of a modem. */
 public class ModemDescriptor extends SerialPortDescriptor {
   private ModemType modemType;
 
-  protected ModemDescriptor() {
-    super();
-  }
+  public static class Builder<T extends Builder<T>> extends SerialPortDescriptor.Builder<T> {
+    private ModemType modemType;
 
-  /**
-   * Constructor setting parameters to specific values
-   *
-   * @param portId
-   * @param portName
-   * @param description
-   * @param productName
-   * @param manufacturer
-   * @param serialNumber
-   * @param modemType
-   */
-  public ModemDescriptor(
-      String portId,
-      String portName,
-      String description,
-      String productName,
-      String manufacturer,
-      String serialNumber,
-      ModemType modemType) {
-    this();
-
-    this.setPortId(portId);
-    this.setPortName(portName);
-    this.setDescription(description);
-    this.setProductName(productName);
-    this.setManufacturer(manufacturer);
-    this.setSerialNumber(serialNumber);
-    this.setModemType(modemType);
-  }
-
-  /**
-   * Constructor setting parameters to specific values for legacy descriptors
-   *
-   * @param serialPortDescriptor legacy descriptor from the historical API
-   * @param modemType modem type
-   */
-  public ModemDescriptor(SerialPortDescriptor serialPortDescriptor, ModemType modemType) {
-    this();
-    if (serialPortDescriptor == null) {
-      throw new IllegalArgumentException("Serial port descriptor cannot be null");
+    public T modemType(ModemType modemType) {
+      this.modemType = modemType;
+      if (modemType == null) {
+        this.productId = null;
+        this.vendorId = null;
+      } else {
+        this.productId = modemType.productId();
+        this.vendorId = modemType.vendorId();
+      }
+      return self();
     }
 
-    this.checkProductId(serialPortDescriptor.getProductId(), modemType);
-    this.checkVendorId(serialPortDescriptor.getVendorId(), modemType);
+    public T copy(SerialPortDescriptor serialPortDescriptor) {
+      this.portId = serialPortDescriptor.portId();
+      this.portName = serialPortDescriptor.portName();
+      this.description = serialPortDescriptor.description();
+      this.productId = serialPortDescriptor.productId();
+      this.vendorId = serialPortDescriptor.vendorId();
+      this.productName = serialPortDescriptor.productName();
+      this.manufacturer = serialPortDescriptor.manufacturer();
+      this.serialNumber = serialPortDescriptor.serialNumber();
+      return self();
+    }
 
-    this.setPortId(serialPortDescriptor.getPortId());
-    this.setPortName(serialPortDescriptor.getPortName());
-    this.setDescription(serialPortDescriptor.getDescription());
-    this.setProductName(serialPortDescriptor.getProductName());
-    this.setManufacturer(serialPortDescriptor.getManufacturer());
-    this.setSerialNumber(serialPortDescriptor.getSerialNumber());
-    this.setModemType(modemType);
+    public T copy(UsbPortDescriptor usbPortDescriptor) {
+      this.productId = usbPortDescriptor.idProduct();
+      this.vendorId = usbPortDescriptor.idVendor();
+      this.productName = usbPortDescriptor.product();
+      this.manufacturer = usbPortDescriptor.manufacturer();
+      this.serialNumber = usbPortDescriptor.serialNumber();
+      return self();
+    }
+
+    /**
+     * Validates the builder's fields.
+     *
+     * @throws IllegalArgumentException if any required field is invalid
+     */
+    protected void validate() {
+      super.validate();
+      if (this.modemType != null) {
+        if (this.productId == null) {
+          throw new IllegalArgumentException(
+              "Modem type is specified while productId is not provided");
+        }
+        if (this.productId != this.modemType.productId()) {
+          throw new IllegalArgumentException("Modem type is inconsistent with the productId");
+        }
+        if (this.vendorId == null) {
+          throw new IllegalArgumentException(
+              "Modem type is specified while vendorId is not provided");
+        }
+        if (this.vendorId != this.modemType.vendorId()) {
+          throw new IllegalArgumentException("Modem type is inconsistent with the vendorId");
+        }
+      }
+    }
+
+    public ModemDescriptor build() {
+      this.validate();
+      return new ModemDescriptor(this);
+    }
   }
 
   /**
-   * Constructor setting parameters to specific values
+   * Constructs a ModemDescriptor with all parameters explicitly set.
    *
-   * @param usbPortDescriptor
-   * @param modemType
+   * <p>This constructor creates a descriptor with all serial port and USB device properties
+   * specified according to the modem type.
+   *
+   * @param builder the builder instance containing all the parameters
    */
-  public ModemDescriptor(USBPortDescriptor usbPortDescriptor, ModemType modemType) {
-    this();
-
-    if (usbPortDescriptor == null) {
-      throw new IllegalArgumentException("USB port descriptor cannot be null");
-    }
-
-    this.checkProductId(usbPortDescriptor.getIdProduct(), modemType);
-    this.checkVendorId(usbPortDescriptor.getIdVendor(), modemType);
-
-    this.setProductName(usbPortDescriptor.getProduct());
-    this.setManufacturer(usbPortDescriptor.getManufacturer());
-    this.setSerialNumber(usbPortDescriptor.getSerialNumber());
-    this.setModemType(modemType);
+  public ModemDescriptor(Builder<?> builder) {
+    super(builder);
+    this.modemType = builder.modemType;
   }
 
   @Override
@@ -103,11 +103,11 @@ public class ModemDescriptor extends SerialPortDescriptor {
     if (!(obj instanceof ModemDescriptor)) {
       return false;
     }
-    if (!super.equals(obj)) {
+    ModemDescriptor other = (ModemDescriptor) obj;
+    if (this.modemType != other.modemType) {
       return false;
     }
-    ModemDescriptor other = (ModemDescriptor) obj;
-    return this.modemType == other.modemType;
+    return super.equals(obj);
   }
 
   @Override
@@ -120,37 +120,7 @@ public class ModemDescriptor extends SerialPortDescriptor {
    *
    * @return the modem type
    */
-  public ModemType getModemType() {
+  public ModemType modemType() {
     return this.modemType;
-  }
-
-  /**
-   * Set modem type
-   *
-   * @param modemType
-   */
-  public void setModemType(ModemType modemType) {
-    this.modemType = modemType;
-    if (modemType != null) {
-      this.setProductId(modemType.getProductId());
-      this.setVendorId(modemType.getVendorId());
-    } else {
-      this.setProductId(null);
-      this.setVendorId(null);
-    }
-  }
-
-  private void checkProductId(Number productId, ModemType modemType) {
-    if (modemType != null
-        && productId != null
-        && productId.intValue() != modemType.getProductId()) {
-      throw new IllegalArgumentException("Modem productId is inconsistent with the given one");
-    }
-  }
-
-  private void checkVendorId(Number vendorId, ModemType modemType) {
-    if (modemType != null && vendorId != null && vendorId.intValue() != modemType.getVendorId()) {
-      throw new IllegalArgumentException("Modem vendorId is inconsistent with the given one");
-    }
   }
 }

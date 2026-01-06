@@ -1,0 +1,12 @@
+[
+    {
+        "serialNumber": "SN123",
+        "productId": 1,
+        "description": "USB Serial Port",
+        "vendorId": 2,
+        "portName": "COM7",
+        "portId": "ABCD1",
+        "productName": "test_product",
+        "manufacturer": "test_manufacturer"
+    }
+]

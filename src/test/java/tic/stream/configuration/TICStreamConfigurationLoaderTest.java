@@ -8,33 +8,27 @@
 package tic.stream.configuration;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 import org.junit.Assert;
 import org.junit.Test;
+import tic.ResourceLoader;
 import tic.frame.TICMode;
 import tic.stream.identifier.TICStreamIdentifierType;
 
 public class TICStreamConfigurationLoaderTest {
 
   @Test
-  public void test_load_withValidPortNameConfig_returnsConfiguration() throws IOException {
+  public void test_load_withValidPortNameConfig_returnsConfiguration()
+      throws IOException, URISyntaxException {
     // Given
-    Path configPath =
-        createTempConfig(
-            "{"
-                + "\"ticMode\":\"HISTORIC\","
-                + "\"timeout\":25,"
-                + "\"identifier\":{"
-                + "\"type\":\"PORT_NAME\","
-                + "\"value\":\"COM7\"}"
-                + "}");
+    String configPath =
+        ResourceLoader.getFilePath("/tic/stream/configuration/withValidPortNameConfig.json");
 
     // When
-    TICStreamConfiguration configuration = TICStreamConfigurationLoader.load(configPath.toString());
+    TICStreamConfiguration configuration = TICStreamConfigurationLoader.load(configPath);
 
     // Then
     Assert.assertEquals(TICMode.HISTORIC, configuration.getTicMode());
@@ -44,17 +38,17 @@ public class TICStreamConfigurationLoaderTest {
   }
 
   @Test
-  public void test_load_withPortIdIdentifier_usesDefaults() throws IOException {
+  public void test_load_withPortIdIdentifier_usesDefaults() throws IOException, URISyntaxException {
     // Given
-    Path configPath =
-        createTempConfig("{\"identifier\":{\"type\":\"PORT_ID\",\"value\":\"12345\"}}");
+    String configPath =
+        ResourceLoader.getFilePath("/tic/stream/configuration/withPortIdIdentifier.json");
 
     // When
-    TICStreamConfiguration configuration = TICStreamConfigurationLoader.load(configPath.toString());
+    TICStreamConfiguration configuration = TICStreamConfigurationLoader.load(configPath);
 
     // Then
     Assert.assertEquals(TICMode.AUTO, configuration.getTicMode());
-    Assert.assertEquals(TICStreamConfiguration.DEFAULT_TIMEOUT, configuration.getTimeout());
+    Assert.assertEquals(10, configuration.getTimeout());
     Assert.assertEquals("12345", configuration.getIdentifier().getPortId());
   }
 
@@ -74,37 +68,32 @@ public class TICStreamConfigurationLoaderTest {
   }
 
   @Test
-  public void test_load_withInvalidTimeout_throwsIllegalArgumentException() throws IOException {
+  public void test_load_withInvalidTimeout_throwsIllegalArgumentException()
+      throws IOException, URISyntaxException {
     // Given
-    Path configPath =
-        createTempConfig(
-            "{"
-                + "\"timeout\":0,"
-                + "\"identifier\":{"
-                + "\"type\":\"PORT_NAME\","
-                + "\"value\":\"COM1\"}"
-                + "}");
+    String configPath =
+        ResourceLoader.getFilePath("/tic/stream/configuration/withInvalidTimeout.json");
 
     // When
     IllegalArgumentException exception =
         Assert.assertThrows(
-            IllegalArgumentException.class,
-            () -> TICStreamConfigurationLoader.load(configPath.toString()));
+            IllegalArgumentException.class, () -> TICStreamConfigurationLoader.load(configPath));
 
     // Then
     Assert.assertTrue(exception.getMessage().contains("Timeout"));
   }
 
   @Test
-  public void test_load_withMissingIdentifier_throwsIllegalArgumentException() throws IOException {
+  public void test_load_withMissingIdentifier_throwsIllegalArgumentException()
+      throws IOException, URISyntaxException {
     // Given
-    Path configPath = createTempConfig("{" + "\"ticMode\":\"STANDARD\"," + "\"timeout\":15" + "}");
+    String configPath =
+        ResourceLoader.getFilePath("/tic/stream/configuration/withMissingIdentifier.json");
 
     // When
     IllegalArgumentException exception =
         Assert.assertThrows(
-            IllegalArgumentException.class,
-            () -> TICStreamConfigurationLoader.load(configPath.toString()));
+            IllegalArgumentException.class, () -> TICStreamConfigurationLoader.load(configPath));
 
     // Then
     Assert.assertTrue(exception.getMessage().contains("identifier"));
@@ -112,11 +101,10 @@ public class TICStreamConfigurationLoaderTest {
 
   @Test
   public void test_load_withInvalidIdentifierType_throwsIllegalArgumentException()
-      throws IOException {
+      throws IOException, URISyntaxException {
     // Given
-    Path configPath =
-        createTempConfig(
-            "{" + "\"identifier\":{" + "\"type\":\"USB\"," + "\"value\":\"device\"}" + "}");
+    String configPath =
+        ResourceLoader.getFilePath("/tic/stream/configuration/withInvalidIdentifierType.json");
 
     // When
     IllegalArgumentException exception =
@@ -129,17 +117,11 @@ public class TICStreamConfigurationLoaderTest {
   }
 
   @Test
-  public void test_load_withInvalidTicMode_throwsIllegalArgumentException() throws IOException {
+  public void test_load_withInvalidTicMode_throwsIllegalArgumentException()
+      throws IOException, URISyntaxException {
     // Given
-    Path configPath =
-        createTempConfig(
-            "{"
-                + "\"ticMode\":\"INVALID_MODE\","
-                + "\"timeout\":42,"
-                + "\"identifier\":{"
-                + "\"type\":\"PORT_NAME\","
-                + "\"value\":\"COM9\"}"
-                + "}");
+    String configPath =
+        ResourceLoader.getFilePath("/tic/stream/configuration/withInvalidTicMode.json");
 
     // When
     IllegalArgumentException exception =
@@ -200,13 +182,6 @@ public class TICStreamConfigurationLoaderTest {
 
     // Then
     Assert.assertTrue(exception.getMessage().contains("Unable to load"));
-    Assert.assertTrue(exception.getCause() instanceof IOException);
-  }
-
-  private static Path createTempConfig(String jsonContent) throws IOException {
-    Path tempFile = Files.createTempFile("tic-stream-config-", ".json");
-    Files.write(tempFile, jsonContent.getBytes(StandardCharsets.UTF_8));
-    tempFile.toFile().deleteOnExit();
-    return tempFile;
+    Assert.assertTrue(exception.getCause() instanceof NullPointerException);
   }
 }

@@ -7,77 +7,91 @@
 
 package tic.io.modem;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.JSONException;
 import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import tic.ResourceLoader;
 
 public class ModemJsonEncoderTest {
 
   @Test
-  public void encodeShouldSerializeAllFields() {
+  public void test_encode_AllFields() throws JSONException, IOException, URISyntaxException {
     // Given
     ModemDescriptor descriptor =
-        new ModemDescriptor(
-            "ABCD1",
-            "COM7",
-            "USB Serial Port",
-            "test_product",
-            "test_manufacturer",
-            "SN123",
-            ModemType.MICHAUD);
+        new ModemDescriptor.Builder<>()
+            .portId("ABCD1")
+            .portName("COM7")
+            .description("USB Serial Port")
+            .productName("test_product")
+            .manufacturer("test_manufacturer")
+            .serialNumber("SN123")
+            .modemType(ModemType.MICHAUD)
+            .build();
 
     // When
-    String jsonPayload = ModemJsonEncoder.encode(Arrays.asList(descriptor), -1);
+    String actualJsonText = ModemJsonEncoder.encode(Arrays.asList(descriptor), -1);
 
     // Then
-    JSONArray array = new JSONArray(jsonPayload);
-    assertEquals(1, array.length());
-    JSONObject json = array.getJSONObject(0);
-    assertEquals("ABCD1", json.getString("portId"));
-    assertEquals("COM7", json.getString("portName"));
-    assertEquals("USB Serial Port", json.getString("description"));
-    assertEquals(ModemType.MICHAUD.getProductId(), json.getInt("productId"));
-    assertEquals(ModemType.MICHAUD.getVendorId(), json.getInt("vendorId"));
-    assertEquals("test_product", json.getString("productName"));
-    assertEquals("test_manufacturer", json.getString("manufacturer"));
-    assertEquals("SN123", json.getString("serialNumber"));
-    assertEquals(ModemType.MICHAUD.name(), json.getString("modemType"));
+    String expectedJsonText = ResourceLoader.readString("/tic/io/modem/AllFields.json");
+    JSONAssert.assertEquals(expectedJsonText, actualJsonText, false);
   }
 
   @Test
-  public void encodeShouldHandleNullModemType() {
+  public void test_encode_Descriptor() throws JSONException, IOException, URISyntaxException {
     // Given
-    ModemDescriptor descriptor = new ModemDescriptor(null, "COM8", null, null, null, null, null);
-    descriptor.setProductId(1234);
-    descriptor.setVendorId(5678);
+    ModemDescriptor descriptor =
+        new ModemDescriptor.Builder<>()
+            .portId("ABCD1")
+            .portName("COM7")
+            .description("USB Serial Port")
+            .productName("test_product")
+            .manufacturer("test_manufacturer")
+            .serialNumber("SN123")
+            .modemType(ModemType.MICHAUD)
+            .build();
 
     // When
-    String jsonPayload = ModemJsonEncoder.encode(Collections.singletonList(descriptor), -1);
+    String actualJsonText = ModemJsonEncoder.encode(descriptor);
 
     // Then
-    JSONArray array = new JSONArray(jsonPayload);
-    assertEquals(1, array.length());
-    JSONObject json = array.getJSONObject(0);
-    assertEquals(1234, json.getInt("productId"));
-    assertEquals(5678, json.getInt("vendorId"));
-    assertTrue(json.isNull("modemType"));
+    String expectedJsonText = ResourceLoader.readString("/tic/io/modem/Descriptor.json");
+    JSONAssert.assertEquals(expectedJsonText, actualJsonText, false);
   }
 
   @Test
-  public void encodeHandlesNullList() {
+  public void encodeShouldHandleNullModemType()
+      throws JSONException, IOException, URISyntaxException {
+    // Given
+    ModemDescriptor descriptor =
+        new ModemDescriptor.Builder<>()
+            .portName("COM8")
+            .productId((short) 1234)
+            .vendorId((short) 5678)
+            .build();
+
+    // When
+    String actualJsonText = ModemJsonEncoder.encode(Collections.singletonList(descriptor), 1);
+
+    // Then
+    String expectedJsonText = ResourceLoader.readString("/tic/io/modem/NullModemType.json");
+    JSONAssert.assertEquals(expectedJsonText, actualJsonText, false);
+  }
+
+  @Test
+  public void encodeHandlesNullList() throws IOException, URISyntaxException, JSONException {
     // Given
     List<ModemDescriptor> descriptors = null;
 
     // When
-    String json = ModemJsonEncoder.encode(descriptors);
+    String actualJsonText = ModemJsonEncoder.encode(descriptors);
 
     // Then
-    assertEquals("[]", json.trim());
+    String expectedJsonText = ResourceLoader.readString("/tic/io/modem/NullList.json");
+    JSONAssert.assertEquals(expectedJsonText, actualJsonText, false);
   }
 }

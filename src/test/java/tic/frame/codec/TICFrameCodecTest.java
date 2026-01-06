@@ -8,15 +8,11 @@
 package tic.frame.codec;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
+import tic.ResourceLoader;
 import tic.frame.TICFrame;
 import tic.frame.TICMode;
 import tic.frame.group.TICGroup;
@@ -26,7 +22,7 @@ public class TICFrameCodecTest {
   @Test
   public void test_decode_historic() throws IOException, URISyntaxException {
     // Given
-    byte[] frameBuffer = readResourceFile("/codec/ticFrameHistoric.txt");
+    byte[] frameBuffer = ResourceLoader.readAllBytes("/tic/frame/codec/ticFrameHistoric.txt");
 
     // When
     TICFrame frame = TICFrameCodec.decode(frameBuffer);
@@ -54,7 +50,7 @@ public class TICFrameCodecTest {
   @Test
   public void test_decode_standard() throws IOException, URISyntaxException {
     // Given
-    byte[] frameBuffer = readResourceFile("/codec/ticFrameStandard.txt");
+    byte[] frameBuffer = ResourceLoader.readAllBytes("/tic/frame/codec/ticFrameStandard.txt");
 
     // When
     TICFrame frame = TICFrameCodec.decode(frameBuffer);
@@ -134,7 +130,8 @@ public class TICFrameCodecTest {
     byte[] encodedFrameBuffer = TICFrameCodec.encode(frame);
 
     // Then
-    byte[] expectedFrameBuffer = readResourceFile("/codec/ticFrameHistoric.txt");
+    byte[] expectedFrameBuffer =
+        ResourceLoader.readAllBytes("/tic/frame/codec/ticFrameHistoric.txt");
     Assert.assertArrayEquals(expectedFrameBuffer, encodedFrameBuffer);
   }
 
@@ -193,7 +190,8 @@ public class TICFrameCodecTest {
     byte[] encodedFrameBuffer = TICFrameCodec.encode(frame);
 
     // Then
-    byte[] expectedFrameBuffer = readResourceFile("/codec/ticFrameStandard_PCOUP_Invalid.txt");
+    byte[] expectedFrameBuffer =
+        ResourceLoader.readAllBytes("/tic/frame/codec/ticFrameStandard_PCOUP_Invalid.txt");
     Assert.assertArrayEquals(expectedFrameBuffer, encodedFrameBuffer);
   }
 
@@ -293,13 +291,5 @@ public class TICFrameCodecTest {
 
     // Then
     Assert.assertEquals("Unable to determine TIC Mode from frame buffer!", exception.getMessage());
-  }
-
-  private byte[] readResourceFile(String resourcePath) throws IOException, URISyntaxException {
-    URL url = getClass().getResource(resourcePath);
-    URI uri = url.toURI();
-    Path path = Paths.get(uri);
-
-    return Files.readAllBytes(path);
   }
 }

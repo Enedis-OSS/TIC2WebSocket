@@ -26,6 +26,8 @@ import tic.io.modem.ModemFinder;
 import tic.io.modem.ModemFinderBase;
 import tic.io.modem.ModemJsonEncoder;
 import tic.io.modem.ModemPlugNotifier;
+import tic.io.serialport.SerialPortFinderBase;
+import tic.io.usb.UsbPortFinderBase;
 import tic.util.task.FilteredNotifier;
 import tic.util.task.FilteredNotifierBase;
 import tic.util.task.Task;
@@ -69,7 +71,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
 
   public TICCoreBase(TICMode streamMode, List<String> nativePortNamesStart) {
     this(
-        ModemFinderBase.getInstance(),
+        ModemFinderBase.create(SerialPortFinderBase.getInstance(), UsbPortFinderBase.getInstance()),
         PLUG_NOTIFIER_POLLING_PERIOD,
         TICCoreStreamBase.class,
         streamMode,
@@ -87,7 +89,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
     this.plugNotifierPeriod = plugNotifierPeriod;
     try {
       this.streamConstructor =
-          streamClass.getConstructor(String.class, String.class, TICMode.class);
+          streamClass.getConstructor(String.class, String.class, TICMode.class, ModemFinder.class);
     } catch (NoSuchMethodException e) {
       throw new IllegalArgumentException(
           "Class " + streamClass.getName() + " has no valid constructor : " + e.getMessage());
@@ -358,13 +360,13 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
   private TICCoreStream findStream(ModemDescriptor descriptor) {
     for (TICCoreStream stream : this.streamList) {
       TICIdentifier identifier = stream.getIdentifier();
-      if (descriptor.getPortId() != null && identifier.getPortId() != null) {
-        if (descriptor.getPortId().equals(identifier.getPortId())) {
+      if (descriptor.portId() != null && identifier.getPortId() != null) {
+        if (descriptor.portId().equals(identifier.getPortId())) {
           return stream;
         }
       }
-      if (descriptor.getPortName() != null && identifier.getPortName() != null) {
-        if (descriptor.getPortName().equals(identifier.getPortName())) {
+      if (descriptor.portName() != null && identifier.getPortName() != null) {
+        if (descriptor.portName().equals(identifier.getPortName())) {
           return stream;
         }
       }
@@ -379,7 +381,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
     try {
       stream =
           this.streamConstructor.newInstance(
-              descriptor.getPortId(), descriptor.getPortName(), this.streamMode);
+              descriptor.portId(), descriptor.portName(), this.streamMode, this.modemFinder);
 
       stream.subscribe(this);
 

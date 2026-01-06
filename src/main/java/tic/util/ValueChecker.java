@@ -60,11 +60,10 @@ public class ValueChecker {
       throw new IllegalArgumentException("Value '" + key + "' cannot be null");
     }
 
-    if (!allowEmpty && value.trim().isEmpty()) {
+    if (!allowEmpty && value.isEmpty()) {
       throw new IllegalArgumentException("Value '" + key + "' cannot be empty");
     }
 
-    String trimmed = value.trim();
-    return trimmed.isEmpty() ? null : trimmed;
+    return value;
   }
 }

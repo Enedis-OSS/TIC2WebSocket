@@ -12,10 +12,13 @@ import tic.stream.identifier.TICStreamIdentifier;
 
 /**
  * Configuration class for TIC stream, including TIC mode, identifier, and timeout.
- * 
+ *
  * @author Enedis Smarties team
  */
 public class TICStreamConfiguration {
+
+  public static final TICMode DEFAULT_TIC_MODE = TICMode.AUTO;
+  public static final int DEFAULT_TIMEOUT = 10;
 
   private TICMode ticMode;
   private TICStreamIdentifier identifier;

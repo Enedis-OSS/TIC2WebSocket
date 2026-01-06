@@ -19,8 +19,8 @@ public final class SerialPortJsonEncoder {
   private SerialPortJsonEncoder() {}
 
   /**
-   * Encodes the provided serial port descriptors list into a JSON string using the default indentation
-   * factor (2 spaces).
+   * Encodes the provided serial port descriptors list into a JSON string using the default
+   * indentation factor (2 spaces).
    *
    * @param descriptors descriptors to encode; {@code null} is treated as an empty list
    * @return the JSON string
@@ -45,14 +45,14 @@ public final class SerialPortJsonEncoder {
     safeDescriptors.forEach(
         descriptor -> {
           JSONObject jsonObject = new JSONObject();
-          jsonObject.put("portId", descriptor.getPortId());
-          jsonObject.put("portName", descriptor.getPortName());
-          jsonObject.put("description", descriptor.getDescription());
-          jsonObject.put("productId", descriptor.getProductId());
-          jsonObject.put("vendorId", descriptor.getVendorId());
-          jsonObject.put("productName", descriptor.getProductName());
-          jsonObject.put("manufacturer", descriptor.getManufacturer());
-          jsonObject.put("serialNumber", descriptor.getSerialNumber());
+          jsonObject.put("portId", descriptor.portId());
+          jsonObject.put("portName", descriptor.portName());
+          jsonObject.put("description", descriptor.description());
+          jsonObject.put("productId", descriptor.productId());
+          jsonObject.put("vendorId", descriptor.vendorId());
+          jsonObject.put("productName", descriptor.productName());
+          jsonObject.put("manufacturer", descriptor.manufacturer());
+          jsonObject.put("serialNumber", descriptor.serialNumber());
           array.put(jsonObject);
         });
 

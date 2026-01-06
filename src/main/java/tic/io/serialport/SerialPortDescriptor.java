@@ -37,68 +37,118 @@ import tic.util.ValueChecker;
  * @author Enedis Smarties team
  */
 public class SerialPortDescriptor {
-  private static final String KEY_PORT_ID = "portId";
-  private static final String KEY_PORT_NAME = "portName";
-  private static final String KEY_DESCRIPTION = "description";
-  private static final String KEY_PRODUCT_ID = "productId";
-  private static final String KEY_VENDOR_ID = "vendorId";
-  private static final String KEY_PRODUCT_NAME = "productName";
-  private static final String KEY_MANUFACTURER = "manufacturer";
-  private static final String KEY_SERIAL_NUMBER = "serialNumber";
-
-  private static final int USB_IDENTIFIER_MIN = 0;
-  private static final int USB_IDENTIFIER_MAX = 65535;
 
   private String portId;
   private String portName;
   private String description;
-  private Number productId;
-  private Number vendorId;
+  private Short productId;
+  private Short vendorId;
   private String productName;
   private String manufacturer;
   private String serialNumber;
 
-  /**
-   * Constructs an empty SerialPortDescriptor.
-   *
-   * <p>This constructor initializes the descriptor with default values and loads the key
-   * descriptors for validation and type conversion.
-   */
-  public SerialPortDescriptor() {}
+  /** Builder class for constructing SerialPortDescriptor instances. */
+  public static class Builder<T extends Builder<T>> {
+    protected String portId;
+    protected String portName;
+    protected String description;
+    protected Short productId;
+    protected Short vendorId;
+    protected String productName;
+    protected String manufacturer;
+    protected String serialNumber;
+
+    @SuppressWarnings("unchecked")
+    public T self() {
+      return (T) this;
+    }
+
+    public T portId(String portId) {
+      this.portId = portId;
+      return self();
+    }
+
+    public T portName(String portName) {
+      this.portName = portName;
+      return self();
+    }
+
+    public T description(String description) {
+      this.description = description;
+      return self();
+    }
+
+    public T productId(Short productId) {
+      this.productId = productId;
+      return self();
+    }
+
+    public T vendorId(Short vendorId) {
+      this.vendorId = vendorId;
+      return self();
+    }
+
+    public T productName(String productName) {
+      this.productName = productName;
+      return self();
+    }
+
+    public T manufacturer(String manufacturer) {
+      this.manufacturer = manufacturer;
+      return self();
+    }
+
+    public T serialNumber(String serialNumber) {
+      this.serialNumber = serialNumber;
+      return self();
+    }
+
+    /**
+     * Validates the builder's fields.
+     *
+     * @throws IllegalArgumentException if any required field is invalid
+     */
+    protected void validate() {
+      ValueChecker.validateString(this.portId, "portId", true, false);
+      ValueChecker.validateString(this.portName, "portName", true, false);
+      ValueChecker.validateString(this.description, "description", true, false);
+      ValueChecker.validateNumber(this.productId, "productId", true);
+      ValueChecker.validateNumber(this.vendorId, "vendorId", true);
+      ValueChecker.validateString(this.productName, "productName", true, false);
+      ValueChecker.validateString(this.manufacturer, "manufacturer", true, false);
+      ValueChecker.validateString(this.serialNumber, "serialNumber", true, false);
+    }
+
+    /**
+     * Builds the SerialPortDescriptor instance with the provided parameters.
+     *
+     * @return the constructed SerialPortDescriptor instance
+     * @throws IllegalArgumentException if any required field is invalid
+     */
+    public SerialPortDescriptor build() {
+      this.validate();
+
+      return new SerialPortDescriptor(this);
+    }
+  }
 
   /**
    * Constructs a SerialPortDescriptor with all parameters explicitly set.
    *
    * <p>This constructor creates a descriptor with all serial port and USB device properties
-   * specified. It validates the parameters and updates the descriptor accordingly.
+   * specified.
    *
-   * @param portId the port unique identifier
-   * @param portName the port name used to open the serial port
-   * @param description the port description
-   * @param productId the USB device product identifier (PID), must be in range [0-65535]
-   * @param vendorId the USB device vendor identifier (VID), must be in range [0-65535]
-   * @param productName the USB device product name
-   * @param manufacturer the USB device manufacturer
-   * @param serialNumber the USB device serial number
-   * @throws IllegalArgumentException if any parameter is invalid or out of range
+   * @param builder the builder instance containing all the parameters
    */
-  public SerialPortDescriptor(
-      String portId,
-      String portName,
-      String description,
-      Number productId,
-      Number vendorId,
-      String productName,
-      String manufacturer,
-      String serialNumber) {
-    this.setPortId(portId);
-    this.setPortName(portName);
-    this.setDescription(description);
-    this.setProductId(productId);
-    this.setVendorId(vendorId);
-    this.setProductName(productName);
-    this.setManufacturer(manufacturer);
-    this.setSerialNumber(serialNumber);
+  protected SerialPortDescriptor(Builder<?> builder) {
+    this.portId = builder.portId;
+    this.portName = builder.portName;
+    this.description = builder.description;
+    this.productId = builder.productId;
+    this.vendorId = builder.vendorId;
+    this.productName = builder.productName;
+    this.manufacturer = builder.manufacturer;
+    this.serialNumber = builder.serialNumber;
   }
 
   @Override
@@ -138,7 +188,7 @@ public class SerialPortDescriptor {
    *
    * @return the port unique identifier
    */
-  public String getPortId() {
+  public String portId() {
     return this.portId;
   }
 
@@ -147,7 +197,7 @@ public class SerialPortDescriptor {
    *
    * @return the port name used to open the serial port
    */
-  public String getPortName() {
+  public String portName() {
     return this.portName;
   }
 
@@ -156,7 +206,7 @@ public class SerialPortDescriptor {
    *
    * @return the port description
    */
-  public String getDescription() {
+  public String description() {
     return this.description;
   }
 
@@ -165,7 +215,7 @@ public class SerialPortDescriptor {
    *
    * @return the USB device product identifier in range [0-65535]
    */
-  public Number getProductId() {
+  public Short productId() {
     return this.productId;
   }
 
@@ -174,7 +224,7 @@ public class SerialPortDescriptor {
    *
    * @return the USB device vendor identifier in range [0-65535]
    */
-  public Number getVendorId() {
+  public Short vendorId() {
     return this.vendorId;
   }
 
@@ -183,7 +233,7 @@ public class SerialPortDescriptor {
    *
    * @return the USB device product name
    */
-  public String getProductName() {
+  public String productName() {
     return this.productName;
   }
 
@@ -192,7 +242,7 @@ public class SerialPortDescriptor {
    *
    * @return the USB device manufacturer
    */
-  public String getManufacturer() {
+  public String manufacturer() {
     return this.manufacturer;
   }
 
@@ -201,92 +251,8 @@ public class SerialPortDescriptor {
    *
    * @return the USB device serial number
    */
-  public String getSerialNumber() {
+  public String serialNumber() {
     return this.serialNumber;
-  }
-
-  /**
-   * Sets the port unique identifier.
-   *
-   * @param portId the port unique identifier
-   * @throws IllegalArgumentException if portId is invalid
-   */
-  public void setPortId(String portId) {
-    this.portId = ValueChecker.validateString(portId, KEY_PORT_ID, true, false);
-  }
-
-  /**
-   * Sets the port name used to open the serial port.
-   *
-   * @param portName the port name used to open the serial port
-   * @throws IllegalArgumentException if portName is invalid
-   */
-  public void setPortName(String portName) {
-    this.portName = ValueChecker.validateString(portName, KEY_PORT_NAME, true, true);
-  }
-
-  /**
-   * Sets the port description.
-   *
-   * @param description the port description
-   * @throws IllegalArgumentException if description is invalid
-   */
-  public void setDescription(String description) {
-    this.description = ValueChecker.validateString(description, KEY_DESCRIPTION, true, false);
-  }
-
-  /**
-   * Sets the USB device product identifier (PID).
-   *
-   * @param productId the USB device product identifier
-   * @throws IllegalArgumentException if productId is out of range [0-65535]
-   */
-  public void setProductId(Number productId) {
-    this.productId =
-        ValueChecker.validateNumber(
-            productId, KEY_PRODUCT_ID, USB_IDENTIFIER_MIN, USB_IDENTIFIER_MAX, true);
-  }
-
-  /**
-   * Sets the USB device vendor identifier (VID).
-   *
-   * @param vendorId the USB device vendor identifier
-   * @throws IllegalArgumentException if vendorId is out of range [0-65535]
-   */
-  public void setVendorId(Number vendorId) {
-    this.vendorId =
-        ValueChecker.validateNumber(
-            vendorId, KEY_VENDOR_ID, USB_IDENTIFIER_MIN, USB_IDENTIFIER_MAX, true);
-  }
-
-  /**
-   * Sets the USB device product name.
-   *
-   * @param productName the USB device product name
-   * @throws IllegalArgumentException if productName is invalid
-   */
-  public void setProductName(String productName) {
-    this.productName = ValueChecker.validateString(productName, KEY_PRODUCT_NAME, true, false);
-  }
-
-  /**
-   * Sets the USB device manufacturer.
-   *
-   * @param manufacturer the USB device manufacturer
-   * @throws IllegalArgumentException if manufacturer is invalid
-   */
-  public void setManufacturer(String manufacturer) {
-    this.manufacturer = ValueChecker.validateString(manufacturer, KEY_MANUFACTURER, true, false);
-  }
-
-  /**
-   * Sets the USB device serial number.
-   *
-   * @param serialNumber the USB device serial number
-   * @throws IllegalArgumentException if serialNumber is invalid
-   */
-  public void setSerialNumber(String serialNumber) {
-    this.serialNumber = ValueChecker.validateString(serialNumber, KEY_SERIAL_NUMBER, true, false);
   }
 
   /**
@@ -298,6 +264,6 @@ public class SerialPortDescriptor {
    * @return true if this is a native serial port, false if it's a USB device
    */
   public boolean isNative() {
-    return this.portName != null && !this.portName.isEmpty() && this.portId == null;
+    return this.portName != null && this.portId == null;
   }
 }
