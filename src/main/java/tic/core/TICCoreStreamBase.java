@@ -7,31 +7,20 @@
 
 package tic.core;
 
-import enedis.lab.io.channels.Channel;
-import enedis.lab.io.channels.ChannelException;
-import enedis.lab.io.datastreams.DataStreamBase;
-import enedis.lab.io.datastreams.DataStreamDirection;
-import enedis.lab.io.datastreams.DataStreamException;
-import enedis.lab.io.datastreams.DataStreamListener;
-import enedis.lab.io.datastreams.DataStreamStatus;
-import enedis.lab.protocol.tic.TICMode;
-import enedis.lab.protocol.tic.channels.ChannelTICSerialPort;
-import enedis.lab.protocol.tic.channels.ChannelTICSerialPortConfiguration;
-import enedis.lab.protocol.tic.datastreams.TICInputStream;
-import enedis.lab.protocol.tic.datastreams.TICStreamConfiguration;
-import enedis.lab.protocol.tic.frame.TICFrame;
-import enedis.lab.protocol.tic.frame.TICFrameDataSet;
-import enedis.lab.protocol.tic.frame.historic.TICFrameHistoric;
-import enedis.lab.protocol.tic.frame.standard.TICFrameStandard;
-import enedis.lab.types.DataDictionary;
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.types.datadictionary.DataDictionaryBase;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tic.frame.TICFrame;
+import tic.frame.TICMode;
+import tic.frame.group.TICGroup;
 import tic.io.modem.ModemDescriptor;
 import tic.io.modem.ModemFinder;
+import tic.stream.TICStream;
+import tic.stream.TICStreamListener;
+import tic.stream.configuration.TICStreamConfiguration;
+import tic.stream.identifier.SerialPortName;
+import tic.stream.identifier.TICStreamIdentifier;
 import tic.util.task.Notifier;
 import tic.util.task.NotifierBase;
 
@@ -51,12 +40,13 @@ import tic.util.task.NotifierBase;
  *
  * @author Enedis Smarties team
  */
-public class TICCoreStreamBase implements TICCoreStream, DataStreamListener {
+public class TICCoreStreamBase implements TICCoreStream {
 
+  private final Object identifierLock = new Object();
   private TICIdentifier identifier;
-  private DataStreamBase stream;
-  private Channel channel;
-  private Notifier<TICCoreSubscriber> notifier;
+  private final TICStream stream;
+  private final TICStreamListener streamListener;
+  private final Notifier<TICCoreSubscriber> notifier;
   private static Logger logger = LogManager.getLogger();
 
   public TICCoreStreamBase(String portId, String portName, TICMode ticMode, ModemFinder modemFinder)
@@ -102,41 +92,46 @@ public class TICCoreStreamBase implements TICCoreStream, DataStreamListener {
       logger.error(exception.getMessage(), exception);
       throw exception;
     }
-    try {
-      this.identifier = new TICIdentifier(portId, portName, null);
-      this.channel =
-          new ChannelTICSerialPort(
-              new ChannelTICSerialPortConfiguration(
-                  "Channel@" + descriptor.portName(), portName, ticMode));
-      this.stream =
-          new TICInputStream(
-              new TICStreamConfiguration(
-                  "Stream@" + descriptor.portName(),
-                  DataStreamDirection.INPUT,
-                  "Channel@" + descriptor.portName(),
-                  ticMode));
-      this.stream.setChannel(this.channel);
-      this.notifier = new NotifierBase<TICCoreSubscriber>();
-      logger = LogManager.getLogger();
-    } catch (DataDictionaryException | ChannelException | DataStreamException e) {
+
+    String resolvedPortId = descriptor.portId();
+    String resolvedPortName = descriptor.portName();
+    if (resolvedPortName == null || resolvedPortName.trim().isEmpty()) {
       TICCoreException exception =
           new TICCoreException(
-              TICCoreErrorCode.OTHER_REASON.getCode(),
-              "TICCore stream instanciation failed : " + e.getMessage());
+              TICCoreErrorCode.STREAM_PORT_NAME_NOT_FOUND.getCode(),
+              "TICCore stream resolved port name is empty!");
       logger.error(exception.getMessage(), exception);
       throw exception;
     }
+
+    this.identifier = new TICIdentifier(resolvedPortId, resolvedPortName, null);
+    this.notifier = new NotifierBase<TICCoreSubscriber>();
+
+    TICStreamIdentifier streamIdentifier = new TICStreamIdentifier(new SerialPortName(resolvedPortName));
+    TICStreamConfiguration configuration =
+        new TICStreamConfiguration(ticMode, streamIdentifier, TICStreamConfiguration.DEFAULT_TIMEOUT);
+    this.stream = new TICStream(configuration);
+
+    this.streamListener =
+        new TICStreamListener() {
+          @Override
+          public void onFrame(TICFrame frame) {
+            TICCoreStreamBase.this.onFrame(frame);
+          }
+
+          @Override
+          public void onError(String error) {
+            TICCoreStreamBase.this.onError(error);
+          }
+        };
+    this.stream.subscribe(this.streamListener);
   }
 
   @Override
   public TICIdentifier getIdentifier() {
-    TICIdentifier identifier;
-
-    synchronized (this.identifier) {
-      identifier = (TICIdentifier) this.identifier.clone();
+    synchronized (this.identifierLock) {
+      return this.identifier;
     }
-
-    return identifier;
   }
 
   @Override
@@ -160,102 +155,53 @@ public class TICCoreStreamBase implements TICCoreStream, DataStreamListener {
   }
 
   @Override
-  public void onDataReceived(String dataStreamName, DataDictionary data) {
-    TICCoreFrame frame = this.createFrame(data);
-
-    if (frame != null) {
-      this.notifyOnData(frame);
-    } else {
-      logger.debug("Frame creation skipped due to null TICFrame");
-    }
-  }
-
-  @Override
-  public void onDataSent(String dataStreamName, DataDictionary data) {}
-
-  @Override
-  public void onStatusChanged(String dataStreamName, DataStreamStatus newStatus) {}
-
-  @Override
-  public void onErrorDetected(
-      String dataStreamName, int errorCode, String errorMessage, DataDictionary data) {
-    TICCoreError error = this.createError(errorCode, errorMessage, data);
-    this.notifyOnError(error);
-  }
-
-  @Override
   public void start() {
-    this.channel.start();
-    try {
-      this.stream.open();
-      this.stream.subscribe(this);
-    } catch (DataStreamException e) {
-      logger.error(e.getMessage());
-    }
+    this.stream.start();
   }
 
   @Override
   public void stop() {
-    this.stream.unsubscribe(this);
-    try {
-      this.stream.close();
-    } catch (DataStreamException e) {
-      logger.error(e.getMessage());
-    }
-    this.channel.stop();
+    this.stream.unsubscribe(this.streamListener);
+    this.stream.stop();
   }
 
   @Override
   public boolean isRunning() {
-    return this.channel.isRunning();
+    return this.stream.isRunning();
   }
 
-  private TICCoreFrame createFrame(DataDictionary data) {
-    TICCoreFrame frame = new TICCoreFrame();
-    try {
-      frame.setCaptureDateTime(LocalDateTime.now());
-      TICFrame ticFrame = (TICFrame) data.get(TICInputStream.KEY_DATA);
-
-      if (ticFrame == null) {
-        logger.warn("TICFrame is null. Skipping frame creation.");
-        return null;
-      }
-
-      DataDictionaryBase content = new DataDictionaryBase();
-      for (TICFrameDataSet frameDataSet : ticFrame.getDataSetList()) {
-        String label = frameDataSet.getLabel();
-        content.set(label, ticFrame.getData(label));
-      }
-      frame.setContent(content);
-      String serialNumber = null;
-      if (ticFrame instanceof TICFrameStandard) {
-        frame.setMode(TICMode.STANDARD);
-        serialNumber = (String) content.get("ADSC");
-      } else if (ticFrame instanceof TICFrameHistoric) {
-        frame.setMode(TICMode.HISTORIC);
-        serialNumber = (String) content.get("ADCO");
-      }
-      synchronized (this.identifier) {
-        this.identifier.setSerialNumber(serialNumber);
-        frame.setIdentifier(this.identifier.clone());
-      }
-    } catch (DataDictionaryException e) {
-      logger.error(e.getMessage());
-      frame = null;
+  private void onFrame(TICFrame ticFrame) {
+    if (ticFrame == null) {
+      return;
     }
 
-    return frame;
+    String serialNumber = null;
+    if (ticFrame.getMode() == TICMode.STANDARD) {
+      TICGroup group = ticFrame.getGroup("ADSC");
+      serialNumber = group != null ? group.getValue() : null;
+    } else if (ticFrame.getMode() == TICMode.HISTORIC) {
+      TICGroup group = ticFrame.getGroup("ADCO");
+      serialNumber = group != null ? group.getValue() : null;
+    }
+
+    TICIdentifier frameIdentifier;
+    synchronized (this.identifierLock) {
+      this.identifier = this.identifier.withSerialNumber(serialNumber);
+      frameIdentifier = this.identifier;
+    }
+
+    TICCoreFrame frame =
+        new TICCoreFrame(frameIdentifier, ticFrame.getMode(), LocalDateTime.now(), ticFrame);
+    this.notifyOnData(frame);
   }
 
-  private TICCoreError createError(int errorCode, String errorMessage, DataDictionary data) {
-    TICCoreError error = null;
-    try {
-      error = new TICCoreError(this.getIdentifier(), errorCode, errorMessage, data);
-    } catch (DataDictionaryException e) {
-      logger.error(e.getMessage());
+  private void onError(String errorMessage) {
+    int code = TICCoreErrorCode.OTHER_REASON.getCode();
+    if (errorMessage != null && errorMessage.toLowerCase().contains("timeout")) {
+      code = TICCoreErrorCode.DATA_READ_TIMEOUT.getCode();
     }
-
-    return error;
+    TICCoreError error = new TICCoreError(this.getIdentifier(), code, errorMessage == null ? "" : errorMessage);
+    this.notifyOnError(error);
   }
 
   private void notifyOnData(TICCoreFrame frame) {

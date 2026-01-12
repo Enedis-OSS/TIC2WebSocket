@@ -7,9 +7,6 @@
 
 package tic.core;
 
-import enedis.lab.protocol.tic.TICMode;
-import enedis.lab.types.DataArrayList;
-import enedis.lab.types.DataDictionaryException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +17,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tic.frame.TICMode;
 import tic.io.PlugSubscriber;
 import tic.io.modem.ModemDescriptor;
 import tic.io.modem.ModemFinder;
@@ -105,10 +103,17 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
 
   @Override
   public List<TICIdentifier> getAvailableTICs() {
-    List<TICIdentifier> identifiers = new DataArrayList<TICIdentifier>();
+    List<TICIdentifier> identifiers = new ArrayList<>();
 
     for (TICCoreStream stream : this.streamList) {
-      identifiers.add(stream.getIdentifier());
+      if (stream == null) {
+        continue;
+      }
+
+      TICIdentifier identifier = stream.getIdentifier();
+      if (!identifiers.contains(identifier)) {
+        identifiers.add(identifier);
+      }
     }
 
     return identifiers;
@@ -116,12 +121,21 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
 
   @Override
   public List<ModemDescriptor> getModemsInfo() {
-    List<ModemDescriptor> descriptors = new DataArrayList<ModemDescriptor>();
+    List<ModemDescriptor> descriptors = new ArrayList<>();
 
     for (TICCoreStream stream : this.streamList) {
-      ModemDescriptor descriptor =
-          this.modemFinder.findByPortName(stream.getIdentifier().getPortName());
-      descriptors.add(descriptor);
+      if (stream == null) {
+        continue;
+      }
+
+      TICIdentifier identifier = stream.getIdentifier();
+      ModemDescriptor descriptor = null;
+      if (identifier != null && identifier.getPortName() != null) {
+        descriptor = this.modemFinder.findByPortName(identifier.getPortName());
+      }
+      if (!descriptors.contains(descriptor)) {
+        descriptors.add(descriptor);
+      }
     }
 
     return descriptors;
@@ -376,22 +390,33 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
   }
 
   private TICCoreStream startNewStream(ModemDescriptor descriptor) {
-    TICCoreStream stream = null;
+    if (descriptor == null) {
+      return null;
+    }
+
+    TICCoreStream existing = this.findStream(descriptor);
+    if (existing != null) {
+      if (existing.isRunning()) {
+        return existing;
+      }
+      this.streamList.remove(existing);
+    }
+
     logger.debug("TICCore starting new stream : " + ModemJsonEncoder.encode(descriptor));
     try {
-      stream =
+      TICCoreStream stream =
           this.streamConstructor.newInstance(
               descriptor.portId(), descriptor.portName(), this.streamMode, this.modemFinder);
 
       stream.subscribe(this);
-
       stream.start();
       this.streamList.add(stream);
       logger.debug("TICCore started new stream : " + ModemJsonEncoder.encode(descriptor));
+      return stream;
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
+      return null;
     }
-    return stream;
   }
 
   private TICIdentifier stopStream(ModemDescriptor descriptor) {
@@ -441,19 +466,15 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
   }
 
   private void notifyOnUnpluggedAndUnsubscribe(TICIdentifier identifier) {
-    try {
-      TICCoreError error =
-          new TICCoreError(
-              identifier,
-              TICCoreErrorCode.STREAM_UNPLUGGED.getCode(),
-              "TICCore stream " + identifier + " has been unplugged (unsubscribe has been forced)");
-      Collection<TICCoreSubscriber> subscriberList = this.findSubscribers(identifier, true);
-      this.notifyOnError(error, subscriberList);
-      subscriberList = this.findSubscribers(identifier, false);
-      this.unsubscribe(subscriberList);
-    } catch (DataDictionaryException e) {
-      logger.error(e.getMessage(), e);
-    }
+    TICCoreError error =
+        new TICCoreError(
+            identifier,
+            TICCoreErrorCode.STREAM_UNPLUGGED.getCode(),
+            "TICCore stream " + identifier + " has been unplugged (unsubscribe has been forced)");
+    Collection<TICCoreSubscriber> subscriberList = this.findSubscribers(identifier, true);
+    this.notifyOnError(error, subscriberList);
+    subscriberList = this.findSubscribers(identifier, false);
+    this.unsubscribe(subscriberList);
   }
 
   private void notifyOnData(TICCoreFrame frame, Collection<TICCoreSubscriber> subscriberList) {

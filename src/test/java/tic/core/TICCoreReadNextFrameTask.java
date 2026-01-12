@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.tic.core;
+package tic.core;
 
 import tic.util.task.TaskBase;
 

@@ -7,8 +7,6 @@
 
 package tic.core;
 
-import enedis.lab.types.ExceptionBase;
-
 /**
  * Exception class for representing core errors and failures.
  *
@@ -17,10 +15,27 @@ import enedis.lab.types.ExceptionBase;
  *
  * @author Enedis Smarties team
  */
-public class TICCoreException extends ExceptionBase {
+public class TICCoreException extends Exception {
   private static final long serialVersionUID = -3285641164559292710L;
 
-  public TICCoreException(int code, String info) {
-    super(code, info);
+  private final int errorCode;
+  private final String errorInfo;
+
+  public TICCoreException(int errorCode, String errorInfo) {
+    this.errorCode = errorCode;
+    this.errorInfo = errorInfo;
+  }
+
+  @Override
+  public String getMessage() {
+    return this.errorInfo + " (" + this.errorCode + ")";
+  }
+
+  public int getErrorCode() {
+    return this.errorCode;
+  }
+
+  public String getErrorInfo() {
+    return this.errorInfo;
   }
 }

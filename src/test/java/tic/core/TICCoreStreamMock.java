@@ -5,16 +5,14 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.tic.core;
-
-import enedis.lab.protocol.tic.TICMode;
-import enedis.lab.types.DataDictionaryException;
-import tic.io.modem.ModemFinder;
+package tic.core;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import tic.frame.TICMode;
+import tic.io.modem.ModemFinder;
 
 public class TICCoreStreamMock implements TICCoreStream {
   public static List<TICCoreStreamMock> streams = new ArrayList<TICCoreStreamMock>();
@@ -22,8 +20,7 @@ public class TICCoreStreamMock implements TICCoreStream {
   public boolean running;
   public TICIdentifier identifier;
 
-  public TICCoreStreamMock(String portId, String portName, TICMode mode, ModemFinder finder)
-      throws DataDictionaryException {
+  public TICCoreStreamMock(String portId, String portName, TICMode mode, ModemFinder finder) {
     super();
     this.subscribers = new HashSet<TICCoreSubscriber>();
     this.running = false;

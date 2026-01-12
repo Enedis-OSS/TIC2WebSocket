@@ -7,16 +7,9 @@
 
 package tic.core;
 
-import enedis.lab.types.DataDictionary;
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.types.datadictionary.DataDictionaryBase;
-import enedis.lab.types.datadictionary.KeyDescriptor;
-import enedis.lab.types.datadictionary.KeyDescriptorDataDictionary;
-import enedis.lab.types.datadictionary.KeyDescriptorNumber;
-import enedis.lab.types.datadictionary.KeyDescriptorString;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.Objects;
+import tic.core.codec.TICCoreErrorCodec;
+import tic.frame.TICFrame;
 
 /**
  * Class representing a core error with identifier, code, message, and optional data.
@@ -35,45 +28,12 @@ import java.util.Map;
  *
  * @author Enedis Smarties team
  */
-public class TICCoreError extends DataDictionaryBase {
-  protected static final String KEY_IDENTIFIER = "identifier";
-  protected static final String KEY_ERROR_CODE = "errorCode";
-  protected static final String KEY_ERROR_MESSAGE = "errorMessage";
-  protected static final String KEY_DATA = "data";
+public class TICCoreError {
 
-  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
-
-  protected KeyDescriptorDataDictionary<TICIdentifier> kIdentifier;
-  protected KeyDescriptorNumber kErrorCode;
-  protected KeyDescriptorString kErrorMessage;
-  protected KeyDescriptorDataDictionary<DataDictionaryBase> kData;
-
-  protected TICCoreError() {
-    super();
-    this.loadKeyDescriptors();
-  }
-
-  /**
-   * Constructor using map
-   *
-   * @param map
-   * @throws DataDictionaryException
-   */
-  public TICCoreError(Map<String, Object> map) throws DataDictionaryException {
-    this();
-    this.copy(fromMap(map));
-  }
-
-  /**
-   * Constructor using datadictionary
-   *
-   * @param other
-   * @throws DataDictionaryException
-   */
-  public TICCoreError(DataDictionary other) throws DataDictionaryException {
-    this();
-    this.copy(other);
-  }
+  private final TICIdentifier identifier;
+  private final Number errorCode;
+  private final String errorMessage;
+  private final TICFrame frame;
 
   /**
    * Constructor setting parameters to specific values
@@ -83,8 +43,7 @@ public class TICCoreError extends DataDictionaryBase {
    * @param errorMessage
    * @throws DataDictionaryException
    */
-  public TICCoreError(TICIdentifier identifier, Number errorCode, String errorMessage)
-      throws DataDictionaryException {
+  public TICCoreError(TICIdentifier identifier, Number errorCode, String errorMessage) {
     this(identifier, errorCode, errorMessage, null);
   }
 
@@ -98,16 +57,11 @@ public class TICCoreError extends DataDictionaryBase {
    * @throws DataDictionaryException
    */
   public TICCoreError(
-      TICIdentifier identifier, Number errorCode, String errorMessage, DataDictionary data)
-      throws DataDictionaryException {
-    this();
-
-    this.setIdentifier(identifier);
-    this.setErrorCode(errorCode);
-    this.setErrorMessage(errorMessage);
-    this.setData(data);
-
-    this.checkAndUpdate();
+      TICIdentifier identifier, Number errorCode, String errorMessage, TICFrame frame) {
+    this.identifier = Objects.requireNonNull(identifier, "identifier must not be null");
+    this.errorCode = Objects.requireNonNull(errorCode, "errorCode must not be null");
+    this.errorMessage = Objects.requireNonNull(errorMessage, "errorMessage must not be null");
+    this.frame = frame;
   }
 
   /**
@@ -116,7 +70,7 @@ public class TICCoreError extends DataDictionaryBase {
    * @return the identifier
    */
   public TICIdentifier getIdentifier() {
-    return (TICIdentifier) this.data.get(KEY_IDENTIFIER);
+    return this.identifier;
   }
 
   /**
@@ -125,7 +79,7 @@ public class TICCoreError extends DataDictionaryBase {
    * @return the error code
    */
   public Number getErrorCode() {
-    return (Number) this.data.get(KEY_ERROR_CODE);
+    return this.errorCode;
   }
 
   /**
@@ -134,7 +88,7 @@ public class TICCoreError extends DataDictionaryBase {
    * @return the error message
    */
   public String getErrorMessage() {
-    return (String) this.data.get(KEY_ERROR_MESSAGE);
+    return this.errorMessage;
   }
 
   /**
@@ -142,86 +96,16 @@ public class TICCoreError extends DataDictionaryBase {
    *
    * @return the data
    */
-  public DataDictionaryBase getData() {
-    return (DataDictionaryBase) this.data.get(KEY_DATA);
+  public TICFrame getFrame() {
+    return this.frame;
   }
 
-  /**
-   * Set identifier
-   *
-   * @param identifier
-   * @throws DataDictionaryException
-   */
-  public void setIdentifier(TICIdentifier identifier) throws DataDictionaryException {
-    this.setIdentifier((Object) identifier);
+  public String toString(int indent) {
+    return TICCoreErrorCodec.encode(this, indent);
   }
 
-  /**
-   * Set error code
-   *
-   * @param errorCode
-   * @throws DataDictionaryException
-   */
-  public void setErrorCode(Number errorCode) throws DataDictionaryException {
-    this.setErrorCode((Object) errorCode);
-  }
-
-  /**
-   * Set error message
-   *
-   * @param errorMessage
-   * @throws DataDictionaryException
-   */
-  public void setErrorMessage(String errorMessage) throws DataDictionaryException {
-    this.setErrorMessage((Object) errorMessage);
-  }
-
-  /**
-   * Set data
-   *
-   * @param data
-   * @throws DataDictionaryException
-   */
-  public void setData(DataDictionary data) throws DataDictionaryException {
-    this.setData((Object) data);
-  }
-
-  protected void setIdentifier(Object identifier) throws DataDictionaryException {
-    this.data.put(KEY_IDENTIFIER, this.kIdentifier.convert(identifier));
-  }
-
-  protected void setErrorCode(Object errorCode) throws DataDictionaryException {
-    this.data.put(KEY_ERROR_CODE, this.kErrorCode.convert(errorCode));
-  }
-
-  protected void setErrorMessage(Object errorMessage) throws DataDictionaryException {
-    this.data.put(KEY_ERROR_MESSAGE, this.kErrorMessage.convert(errorMessage));
-  }
-
-  protected void setData(Object data) throws DataDictionaryException {
-    this.data.put(KEY_DATA, this.kData.convert(data));
-  }
-
-  private void loadKeyDescriptors() {
-    try {
-      this.kIdentifier =
-          new KeyDescriptorDataDictionary<TICIdentifier>(KEY_IDENTIFIER, true, TICIdentifier.class);
-      this.keys.add(this.kIdentifier);
-
-      this.kErrorCode = new KeyDescriptorNumber(KEY_ERROR_CODE, true);
-      this.keys.add(this.kErrorCode);
-
-      this.kErrorMessage = new KeyDescriptorString(KEY_ERROR_MESSAGE, true, false);
-      this.keys.add(this.kErrorMessage);
-
-      this.kData =
-          new KeyDescriptorDataDictionary<DataDictionaryBase>(
-              KEY_DATA, false, DataDictionaryBase.class);
-      this.keys.add(this.kData);
-
-      this.addAllKeyDescriptor(this.keys);
-    } catch (DataDictionaryException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
+  @Override
+  public String toString() {
+    return TICCoreErrorCodec.encode(this);
   }
 }
