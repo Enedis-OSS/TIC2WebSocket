@@ -49,9 +49,13 @@ public class TICCoreStreamBase implements TICCoreStream {
   private final Notifier<TICCoreSubscriber> notifier;
   private static Logger logger = LogManager.getLogger();
 
-  public TICCoreStreamBase(String portId, String portName, TICMode ticMode, ModemFinder modemFinder)
+  public static TICCoreStream create(
+      String portId, String portName, TICMode ticMode, ModemFinder modemFinder)
       throws TICCoreException {
     ModemDescriptor descriptor = null;
+    TICIdentifier identifier = null;
+    TICStream stream = null;
+    Notifier<TICCoreSubscriber> notifier = null;
 
     if (portId != null) {
       descriptor = modemFinder.findByPortId(portId);
@@ -104,27 +108,38 @@ public class TICCoreStreamBase implements TICCoreStream {
       throw exception;
     }
 
-    this.identifier = new TICIdentifier(resolvedPortId, resolvedPortName, null);
-    this.notifier = new NotifierBase<TICCoreSubscriber>();
+    identifier = new TICIdentifier(resolvedPortId, resolvedPortName, null);
+    notifier = new NotifierBase<TICCoreSubscriber>();
 
-    TICStreamIdentifier streamIdentifier = new TICStreamIdentifier(new SerialPortName(resolvedPortName));
+    TICStreamIdentifier streamIdentifier =
+        new TICStreamIdentifier(new SerialPortName(resolvedPortName));
     TICStreamConfiguration configuration =
-        new TICStreamConfiguration(ticMode, streamIdentifier, TICStreamConfiguration.DEFAULT_TIMEOUT);
-    this.stream = new TICStream(configuration);
+        new TICStreamConfiguration(
+            ticMode, streamIdentifier, TICStreamConfiguration.DEFAULT_TIMEOUT);
+    stream = new TICStream(configuration);
+
+    return new TICCoreStreamBase(identifier, stream, notifier);
+  }
+
+  private TICCoreStreamBase(
+      TICIdentifier identifier, TICStream stream, Notifier<TICCoreSubscriber> notifier)
+      throws TICCoreException {
+    this.identifier = identifier;
+    this.stream = stream;
+    this.notifier = notifier;
 
     this.streamListener =
         new TICStreamListener() {
           @Override
-          public void onFrame(TICFrame frame) {
-            TICCoreStreamBase.this.onFrame(frame);
+          public void onFrame(TICFrame ticFrame) {
+            TICCoreStreamBase.this.onFrame(ticFrame);
           }
 
           @Override
-          public void onError(String error) {
-            TICCoreStreamBase.this.onError(error);
+          public void onError(String errorMessage) {
+            TICCoreStreamBase.this.onError(errorMessage);
           }
         };
-    this.stream.subscribe(this.streamListener);
   }
 
   @Override
@@ -156,6 +171,7 @@ public class TICCoreStreamBase implements TICCoreStream {
 
   @Override
   public void start() {
+    this.stream.subscribe(this.streamListener);
     this.stream.start();
   }
 
@@ -200,7 +216,8 @@ public class TICCoreStreamBase implements TICCoreStream {
     if (errorMessage != null && errorMessage.toLowerCase().contains("timeout")) {
       code = TICCoreErrorCode.DATA_READ_TIMEOUT.getCode();
     }
-    TICCoreError error = new TICCoreError(this.getIdentifier(), code, errorMessage == null ? "" : errorMessage);
+    TICCoreError error =
+        new TICCoreError(this.getIdentifier(), code, errorMessage == null ? "" : errorMessage);
     this.notifyOnError(error);
   }
 

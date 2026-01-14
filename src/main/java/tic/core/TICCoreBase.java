@@ -7,7 +7,6 @@
 
 package tic.core;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -56,7 +55,6 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
   private ModemFinder modemFinder;
   private ModemPlugNotifier plugNotifier;
   private long plugNotifierPeriod;
-  private Constructor<? extends TICCoreStream> streamConstructor;
   private TICMode streamMode;
   private List<String> nativePortNamesOnStart;
   private Collection<TICCoreStream> streamList;
@@ -71,7 +69,6 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
     this(
         ModemFinderBase.create(SerialPortFinderBase.getInstance(), UsbPortFinderBase.getInstance()),
         PLUG_NOTIFIER_POLLING_PERIOD,
-        TICCoreStreamBase.class,
         streamMode,
         nativePortNamesStart);
   }
@@ -79,19 +76,11 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
   public TICCoreBase(
       ModemFinder modemFinder,
       long plugNotifierPeriod,
-      Class<? extends TICCoreStream> streamClass,
       TICMode streamMode,
       List<String> nativePortNamesOnStart) {
     super();
     this.modemFinder = modemFinder;
     this.plugNotifierPeriod = plugNotifierPeriod;
-    try {
-      this.streamConstructor =
-          streamClass.getConstructor(String.class, String.class, TICMode.class, ModemFinder.class);
-    } catch (NoSuchMethodException e) {
-      throw new IllegalArgumentException(
-          "Class " + streamClass.getName() + " has no valid constructor : " + e.getMessage());
-    }
     if (streamMode == null) {
       throw new IllegalArgumentException("TICMode should be defined");
     }
@@ -405,7 +394,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
     logger.debug("TICCore starting new stream : " + ModemJsonEncoder.encode(descriptor));
     try {
       TICCoreStream stream =
-          this.streamConstructor.newInstance(
+          TICCoreStreamBase.create(
               descriptor.portId(), descriptor.portName(), this.streamMode, this.modemFinder);
 
       stream.subscribe(this);
