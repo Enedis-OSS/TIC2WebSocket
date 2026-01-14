@@ -10,6 +10,8 @@ package tic.diagnostic.core;
 import tic.core.TICCoreError;
 import tic.core.TICCoreFrame;
 import tic.core.TICCoreSubscriber;
+import tic.core.codec.TICCoreErrorCodec;
+import tic.core.codec.TICCoreFrameCodec;
 
 /** Subscriber that prints received frames/errors to stdout/stderr. */
 public final class TICCorePrintingSubscriber implements TICCoreSubscriber {
@@ -27,14 +29,14 @@ public final class TICCorePrintingSubscriber implements TICCoreSubscriber {
   public void onData(TICCoreFrame frame) {
     this.frameCount++;
     System.out.println("--- Frame #" + this.frameCount + " ---");
-    System.out.println(frame == null ? "null" : frame.toString(this.indent));
+    System.out.println(frame == null ? "null" : TICCoreFrameCodec.encode(frame, this.indent));
   }
 
   @Override
   public void onError(TICCoreError error) {
     this.lastError = error;
     System.err.println("--- Error ---");
-    System.err.println(error == null ? "null" : error.toString(this.indent));
+    System.err.println(error == null ? "null" : TICCoreErrorCodec.encode(error, this.indent));
   }
 
   public long getFrameCount() {

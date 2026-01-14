@@ -9,7 +9,6 @@ package tic.core;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import tic.core.codec.TICCoreFrameCodec;
 import tic.frame.TICFrame;
 import tic.frame.TICMode;
 
@@ -82,12 +81,15 @@ public class TICCoreFrame {
     return this.frame;
   }
 
-  public String toString(int indent) {
-    return TICCoreFrameCodec.encode(this, indent);
-  }
-
   @Override
   public String toString() {
-    return TICCoreFrameCodec.encode(this);
+    StringBuilder sb = new StringBuilder();
+    sb.append("TICCoreFrame {\n");
+    sb.append("  identifier: ").append(this.identifier).append(",\n");
+    sb.append("  mode: ").append(this.mode).append(",\n");
+    sb.append("  captureDateTime: ").append(this.captureDateTime).append(",\n");
+    sb.append("  frame: ").append(this.frame).append("\n");
+    sb.append("}");
+    return sb.toString();
   }
 }

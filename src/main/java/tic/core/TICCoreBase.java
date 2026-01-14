@@ -269,7 +269,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
 
   @Override
   public void onData(TICCoreFrame frame) {
-    logger.trace("TICCore frame:\n" + frame.toString(2));
+    logger.trace("TICCore frame:\n" + frame.toString());
     Collection<TICCoreSubscriber> subscriberList =
         this.findSubscribers(frame.getIdentifier(), true);
     Task task =
@@ -284,7 +284,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
 
   @Override
   public void onError(TICCoreError error) {
-    logger.error("TICCore error:\n" + error.toString(2));
+    logger.error("TICCore error:\n" + error.toString());
     Collection<TICCoreSubscriber> subscriberList =
         this.findSubscribers(error.getIdentifier(), true);
     Task task =

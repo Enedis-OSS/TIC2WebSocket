@@ -8,7 +8,8 @@
 package tic.core;
 
 import java.util.Objects;
-import tic.core.codec.TICCoreErrorCodec;
+
+import enedis.lab.types.DataDictionaryException;
 import tic.frame.TICFrame;
 
 /**
@@ -100,12 +101,15 @@ public class TICCoreError {
     return this.frame;
   }
 
-  public String toString(int indent) {
-    return TICCoreErrorCodec.encode(this, indent);
-  }
-
   @Override
   public String toString() {
-    return TICCoreErrorCodec.encode(this);
+    StringBuilder sb = new StringBuilder();
+    sb.append("TICCoreError {\n");
+    sb.append("  identifier: ").append(this.identifier).append(",\n");
+    sb.append("  errorCode: ").append(this.errorCode).append(",\n");
+    sb.append("  errorMessage: ").append(this.errorMessage).append(",\n");
+    sb.append("  frame: ").append(this.frame).append("\n");
+    sb.append("}");
+    return sb.toString();
   }
 }
