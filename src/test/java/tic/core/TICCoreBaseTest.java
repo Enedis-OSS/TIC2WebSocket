@@ -39,7 +39,6 @@ public class TICCoreBaseTest {
         new TICCoreBase(
             this.ticPortFinder,
             this.plugNotifierPeriod,
-            TICCoreStreamMock.class,
             TICMode.AUTO,
             null);
 
