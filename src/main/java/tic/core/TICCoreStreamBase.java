@@ -23,6 +23,8 @@ import tic.stream.identifier.SerialPortName;
 import tic.stream.identifier.TICStreamIdentifier;
 import tic.util.task.Notifier;
 import tic.util.task.NotifierBase;
+import tic.util.task.Task;
+import tic.util.task.TaskBase;
 
 /**
  * Core stream implementation for frame acquisition and subscriber notifications.
@@ -225,17 +227,43 @@ public class TICCoreStreamBase implements TICCoreStream {
     if (frame == null) {
       return;
     }
-    for (TICCoreSubscriber subscriber : this.notifier.getSubscribers()) {
-      subscriber.onData(frame);
-    }
+
+    Collection<TICCoreSubscriber> subscriberList = this.notifier.getSubscribers();
+    Task task =
+        new TaskBase() {
+          @Override
+          public void process() {
+            for (TICCoreSubscriber subscriber : subscriberList) {
+              try {
+                subscriber.onData(frame);
+              } catch (Exception exception) {
+                logger.error("TICCoreStream subscriber onData aborted", exception);
+              }
+            }
+          }
+        };
+    task.start();
   }
 
   private void notifyOnError(TICCoreError error) {
     if (error == null) {
       return;
     }
-    for (TICCoreSubscriber subscriber : this.notifier.getSubscribers()) {
-      subscriber.onError(error);
-    }
+
+    Collection<TICCoreSubscriber> subscriberList = this.notifier.getSubscribers();
+    Task task =
+        new TaskBase() {
+          @Override
+          public void process() {
+            for (TICCoreSubscriber subscriber : subscriberList) {
+              try {
+                subscriber.onError(error);
+              } catch (Exception exception) {
+                logger.error("TICCoreStream subscriber onError aborted", exception);
+              }
+            }
+          }
+        };
+    task.start();
   }
 }
