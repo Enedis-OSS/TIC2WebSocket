@@ -24,7 +24,7 @@ public class TICCoreStreamMock implements TICCoreStream {
     super();
     this.subscribers = new HashSet<TICCoreSubscriber>();
     this.running = false;
-    this.identifier = new TICIdentifier(portId, portName, null);
+    this.identifier = new TICIdentifier.Builder().portId(portId).portName(portName).build();
     streams.add(this);
   }
 

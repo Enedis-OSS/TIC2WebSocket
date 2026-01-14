@@ -34,6 +34,10 @@ public final class TICCoreIdentifierOptions {
     if (this.portName == null && this.portId == null && this.serialNumber == null) {
       return null;
     }
-    return new TICIdentifier(this.portId, this.portName, this.serialNumber);
+    return new TICIdentifier.Builder()
+        .portId(this.portId)
+        .portName(this.portName)
+        .serialNumber(this.serialNumber)
+        .build();
   }
 }

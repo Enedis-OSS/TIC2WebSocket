@@ -110,7 +110,11 @@ public class TICCoreStreamBase implements TICCoreStream {
       throw exception;
     }
 
-    identifier = new TICIdentifier(resolvedPortId, resolvedPortName, null);
+    identifier =
+        new TICIdentifier.Builder()
+            .portId(resolvedPortId)
+            .portName(resolvedPortName)
+            .build();
     notifier = new NotifierBase<TICCoreSubscriber>();
 
     TICStreamIdentifier streamIdentifier =
@@ -204,7 +208,11 @@ public class TICCoreStreamBase implements TICCoreStream {
 
     TICIdentifier frameIdentifier;
     synchronized (this.identifierLock) {
-      this.identifier = this.identifier.withSerialNumber(serialNumber);
+      this.identifier = new TICIdentifier.Builder()
+            .portId(this.identifier.getPortId())
+            .portName(this.identifier.getPortName())
+            .serialNumber(serialNumber)
+            .build();
       frameIdentifier = this.identifier;
     }
 

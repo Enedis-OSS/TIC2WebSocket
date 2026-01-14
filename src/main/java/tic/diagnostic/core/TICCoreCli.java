@@ -156,9 +156,12 @@ public final class TICCoreCli implements Callable<Integer> {
         if (descriptor == null) {
           continue;
         }
-        TICIdentifier identifier =
-            new TICIdentifier(
-                descriptor.portId(), descriptor.portName(), descriptor.serialNumber());
+
+        TICIdentifier identifier = new TICIdentifier.Builder()
+            .portId(descriptor.portId())
+            .portName(descriptor.portName())
+            .build();
+
         // subscribe() will start the stream if needed.
         ticCore.subscribe(identifier, NOOP_SUBSCRIBER);
       }

@@ -31,10 +31,62 @@ public class TICIdentifier {
   private final String portName;
   private final String serialNumber;
 
-  public TICIdentifier(String portId, String portName, String serialNumber) {
-    if (portId == null && portName == null && serialNumber == null) {
-      throw new IllegalArgumentException("Empty TICIdentifier not allowed!");
+  public static class Builder {
+    private String portId;
+    private String portName;
+    private String serialNumber;
+
+    /**
+     * Sets the portId field.
+     *
+     * @param portId the port ID
+     * @return the Builder instance
+     */
+    public Builder portId(String portId) {
+      this.portId = portId;
+      return this;
     }
+
+    /**
+     * Sets the portName field.
+     *
+     * @param portName the port name
+     * @return the Builder instance
+     */
+    public Builder portName(String portName) {
+      this.portName = portName;
+      return this;
+    }
+
+    /**
+     * Sets the serialNumber field.
+     *
+     * @param serialNumber the serial number
+     * @return the Builder instance
+     */
+    public Builder serialNumber(String serialNumber) {
+      this.serialNumber = serialNumber;
+      return this;
+    }
+
+    /**
+     * Validates the builder's fields.
+     *
+     * @throws IllegalArgumentException if any required field is invalid
+     */
+    protected void validate() {
+      if (this.portId == null && this.portName == null && this.serialNumber == null) {
+        throw new IllegalArgumentException("Empty TICIdentifier not allowed!");
+      }
+    }
+
+    public TICIdentifier build() {
+      this.validate();
+      return new TICIdentifier(this.portId, this.portName, this.serialNumber);
+    }
+  }
+
+  private TICIdentifier(String portId, String portName, String serialNumber) {
     this.portId = portId;
     this.portName = portName;
     this.serialNumber = serialNumber;
@@ -81,10 +133,6 @@ public class TICIdentifier {
    */
   public String getSerialNumber() {
     return this.serialNumber;
-  }
-
-  public TICIdentifier withSerialNumber(String serialNumber) {
-    return new TICIdentifier(this.portId, this.portName, serialNumber);
   }
 
   @Override

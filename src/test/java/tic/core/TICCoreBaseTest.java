@@ -90,8 +90,8 @@ public class TICCoreBaseTest {
     // Then
     Assert.assertNotNull(availableTICs);
     Assert.assertEquals(2, availableTICs.size());
-    Assert.assertTrue(availableTICs.contains(new TICIdentifier("1", "COM3", null)));
-    Assert.assertTrue(availableTICs.contains(new TICIdentifier("2", "COM4", null)));
+    Assert.assertTrue(availableTICs.contains(new TICIdentifier.Builder().portId("1").portName("COM3").build()));
+    Assert.assertTrue(availableTICs.contains(new TICIdentifier.Builder().portId("2").portName("COM4").build()));
   }
 
   @Test
@@ -120,7 +120,7 @@ public class TICCoreBaseTest {
     // Then
     Assert.assertNotNull(availableTICs);
     Assert.assertEquals(1, availableTICs.size());
-    Assert.assertTrue(availableTICs.contains(new TICIdentifier("2", "COM4", null)));
+    Assert.assertTrue(availableTICs.contains(new TICIdentifier.Builder().portId("2").portName("COM4").build()));
   }
 
   @Test
@@ -264,7 +264,7 @@ public class TICCoreBaseTest {
             .modemType(ModemType.MICHAUD)
             .build());
     TICCoreReadNextFrameTask task =
-        new TICCoreReadNextFrameTask(this.ticCore, new TICIdentifier("2", "COM3", null));
+        new TICCoreReadNextFrameTask(this.ticCore, new TICIdentifier.Builder().portId("2").portName("COM3").build());
 
     // When
     task.start();
@@ -403,7 +403,7 @@ public class TICCoreBaseTest {
             .modemType(ModemType.MICHAUD)
             .build());
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
-    TICIdentifier identifier = new TICIdentifier(null, "COM4", null);
+    TICIdentifier identifier = new TICIdentifier.Builder().portName("COM4").build();
 
     // When
     try {
@@ -738,7 +738,7 @@ public class TICCoreBaseTest {
     this.ticPortFinder.addDescriptor(descriptor);
     this.waitPlugNotifierUpdate();
 
-    return new TICIdentifier(descriptor.portId(), descriptor.portName(), null);
+    return new TICIdentifier.Builder().portId(descriptor.portId()).portName(descriptor.portName()).build();
   }
 
   private void unplugModem(ModemDescriptor descriptor) {
