@@ -16,6 +16,7 @@ import picocli.CommandLine.Option;
 import tic.core.TICCoreBase;
 import tic.core.TICCoreFrame;
 import tic.core.TICIdentifier;
+import tic.core.codec.TICCoreFrameCodec;
 import tic.diagnostic.core.TICCoreCli;
 import tic.diagnostic.core.TICCoreIdentifierOptions;
 
@@ -50,7 +51,7 @@ public final class TICCoreReadCommand implements Callable<Integer> {
       TICIdentifier identifier = parent.resolveIdentifier(ticCore, identifierOptions);
       System.out.println("Reading next frame from " + identifier + " ...");
       TICCoreFrame frame = ticCore.readNextFrame(identifier, timeoutMs);
-      System.out.println(frame == null ? "null" : frame.toString(indent));
+      System.out.println(frame == null ? "null" : TICCoreFrameCodec.encode(frame, indent));
       return ExitCode.OK;
     } catch (IllegalArgumentException e) {
       System.err.println("[ERROR] " + e.getMessage());
