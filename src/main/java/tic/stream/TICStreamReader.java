@@ -75,7 +75,7 @@ public class TICStreamReader {
         System.exit(3);
       } else {
         TICFrame frame = TICFrameCodec.decode(frameBuffer);
-        String jsonFrame = TICFrameJsonEncoder.encode(frame);
+        String jsonFrame = TICFrameJsonEncoder.encodeAsString(frame);
         System.out.println("TIC frame read:\n" + jsonFrame);
         System.exit(0);
       }

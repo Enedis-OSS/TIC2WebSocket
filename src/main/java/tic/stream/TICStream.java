@@ -58,7 +58,8 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
             @Override
             public void onFrame(TICFrame frame) {
 
-              System.out.println("TIC stream frame:\n" + TICFrameJsonEncoder.encode(frame) + "\n");
+              System.out.println(
+                  "TIC stream frame:\n" + TICFrameJsonEncoder.encodeAsString(frame) + "\n");
             }
 
             @Override

@@ -26,8 +26,8 @@ public class TICFrameJsonEncoder {
    * @param frame the TICFrame object to encode
    * @return the JSON string representation of the TICFrame
    */
-  public static String encode(TICFrame frame) {
-    return encode(frame, DEFAULT_INDENT, DEFAULT_SUMMARIZED);
+  public static String encodeAsString(TICFrame frame) {
+    return encodeAsString(frame, DEFAULT_INDENT, DEFAULT_SUMMARIZED);
   }
 
   /**
@@ -38,7 +38,7 @@ public class TICFrameJsonEncoder {
    * @param summarized whether to produce a summarized version of the JSON
    * @return the JSON string representation of the TICFrame
    */
-  public static String encode(TICFrame frame, int indentFactor, boolean summarized) {
+  public static String encodeAsString(TICFrame frame, int indentFactor, boolean summarized) {
 
     return summarized
         ? encodeSummarized(frame, indentFactor)

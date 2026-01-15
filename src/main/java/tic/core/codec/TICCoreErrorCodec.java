@@ -53,7 +53,7 @@ public final class TICCoreErrorCodec {
 
   private static JSONObject toJson(TICFrame frame, boolean summarized) {
     // Encode with no indentation, then parse back to JSONObject to embed cleanly.
-    String jsonText = TICFrameJsonEncoder.encode(frame, -1, summarized);
+    String jsonText = TICFrameJsonEncoder.encodeAsString(frame, -1, summarized);
     return new JSONObject(jsonText);
   }
 }

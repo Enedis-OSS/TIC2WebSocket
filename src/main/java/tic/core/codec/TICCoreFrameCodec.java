@@ -51,7 +51,7 @@ public final class TICCoreFrameCodec {
       return new JSONObject();
     }
     // Encode with no indentation, then parse back to JSONObject to embed cleanly.
-    String jsonText = TICFrameJsonEncoder.encode(frame, -1, summarized);
+    String jsonText = TICFrameJsonEncoder.encodeAsString(frame, -1, summarized);
     return new JSONObject(jsonText);
   }
 }
