@@ -157,14 +157,10 @@ public class TICIdentifier {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("{\"portName\":")
-        .append(this.portName == null ? "null" : "\"" + this.portName + "\"");
-    if (this.portId != null) {
-      sb.append(",\"portId\":\"").append(this.portId).append("\"");
-    }
-    if (this.serialNumber != null) {
-      sb.append(",\"serialNumber\":\"").append(this.serialNumber).append("\"");
-    }
+    sb.append("TICIdentifier {\n");
+    sb.append("  portName: ").append(this.portName).append(",\n");
+    sb.append("  portId: ").append(this.portId).append(",\n");
+    sb.append("  serialNumber: ").append(this.serialNumber).append("\n");
     sb.append("}");
     return sb.toString();
   }
