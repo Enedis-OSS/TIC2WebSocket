@@ -9,7 +9,6 @@ package tic.core.codec;
 
 import org.json.JSONObject;
 import tic.core.TICCoreFrame;
-import tic.core.TICIdentifier;
 import tic.frame.TICFrame;
 import tic.frame.codec.TICFrameJsonEncoder;
 
@@ -39,23 +38,12 @@ public final class TICCoreFrameCodec {
     }
 
     JSONObject json = new JSONObject();
-    json.put("identifier", toJson(frame.getIdentifier()));
+    json.put("identifier", TICIdentifierCodec.toJson(frame.getIdentifier()));
     json.put("mode", frame.getMode().name());
     json.put("captureDateTime", frame.getCaptureDateTime().toString());
     json.put("frame", toJson(frame.getFrame(), summarizedFrame));
 
     return indentFactor < 0 ? json.toString() : json.toString(indentFactor);
-  }
-
-  private static JSONObject toJson(TICIdentifier identifier) {
-    JSONObject json = new JSONObject();
-    json.put(
-        "portName", identifier.getPortName() == null ? JSONObject.NULL : identifier.getPortName());
-    json.put("portId", identifier.getPortId() == null ? JSONObject.NULL : identifier.getPortId());
-    json.put(
-        "serialNumber",
-        identifier.getSerialNumber() == null ? JSONObject.NULL : identifier.getSerialNumber());
-    return json;
   }
 
   private static JSONObject toJson(TICFrame frame, boolean summarized) {

@@ -10,7 +10,6 @@ package tic.core.codec;
 
 import org.json.JSONObject;
 import tic.core.TICCoreError;
-import tic.core.TICIdentifier;
 import tic.frame.TICFrame;
 import tic.frame.codec.TICFrameJsonEncoder;
 
@@ -40,7 +39,7 @@ public final class TICCoreErrorCodec {
     }
 
     JSONObject json = new JSONObject();
-    json.put("identifier", toJson(error.getIdentifier()));
+    json.put("identifier", TICIdentifierCodec.toJson(error.getIdentifier()));
     json.put("errorMessage", error.getErrorMessage());
     json.put("errorCode", error.getErrorCode());
 
@@ -50,17 +49,6 @@ public final class TICCoreErrorCodec {
     }
 
     return indentFactor < 0 ? json.toString() : json.toString(indentFactor);
-  }
-
-  private static JSONObject toJson(TICIdentifier identifier) {
-    JSONObject json = new JSONObject();
-    json.put(
-        "portName", identifier.getPortName() == null ? JSONObject.NULL : identifier.getPortName());
-    json.put("portId", identifier.getPortId() == null ? JSONObject.NULL : identifier.getPortId());
-    json.put(
-        "serialNumber",
-        identifier.getSerialNumber() == null ? JSONObject.NULL : identifier.getSerialNumber());
-    return json;
   }
 
   private static JSONObject toJson(TICFrame frame, boolean summarized) {
