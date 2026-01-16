@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.function.Predicate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import tic.core.codec.TICCoreErrorCodec;
+import tic.core.codec.TICCoreFrameCodec;
 import tic.frame.TICMode;
 import tic.io.PlugSubscriber;
 import tic.io.modem.ModemDescriptor;
@@ -258,7 +261,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
 
   @Override
   public void onData(TICCoreFrame frame) {
-    logger.trace("TICCore frame:\n" + frame.toString());
+    logger.trace("TICCore frame:\n" + TICCoreFrameCodec.encode(frame));
     Collection<TICCoreSubscriber> subscriberList =
         this.findSubscribers(frame.getIdentifier(), true);
     Task task =
@@ -273,7 +276,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
 
   @Override
   public void onError(TICCoreError error) {
-    logger.error("TICCore error:\n" + error.toString());
+    logger.trace("TICCore error:\n" + TICCoreErrorCodec.encode(error));
     Collection<TICCoreSubscriber> subscriberList =
         this.findSubscribers(error.getIdentifier(), true);
     Task task =
