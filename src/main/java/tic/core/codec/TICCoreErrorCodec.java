@@ -11,7 +11,8 @@ package tic.core.codec;
 import org.json.JSONObject;
 import tic.core.TICCoreError;
 import tic.frame.TICFrame;
-import tic.frame.codec.TICFrameJsonEncoder;
+import tic.frame.codec.TICFrameDetailledJsonEncoder;
+import tic.frame.codec.TICFrameSummarizedJsonEncoder;
 
 /**
  * Codec utilities for {@link tic.core.TICCoreError}.
@@ -52,8 +53,12 @@ public final class TICCoreErrorCodec {
   }
 
   private static JSONObject toJson(TICFrame frame, boolean summarized) {
-    // Encode with no indentation, then parse back to JSONObject to embed cleanly.
-    String jsonText = TICFrameJsonEncoder.encodeAsString(frame, -1, summarized);
-    return new JSONObject(jsonText);
+    if (frame == null) {
+      return new JSONObject();
+    }
+
+    return summarized
+        ? TICFrameSummarizedJsonEncoder.encodeAsObject(frame)
+        : TICFrameDetailledJsonEncoder.encodeAsObject(frame);
   }
 }

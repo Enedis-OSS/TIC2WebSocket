@@ -10,7 +10,8 @@ package tic.core.codec;
 import org.json.JSONObject;
 import tic.core.TICCoreFrame;
 import tic.frame.TICFrame;
-import tic.frame.codec.TICFrameJsonEncoder;
+import tic.frame.codec.TICFrameDetailledJsonEncoder;
+import tic.frame.codec.TICFrameSummarizedJsonEncoder;
 
 /**
  * Codec utilities for {@link tic.core.TICCoreFrame}.
@@ -50,8 +51,8 @@ public final class TICCoreFrameCodec {
     if (frame == null) {
       return new JSONObject();
     }
-    // Encode with no indentation, then parse back to JSONObject to embed cleanly.
-    String jsonText = TICFrameJsonEncoder.encodeAsString(frame, -1, summarized);
-    return new JSONObject(jsonText);
+    return summarized
+        ? TICFrameSummarizedJsonEncoder.encodeAsObject(frame)
+        : TICFrameDetailledJsonEncoder.encodeAsObject(frame);
   }
 }

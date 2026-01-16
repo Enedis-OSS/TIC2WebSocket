@@ -83,13 +83,14 @@ public class TICCoreFrame {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("TICCoreFrame {\n");
-    sb.append("  identifier: ").append(this.identifier).append(",\n");
-    sb.append("  mode: ").append(this.mode).append(",\n");
-    sb.append("  captureDateTime: ").append(this.captureDateTime).append(",\n");
-    sb.append("  frame: ").append(this.frame).append("\n");
-    sb.append("}");
-    return sb.toString();
+    return "{identifier="
+        + this.identifier
+        + ", mode="
+        + this.mode
+        + ", captureDateTime="
+        + this.captureDateTime
+        + ", frame="
+        + this.frame
+        + "}";
   }
 }

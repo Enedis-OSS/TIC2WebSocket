@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import tic.frame.TICFrame;
 import tic.frame.codec.TICFrameCodec;
-import tic.frame.codec.TICFrameJsonEncoder;
+import tic.frame.codec.TICFrameSummarizedJsonEncoder;
 import tic.frame.delimiter.TICFrameDelimiter;
 import tic.util.time.Time;
 
@@ -75,7 +75,7 @@ public class TICStreamReader {
         System.exit(3);
       } else {
         TICFrame frame = TICFrameCodec.decode(frameBuffer);
-        String jsonFrame = TICFrameJsonEncoder.encodeAsString(frame);
+        String jsonFrame = TICFrameSummarizedJsonEncoder.encodeAsString(frame);
         System.out.println("TIC frame read:\n" + jsonFrame);
         System.exit(0);
       }

@@ -156,12 +156,12 @@ public class TICIdentifier {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("TICIdentifier {\n");
-    sb.append("  portName: ").append(this.portName).append(",\n");
-    sb.append("  portId: ").append(this.portId).append(",\n");
-    sb.append("  serialNumber: ").append(this.serialNumber).append("\n");
-    sb.append("}");
-    return sb.toString();
+    return "{portId="
+        + this.portId
+        + ", portName="
+        + this.portName
+        + ", serialNumber="
+        + this.serialNumber
+        + "}";
   }
 }

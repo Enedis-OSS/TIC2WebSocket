@@ -8,17 +8,15 @@
 package tic.frame.codec;
 
 import java.util.List;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import tic.frame.TICFrame;
 import tic.frame.group.TICGroup;
 
-public class TICFrameJsonEncoder {
+public class TICFrameSummarizedJsonEncoder {
 
   private static final int DEFAULT_INDENT = 2;
-  private static final boolean DEFAULT_SUMMARIZED = true;
 
-  private TICFrameJsonEncoder() {}
+  private TICFrameSummarizedJsonEncoder() {}
 
   /**
    * Encodes a TICFrame object into its JSON string representation with default settings.
@@ -27,7 +25,7 @@ public class TICFrameJsonEncoder {
    * @return the JSON string representation of the TICFrame
    */
   public static String encodeAsString(TICFrame frame) {
-    return encodeAsString(frame, DEFAULT_INDENT, DEFAULT_SUMMARIZED);
+    return encodeAsString(frame, DEFAULT_INDENT);
   }
 
   /**
@@ -35,37 +33,20 @@ public class TICFrameJsonEncoder {
    *
    * @param frame the TICFrame object to encode
    * @param indentFactor the number of spaces to add to each level of indentation
-   * @param summarized whether to produce a summarized version of the JSON
    * @return the JSON string representation of the TICFrame
    */
-  public static String encodeAsString(TICFrame frame, int indentFactor, boolean summarized) {
-
-    return summarized
-        ? encodeSummarized(frame, indentFactor)
-        : encodeFullDetails(frame, indentFactor);
-  }
-
-  private static String encodeFullDetails(TICFrame frame, int indentFactor) {
-
-    JSONObject jsonFrame = new JSONObject();
-    jsonFrame.put("mode", frame.getMode().name());
-    List<TICGroup> groups = frame.getGroupList();
-    JSONArray jsonGroups = new JSONArray();
-    groups.forEach(
-        group -> {
-          JSONObject jsonGroup = new JSONObject();
-          jsonGroup.put("label", group.getLabel());
-          jsonGroup.put("value", group.getValue());
-          jsonGroup.put("isValid", group.isValid());
-          jsonGroups.put(jsonGroup);
-        });
-    jsonFrame.put("groupList", jsonGroups);
-
+  public static String encodeAsString(TICFrame frame, int indentFactor) {
+    JSONObject jsonFrame = encodeAsObject(frame);
     return indentFactor < 0 ? jsonFrame.toString() : jsonFrame.toString(indentFactor);
   }
 
-  private static String encodeSummarized(TICFrame frame, int indentFactor) {
-
+  /**
+   * Encodes a TICFrame object into its JSON object representation in summarized form.
+   *
+   * @param frame the TICFrame object to encode
+   * @return the JSON object representation of the TICFrame
+   */
+  public static JSONObject encodeAsObject(TICFrame frame) {
     List<TICGroup> groups = frame.getGroupList();
     JSONObject jsonFrame = new JSONObject();
     groups.forEach(
@@ -76,7 +57,6 @@ public class TICFrameJsonEncoder {
             jsonFrame.put("!" + group.getLabel(), group.getValue());
           }
         });
-
-    return indentFactor < 0 ? jsonFrame.toString() : jsonFrame.toString(indentFactor);
+    return jsonFrame;
   }
 }

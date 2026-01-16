@@ -89,7 +89,7 @@ public class TICFrameJsonEncoderTest {
     HISTORIC_GROUPS.forEach(group -> frame.addGroup(group));
 
     // When
-    String actualJsonText = TICFrameJsonEncoder.encodeAsString(frame, 2, false);
+    String actualJsonText = TICFrameDetailledJsonEncoder.encodeAsString(frame);
 
     // Then
     String expectedJsonText =
@@ -104,7 +104,7 @@ public class TICFrameJsonEncoderTest {
     STANDARD_GROUPS.forEach(group -> frame.addGroup(group));
 
     // When
-    String actualJsonText = TICFrameJsonEncoder.encodeAsString(frame);
+    String actualJsonText = TICFrameSummarizedJsonEncoder.encodeAsString(frame);
 
     // Then
     String expectedJsonText =
@@ -120,7 +120,7 @@ public class TICFrameJsonEncoderTest {
     HISTORIC_GROUPS.forEach(group -> frame.addGroup(group));
 
     // When
-    String actualJsonText = TICFrameJsonEncoder.encodeAsString(frame, -1, false);
+    String actualJsonText = TICFrameDetailledJsonEncoder.encodeAsString(frame, -1);
 
     // Then
     String expectedJsonText =
@@ -136,7 +136,7 @@ public class TICFrameJsonEncoderTest {
     STANDARD_GROUPS.forEach(group -> frame.addGroup(group));
 
     // When
-    String actualJsonText = TICFrameJsonEncoder.encodeAsString(frame, -1, true);
+    String actualJsonText = TICFrameSummarizedJsonEncoder.encodeAsString(frame, -1);
 
     // Then
     String expectedJsonText =
