@@ -9,12 +9,12 @@ package enedis.tic.service.message;
 
 import enedis.lab.util.message.Message;
 import enedis.lab.util.message.MessageType;
-import enedis.lab.util.message.exception.MessageInvalidContentException;
-import enedis.lab.util.message.exception.MessageInvalidFormatException;
-import enedis.lab.util.message.exception.MessageInvalidTypeException;
-import enedis.lab.util.message.exception.MessageKeyNameDoesntExistException;
-import enedis.lab.util.message.exception.MessageKeyTypeDoesntExistException;
-import enedis.lab.util.message.exception.UnsupportedMessageException;
+import tic.util.message.exception.MessageInvalidContentException;
+import tic.util.message.exception.MessageInvalidFormatException;
+import tic.util.message.exception.MessageInvalidTypeException;
+import tic.util.message.exception.MessageKeyNameDoesntExistException;
+import tic.util.message.exception.MessageKeyTypeDoesntExistException;
+import tic.util.message.exception.UnsupportedMessageException;
 import enedis.tic.service.message.factory.TIC2WebSocketResponseFactory;
 import org.junit.Assert;
 import org.junit.Test;

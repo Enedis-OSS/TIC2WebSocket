@@ -7,7 +7,7 @@
 
 package enedis.tic.service.message.factory;
 
-import enedis.lab.util.message.factory.EventFactory;
+import tic.util.message.factory.EventFactory;
 import enedis.tic.service.message.EventOnError;
 import enedis.tic.service.message.EventOnTICData;
 

@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.lab.util.message.factory;
+package tic.util.message.factory;
 
 import enedis.lab.util.message.Event;
 

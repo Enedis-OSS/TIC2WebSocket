@@ -5,15 +5,15 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.lab.util.message.factory;
+package tic.util.message.factory;
 
 import enedis.lab.util.message.Message;
-import enedis.lab.util.message.exception.MessageInvalidContentException;
-import enedis.lab.util.message.exception.MessageInvalidFormatException;
-import enedis.lab.util.message.exception.MessageInvalidTypeException;
-import enedis.lab.util.message.exception.MessageKeyNameDoesntExistException;
-import enedis.lab.util.message.exception.MessageKeyTypeDoesntExistException;
-import enedis.lab.util.message.exception.UnsupportedMessageException;
+import tic.util.message.exception.MessageInvalidContentException;
+import tic.util.message.exception.MessageInvalidFormatException;
+import tic.util.message.exception.MessageInvalidTypeException;
+import tic.util.message.exception.MessageKeyNameDoesntExistException;
+import tic.util.message.exception.MessageKeyTypeDoesntExistException;
+import tic.util.message.exception.UnsupportedMessageException;
 
 /**
  * Central factory for decoding and dispatching messages in the TIC2WebSocket framework.

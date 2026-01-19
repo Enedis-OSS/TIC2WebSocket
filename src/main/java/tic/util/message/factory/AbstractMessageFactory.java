@@ -5,17 +5,17 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.lab.util.message.factory;
+package tic.util.message.factory;
 
 import enedis.lab.types.DataDictionaryException;
 import enedis.lab.types.datadictionary.DataDictionaryBase;
 import enedis.lab.util.message.Message;
-import enedis.lab.util.message.exception.MessageInvalidContentException;
-import enedis.lab.util.message.exception.MessageInvalidFormatException;
-import enedis.lab.util.message.exception.UnsupportedMessageException;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONException;
+import tic.util.message.exception.MessageInvalidContentException;
+import tic.util.message.exception.MessageInvalidFormatException;
+import tic.util.message.exception.UnsupportedMessageException;
 
 /**
  * Generic factory for creating and decoding message objects.

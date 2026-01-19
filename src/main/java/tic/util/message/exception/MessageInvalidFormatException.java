@@ -5,41 +5,41 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.lab.util.message.exception;
+package tic.util.message.exception;
 
 /**
- * Exception indicating that a required message key type does not exist.
+ * Exception indicating that a message has an invalid format.
  *
- * <p>This exception is thrown when a message references a key type that is missing, undefined, or
- * not recognized during parsing or processing. It is part of the message exception hierarchy used
- * to signal specific errors in communication.
+ * <p>This exception is thrown when a message fails to conform to the expected format, such as
+ * incorrect JSON structure, missing required fields, or syntactic errors during parsing. It is part
+ * of the message exception hierarchy used to signal specific errors in communication.
  *
  * <p>Common use cases include:
  *
  * <ul>
- *   <li>Detecting missing key types in message definitions
- *   <li>Reporting undefined or unrecognized key types
- *   <li>Handling validation failures due to absent key types
+ *   <li>Detecting malformed or corrupted messages
+ *   <li>Reporting missing or unexpected fields
+ *   <li>Handling parsing failures due to format errors
  *   <li>Chaining underlying exceptions for debugging
  * </ul>
  *
  * @author Enedis Smarties team
  */
-public class MessageKeyTypeDoesntExistException extends MessageException {
+public class MessageInvalidFormatException extends MessageException {
 
   private static final long serialVersionUID = -2263755971102386572L;
 
   /**
-   * Creates a new MessageKeyTypeDoesntExistException with no detail message.
+   * Creates a new MessageInvalidFormatException with no detail message.
    *
    * <p>This constructor is typically used when no specific error information is available.
    */
-  public MessageKeyTypeDoesntExistException() {
+  public MessageInvalidFormatException() {
     super();
   }
 
   /**
-   * Creates a new MessageKeyTypeDoesntExistException with a detail message and underlying cause.
+   * Creates a new MessageInvalidFormatException with a detail message and underlying cause.
    *
    * <p>This constructor is used when both a descriptive error message and the original cause of the
    * error are available, providing complete context for debugging.
@@ -47,31 +47,31 @@ public class MessageKeyTypeDoesntExistException extends MessageException {
    * @param message the detail message explaining the error
    * @param cause the underlying exception that caused this error
    */
-  public MessageKeyTypeDoesntExistException(String message, Throwable cause) {
+  public MessageInvalidFormatException(String message, Throwable cause) {
     super(message, cause);
   }
 
   /**
-   * Creates a new MessageKeyTypeDoesntExistException with a detail message.
+   * Creates a new MessageInvalidFormatException with a detail message.
    *
    * <p>This constructor is used when a descriptive error message is available but there is no
    * underlying cause to chain.
    *
    * @param message the detail message explaining the error
    */
-  public MessageKeyTypeDoesntExistException(String message) {
+  public MessageInvalidFormatException(String message) {
     super(message);
   }
 
   /**
-   * Creates a new MessageKeyTypeDoesntExistException with an underlying cause.
+   * Creates a new MessageInvalidFormatException with an underlying cause.
    *
    * <p>This constructor is used when the original cause is known but no additional descriptive
    * message is needed beyond what the cause provides.
    *
    * @param cause the underlying exception that caused this error
    */
-  public MessageKeyTypeDoesntExistException(Throwable cause) {
+  public MessageInvalidFormatException(Throwable cause) {
     super(cause);
   }
 }

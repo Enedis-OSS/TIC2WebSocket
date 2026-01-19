@@ -7,7 +7,7 @@
 
 package enedis.tic.service.message.factory;
 
-import enedis.lab.util.message.factory.RequestFactory;
+import tic.util.message.factory.RequestFactory;
 import enedis.tic.service.message.RequestGetAvailableTICs;
 import enedis.tic.service.message.RequestGetModemsInfo;
 import enedis.tic.service.message.RequestReadTIC;

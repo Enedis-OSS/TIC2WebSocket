@@ -7,7 +7,7 @@
 
 package enedis.tic.service.message.factory;
 
-import enedis.lab.util.message.factory.MessageFactory;
+import tic.util.message.factory.MessageFactory;
 
 /**
  * Factory for creating TIC2WebSocket protocol messages.
