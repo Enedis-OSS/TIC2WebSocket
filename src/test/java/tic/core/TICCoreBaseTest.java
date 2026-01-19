@@ -5,21 +5,21 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.tic.core;
+package tic.core;
 
-import enedis.lab.mock.FunctionCall;
-import enedis.lab.protocol.tic.TICMode;
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.types.datadictionary.DataDictionaryBase;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import tic.frame.TICFrame;
+import tic.frame.TICMode;
+import tic.frame.group.TICGroup;
 import tic.io.modem.ModemDescriptor;
 import tic.io.modem.ModemFinderMock;
 import tic.io.modem.ModemType;
+import tic.mock.FunctionCall;
 import tic.util.task.Task;
 import tic.util.time.Time;
 
@@ -39,7 +39,6 @@ public class TICCoreBaseTest {
         new TICCoreBase(
             this.ticPortFinder,
             this.plugNotifierPeriod,
-            TICCoreStreamMock.class,
             TICMode.AUTO,
             null);
 
@@ -67,7 +66,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_getAvailableTICs_plug() throws TICCoreException, DataDictionaryException {
+  public void test_getAvailableTICs_plug() throws TICCoreException {
     // Given
     List<TICIdentifier> availableTICs;
     ModemDescriptor descriptor1 =
@@ -91,12 +90,12 @@ public class TICCoreBaseTest {
     // Then
     Assert.assertNotNull(availableTICs);
     Assert.assertEquals(2, availableTICs.size());
-    Assert.assertTrue(availableTICs.contains(new TICIdentifier("1", "COM3", null)));
-    Assert.assertTrue(availableTICs.contains(new TICIdentifier("2", "COM4", null)));
+    Assert.assertTrue(availableTICs.contains(new TICIdentifier.Builder().portId("1").portName("COM3").build()));
+    Assert.assertTrue(availableTICs.contains(new TICIdentifier.Builder().portId("2").portName("COM4").build()));
   }
 
   @Test
-  public void test_getAvailableTICs_unplug() throws TICCoreException, DataDictionaryException {
+  public void test_getAvailableTICs_unplug() throws TICCoreException {
     // Given
     List<TICIdentifier> availableTICs;
     ModemDescriptor descriptor1 =
@@ -121,7 +120,7 @@ public class TICCoreBaseTest {
     // Then
     Assert.assertNotNull(availableTICs);
     Assert.assertEquals(1, availableTICs.size());
-    Assert.assertTrue(availableTICs.contains(new TICIdentifier("2", "COM4", null)));
+    Assert.assertTrue(availableTICs.contains(new TICIdentifier.Builder().portId("2").portName("COM4").build()));
   }
 
   @Test
@@ -138,7 +137,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_getModemsInfo_plug() throws TICCoreException, DataDictionaryException {
+  public void test_getModemsInfo_plug() throws TICCoreException {
     // Given
     List<ModemDescriptor> modemsInfo;
     ModemDescriptor descriptor1 =
@@ -167,7 +166,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_getModemsInfo_unplug() throws TICCoreException, DataDictionaryException {
+  public void test_getModemsInfo_unplug() throws TICCoreException {
     // Given
     List<ModemDescriptor> modemsInfo;
     ModemDescriptor descriptor1 =
@@ -196,7 +195,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_readNextFrame_ok() throws TICCoreException, DataDictionaryException {
+  public void test_readNextFrame_ok() throws TICCoreException {
     // Given
     TICIdentifier identifier =
         this.plugModem(
@@ -224,8 +223,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_readNextFrame_error_OTHER_REASON()
-      throws TICCoreException, DataDictionaryException {
+  public void test_readNextFrame_error_OTHER_REASON() throws TICCoreException {
     // Given
     TICIdentifier identifier =
         this.plugModem(
@@ -257,8 +255,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_readNextFrame_error_STREAM_IDENTIFIER_NOT_FOUND()
-      throws TICCoreException, DataDictionaryException {
+  public void test_readNextFrame_error_STREAM_IDENTIFIER_NOT_FOUND() throws TICCoreException {
     // Given
     this.plugModem(
         new ModemDescriptor.Builder<>()
@@ -267,7 +264,7 @@ public class TICCoreBaseTest {
             .modemType(ModemType.MICHAUD)
             .build());
     TICCoreReadNextFrameTask task =
-        new TICCoreReadNextFrameTask(this.ticCore, new TICIdentifier("2", "COM3", null));
+        new TICCoreReadNextFrameTask(this.ticCore, new TICIdentifier.Builder().portId("2").portName("COM3").build());
 
     // When
     task.start();
@@ -284,7 +281,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_readNextFrame_timeout() throws TICCoreException, DataDictionaryException {
+  public void test_readNextFrame_timeout() throws TICCoreException {
     // Given
     TICIdentifier identifier =
         this.plugModem(
@@ -396,8 +393,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_subscribe_withIdentifier_notFound()
-      throws TICCoreException, DataDictionaryException {
+  public void test_subscribe_withIdentifier_notFound() throws TICCoreException {
     // Given
     Exception exception = null;
     this.plugModem(
@@ -407,7 +403,7 @@ public class TICCoreBaseTest {
             .modemType(ModemType.MICHAUD)
             .build());
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
-    TICIdentifier identifier = new TICIdentifier(null, "COM4", null);
+    TICIdentifier identifier = new TICIdentifier.Builder().portName("COM4").build();
 
     // When
     try {
@@ -426,7 +422,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_onError_whenUnplugModem() throws TICCoreException, DataDictionaryException {
+  public void test_onError_whenUnplugModem() throws TICCoreException {
     // Given
     ModemDescriptor descriptor1 =
         new ModemDescriptor.Builder<>()
@@ -499,7 +495,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_onData_any_oneModem() throws TICCoreException, DataDictionaryException {
+  public void test_onData_any_oneModem() throws TICCoreException {
     // Given
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(subscriber);
@@ -524,7 +520,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_onData_any_twoModems() throws TICCoreException, DataDictionaryException {
+  public void test_onData_any_twoModems() throws TICCoreException {
     // Given
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(subscriber);
@@ -562,8 +558,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_onData_withIdentifier_oneModem()
-      throws TICCoreException, DataDictionaryException {
+  public void test_onData_withIdentifier_oneModem() throws TICCoreException {
     // Given
     TICIdentifier identifier =
         this.plugModem(
@@ -589,8 +584,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_onData_withIdentifier_twoModems()
-      throws TICCoreException, DataDictionaryException {
+  public void test_onData_withIdentifier_twoModems() throws TICCoreException {
     // Given
     TICIdentifier identifier =
         this.plugModem(
@@ -629,7 +623,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_onError_any() throws TICCoreException, DataDictionaryException {
+  public void test_onError_any() throws TICCoreException {
     // Given
     TICCoreSubscriberMock subscriber = new TICCoreSubscriberMock();
     this.ticCore.subscribe(subscriber);
@@ -654,7 +648,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_onError_withIdentifier() throws TICCoreException, DataDictionaryException {
+  public void test_onError_withIdentifier() throws TICCoreException {
     // Given
     TICIdentifier identifier =
         this.plugModem(
@@ -680,7 +674,7 @@ public class TICCoreBaseTest {
   }
 
   @Test
-  public void test_getIdentifiers() throws TICCoreException, DataDictionaryException {
+  public void test_getIdentifiers() throws TICCoreException {
     // Given
     TICIdentifier identifier1 =
         this.plugModem(
@@ -740,11 +734,11 @@ public class TICCoreBaseTest {
     Assert.assertEquals(0, indentifierList3_unsubscribed.size());
   }
 
-  private TICIdentifier plugModem(ModemDescriptor descriptor) throws DataDictionaryException {
+  private TICIdentifier plugModem(ModemDescriptor descriptor) {
     this.ticPortFinder.addDescriptor(descriptor);
     this.waitPlugNotifierUpdate();
 
-    return new TICIdentifier(descriptor.portId(), descriptor.portName(), null);
+    return new TICIdentifier.Builder().portId(descriptor.portId()).portName(descriptor.portName()).build();
   }
 
   private void unplugModem(ModemDescriptor descriptor) {
@@ -753,17 +747,14 @@ public class TICCoreBaseTest {
   }
 
   private TICCoreFrame createFrame(
-      TICIdentifier identifier, TICMode mode, LocalDateTime localDateTime)
-      throws DataDictionaryException {
-    DataDictionaryBase content = new DataDictionaryBase();
+      TICIdentifier identifier, TICMode mode, LocalDateTime localDateTime) {
+    TICFrame content = new TICFrame(mode);
     if (mode == TICMode.STANDARD) {
-      content.set("ADSC", identifier.getSerialNumber());
+      content.addGroup(new TICGroup("ADSC", identifier.getSerialNumber()));
     } else {
-      content.set("ADCO", identifier.getSerialNumber());
+      content.addGroup(new TICGroup("ADCO", identifier.getSerialNumber()));
     }
-    TICCoreFrame frame = new TICCoreFrame(identifier, mode, localDateTime, content);
-
-    return frame;
+    return new TICCoreFrame(identifier, mode, localDateTime, content);
   }
 
   private void waitPlugNotifierUpdate() {

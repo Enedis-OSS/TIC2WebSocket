@@ -5,16 +5,21 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.tic.core;
+package tic.core;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("javadoc")
 public class TICCoreSubscriberMock implements TICCoreSubscriber {
-  public List<TICCoreSubscriberOnDataCall> onDataCalls =
-      new ArrayList<TICCoreSubscriberOnDataCall>();
-  public List<TICCoreSubscriberOnErrorCall> onErrorCalls =
-      new ArrayList<TICCoreSubscriberOnErrorCall>();
+  public List<TICCoreSubscriberOnDataCall> onDataCalls;
+  public List<TICCoreSubscriberOnErrorCall> onErrorCalls;
+
+  public TICCoreSubscriberMock() {
+    super();
+    this.onDataCalls = new ArrayList<TICCoreSubscriberOnDataCall>();
+    this.onErrorCalls = new ArrayList<TICCoreSubscriberOnErrorCall>();
+  }
 
   @Override
   public void onData(TICCoreFrame frame) {

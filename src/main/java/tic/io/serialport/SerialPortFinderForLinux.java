@@ -153,7 +153,7 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
         String productName = deviceProductName(device);
         try {
           serialPortDescriptor =
-              new SerialPortDescriptor.Builder()
+              new SerialPortDescriptor.Builder<>()
                   .portId(portId)
                   .portName(location)
                   .description(description)
@@ -178,7 +178,7 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
         }
         try {
           serialPortDescriptor =
-              new SerialPortDescriptor.Builder()
+              new SerialPortDescriptor.Builder<>()
                   .portId(null)
                   .portName(location)
                   .description(null)
@@ -292,7 +292,7 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
       } while (targetDir != null);
       try {
         serialPortDescriptor =
-            new SerialPortDescriptor.Builder()
+            new SerialPortDescriptor.Builder<>()
                 .portId(null)
                 .portName(portName)
                 .description(description)
@@ -330,7 +330,7 @@ public class SerialPortFinderForLinux implements SerialPortFinder {
       String portName = portNameFromSystemLocation(deviceFilePath);
       try {
         serialPortDescriptor =
-            new SerialPortDescriptor.Builder()
+            new SerialPortDescriptor.Builder<>()
                 .portId(null)
                 .portName(portName)
                 .description(null)

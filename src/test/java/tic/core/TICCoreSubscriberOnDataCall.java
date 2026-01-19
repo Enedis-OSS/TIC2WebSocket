@@ -5,9 +5,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package enedis.tic.core;
+package tic.core;
 
-import enedis.lab.mock.FunctionCall;
+import tic.mock.FunctionCall;
 
 @SuppressWarnings("javadoc")
 public class TICCoreSubscriberOnDataCall extends FunctionCall {
