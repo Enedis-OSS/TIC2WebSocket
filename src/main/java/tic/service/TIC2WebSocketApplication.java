@@ -12,6 +12,7 @@ import tic.core.TICCoreBase;
 import tic.service.client.TIC2WebSocketClientPool;
 import tic.service.client.TIC2WebSocketClientPoolBase;
 import tic.service.config.TIC2WebSocketConfiguration;
+import tic.service.config.TIC2WebSocketConfigurationLoader;
 import tic.service.netty.TIC2WebSocketServer;
 import tic.service.requesthandler.TIC2WebSocketRequestHandler;
 import tic.service.requesthandler.TIC2WebSocketRequestHandlerBase;
