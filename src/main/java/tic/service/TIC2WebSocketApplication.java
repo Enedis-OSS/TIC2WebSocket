@@ -7,9 +7,8 @@
 
 package tic.service;
 
-import enedis.lab.types.datadictionary.DataDictionaryBase;
-import enedis.tic.core.TICCore;
-import enedis.tic.core.TICCoreBase;
+import tic.core.TICCore;
+import tic.core.TICCoreBase;
 import tic.service.client.TIC2WebSocketClientPool;
 import tic.service.client.TIC2WebSocketClientPoolBase;
 import tic.service.config.TIC2WebSocketConfiguration;

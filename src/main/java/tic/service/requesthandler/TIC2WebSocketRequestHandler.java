@@ -7,8 +7,8 @@
 
 package tic.service.requesthandler;
 
-import enedis.lab.util.message.Request;
-import enedis.lab.util.message.Response;
+import tic.util.message.Request;
+import tic.util.message.Response;
 import tic.service.client.TIC2WebSocketClient;
 
 /**

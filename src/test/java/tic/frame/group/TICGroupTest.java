@@ -7,9 +7,10 @@
 
 package tic.frame.group;
 
-import enedis.lab.protocol.tic.TICMode;
 import org.junit.Assert;
 import org.junit.Test;
+
+import tic.frame.TICMode;
 
 public class TICGroupTest {
   @Test

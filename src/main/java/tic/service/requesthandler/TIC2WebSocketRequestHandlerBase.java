@@ -7,15 +7,18 @@
 
 package tic.service.requesthandler;
 
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.util.message.Request;
-import enedis.lab.util.message.Response;
-import enedis.lab.util.message.ResponseBase;
-import enedis.tic.core.TICCore;
-import enedis.tic.core.TICCoreErrorCode;
-import enedis.tic.core.TICCoreException;
-import enedis.tic.core.TICCoreFrame;
-import enedis.tic.core.TICIdentifier;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import tic.core.TICCore;
+import tic.core.TICCoreErrorCode;
+import tic.core.TICCoreException;
+import tic.core.TICCoreFrame;
+import tic.core.TICIdentifier;
+import tic.io.modem.ModemDescriptor;
 import tic.service.client.TIC2WebSocketClient;
 import tic.service.endpoint.TIC2WebSocketEndPointErrorCode;
 import tic.service.message.RequestGetAvailableTICs;
@@ -23,18 +26,14 @@ import tic.service.message.RequestGetModemsInfo;
 import tic.service.message.RequestReadTIC;
 import tic.service.message.RequestSubscribeTIC;
 import tic.service.message.RequestUnsubscribeTIC;
+import tic.service.message.ResponseError;
 import tic.service.message.ResponseGetAvailableTICs;
 import tic.service.message.ResponseGetModemsInfo;
 import tic.service.message.ResponseReadTIC;
 import tic.service.message.ResponseSubscribeTIC;
 import tic.service.message.ResponseUnsubscribeTIC;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import tic.io.modem.ModemDescriptor;
+import tic.util.message.Request;
+import tic.util.message.Response;
 
 /**
  * Base implementation of the TIC2WebSocket request handler.
@@ -91,21 +90,22 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
   public Response handle(Request request, TIC2WebSocketClient client) {
     Response response = null;
 
+    logger.info("Handling request: " + request.getName());
     switch (request.getName()) {
       case RequestGetAvailableTICs.NAME:
-        response = this.handleGetAvailableTICsRequest((RequestGetAvailableTICs) request);
+        response = this.handleGetAvailableTICsRequest(request);
         break;
       case RequestGetModemsInfo.NAME:
-        response = this.handleGetModemsInfoRequest((RequestGetModemsInfo) request);
+        response = this.handleGetModemsInfoRequest(request);
         break;
       case RequestReadTIC.NAME:
-        response = this.handleReadTICRequest((RequestReadTIC) request);
+        response = this.handleReadTICRequest(request);
         break;
       case RequestSubscribeTIC.NAME:
-        response = this.handleSubscribeTICRequest((RequestSubscribeTIC) request, client);
+        response = this.handleSubscribeTICRequest(request, client);
         break;
       case RequestUnsubscribeTIC.NAME:
-        response = this.handleUnsubscribeTICRequest((RequestUnsubscribeTIC) request, client);
+        response = this.handleUnsubscribeTICRequest(request, client);
         break;
       default:
         this.logger.error("Request " + request.getName() + " not supported");
@@ -126,10 +126,11 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
    * @param request the request to process
    * @return the response containing available TIC identifiers or an error
    */
-  private Response handleGetAvailableTICsRequest(RequestGetAvailableTICs request) {
+  private Response handleGetAvailableTICsRequest(Request request) {
     List<TICIdentifier> ticIdentifiers = this.ticCore.getAvailableTICs();
 
     Response response = null;
+
     try {
       response =
           new ResponseGetAvailableTICs(
@@ -137,7 +138,7 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
               TIC2WebSocketEndPointErrorCode.NO_ERROR.value(),
               null,
               ticIdentifiers);
-    } catch (DataDictionaryException e) {
+    } catch (Exception e) {
       this.logger.error(e.getMessage(), e);
       response =
           this.createErrorResponse(
@@ -153,7 +154,7 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
    * @param request the request to process
    * @return the response containing modem information or an error
    */
-  private Response handleGetModemsInfoRequest(RequestGetModemsInfo request) {
+  private Response handleGetModemsInfoRequest(Request request) {
     List<ModemDescriptor> modemsInfo = this.ticCore.getModemsInfo();
 
     Response response = null;
@@ -164,7 +165,7 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
               TIC2WebSocketEndPointErrorCode.NO_ERROR.value(),
               null,
               modemsInfo);
-    } catch (DataDictionaryException e) {
+    } catch (Exception e) {
       this.logger.error(e.getMessage(), e);
       response =
           this.createErrorResponse(
@@ -180,18 +181,22 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
    * @param request the request to process
    * @return the response containing the TIC frame or an error
    */
-  private Response handleReadTICRequest(RequestReadTIC request) {
+  private Response handleReadTICRequest(Request request) {
     Response response = null;
     try {
-      TICCoreFrame frame = this.ticCore.readNextFrame(request.getData());
+      if (!(request instanceof RequestReadTIC)) {
+        return this.createErrorResponse(
+            request.getName(),
+            TIC2WebSocketEndPointErrorCode.INTERNAL_ERROR,
+            "Invalid request type for " + request.getName());
+      }
+
+      TICIdentifier identifier = ((RequestReadTIC) request).getData();
+
+      TICCoreFrame frame = this.ticCore.readNextFrame(identifier);
       response =
           new ResponseReadTIC(
               LocalDateTime.now(), TIC2WebSocketEndPointErrorCode.NO_ERROR.value(), null, frame);
-    } catch (DataDictionaryException e) {
-      this.logger.error(e.getMessage(), e);
-      response =
-          this.createErrorResponse(
-              request.getName(), TIC2WebSocketEndPointErrorCode.INTERNAL_ERROR, e.getMessage());
     } catch (TICCoreException e) {
       if (e.getErrorCode() == TICCoreErrorCode.STREAM_IDENTIFIER_NOT_FOUND.getCode()) {
         response =
@@ -220,10 +225,19 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
    * @param client the client to subscribe
    * @return the response indicating subscription success or failure
    */
-  private Response handleSubscribeTICRequest(
-      RequestSubscribeTIC request, TIC2WebSocketClient client) {
+  private Response handleSubscribeTICRequest(Request request, TIC2WebSocketClient client) {
     Response response = null;
-    Optional<List<TICIdentifier>> ticIdentifiers = Optional.ofNullable(request.getData());
+
+    if (!(request instanceof RequestSubscribeTIC)) {
+      return this.createErrorResponse(
+          request.getName(),
+          TIC2WebSocketEndPointErrorCode.INTERNAL_ERROR,
+          "Invalid request type for " + request.getName());
+    }
+
+    List<TICIdentifier> requestedIdentifiers = ((RequestSubscribeTIC) request).getData();
+
+    Optional<List<TICIdentifier>> ticIdentifiers = Optional.ofNullable(requestedIdentifiers);
 
     if (ticIdentifiers.isPresent()) {
       List<TICIdentifier> newSubscriptions =
@@ -236,7 +250,7 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
               response =
                   new ResponseSubscribeTIC(
                       LocalDateTime.now(), TIC2WebSocketEndPointErrorCode.NO_ERROR.value(), null);
-            } catch (DataDictionaryException e) {
+            } catch (Exception e) {
               this.logger.error(e.getMessage(), e);
             }
           } catch (TICCoreException e) {
@@ -254,7 +268,7 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
         response =
             new ResponseSubscribeTIC(
                 LocalDateTime.now(), TIC2WebSocketEndPointErrorCode.NO_ERROR.value(), null);
-      } catch (DataDictionaryException e) {
+      } catch (Exception e) {
         this.logger.error(e.getMessage(), e);
       }
     }
@@ -298,10 +312,19 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
    * @param client the client to unsubscribe
    * @return the response indicating unsubscription success or failure
    */
-  private Response handleUnsubscribeTICRequest(
-      RequestUnsubscribeTIC request, TIC2WebSocketClient client) {
+  private Response handleUnsubscribeTICRequest(Request request, TIC2WebSocketClient client) {
     Response response = null;
-    Optional<List<TICIdentifier>> ticIdentifiers = Optional.ofNullable(request.getData());
+
+    if (!(request instanceof RequestUnsubscribeTIC)) {
+      return this.createErrorResponse(
+          request.getName(),
+          TIC2WebSocketEndPointErrorCode.INTERNAL_ERROR,
+          "Invalid request type for " + request.getName());
+    }
+
+    List<TICIdentifier> requestedIdentifiers = ((RequestUnsubscribeTIC) request).getData();
+
+    Optional<List<TICIdentifier>> ticIdentifiers = Optional.ofNullable(requestedIdentifiers);
 
     if (ticIdentifiers.isPresent()) {
       for (TICIdentifier identifier : ticIdentifiers.get()) {
@@ -311,7 +334,7 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
             response =
                 new ResponseUnsubscribeTIC(
                     LocalDateTime.now(), TIC2WebSocketEndPointErrorCode.NO_ERROR.value(), null);
-          } catch (DataDictionaryException e) {
+          } catch (Exception e) {
             this.logger.error(e.getMessage(), e);
           }
         } catch (TICCoreException e) {
@@ -328,7 +351,7 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
         response =
             new ResponseUnsubscribeTIC(
                 LocalDateTime.now(), TIC2WebSocketEndPointErrorCode.NO_ERROR.value(), null);
-      } catch (DataDictionaryException e) {
+      } catch (Exception e) {
         this.logger.error(e.getMessage(), e);
       }
     }
@@ -347,8 +370,8 @@ public class TIC2WebSocketRequestHandlerBase implements TIC2WebSocketRequestHand
   private Response createErrorResponse(
       String name, TIC2WebSocketEndPointErrorCode code, String message) {
     try {
-      return new ResponseBase(name, LocalDateTime.now(), code.value(), message, null);
-    } catch (DataDictionaryException e) {
+      return new ResponseError(name, LocalDateTime.now(), code.value(), message);
+    } catch (Exception e) {
       this.logger.error(e.getMessage(), e);
       return null;
     }

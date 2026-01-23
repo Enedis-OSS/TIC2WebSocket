@@ -150,7 +150,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
             new TICCoreException(
                 TICCoreErrorCode.STREAM_IDENTIFIER_NOT_FOUND.getCode(),
                 "Stream " + identifier + " not found!");
-        logger.error(exception.getMessage(), exception);
+        logger.error(exception.getMessage());
         throw exception;
       }
       stream = this.startNewStream(descriptor);
@@ -166,7 +166,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
             new TICCoreException(
                 subscriber.getError().getErrorCode().intValue(),
                 subscriber.getError().getErrorMessage());
-        logger.error(exception.getMessage(), exception);
+        logger.error(exception.getMessage());
         stream.unsubscribe(subscriber);
         this.closeNativeStream(identifier, stream, subscriber);
         throw exception;
@@ -185,7 +185,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
           new TICCoreException(
               TICCoreErrorCode.DATA_READ_TIMEOUT.getCode(),
               "Stream " + identifier + " data read timeout !");
-      logger.error(exception.getMessage(), exception);
+      logger.error(exception.getMessage());
       throw exception;
     }
     return frame;

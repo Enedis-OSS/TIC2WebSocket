@@ -1,0 +1,1993 @@
+22/01/2026 17:16:05.729 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 17:16:05.742 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 17:16:06.567 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 17:16:06.567 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 17:16:06.567 DEBUG tic.core.TICCoreBase(314) - Starting TIC port plug notifier
+22/01/2026 17:16:06.571 DEBUG tic.core.TICCoreBase(318) - TIC port plug notifier started
+22/01/2026 17:16:06.574 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 17:16:06.761 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 17:16:06.762 DEBUG tic.core.TICCoreBase(396) - TICCore starting new stream : {
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 17:16:06.844 DEBUG tic.core.TICCoreBase(405) - TICCore started new stream : {
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 17:16:06.844 DEBUG tic.stream.TICStreamModeDetector(69) - Auto detecting TIC Mode
+22/01/2026 17:16:06.889 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 17:16:07.713 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 17:16:07.713 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 17:16:09.210 DEBUG tic.stream.TICStreamModeDetector(76) - TIC Mode STANDARD detected
+22/01/2026 17:16:09.319 DEBUG tic.stream.TICStream(221) - Closed serial port COM10
+22/01/2026 17:16:09.337 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 17:16:12.965 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:12.959",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183859\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:14.845 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:14.833",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183901\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:16.626 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:16.622",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183903\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:18.517 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:18.514",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "231",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183905\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:20.424 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:20.421",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183907\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:22.302 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:22.300",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183908\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:24.108 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:24.107",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "231",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183910\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:25.993 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:25.992",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183912\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:27.894 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:27.891",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183914\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:29.676 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:29.675",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "231",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183916\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:31.565 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:31.550",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183918\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:33.457 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:33.446",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183920\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:35.337 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:35.337",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183922\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:37.137 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:37.134",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183923\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:39.021 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:39.020",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183925\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:40.913 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:40.912",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183927\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:42.815 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:42.814",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183929\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:44.618 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:44.615",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183931\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:46.531 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:46.529",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183933\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:48.415 TRACE tic.core.TICCoreBase(263) - TICCore frame:
+{
+  "mode": "STANDARD",
+  "identifier": {
+    "serialNumber": "811875682098",
+    "portName": "COM10",
+    "portId": "3"
+  },
+  "captureDateTime": "2026-01-22T17:16:48.413",
+  "frame": {
+    "EASF09": "000000000",
+    "PREF": "09",
+    "NJOURF": "00",
+    "EASF02": "000000000",
+    "EASD04": "000000000",
+    "SMAXIN": "h181216164731\t00000",
+    "EASF01": "000000144",
+    "EASD03": "000000000",
+    "EASF04": "000000000",
+    "PRM": "00000000000000",
+    "EASF03": "000000000",
+    "EASF06": "000000000",
+    "EASF05": "000000000",
+    "ERQ1": "000000222",
+    "EASF08": "000000000",
+    "ERQ2": "000000000",
+    "NGTF": "BASE            ",
+    "EASF07": "000000000",
+    "ERQ3": "000000000",
+    "RELAIS": "000",
+    "ERQ4": "000000000",
+    "PCOUP": "09",
+    "SINSTS": "00000",
+    "SMAXSN": "h181216164731\t00000",
+    "MSG1": "     PAS DE          MESSAGE    ",
+    "EASD02": "000000000",
+    "EASD01": "000000144",
+    "STGE": "000B0111",
+    "URMS1": "230",
+    "SINSTI": "00000",
+    "EAST": "000000144",
+    "NTARF": "01",
+    "EAIT": "000000000",
+    "IRMS1": "000",
+    "ADSC": "811875682098",
+    "VTIC": "02",
+    "DATE": "h181216183935\t",
+    "PJOURF+1": "00008001 NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE NONUTILE",
+    "EASF10": "000000000",
+    "NJOURF+1": "00",
+    "LTARF": "      BASE      ",
+    "SMAXSN-1": "h181207000000\t00000",
+    "SMAXIN-1": "h181207000000\t00000",
+    "UMOY1": "H181216183000\t229"
+  }
+}
+22/01/2026 17:16:48.618 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 17:18:12.371 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 17:18:12.382 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 17:18:13.249 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 17:18:13.250 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 17:18:13.257 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 17:18:13.438 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 17:18:13.563 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 17:18:14.401 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 17:18:14.401 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 17:18:16.254 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 17:18:26.243 INFO  tic.service.netty.TIC2WebSocketHandler(115) - Open channel 046c59fffee4b60f-00005c64-00000001-17e7ed6742c5dcdd-457efca8
+22/01/2026 17:18:26.246 INFO  tic.service.netty.TIC2WebSocketHandler(118) - Client create with channel id : 046c59fffee4b60f-00005c64-00000001-17e7ed6742c5dcdd-457efca8
+22/01/2026 17:18:35.223 INFO  tic.service.netty.TIC2WebSocketHandler(197) - Message on channel 046c59fffee4b60f-00005c64-00000001-17e7ed6742c5dcdd-457efca8
+22/01/2026 17:25:00.742 INFO  tic.service.netty.TIC2WebSocketHandler(115) - Open channel 046c59fffee4b60f-00005c64-00000002-25e89563673c2244-e5c7dc6f
+22/01/2026 17:25:00.743 INFO  tic.service.netty.TIC2WebSocketHandler(118) - Client create with channel id : 046c59fffee4b60f-00005c64-00000002-25e89563673c2244-e5c7dc6f
+22/01/2026 17:25:06.783 INFO  tic.service.netty.TIC2WebSocketHandler(197) - Message on channel 046c59fffee4b60f-00005c64-00000002-25e89563673c2244-e5c7dc6f
+22/01/2026 17:34:27.758 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 17:34:38.560 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 17:34:38.571 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 17:34:39.430 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 17:34:39.430 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 17:34:39.435 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 17:34:39.615 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 17:34:39.746 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 17:34:40.597 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 17:34:40.598 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 17:34:42.097 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 17:41:35.498 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 17:41:39.414 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 17:41:39.425 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 17:41:40.514 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 17:41:40.514 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 17:41:40.520 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 17:41:40.730 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 17:41:40.890 INFO  tic.stream.TICStream(209) - Opened TIC serial port COM10
+22/01/2026 17:41:42.084 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 17:41:42.085 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 17:41:44.234 INFO  tic.stream.TICStream(209) - Opened TIC serial port COM10
+22/01/2026 17:41:45.009 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 17:42:35.600 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 17:42:35.611 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 17:42:36.518 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 17:42:36.518 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 17:42:36.524 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 17:42:36.696 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 17:42:36.829 INFO  tic.stream.TICStream(207) - Opened TIC serial port COM10
+22/01/2026 17:42:37.763 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 17:42:37.763 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 17:42:40.143 INFO  tic.stream.TICStream(207) - Opened TIC serial port COM10
+22/01/2026 17:44:25.102 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 17:44:28.862 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 17:44:28.873 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 17:44:29.738 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 17:44:29.739 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 17:44:29.744 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 17:44:29.914 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 17:44:30.051 INFO  tic.stream.TICStream(207) - Opened TIC serial port COM10
+22/01/2026 17:44:30.943 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 17:44:30.943 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 17:44:32.375 INFO  tic.stream.TICStream(207) - Opened TIC serial port COM10
+22/01/2026 17:58:00.570 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 17:58:06.183 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 17:58:06.199 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 17:58:07.472 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 17:58:07.472 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 17:58:07.477 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 17:58:07.698 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 17:58:07.867 INFO  tic.stream.TICStream(212) - Opened TIC serial port COM10
+22/01/2026 17:58:09.311 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 17:58:09.311 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 17:58:09.979 INFO  tic.stream.TICStream(212) - Opened TIC serial port COM10
+22/01/2026 18:02:36.082 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 18:02:41.154 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 18:02:41.166 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 18:02:42.001 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 18:02:42.001 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 18:02:42.007 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 18:02:42.258 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 18:02:43.368 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 18:02:43.368 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 18:02:45.439 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 18:03:00.456 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 18:03:00.470 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 18:03:01.514 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 18:03:01.515 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 18:03:01.520 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 18:03:01.716 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 18:07:36.675 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 18:07:36.686 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 18:07:37.560 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 18:07:37.560 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 18:07:37.565 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 18:07:37.740 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 18:07:38.634 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 18:07:38.634 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 18:09:38.954 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 18:10:11.308 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 18:10:11.319 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 18:10:12.196 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 18:10:12.197 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 18:10:12.202 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 18:10:12.379 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 18:10:12.510 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:10:13.380 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 18:10:13.380 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 18:10:16.020 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:10:24.020 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 18:21:39.977 ERROR tic.service.TIC2WebSocketApplication(357) - No configuration file path 'C:\Users\ms4d7e9n.ZEPRODBUR\dev\github\TIC2WebSocket\TIC2WebSocketConfiguration.json' not found
+22/01/2026 18:21:46.144 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 18:21:46.156 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 18:21:47.151 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 18:21:47.152 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 18:21:47.157 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 18:21:47.362 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 18:21:47.506 INFO  tic.stream.TICStreamReader(216) - Opened TIC serial port COM10 (context=auto-detect, baudrate=9600)
+22/01/2026 18:21:48.528 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 18:21:48.528 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 18:21:50.466 INFO  tic.stream.TICStreamReader(216) - Opened TIC serial port COM10 (context=stream(STANDARD), baudrate=9600)
+22/01/2026 18:30:45.982 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 18:30:48.993 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 18:30:49.006 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 18:30:49.959 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 18:30:49.959 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 18:30:49.965 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 18:30:50.148 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 18:30:50.283 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:30:51.177 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 18:30:51.177 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 18:30:53.757 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:33:11.807 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 18:33:15.332 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 18:33:15.360 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 18:33:16.470 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 18:33:16.470 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 18:33:16.475 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 18:33:16.654 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 18:33:16.774 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:33:17.796 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 18:33:17.797 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 18:33:19.392 INFO  tic.stream.TICStream(151) - TIC mode detected: STANDARD
+22/01/2026 18:33:19.542 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:33:44.542 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: GetAvailableTICs
+22/01/2026 18:33:51.749 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 18:34:08.686 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: GetModemsInfo
+22/01/2026 18:34:11.712 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 18:37:00.456 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: ReadTIC
+22/01/2026 18:37:12.500 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 18:37:22.089 ERROR tic.service.netty.TIC2WebSocketHandler(174) - Error on channel 046c59fffee4b60f-0000616c-00000004-00d33f65284e19ee-d82fce92
+java.lang.NullPointerException: null
+	at java.util.Objects.requireNonNull(Objects.java:203) ~[?:1.8.0_452]
+	at java.util.Optional.<init>(Optional.java:96) ~[?:1.8.0_452]
+	at java.util.Optional.of(Optional.java:108) ~[?:1.8.0_452]
+	at tic.service.netty.TIC2WebSocketHandler.getMessage(TIC2WebSocketHandler.java:290) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:201) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:1) ~[classes/:?]
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:99) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.ChannelInboundHandlerAdapter.channelRead(ChannelInboundHandlerAdapter.java:93) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.http.websocketx.Utf8FrameValidator.channelRead(Utf8FrameValidator.java:98) ~[netty-codec-http-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1429) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:918) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:167) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:445) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:381) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:575) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:550) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:491) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:468) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:206) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:177) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1073) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_452]
+22/01/2026 18:37:22.097 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 18:38:37.631 ERROR tic.service.netty.TIC2WebSocketHandler(174) - Error on channel 046c59fffee4b60f-0000616c-00000005-1cddfd6b474f4091-6e281b77
+java.lang.NullPointerException: null
+	at java.util.Objects.requireNonNull(Objects.java:203) ~[?:1.8.0_452]
+	at java.util.Optional.<init>(Optional.java:96) ~[?:1.8.0_452]
+	at java.util.Optional.of(Optional.java:108) ~[?:1.8.0_452]
+	at tic.service.netty.TIC2WebSocketHandler.getMessage(TIC2WebSocketHandler.java:290) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:201) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:1) ~[classes/:?]
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:99) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.ChannelInboundHandlerAdapter.channelRead(ChannelInboundHandlerAdapter.java:93) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.http.websocketx.Utf8FrameValidator.channelRead(Utf8FrameValidator.java:98) ~[netty-codec-http-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1429) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:918) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:167) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:445) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:381) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:575) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:550) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:491) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:468) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:206) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:177) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1073) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_452]
+22/01/2026 18:38:37.634 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 18:39:42.526 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 18:39:48.369 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 18:39:48.384 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 18:39:49.472 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 18:39:49.472 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 18:39:49.477 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 18:39:49.734 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 18:39:49.869 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:39:50.617 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 18:39:50.618 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 18:39:53.188 INFO  tic.stream.TICStream(151) - TIC mode detected: STANDARD
+22/01/2026 18:39:53.344 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:39:58.546 ERROR tic.service.netty.TIC2WebSocketHandler(174) - Error on channel 046c59fffee4b60f-000046b0-00000001-1932eabbff4cbea8-032a031d
+java.lang.NullPointerException: null
+	at java.util.Objects.requireNonNull(Objects.java:203) ~[?:1.8.0_452]
+	at java.util.Optional.<init>(Optional.java:96) ~[?:1.8.0_452]
+	at java.util.Optional.of(Optional.java:108) ~[?:1.8.0_452]
+	at tic.service.netty.TIC2WebSocketHandler.getMessage(TIC2WebSocketHandler.java:291) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:201) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:1) ~[classes/:?]
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:99) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.ChannelInboundHandlerAdapter.channelRead(ChannelInboundHandlerAdapter.java:93) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.http.websocketx.Utf8FrameValidator.channelRead(Utf8FrameValidator.java:98) ~[netty-codec-http-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1429) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:918) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:167) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:445) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:381) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:575) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:550) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:491) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:468) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:206) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:177) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1073) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_452]
+22/01/2026 18:39:58.560 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 18:41:36.183 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 18:41:38.578 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 18:41:38.590 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 18:41:39.670 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 18:41:39.670 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 18:41:39.681 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 18:41:39.943 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 18:41:40.092 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:41:41.107 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 18:41:41.108 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 18:41:43.337 INFO  tic.stream.TICStream(151) - TIC mode detected: STANDARD
+22/01/2026 18:41:43.482 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:41:46.431 ERROR tic.service.netty.TIC2WebSocketHandler(174) - Error on channel 046c59fffee4b60f-000029dc-00000001-149a69fb6b4a622b-35b6ca7f
+java.lang.NullPointerException: null
+	at java.util.Objects.requireNonNull(Objects.java:203) ~[?:1.8.0_452]
+	at java.util.Optional.<init>(Optional.java:96) ~[?:1.8.0_452]
+	at java.util.Optional.of(Optional.java:108) ~[?:1.8.0_452]
+	at tic.service.netty.TIC2WebSocketHandler.getMessage(TIC2WebSocketHandler.java:291) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:201) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:1) ~[classes/:?]
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:99) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.ChannelInboundHandlerAdapter.channelRead(ChannelInboundHandlerAdapter.java:93) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.http.websocketx.Utf8FrameValidator.channelRead(Utf8FrameValidator.java:98) ~[netty-codec-http-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1429) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:918) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:167) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:445) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:381) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:575) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:550) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:491) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:468) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:206) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:177) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1073) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_452]
+22/01/2026 18:41:46.446 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 18:45:58.707 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 18:46:01.732 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 18:46:01.748 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 18:46:02.879 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 18:46:02.879 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 18:46:02.884 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 18:46:03.075 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 18:46:03.205 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:46:04.234 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 18:46:04.234 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 18:46:06.493 INFO  tic.stream.TICStream(151) - TIC mode detected: STANDARD
+22/01/2026 18:46:06.613 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:46:11.575 ERROR tic.service.netty.TIC2WebSocketHandler(174) - Error on channel 046c59fffee4b60f-00001e94-00000001-3cbdf76851561e00-8a1117d5
+java.lang.NullPointerException: null
+	at java.util.Objects.requireNonNull(Objects.java:203) ~[?:1.8.0_452]
+	at java.util.Optional.<init>(Optional.java:96) ~[?:1.8.0_452]
+	at java.util.Optional.of(Optional.java:108) ~[?:1.8.0_452]
+	at tic.service.netty.TIC2WebSocketHandler.getMessage(TIC2WebSocketHandler.java:298) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:201) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:1) ~[classes/:?]
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:99) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.ChannelInboundHandlerAdapter.channelRead(ChannelInboundHandlerAdapter.java:93) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.http.websocketx.Utf8FrameValidator.channelRead(Utf8FrameValidator.java:98) ~[netty-codec-http-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1429) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:918) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:167) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:445) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:381) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:575) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:550) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:491) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:468) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:206) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:177) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1073) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_452]
+22/01/2026 18:46:11.589 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 18:51:52.601 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 18:51:56.289 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 18:51:56.301 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 18:51:57.413 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 18:51:57.414 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 18:51:57.424 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 18:51:57.646 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 18:51:57.772 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:51:58.700 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 18:51:58.700 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 18:52:01.165 INFO  tic.stream.TICStream(151) - TIC mode detected: STANDARD
+22/01/2026 18:52:01.307 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 18:52:03.235 ERROR tic.service.netty.TIC2WebSocketHandler(294) - Error parsing message: JSON object missing required field 'data' for ReadTIC request
+22/01/2026 18:53:16.266 ERROR tic.service.netty.TIC2WebSocketHandler(294) - Error parsing message: JSON object missing required field 'data' for ReadTIC request
+22/01/2026 19:00:30.301 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 19:00:41.759 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 19:00:41.772 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 19:00:42.810 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 19:00:42.811 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 19:00:42.818 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 19:00:43.056 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 19:00:43.208 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:00:44.315 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 19:00:44.315 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 19:00:45.608 INFO  tic.stream.TICStream(151) - TIC mode detected: STANDARD
+22/01/2026 19:00:45.751 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:00:52.901 ERROR tic.service.netty.TIC2WebSocketHandler(296) - Error parsing message: JSON object missing required field 'data' for ReadTIC request
+22/01/2026 19:16:03.094 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: ReadTIC
+22/01/2026 19:16:11.968 ERROR tic.service.netty.TIC2WebSocketHandler(296) - Error parsing message: JSON object missing required field 'data' for ReadTIC request
+22/01/2026 19:16:48.093 ERROR tic.service.netty.TIC2WebSocketHandler(259) - Error parsing message: Invalid JSON format: Expected a ':' after a key at 48 [character 5 line 3]
+22/01/2026 19:16:48.094 ERROR tic.service.netty.TIC2WebSocketHandler(263) - Error parsing message: Invalid JSON format: Expected a ':' after a key at 48 [character 5 line 3]
+22/01/2026 19:19:47.570 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 19:19:50.443 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 19:19:50.456 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 19:19:51.571 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 19:19:51.572 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 19:19:51.578 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 19:19:51.765 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 19:19:51.890 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:19:52.955 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 19:19:52.955 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 19:19:55.378 INFO  tic.stream.TICStream(151) - TIC mode detected: STANDARD
+22/01/2026 19:19:55.524 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:20:01.000 ERROR tic.service.netty.TIC2WebSocketHandler(259) - Error parsing message: Invalid JSON format: Expected a ':' after a key at 48 [character 5 line 3]
+22/01/2026 19:20:15.685 ERROR tic.service.netty.TIC2WebSocketHandler(259) - Error parsing message: Invalid JSON format: Expected a ',' or '}' at 30 [character 5 line 3]
+22/01/2026 19:20:20.780 ERROR tic.service.netty.TIC2WebSocketHandler(292) - Error parsing message: JSON object missing required field 'data' for ReadTIC request
+22/01/2026 19:22:00.172 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 19:30:58.677 ERROR tic.service.netty.TIC2WebSocketHandler(292) - Error parsing message: JSON object missing required fields 'name' or 'type'
+22/01/2026 19:32:47.507 ERROR tic.service.netty.TIC2WebSocketHandler(292) - Error parsing message: Invalid message type: INVALID_TYPE
+22/01/2026 19:33:47.972 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 19:33:56.377 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 19:33:56.388 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 19:33:57.208 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 19:33:57.209 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 19:33:57.214 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 19:33:57.395 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 19:33:57.527 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:33:58.354 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 19:33:58.355 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 19:34:00.932 INFO  tic.stream.TICStream(151) - TIC mode detected: STANDARD
+22/01/2026 19:34:01.062 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:35:09.215 ERROR tic.service.netty.TIC2WebSocketHandler(292) - Error parsing message: Invalid message type: INVALID_TYPE
+22/01/2026 19:36:40.223 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 19:36:46.445 ERROR tic.service.netty.TIC2WebSocketHandler(292) - Error parsing message: Invalid message type: INVALID_TYPE
+22/01/2026 19:37:03.094 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 19:37:46.015 ERROR tic.service.netty.TIC2WebSocketHandler(292) - Error parsing message: Invalid message type: INVALID_TYPE
+22/01/2026 19:37:56.485 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 19:38:13.349 ERROR tic.service.netty.TIC2WebSocketHandler(292) - Error parsing message: Unsupported request message name: InvalidName
+22/01/2026 19:38:23.766 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 19:38:28.556 ERROR tic.service.netty.TIC2WebSocketHandler(292) - Error parsing message: Invalid message type: INVALID_TYPE
+22/01/2026 19:38:33.333 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 19:38:37.590 ERROR tic.service.netty.TIC2WebSocketHandler(292) - Error parsing message: JSON object missing required field 'data' for ReadTIC request
+22/01/2026 19:39:13.375 ERROR tic.service.netty.TIC2WebSocketHandler(259) - Error parsing message: Invalid JSON format: A JSONObject text must begin with '{' at 1 [character 2 line 1]
+22/01/2026 19:40:54.213 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: ReadTIC
+22/01/2026 19:40:54.220 ERROR tic.core.TICCoreBase(153) - Stream {portId=null, portName=null, serialNumber=bla bla bla} not found! (5)
+tic.core.TICCoreException: Stream {portId=null, portName=null, serialNumber=bla bla bla} not found! (5)
+	at tic.core.TICCoreBase.readNextFrame(TICCoreBase.java:150) ~[classes/:?]
+	at tic.core.TICCoreBase.readNextFrame(TICCoreBase.java:137) ~[classes/:?]
+	at tic.service.requesthandler.TIC2WebSocketRequestHandlerBase.handleReadTICRequest(TIC2WebSocketRequestHandlerBase.java:196) ~[classes/:?]
+	at tic.service.requesthandler.TIC2WebSocketRequestHandlerBase.handle(TIC2WebSocketRequestHandlerBase.java:102) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.handleRequest(TIC2WebSocketHandler.java:328) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:213) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:1) ~[classes/:?]
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:99) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.ChannelInboundHandlerAdapter.channelRead(ChannelInboundHandlerAdapter.java:93) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.http.websocketx.Utf8FrameValidator.channelRead(Utf8FrameValidator.java:98) ~[netty-codec-http-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1429) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:918) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:167) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:445) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:381) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:575) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:550) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:491) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:468) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:206) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:177) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1073) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_452]
+22/01/2026 19:40:54.227 ERROR tic.service.netty.TIC2WebSocketHandler(354) - Error sending message to channel 046c59fffee4b60f-00003f4c-00000008-3f4e8bf730244774-176e76fa
+java.lang.ClassCastException: tic.service.message.ResponseError cannot be cast to tic.service.message.ResponseReadTIC
+	at tic.util.message.codec.ResponseJsonEncoder.encode(ResponseJsonEncoder.java:31) ~[classes/:?]
+	at tic.util.message.codec.MessageJsonCodec.encodeToJsonObject(MessageJsonCodec.java:80) ~[classes/:?]
+	at tic.util.message.codec.MessageJsonCodec.encodeToJsonString(MessageJsonCodec.java:59) ~[classes/:?]
+	at tic.util.message.codec.MessageJsonCodec.encodeToJsonString(MessageJsonCodec.java:1) ~[classes/:?]
+	at tic.util.codec.JsonStringCodec.encodeToJsonString(JsonStringCodec.java:7) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.sendMessage(TIC2WebSocketHandler.java:348) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:215) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:1) ~[classes/:?]
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:99) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.ChannelInboundHandlerAdapter.channelRead(ChannelInboundHandlerAdapter.java:93) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.http.websocketx.Utf8FrameValidator.channelRead(Utf8FrameValidator.java:98) ~[netty-codec-http-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1429) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:918) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:167) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:445) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:381) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:575) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:550) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:491) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:468) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:206) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:177) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1073) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_452]
+22/01/2026 19:44:46.824 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 19:44:46.828 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 19:44:46.828 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 19:44:46.829 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 19:44:51.591 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 19:44:51.604 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 19:44:52.687 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 19:44:52.687 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 19:44:52.693 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 19:44:52.883 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 19:44:53.006 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:44:53.947 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 19:44:53.948 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 19:44:55.944 INFO  tic.stream.TICStream(151) - TIC mode detected: STANDARD
+22/01/2026 19:44:56.098 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:44:59.779 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: ReadTIC
+22/01/2026 19:44:59.802 ERROR tic.core.TICCoreBase(153) - Stream {portId=null, portName=null, serialNumber=bla bla bla} not found! (5)
+22/01/2026 19:44:59.816 ERROR tic.service.netty.TIC2WebSocketHandler(354) - Error sending message to channel 046c59fffee4b60f-00002574-00000001-20e35777c3a003d4-70d34e96
+java.lang.ClassCastException: tic.service.message.ResponseError cannot be cast to tic.service.message.ResponseReadTIC
+	at tic.util.message.codec.ResponseJsonEncoder.encode(ResponseJsonEncoder.java:31) ~[classes/:?]
+	at tic.util.message.codec.MessageJsonCodec.encodeToJsonObject(MessageJsonCodec.java:80) ~[classes/:?]
+	at tic.util.message.codec.MessageJsonCodec.encodeToJsonString(MessageJsonCodec.java:59) ~[classes/:?]
+	at tic.util.message.codec.MessageJsonCodec.encodeToJsonString(MessageJsonCodec.java:1) ~[classes/:?]
+	at tic.util.codec.JsonStringCodec.encodeToJsonString(JsonStringCodec.java:7) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.sendMessage(TIC2WebSocketHandler.java:348) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:215) ~[classes/:?]
+	at tic.service.netty.TIC2WebSocketHandler.channelRead0(TIC2WebSocketHandler.java:1) ~[classes/:?]
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:99) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.ChannelInboundHandlerAdapter.channelRead(ChannelInboundHandlerAdapter.java:93) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.http.websocketx.Utf8FrameValidator.channelRead(Utf8FrameValidator.java:98) ~[netty-codec-http-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-base-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1429) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:918) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:167) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:445) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:381) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:575) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:550) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:491) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:468) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:206) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:177) ~[netty-transport-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1073) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.2.Final.jar:4.2.2.Final]
+	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_452]
+22/01/2026 19:53:37.690 INFO  tic.service.netty.TIC2WebSocketServer(124) - Stopping TIC2WebSocket Netty server
+22/01/2026 19:53:41.854 INFO  tic.service.TIC2WebSocketApplication(362) - Loading configuration file src\main\resources\config\TIC2WebSocketConfiguration.json
+22/01/2026 19:53:41.866 INFO  tic.service.TIC2WebSocketApplication(206) - TIC2WebSocket initialized
+22/01/2026 19:53:43.012 INFO  tic.service.TIC2WebSocketApplication(237) - TIC2WebSocket starting
+22/01/2026 19:53:43.012 INFO  tic.core.TICCoreBase(313) - Starting TICCore
+22/01/2026 19:53:43.019 INFO  tic.service.netty.TIC2WebSocketServer(94) - Starting TIC2WebSocket Netty server on localhost:19584
+22/01/2026 19:53:43.229 INFO  tic.core.TICCoreBase(292) - TICCore modem plugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}
+22/01/2026 19:53:43.359 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:53:44.352 INFO  tic.service.netty.TIC2WebSocketServer(110) - TIC2WebSocket Netty server started successfully on localhost:19584
+22/01/2026 19:53:44.353 INFO  tic.service.TIC2WebSocketApplication(247) - TIC2WebSocket started
+22/01/2026 19:53:46.315 INFO  tic.stream.TICStream(151) - TIC mode detected: STANDARD
+22/01/2026 19:53:46.463 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:53:53.503 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: ReadTIC
+22/01/2026 19:53:53.511 ERROR tic.core.TICCoreBase(153) - Stream {portId=null, portName=null, serialNumber=bla bla bla} not found! (5)
+22/01/2026 19:57:04.601 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: ReadTIC
+22/01/2026 19:57:14.554 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: ReadTIC
+22/01/2026 19:57:21.137 ERROR tic.core.TICCoreBase(169) - TIC read timeout (7)
+22/01/2026 19:57:21.158 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:57:32.391 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:57:43.630 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:57:54.863 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:57:58.410 INFO  tic.stream.TICStream(151) - TIC mode detected: STANDARD
+22/01/2026 19:57:58.554 INFO  tic.stream.TICStream(206) - Opened TIC serial port COM10
+22/01/2026 19:58:03.434 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: ReadTIC
+22/01/2026 19:59:48.983 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: GetAvailableTICs
+22/01/2026 20:00:56.162 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: ReadTIC
+22/01/2026 20:01:30.411 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: ReadTIC
+22/01/2026 20:01:43.960 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 20:01:47.280 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 20:01:49.059 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 20:01:54.298 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 20:03:01.036 INFO  tic.service.requesthandler.TIC2WebSocketRequestHandlerBase(93) - Handling request: UnsubscribeTIC
+22/01/2026 20:03:15.865 INFO  tic.core.TICCoreBase(298) - TICCore modem unplugged:
+{
+  "modemType": "MICHAUD",
+  "serialNumber": "A902A44LA",
+  "productId": 24577,
+  "description": "USB Serial Port",
+  "vendorId": 1027,
+  "portName": "COM10",
+  "portId": "3",
+  "manufacturer": "FTDI"
+}

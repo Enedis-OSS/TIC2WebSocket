@@ -7,7 +7,7 @@
 
 package tic.service.endpoint;
 
-import enedis.lab.util.message.Event;
+import tic.util.message.Event;
 import io.netty.channel.Channel;
 
 /**

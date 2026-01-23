@@ -7,18 +7,17 @@
 
 package tic.service.client;
 
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.util.message.Event;
-import enedis.tic.core.TICCoreError;
-import enedis.tic.core.TICCoreFrame;
-import enedis.tic.core.TICCoreSubscriber;
-import tic.service.endpoint.EventSender;
-import tic.service.message.EventOnError;
-import tic.service.message.EventOnTICData;
 import io.netty.channel.Channel;
 import java.time.LocalDateTime;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tic.core.TICCoreError;
+import tic.core.TICCoreFrame;
+import tic.core.TICCoreSubscriber;
+import tic.service.endpoint.EventSender;
+import tic.service.message.EventOnError;
+import tic.service.message.EventOnTICData;
+import tic.util.message.Event;
 
 /**
  * WebSocket client for TIC2WebSocket service.
@@ -74,12 +73,8 @@ public class TIC2WebSocketClient implements TICCoreSubscriber {
    */
   @Override
   public void onData(TICCoreFrame frame) {
-    try {
-      Event event = new EventOnTICData(LocalDateTime.now(), frame);
-      this.eventSender.sendEvent(this.channel, event);
-    } catch (DataDictionaryException e) {
-      this.logger.error(e.getMessage(), e);
-    }
+    Event event = new EventOnTICData(LocalDateTime.now(), frame);
+    this.eventSender.sendEvent(this.channel, event);
   }
 
   /**
@@ -92,12 +87,8 @@ public class TIC2WebSocketClient implements TICCoreSubscriber {
    */
   @Override
   public void onError(TICCoreError error) {
-    try {
-      Event event = new EventOnError(LocalDateTime.now(), error);
-      this.eventSender.sendEvent(this.channel, event);
-    } catch (DataDictionaryException e) {
-      this.logger.error(e.getMessage(), e);
-    }
+    Event event = new EventOnError(LocalDateTime.now(), error);
+    this.eventSender.sendEvent(this.channel, event);
   }
 
   /**

@@ -7,43 +7,48 @@
 
 package tic.service.netty;
 
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.util.message.Event;
-import enedis.lab.util.message.Message;
-import enedis.lab.util.message.Request;
-import enedis.lab.util.message.Response;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
+import tic.core.TICIdentifier;
+import tic.service.client.TIC2WebSocketClient;
+import tic.service.client.TIC2WebSocketClientPool;
+import tic.service.endpoint.EventSender;
+import tic.service.endpoint.TIC2WebSocketEndPointErrorCode;
+import tic.service.message.RequestUnsubscribeTIC;
+import tic.service.message.ResponseError;
+import tic.service.requesthandler.TIC2WebSocketRequestHandler;
+import tic.util.message.Event;
+import tic.util.message.Message;
+import tic.util.message.Request;
+import tic.util.message.Response;
+import tic.util.message.codec.MessageJsonCodec;
+import tic.util.message.exception.MessageException;
 import tic.util.message.exception.MessageInvalidContentException;
 import tic.util.message.exception.MessageInvalidFormatException;
 import tic.util.message.exception.MessageInvalidTypeException;
 import tic.util.message.exception.MessageKeyNameDoesntExistException;
 import tic.util.message.exception.MessageKeyTypeDoesntExistException;
 import tic.util.message.exception.UnsupportedMessageException;
-import enedis.tic.core.TICIdentifier;
-import tic.service.client.TIC2WebSocketClient;
-import tic.service.client.TIC2WebSocketClientPool;
-import tic.service.endpoint.EventSender;
-import tic.service.endpoint.TIC2WebSocketEndPointErrorCode;
-import tic.service.message.RequestUnsubscribeTIC;
-import tic.service.message.factory.TIC2WebSocketMessageFactory;
-import tic.service.requesthandler.TIC2WebSocketRequestHandler;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketFrame;
-import java.util.List;
-import java.util.Optional;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * Netty WebSocket handler for TIC2WebSocket.
  *
- * <p>This handler manages WebSocket connections for TIC2WebSocket, handling incoming WebSocket frames,
- * client lifecycle events, and message dispatching. It integrates with the client pool and request handler
- * to process requests and send responses or events over the WebSocket channel.
+ * <p>This handler manages WebSocket connections for TIC2WebSocket, handling incoming WebSocket
+ * frames, client lifecycle events, and message dispatching. It integrates with the client pool and
+ * request handler to process requests and send responses or events over the WebSocket channel.
  *
  * <p>Responsibilities include:
+ *
  * <ul>
  *   <li>Managing client connections and their lifecycle
  *   <li>Parsing and validating incoming WebSocket messages
@@ -52,7 +57,8 @@ import org.apache.logging.log4j.Logger;
  *   <li>Logging and error handling for channel operations
  * </ul>
  *
- * <p>This class is intended to be used as a Netty handler in the server pipeline for real-time TIC data exchange.
+ * <p>This class is intended to be used as a Netty handler in the server pipeline for real-time TIC
+ * data exchange.
  *
  * @author Enedis Smarties team
  * @see TIC2WebSocketClientPool
@@ -66,10 +72,11 @@ public class TIC2WebSocketHandler extends SimpleChannelInboundHandler<WebSocketF
 
   /** Pool managing active WebSocket clients. */
   private final TIC2WebSocketClientPool clientPool;
+
   /** Handler for processing incoming requests. */
   private final TIC2WebSocketRequestHandler requestHandler;
-  /** Factory for creating and parsing TIC2WebSocket messages. */
-  private final TIC2WebSocketMessageFactory factory;
+
+  private MessageJsonCodec messageJsonCodec = MessageJsonCodec.getInstance();
 
   /**
    * Constructs a new TIC2WebSocketHandler.
@@ -81,7 +88,6 @@ public class TIC2WebSocketHandler extends SimpleChannelInboundHandler<WebSocketF
       TIC2WebSocketClientPool clientPool, TIC2WebSocketRequestHandler requestHandler) {
     this.clientPool = clientPool;
     this.requestHandler = requestHandler;
-    this.factory = new TIC2WebSocketMessageFactory();
   }
 
   /**
@@ -108,10 +114,10 @@ public class TIC2WebSocketHandler extends SimpleChannelInboundHandler<WebSocketF
     Channel channel = ctx.channel();
     String channelId = channel.id().asLongText();
 
-    logger.info("Open channel " + channelId);
+    logger.debug("Open channel " + channelId);
 
     if (!clientPool.exists(channelId)) {
-      logger.info("Client create with channel id : " + channelId);
+      logger.debug("Client create with channel id : " + channelId);
       clientPool.createClient(channel, this);
     } else {
       logger.error("Client with channel id : " + channelId + " already exists ! ");
@@ -133,17 +139,17 @@ public class TIC2WebSocketHandler extends SimpleChannelInboundHandler<WebSocketF
     Channel channel = ctx.channel();
     String channelId = channel.id().asLongText();
 
-    logger.info("Close channel " + channelId);
+    logger.debug("Close channel " + channelId);
 
     if (clientPool.exists(channelId)) {
       try {
-        logger.info("Generate unsubscribe request");
+        logger.debug("Generate unsubscribe request");
         Request request = new RequestUnsubscribeTIC((List<TICIdentifier>) null);
         this.handleRequest(clientPool.getClient(channelId).get(), request);
 
-        logger.info("Remove client with channel id : " + channelId);
+        logger.debug("Remove client with channel id : " + channelId);
         clientPool.remove(channelId);
-      } catch (DataDictionaryException e) {
+      } catch (Exception e) {
         logger.error("Error during channel close", e);
       }
     } else {
@@ -175,8 +181,8 @@ public class TIC2WebSocketHandler extends SimpleChannelInboundHandler<WebSocketF
   /**
    * Handles incoming WebSocket frames.
    *
-   * <p>Processes text frames as TIC2WebSocket messages, validates and dispatches requests,
-   * and sends responses. Unsupported frame types are logged as warnings.
+   * <p>Processes text frames as TIC2WebSocket messages, validates and dispatches requests, and
+   * sends responses. Unsupported frame types are logged as warnings.
    *
    * @param ctx the channel handler context
    * @param frame the received WebSocket frame
@@ -190,7 +196,7 @@ public class TIC2WebSocketHandler extends SimpleChannelInboundHandler<WebSocketF
       Channel channel = ctx.channel();
       String channelId = channel.id().asLongText();
 
-      logger.info("Message on channel " + channelId);
+      logger.debug("Message on channel " + channelId);
 
       TIC2WebSocketClient client = this.getClient(channel);
 
@@ -243,32 +249,48 @@ public class TIC2WebSocketHandler extends SimpleChannelInboundHandler<WebSocketF
     Message message = null;
     TIC2WebSocketEndPointErrorCode errorCode = TIC2WebSocketEndPointErrorCode.NO_ERROR;
     String errorMessage = "";
+    JSONObject jsonObject = null;
 
     try {
-      message = this.factory.getMessage(text);
-    } catch (MessageInvalidFormatException e) {
+      jsonObject = new JSONObject(text);
+    } catch (JSONException e) {
       errorCode = TIC2WebSocketEndPointErrorCode.INVALID_MESSAGE_FORMAT;
-      errorMessage = e.getMessage();
-    } catch (MessageInvalidTypeException e) {
-      errorCode = TIC2WebSocketEndPointErrorCode.MESSAGE_TYPE_INVALID;
-      errorMessage = e.getMessage();
-    } catch (MessageKeyNameDoesntExistException e) {
-      errorCode = TIC2WebSocketEndPointErrorCode.MESSAGE_NAME_MISSING;
-      errorMessage = e.getMessage();
-    } catch (MessageKeyTypeDoesntExistException e) {
-      errorCode = TIC2WebSocketEndPointErrorCode.MESSAGE_TYPE_MISSING;
-      errorMessage = e.getMessage();
-    } catch (MessageInvalidContentException e) {
-      errorCode = TIC2WebSocketEndPointErrorCode.INVALID_MESSAGE_CONTENT;
-      errorMessage = e.getMessage();
-    } catch (UnsupportedMessageException e) {
-      errorCode = TIC2WebSocketEndPointErrorCode.UNSUPPORTED_MESSAGE;
-      errorMessage = e.getMessage();
+      errorMessage = "Invalid JSON format: " + e.getMessage();
+      logger.error("Error parsing message: " + errorMessage);
+      this.sendErrorMessage(channel, errorCode, errorMessage);
+      return Optional.empty();
+    }
+
+    try {
+      message = messageJsonCodec.decodeFromJsonObject(jsonObject);
+    } catch (MessageException e) {
+      if (e instanceof MessageInvalidFormatException) {
+        errorCode = TIC2WebSocketEndPointErrorCode.INVALID_MESSAGE_FORMAT;
+        errorMessage = e.getMessage();
+      } else if (e instanceof MessageInvalidTypeException) {
+        errorCode = TIC2WebSocketEndPointErrorCode.MESSAGE_TYPE_INVALID;
+        errorMessage = e.getMessage();
+      } else if (e instanceof MessageKeyNameDoesntExistException) {
+        errorCode = TIC2WebSocketEndPointErrorCode.MESSAGE_NAME_MISSING;
+        errorMessage = e.getMessage();
+      } else if (e instanceof MessageKeyTypeDoesntExistException) {
+        errorCode = TIC2WebSocketEndPointErrorCode.MESSAGE_TYPE_MISSING;
+        errorMessage = e.getMessage();
+      } else if (e instanceof MessageInvalidContentException) {
+        errorCode = TIC2WebSocketEndPointErrorCode.INVALID_MESSAGE_CONTENT;
+        errorMessage = e.getMessage();
+      } else if (e instanceof UnsupportedMessageException) {
+        errorCode = TIC2WebSocketEndPointErrorCode.UNSUPPORTED_MESSAGE;
+        errorMessage = e.getMessage();
+      }
+    } catch (Exception e) {
+      errorCode = TIC2WebSocketEndPointErrorCode.INTERNAL_ERROR;
+      errorMessage = "Internal error: " + e.getMessage();
     }
 
     if (errorCode != TIC2WebSocketEndPointErrorCode.NO_ERROR) {
       logger.error("Error parsing message: " + errorMessage);
-      // TODO: Send error event
+      this.sendErrorMessage(channel, errorCode, errorMessage);
       return Optional.empty();
     }
 
@@ -287,7 +309,8 @@ public class TIC2WebSocketHandler extends SimpleChannelInboundHandler<WebSocketF
   private Optional<Request> getRequest(Channel channel, Message message) {
     if (!(message instanceof Request)) {
       logger.error("Message is not a request");
-      // TODO: Send error event
+      this.sendErrorMessage(
+          channel, TIC2WebSocketEndPointErrorCode.MESSAGE_TYPE_INVALID, "Message is not a request");
       return Optional.empty();
     }
 
@@ -305,6 +328,13 @@ public class TIC2WebSocketHandler extends SimpleChannelInboundHandler<WebSocketF
     return requestHandler.handle(request, client);
   }
 
+  private void sendErrorMessage(
+      Channel channel, TIC2WebSocketEndPointErrorCode errorCode, String errorMessage) {
+    ResponseError responseError =
+        new ResponseError("ErrorResponse", LocalDateTime.now(), errorCode.value(), errorMessage);
+    this.sendMessage(channel, responseError);
+  }
+
   /**
    * Sends a message to the specified channel as a JSON WebSocket frame.
    *
@@ -315,7 +345,7 @@ public class TIC2WebSocketHandler extends SimpleChannelInboundHandler<WebSocketF
    */
   private void sendMessage(Channel channel, Message message) {
     try {
-      String json = message.toJSON().toString();
+      String json = messageJsonCodec.encodeToJsonString(message);
       TextWebSocketFrame frame = new TextWebSocketFrame(json);
       channel.writeAndFlush(frame);
 

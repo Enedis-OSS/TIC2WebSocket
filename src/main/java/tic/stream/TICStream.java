@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 import tic.frame.TICFrame;
 import tic.frame.TICMode;
 import tic.frame.codec.TICFrameCodec;
-import tic.frame.codec.TICFrameSummarizedJsonEncoder;
+import tic.frame.codec.TICFrameSummarizedEncoder;
 import tic.io.serialport.SerialPortDescriptor;
 import tic.io.serialport.SerialPortFinder;
 import tic.io.serialport.SerialPortFinderBase;
@@ -58,13 +58,13 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
             @Override
             public void onFrame(TICFrame frame) {
 
-              System.out.println(
-                  "TIC stream frame:\n" + TICFrameSummarizedJsonEncoder.encodeAsString(frame) + "\n");
+              logger.debug(
+                  "TIC stream frame:\n" + TICFrameSummarizedEncoder.encodeAsString(frame) + "\n");
             }
 
             @Override
             public void onError(String error) {
-              System.err.println("TIC stream error: " + error);
+              logger.error("TIC stream error: " + error);
             }
           });
 
@@ -76,12 +76,12 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
                     shutdownLatch.countDown();
                   }));
 
-      System.out.println("Starting TIC stream with configuration " + configPath);
-      System.out.println("Press CTRL-C to stop.");
+      logger.info("Starting TIC stream with configuration " + configPath);
+      logger.info("Press CTRL-C to stop.");
       stream.start();
       shutdownLatch.await();
     } catch (Exception exception) {
-      System.err.println("Failed to start TIC stream: " + exception.getMessage());
+      logger.error("Failed to start TIC stream: " + exception.getMessage());
       System.exit(1);
     }
   }
@@ -147,6 +147,9 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
 
     if (this.currentMode == null) {
       TICMode newMode = this.streamModeDetector.autoDetectMode();
+      if (newMode != null && newMode != this.currentMode) {
+        logger.info("TIC mode detected: {}", newMode);
+      }
       if (newMode == null) {
         this.onReadTimeout();
         return;
