@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import tic.core.codec.TICCoreErrorCodec;
 import tic.core.codec.TICCoreFrameCodec;
 import tic.frame.TICMode;
@@ -24,7 +23,7 @@ import tic.io.PlugSubscriber;
 import tic.io.modem.ModemDescriptor;
 import tic.io.modem.ModemFinder;
 import tic.io.modem.ModemFinderBase;
-import tic.io.modem.ModemJsonEncoder;
+import tic.io.modem.ModemJsonCodec;
 import tic.io.modem.ModemPlugNotifier;
 import tic.io.serialport.SerialPortFinderBase;
 import tic.io.usb.UsbPortFinderBase;
@@ -290,13 +289,13 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
 
   @Override
   public void onPlugged(ModemDescriptor descriptor) {
-    logger.info("TICCore modem plugged:\n" + ModemJsonEncoder.encode(descriptor));
+    logger.info("TICCore modem plugged:\n" + ModemJsonCodec.encode(descriptor));
     this.startNewStream(descriptor);
   }
 
   @Override
   public void onUnplugged(ModemDescriptor descriptor) {
-    logger.info("TICCore modem unplugged:\n" + ModemJsonEncoder.encode(descriptor));
+    logger.info("TICCore modem unplugged:\n" + ModemJsonCodec.encode(descriptor));
     TICIdentifier identifier = this.stopStream(descriptor);
     Task task =
         new TaskBase() {
@@ -323,7 +322,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
         for (String portName : this.nativePortNamesOnStart) {
           ModemDescriptor descriptor = this.modemFinder.findNative(portName);
           logger.debug(
-              "Starting native TIC port " + portName + " : " + ModemJsonEncoder.encode(descriptor));
+              "Starting native TIC port " + portName + " : " + ModemJsonCodec.encode(descriptor));
           if (descriptor != null && this.findStream(descriptor) == null) {
             this.startNewStream(descriptor);
           }
@@ -394,7 +393,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
       this.streamList.remove(existing);
     }
 
-    logger.debug("TICCore starting new stream : " + ModemJsonEncoder.encode(descriptor));
+    logger.debug("TICCore starting new stream : " + ModemJsonCodec.encode(descriptor));
     try {
       TICCoreStream stream =
           TICCoreStreamBase.create(
@@ -403,7 +402,7 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
       stream.subscribe(this);
       stream.start();
       this.streamList.add(stream);
-      logger.debug("TICCore started new stream : " + ModemJsonEncoder.encode(descriptor));
+      logger.debug("TICCore started new stream : " + ModemJsonCodec.encode(descriptor));
       return stream;
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
@@ -414,13 +413,13 @@ public class TICCoreBase implements TICCore, TICCoreSubscriber, PlugSubscriber<M
   private TICIdentifier stopStream(ModemDescriptor descriptor) {
     TICIdentifier identifier = null;
     TICCoreStream stream = this.findStream(descriptor);
-    logger.debug("TICCore stopping new stream : " + ModemJsonEncoder.encode(descriptor));
+    logger.debug("TICCore stopping new stream : " + ModemJsonCodec.encode(descriptor));
     if (stream != null) {
       identifier = stream.getIdentifier();
       stream.unsubscribe(this);
       stream.stop();
       this.streamList.remove(stream);
-      logger.debug("TICCore stopped new stream : " + ModemJsonEncoder.encode(descriptor));
+      logger.debug("TICCore stopped new stream : " + ModemJsonCodec.encode(descriptor));
     }
 
     return identifier;

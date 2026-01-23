@@ -1,0 +1,7 @@
+{
+    "type": "REQUEST",
+    "name": "SubscribeTIC",
+    "data": {
+        "serialNumber": "010203040506"
+    }
+}

@@ -7,10 +7,7 @@
 
 package tic.service.message;
 
-import enedis.lab.types.DataDictionary;
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.util.message.Request;
-import java.util.Map;
+import tic.util.message.Request;
 
 /**
  * Request message for retrieving modem information.
@@ -23,7 +20,6 @@ import java.util.Map;
  *
  * <ul>
  *   <li>Encapsulates request for modem information
- *   <li>Supports construction from map, DataDictionary, or default values
  *   <li>Validates and manages request parameters
  * </ul>
  *
@@ -34,49 +30,8 @@ public class RequestGetModemsInfo extends Request {
   /** Message name for this request. */
   public static final String NAME = "GetModemsInfo";
 
-  /**
-   * Constructs a request for modem information with default values.
-   *
-   * @throws DataDictionaryException if validation fails
-   */
-  public RequestGetModemsInfo() throws DataDictionaryException {
-    super();
-    this.kName.setAcceptedValues(NAME);
-    this.checkAndUpdate();
-  }
-
-  /**
-   * Constructs a request for modem information from a map of values.
-   *
-   * @param map the map containing request parameters
-   * @throws DataDictionaryException if validation fails
-   */
-  public RequestGetModemsInfo(Map<String, Object> map) throws DataDictionaryException {
-    this();
-    this.copy(fromMap(map));
-  }
-
-  /**
-   * Constructs a request for modem information from another DataDictionary instance.
-   *
-   * @param other the DataDictionary to copy from
-   * @throws DataDictionaryException if validation fails
-   */
-  public RequestGetModemsInfo(DataDictionary other) throws DataDictionaryException {
-    this();
-    this.copy(other);
-  }
-
-  /**
-   * Updates optional parameters for the request, ensuring the name is set.
-   *
-   * @throws DataDictionaryException if validation fails
-   */
-  @Override
-  protected void updateOptionalParameters() throws DataDictionaryException {
-    if (!this.exists(KEY_NAME)) {
-      this.setName(NAME);
-    }
-    super.updateOptionalParameters();
+  /** Constructs a request for modem information with default values. */
+  public RequestGetModemsInfo() {
+    super(NAME);
   }
 }

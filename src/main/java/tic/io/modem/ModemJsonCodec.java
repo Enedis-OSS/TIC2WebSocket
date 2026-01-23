@@ -13,10 +13,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /** Utility class to convert modem descriptors to their JSON representation. */
-public final class ModemJsonEncoder {
+public final class ModemJsonCodec {
   private static final int DEFAULT_INDENT = 2;
 
-  private ModemJsonEncoder() {}
+  private ModemJsonCodec() {}
 
   /**
    * Encodes the provided modem descriptor list into a JSON string using the default indentation
@@ -38,11 +38,11 @@ public final class ModemJsonEncoder {
    * @return the JSON string
    */
   public static String encode(List<ModemDescriptor> descriptors, int indentFactor) {
-    List<ModemDescriptor> safeDescriptors =
+    List<ModemDescriptor> safeList =
         descriptors == null ? Collections.emptyList() : descriptors;
 
     JSONArray array = new JSONArray();
-    safeDescriptors.forEach(
+    safeList.forEach(
         descriptor -> array.put(new JSONObject(encode(descriptor, indentFactor))));
 
     return indentFactor < 0 ? array.toString() : array.toString(indentFactor);
@@ -59,15 +59,23 @@ public final class ModemJsonEncoder {
     return encode(descriptor, DEFAULT_INDENT);
   }
 
+  public static JSONArray encodeAsArray(List<ModemDescriptor> descriptors) {
+    List<ModemDescriptor> safeList =
+        descriptors == null ? Collections.emptyList() : descriptors;
+
+    JSONArray array = new JSONArray();
+    safeList.forEach(descriptor -> array.put(encodeAsObject(descriptor)));
+
+    return array;
+  }
+
   /**
-   * Encodes a single modem descriptor into a JSON string.
+   * Encodes a single modem descriptor into a JSON object.
    *
    * @param descriptor descriptor to encode
-   * @param indentFactor indentation factor forwarded to {@link JSONObject#toString(int)}. If the
-   *     value is negative the compact form is returned
-   * @return the JSON string
+   * @return the JSON object
    */
-  public static String encode(ModemDescriptor descriptor, int indentFactor) {
+  public static JSONObject encodeAsObject(ModemDescriptor descriptor) {
     JSONObject jsonObject = new JSONObject();
     jsonObject.put("portId", descriptor.portId());
     jsonObject.put("portName", descriptor.portName());
@@ -80,6 +88,19 @@ public final class ModemJsonEncoder {
     jsonObject.put(
         "modemType",
         descriptor.modemType() == null ? JSONObject.NULL : descriptor.modemType().name());
+    return jsonObject;
+  }
+
+  /**
+   * Encodes a single modem descriptor into a JSON string.
+   *
+   * @param descriptor descriptor to encode
+   * @param indentFactor indentation factor forwarded to {@link JSONObject#toString(int)}. If the
+   *     value is negative the compact form is returned
+   * @return the JSON string
+   */
+  public static String encode(ModemDescriptor descriptor, int indentFactor) {
+    JSONObject jsonObject = encodeAsObject(descriptor);
     return indentFactor < 0 ? jsonObject.toString() : jsonObject.toString(indentFactor);
   }
 }

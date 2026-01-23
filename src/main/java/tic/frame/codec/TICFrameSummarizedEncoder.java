@@ -12,11 +12,11 @@ import org.json.JSONObject;
 import tic.frame.TICFrame;
 import tic.frame.group.TICGroup;
 
-public class TICFrameSummarizedJsonEncoder {
+public class TICFrameSummarizedEncoder {
 
   private static final int DEFAULT_INDENT = 2;
 
-  private TICFrameSummarizedJsonEncoder() {}
+  private TICFrameSummarizedEncoder() {}
 
   /**
    * Encodes a TICFrame object into its JSON string representation with default settings.

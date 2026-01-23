@@ -7,16 +7,11 @@
 
 package tic.service.message;
 
-import enedis.lab.types.DataDictionary;
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.types.datadictionary.KeyDescriptor;
-import enedis.lab.types.datadictionary.KeyDescriptorList;
-import enedis.lab.util.message.Response;
-import enedis.tic.core.TICIdentifier;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import tic.core.TICIdentifier;
+import tic.util.message.Response;
+import tic.util.message.ResponseWithData;
 
 /**
  * Response message for available TIC identifiers.
@@ -37,46 +32,11 @@ import java.util.Map;
  * @see Response
  * @see TICIdentifier
  */
-public class ResponseGetAvailableTICs extends Response {
-  /** Key for TIC identifier data in the response. */
-  protected static final String KEY_DATA = "data";
-
+public class ResponseGetAvailableTICs extends ResponseWithData<List<TICIdentifier>> {
   /** Message name for this response. */
   public static final String NAME = "GetAvailableTICs";
 
-  private List<KeyDescriptor<?>> keys = new ArrayList<KeyDescriptor<?>>();
-
-  /** Key descriptor for TIC identifier data. */
-  protected KeyDescriptorList<TICIdentifier> kData;
-
-  /** Constructs a response for available TIC identifiers with default values. */
-  protected ResponseGetAvailableTICs() {
-    super();
-    this.loadKeyDescriptors();
-    this.kName.setAcceptedValues(NAME);
-  }
-
-  /**
-   * Constructs a response for available TIC identifiers from a map of values.
-   *
-   * @param map the map containing response parameters
-   * @throws DataDictionaryException if validation fails
-   */
-  public ResponseGetAvailableTICs(Map<String, Object> map) throws DataDictionaryException {
-    this();
-    this.copy(fromMap(map));
-  }
-
-  /**
-   * Constructs a response for available TIC identifiers from another DataDictionary instance.
-   *
-   * @param other the DataDictionary to copy from
-   * @throws DataDictionaryException if validation fails
-   */
-  public ResponseGetAvailableTICs(DataDictionary other) throws DataDictionaryException {
-    this();
-    this.copy(other);
-  }
+  private List<TICIdentifier> ticIdentifiers;
 
   /**
    * Constructs a response for available TIC identifiers with explicit parameters.
@@ -85,75 +45,30 @@ public class ResponseGetAvailableTICs extends Response {
    * @param errorCode the error code, if any
    * @param errorMessage the error message, if any
    * @param data the list of available TIC identifiers
-   * @throws DataDictionaryException if validation fails
    */
   public ResponseGetAvailableTICs(
-      LocalDateTime dateTime, Number errorCode, String errorMessage, List<TICIdentifier> data)
-      throws DataDictionaryException {
-    this();
-    this.setDateTime(dateTime);
-    this.setErrorCode(errorCode);
-    this.setErrorMessage(errorMessage);
-    this.setData(data);
-    this.checkAndUpdate();
+      LocalDateTime dateTime, Number errorCode, String errorMessage, List<TICIdentifier> data) {
+    super(NAME, dateTime, errorCode, errorMessage, data);
+    this.ticIdentifiers = data;
   }
 
   /**
-   * Updates optional parameters for the response, ensuring the name is set.
-   *
-   * @throws DataDictionaryException if validation fails
-   */
-  @Override
-  protected void updateOptionalParameters() throws DataDictionaryException {
-    if (!this.exists(KEY_NAME)) {
-      this.setName(NAME);
-    }
-    super.updateOptionalParameters();
-  }
-
-  /**
-   * Returns the list of TIC identifier data associated with this response.
+   * Returns the list of available TIC identifier data associated with this response.
    *
    * @return the list of TIC identifiers
    */
-  @SuppressWarnings("unchecked")
+  @Override
   public List<TICIdentifier> getData() {
-    return (List<TICIdentifier>) this.data.get(KEY_DATA);
+    return this.ticIdentifiers;
   }
 
   /**
-   * Sets the list of TIC identifier data for this response.
+   * Sets the list of available TIC identifier data for this response.
    *
    * @param data the list of TIC identifiers
-   * @throws DataDictionaryException if validation fails
    */
-  public void setData(List<TICIdentifier> data) throws DataDictionaryException {
-    this.setData((Object) data);
-  }
-
-  /**
-   * Internal setter for TIC identifier data, with conversion and validation.
-   *
-   * @param data the TIC identifier list (Object or List<TICIdentifier>)
-   * @throws DataDictionaryException if validation fails
-   */
-  protected void setData(Object data) throws DataDictionaryException {
-    this.data.put(KEY_DATA, this.kData.convert(data));
-  }
-
-  /**
-   * Loads key descriptors for response parameters.
-   *
-   * <p>Initializes the descriptor for TIC identifier data and adds it to the response.
-   */
-  private void loadKeyDescriptors() {
-    try {
-      this.kData = new KeyDescriptorList<TICIdentifier>(KEY_DATA, false, TICIdentifier.class);
-      this.keys.add(this.kData);
-
-      this.addAllKeyDescriptor(this.keys);
-    } catch (DataDictionaryException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
+  @Override
+  public void setData(List<TICIdentifier> data) {
+    this.ticIdentifiers = data;
   }
 }

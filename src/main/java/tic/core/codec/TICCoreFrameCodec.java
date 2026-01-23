@@ -10,8 +10,8 @@ package tic.core.codec;
 import org.json.JSONObject;
 import tic.core.TICCoreFrame;
 import tic.frame.TICFrame;
-import tic.frame.codec.TICFrameDetailledJsonEncoder;
-import tic.frame.codec.TICFrameSummarizedJsonEncoder;
+import tic.frame.codec.TICFrameDetailledEncoder;
+import tic.frame.codec.TICFrameSummarizedEncoder;
 
 /**
  * Codec utilities for {@link tic.core.TICCoreFrame}.
@@ -25,6 +25,32 @@ public final class TICCoreFrameCodec {
 
   private TICCoreFrameCodec() {}
 
+  /**
+   * Encodes a {@link tic.core.TICCoreFrame} into a {@link org.json.JSONObject}.
+   *
+   * <p>Unlike {@link #encode(TICCoreFrame)}, this method does not pretty-print nor stringify the
+   * JSON. It is intended for embedding frame data inside larger JSON documents (e.g. WebSocket
+   * responses) without double-encoding.
+   */
+  public static JSONObject encodeAsJsonObject(TICCoreFrame frame) {
+    return encodeAsJsonObject(frame, DEFAULT_SUMMARIZED_FRAME);
+  }
+
+  public static JSONObject encodeAsJsonObject(TICCoreFrame frame, boolean summarizedFrame) {
+    if (frame == null) {
+      throw new IllegalArgumentException("frame cannot be null");
+    }
+
+    JSONObject json = new JSONObject();
+    json.put(
+        "identifier", TICIdentifierCodec.getInstance().encodeToJsonObject(frame.getIdentifier()));
+    json.put("mode", frame.getMode().name());
+    json.put("captureDateTime", frame.getCaptureDateTime().toString());
+    json.put("frame", toJson(frame.getFrame(), summarizedFrame));
+
+    return json;
+  }
+
   public static String encode(TICCoreFrame frame) {
     return encode(frame, DEFAULT_INDENT, DEFAULT_SUMMARIZED_FRAME);
   }
@@ -34,16 +60,7 @@ public final class TICCoreFrameCodec {
   }
 
   public static String encode(TICCoreFrame frame, int indentFactor, boolean summarizedFrame) {
-    if (frame == null) {
-      throw new IllegalArgumentException("frame cannot be null");
-    }
-
-    JSONObject json = new JSONObject();
-    json.put("identifier", TICIdentifierCodec.toJson(frame.getIdentifier()));
-    json.put("mode", frame.getMode().name());
-    json.put("captureDateTime", frame.getCaptureDateTime().toString());
-    json.put("frame", toJson(frame.getFrame(), summarizedFrame));
-
+    JSONObject json = encodeAsJsonObject(frame, summarizedFrame);
     return indentFactor < 0 ? json.toString() : json.toString(indentFactor);
   }
 
@@ -52,7 +69,7 @@ public final class TICCoreFrameCodec {
       return new JSONObject();
     }
     return summarized
-        ? TICFrameSummarizedJsonEncoder.encodeAsObject(frame)
-        : TICFrameDetailledJsonEncoder.encodeAsObject(frame);
+        ? TICFrameSummarizedEncoder.encodeAsObject(frame)
+        : TICFrameDetailledEncoder.encodeAsObject(frame);
   }
 }

@@ -7,34 +7,39 @@
 
 package tic.core.codec;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import tic.core.TICIdentifier;
+import tic.util.codec.JsonArrayCodec;
+import tic.util.codec.JsonObjectCodec;
+import tic.util.codec.JsonStringCodec;
 
 /**
  * Codec utilities for {@link tic.core.TICIdentifier}.
  *
  * <p>Currently focuses on JSON encoding (pretty-printed) for diagnostics and logging.
  */
-public final class TICIdentifierCodec {
+public final class TICIdentifierCodec
+    implements JsonObjectCodec<TICIdentifier>,
+        JsonStringCodec<TICIdentifier>,
+        JsonArrayCodec<List<TICIdentifier>> {
 
-  private static final int DEFAULT_INDENT = 2;
+  public static TICIdentifierCodec instance = null;
+
+  public static final TICIdentifierCodec getInstance() {
+    if (instance == null) {
+      return new TICIdentifierCodec();
+    }
+    return instance;
+  }
 
   private TICIdentifierCodec() {}
 
-  public static String encode(TICIdentifier identifier) {
-    return encode(identifier, DEFAULT_INDENT);
-  }
-
-  public static String encode(TICIdentifier identifier, int indentFactor) {
-    if (identifier == null) {
-      throw new IllegalArgumentException("identifier cannot be null");
-    }
-
-    JSONObject json = toJson(identifier);
-    return indentFactor < 0 ? json.toString() : json.toString(indentFactor);
-  }
-
-  public static JSONObject toJson(TICIdentifier identifier) {
+  @Override
+  public JSONObject encodeToJsonObject(TICIdentifier identifier) {
     if (identifier == null) {
       throw new IllegalArgumentException("identifier cannot be null");
     }
@@ -47,5 +52,68 @@ public final class TICIdentifierCodec {
         "serialNumber",
         identifier.getSerialNumber() == null ? JSONObject.NULL : identifier.getSerialNumber());
     return json;
+  }
+
+  @Override
+  public TICIdentifier decodeFromJsonObject(Object object) {
+    if (object == null || object instanceof JSONObject == false) {
+      throw new IllegalArgumentException("Input is not a valid JSON object"); 
+    }
+
+    JSONObject jsonObject = (JSONObject) object;
+
+    String portName = jsonObject.isNull("portName") ? null : jsonObject.getString("portName");
+    String portId = jsonObject.isNull("portId") ? null : jsonObject.getString("portId");
+    String serialNumber =
+        jsonObject.isNull("serialNumber") ? null : jsonObject.getString("serialNumber");
+
+    return new TICIdentifier.Builder()
+        .portName(portName)
+        .portId(portId)
+        .serialNumber(serialNumber)
+        .build();
+  }
+
+  @Override
+  public JSONArray encodeToJsonArray(List<TICIdentifier> identifiers) {
+    List<TICIdentifier> safeList = identifiers == null ? Collections.emptyList() : identifiers;
+    JSONArray jsonArray = new JSONArray();
+
+    for (TICIdentifier identifier : safeList) {
+      jsonArray.put(encodeToJsonObject(identifier));
+    }
+    return jsonArray;
+  }
+
+  @Override
+  public List<TICIdentifier> decodeFromJsonArray(Object object) {
+    if (object == null || object instanceof JSONArray == false) {
+      throw new IllegalArgumentException("Input is not a valid JSON array");
+    }
+
+    JSONArray jsonArray = (JSONArray) object;
+
+    List<TICIdentifier> identifiers = new ArrayList<>();
+    for (int i = 0; i < jsonArray.length(); i++) {
+      JSONObject jsonObject = jsonArray.getJSONObject(i);
+      TICIdentifier identifier = decodeFromJsonObject(jsonObject);
+      identifiers.add(identifier);
+    }
+    return identifiers;
+  }
+
+  @Override
+  public String encodeToJsonString(TICIdentifier identifier, int indentFactor) {
+    if (identifier == null) {
+      throw new IllegalArgumentException("identifier cannot be null");
+    }
+
+    JSONObject json = encodeToJsonObject(identifier);
+    return indentFactor < 0 ? json.toString() : json.toString(indentFactor);
+  }
+
+  @Override
+  public TICIdentifier decodeFromJsonString(String jsonString, int indentFactor) {
+    throw new UnsupportedOperationException("Unimplemented method 'decodeFromJsonString'");
   }
 }

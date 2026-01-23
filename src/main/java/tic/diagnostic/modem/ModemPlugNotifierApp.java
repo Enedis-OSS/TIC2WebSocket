@@ -13,7 +13,7 @@ import tic.io.PortPlugNotifier;
 import tic.io.modem.ModemDescriptor;
 import tic.io.modem.ModemFinder;
 import tic.io.modem.ModemFinderBase;
-import tic.io.modem.ModemJsonEncoder;
+import tic.io.modem.ModemJsonCodec;
 import tic.io.modem.ModemPlugNotifier;
 import tic.io.serialport.SerialPortFinderBase;
 import tic.io.usb.UsbPortFinderBase;
@@ -36,14 +36,14 @@ public class ModemPlugNotifierApp {
           @Override
           public void onPlugged(ModemDescriptor descriptor) {
             String payload =
-                ModemJsonEncoder.encode(new java.util.ArrayList<>(Arrays.asList(descriptor)));
+                ModemJsonCodec.encode(new java.util.ArrayList<>(Arrays.asList(descriptor)));
             System.out.println("onPlugged event:\n" + payload + "\n");
           }
 
           @Override
           public void onUnplugged(ModemDescriptor descriptor) {
             String payload =
-                ModemJsonEncoder.encode(new java.util.ArrayList<>(Arrays.asList(descriptor)));
+                ModemJsonCodec.encode(new java.util.ArrayList<>(Arrays.asList(descriptor)));
             System.out.println("onUnplugged event:\n" + payload + "\n");
           }
         };

@@ -11,8 +11,8 @@ package tic.core.codec;
 import org.json.JSONObject;
 import tic.core.TICCoreError;
 import tic.frame.TICFrame;
-import tic.frame.codec.TICFrameDetailledJsonEncoder;
-import tic.frame.codec.TICFrameSummarizedJsonEncoder;
+import tic.frame.codec.TICFrameDetailledEncoder;
+import tic.frame.codec.TICFrameSummarizedEncoder;
 
 /**
  * Codec utilities for {@link tic.core.TICCoreError}.
@@ -40,7 +40,8 @@ public final class TICCoreErrorCodec {
     }
 
     JSONObject json = new JSONObject();
-    json.put("identifier", TICIdentifierCodec.toJson(error.getIdentifier()));
+    json.put(
+        "identifier", TICIdentifierCodec.getInstance().encodeToJsonObject(error.getIdentifier()));
     json.put("errorMessage", error.getErrorMessage());
     json.put("errorCode", error.getErrorCode());
 
@@ -58,7 +59,7 @@ public final class TICCoreErrorCodec {
     }
 
     return summarized
-        ? TICFrameSummarizedJsonEncoder.encodeAsObject(frame)
-        : TICFrameDetailledJsonEncoder.encodeAsObject(frame);
+        ? TICFrameSummarizedEncoder.encodeAsObject(frame)
+        : TICFrameDetailledEncoder.encodeAsObject(frame);
   }
 }

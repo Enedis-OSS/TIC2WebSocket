@@ -11,7 +11,7 @@ import java.util.List;
 import tic.io.modem.ModemDescriptor;
 import tic.io.modem.ModemFinder;
 import tic.io.modem.ModemFinderBase;
-import tic.io.modem.ModemJsonEncoder;
+import tic.io.modem.ModemJsonCodec;
 import tic.io.serialport.SerialPortFinderBase;
 import tic.io.usb.UsbPortFinderBase;
 
@@ -28,7 +28,7 @@ public class ModemFinderApp {
           ModemFinderBase.create(
               SerialPortFinderBase.getInstance(), UsbPortFinderBase.getInstance());
       List<ModemDescriptor> descriptors = modemFinder.findAll();
-      System.out.println(ModemJsonEncoder.encode(descriptors));
+      System.out.println(ModemJsonCodec.encode(descriptors));
     } catch (Exception exception) {
       System.err.println(exception.getMessage());
     }

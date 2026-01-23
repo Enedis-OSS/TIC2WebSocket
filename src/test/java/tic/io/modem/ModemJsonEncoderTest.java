@@ -34,7 +34,7 @@ public class ModemJsonEncoderTest {
             .build();
 
     // When
-    String actualJsonText = ModemJsonEncoder.encode(Arrays.asList(descriptor), -1);
+    String actualJsonText = ModemJsonCodec.encode(Arrays.asList(descriptor), -1);
 
     // Then
     String expectedJsonText = ResourceLoader.readString("/tic/io/modem/AllFields.json");
@@ -56,7 +56,7 @@ public class ModemJsonEncoderTest {
             .build();
 
     // When
-    String actualJsonText = ModemJsonEncoder.encode(descriptor);
+    String actualJsonText = ModemJsonCodec.encode(descriptor);
 
     // Then
     String expectedJsonText = ResourceLoader.readString("/tic/io/modem/Descriptor.json");
@@ -75,7 +75,7 @@ public class ModemJsonEncoderTest {
             .build();
 
     // When
-    String actualJsonText = ModemJsonEncoder.encode(Collections.singletonList(descriptor), 1);
+    String actualJsonText = ModemJsonCodec.encode(Collections.singletonList(descriptor), 1);
 
     // Then
     String expectedJsonText = ResourceLoader.readString("/tic/io/modem/NullModemType.json");
@@ -88,7 +88,7 @@ public class ModemJsonEncoderTest {
     List<ModemDescriptor> descriptors = null;
 
     // When
-    String actualJsonText = ModemJsonEncoder.encode(descriptors);
+    String actualJsonText = ModemJsonCodec.encode(descriptors);
 
     // Then
     String expectedJsonText = ResourceLoader.readString("/tic/io/modem/NullList.json");
