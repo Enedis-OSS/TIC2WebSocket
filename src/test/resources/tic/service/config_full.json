@@ -1,0 +1,5 @@
+{
+  "serverPort": 1234,
+  "ticMode": "HISTORIC",
+  "ticPortNames": ["COM3", "COM4"]
+}

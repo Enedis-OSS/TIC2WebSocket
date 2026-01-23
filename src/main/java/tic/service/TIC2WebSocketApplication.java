@@ -213,7 +213,7 @@ public class TIC2WebSocketApplication {
     this.server =
         new TIC2WebSocketServer(
             "localhost",
-            this.configuration.getServerPort().intValue(),
+        this.configuration.getServerPort(),
             this.clientPool,
             this.requestHandler);
 
@@ -360,9 +360,7 @@ public class TIC2WebSocketApplication {
     }
     try {
       this.logger.info("Loading configuration file " + configPath);
-      this.configuration =
-          (TIC2WebSocketConfiguration)
-              DataDictionaryBase.fromFile(configPath, TIC2WebSocketConfiguration.class);
+      this.configuration = TIC2WebSocketConfigurationLoader.load(configPath.getAbsolutePath());
     } catch (Exception exception) {
       this.logger.error("Loading configuration file " + configPath + " failed", exception);
       return TIC2WebSocketApplicationErrorCode.LOAD_CONFIGURATION_FAILURE.code();

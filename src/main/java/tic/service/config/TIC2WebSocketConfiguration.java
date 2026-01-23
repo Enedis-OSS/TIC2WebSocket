@@ -7,18 +7,12 @@
 
 package tic.service.config;
 
-import enedis.lab.protocol.tic.TICMode;
-import enedis.lab.types.DataDictionary;
-import enedis.lab.types.DataDictionaryException;
-import enedis.lab.types.configuration.ConfigurationBase;
-import enedis.lab.types.datadictionary.KeyDescriptor;
-import enedis.lab.types.datadictionary.KeyDescriptorEnum;
-import enedis.lab.types.datadictionary.KeyDescriptorListMinMaxSize;
-import enedis.lab.types.datadictionary.KeyDescriptorNumberMinMax;
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
+import tic.frame.TICMode;
 
 /**
  * Configuration class for TIC2WebSocket service.
@@ -39,248 +33,109 @@ import java.util.Map;
  * @see ConfigurationBase
  * @see TICMode
  */
-public class TIC2WebSocketConfiguration extends ConfigurationBase {
-  /** Key for server port configuration. */
-  protected static final String KEY_SERVER_PORT = "serverPort";
+public class TIC2WebSocketConfiguration {
 
-  /** Key for TIC mode configuration. */
-  protected static final String KEY_TIC_MODE = "ticMode";
+  public static final String KEY_SERVER_PORT = "serverPort";
+  public static final String KEY_TIC_MODE = "ticMode";
+  public static final String KEY_TIC_PORT_NAMES = "ticPortNames";
 
-  /** Key for TIC port names configuration. */
-  protected static final String KEY_TIC_PORT_NAMES = "ticPortNames";
+  public static final int SERVER_PORT_MIN = 1;
+  public static final int SERVER_PORT_MAX = 65535;
 
-  /** Minimum allowed server port value. */
-  private static final Number SERVER_PORT_MIN = 1;
+  public static final TICMode DEFAULT_TIC_MODE = TICMode.AUTO;
 
-  /** Maximum allowed server port value. */
-  private static final Number SERVER_PORT_MAX = 65535;
-
-  /** Minimum number of TIC port names required. */
-  private static final int TIC_PORT_NAMES_MIN_SIZE = 1;
-
-  /** List of key descriptors for configuration parameters. */
-  private final List<KeyDescriptor<?>> keys = new ArrayList<>();
-
-  /** Key descriptor for server port. */
-  protected KeyDescriptorNumberMinMax kServerPort;
-
-  /** Key descriptor for TIC mode. */
-  protected KeyDescriptorEnum<TICMode> kTicMode;
-
-  /** Key descriptor for TIC port names. */
-  protected KeyDescriptorListMinMaxSize<String> kTicPortNames;
-
-  /** Constructs a configuration with default values and loads key descriptors. */
-  protected TIC2WebSocketConfiguration() {
-    super();
-    this.loadKeyDescriptors();
-  }
+  private int serverPort;
+  private TICMode ticMode;
+  private List<String> ticPortNames;
 
   /**
-   * Constructs a configuration from a map of values.
-   *
-   * <p>Initializes the configuration using a map of key-value pairs.
-   *
-   * @param map the map containing configuration parameters
-   * @throws DataDictionaryException if validation fails
-   */
-  public TIC2WebSocketConfiguration(Map<String, Object> map) throws DataDictionaryException {
-    this();
-    this.copy(fromMap(map));
-  }
-
-  /**
-   * Constructs a configuration from another DataDictionary instance.
-   *
-   * <p>Copies configuration values from the provided DataDictionary.
-   *
-   * @param other the DataDictionary to copy from
-   * @throws DataDictionaryException if validation fails
-   */
-  public TIC2WebSocketConfiguration(DataDictionary other) throws DataDictionaryException {
-    this();
-    this.copy(other);
-  }
-
-  /**
-   * Constructs a configuration with a specified name and file, using default parameter values.
-   *
-   * @param name the configuration name
-   * @param file the configuration file
-   */
-  public TIC2WebSocketConfiguration(String name, File file) {
-    this();
-    this.init(name, file);
-  }
-
-  /**
-   * Constructs a configuration with explicit parameter values.
-   *
-   * <p>Initializes the configuration with the specified server port, TIC mode, and TIC port names.
+   * Constructs a configuration with a mandatory server port.
    *
    * @param serverPort the server port number
-   * @param ticMode the TIC mode
-   * @param ticPortNames the list of TIC port names
-   * @throws DataDictionaryException if validation fails
    */
-  public TIC2WebSocketConfiguration(Number serverPort, TICMode ticMode, List<String> ticPortNames)
-      throws DataDictionaryException {
-    this();
+  public TIC2WebSocketConfiguration(int serverPort) {
+    this(serverPort, null, null);
+  }
 
+  /**
+   * Constructs a configuration with a mandatory server port, and optional TIC mode and port names.
+   *
+   * @param serverPort the server port number
+   * @param ticMode the TIC mode (optional, defaults to {@link #DEFAULT_TIC_MODE} when null)
+   * @param ticPortNames list of TIC native port names (optional, null/empty means not set)
+   */
+  public TIC2WebSocketConfiguration(int serverPort, TICMode ticMode, List<String> ticPortNames) {
     this.setServerPort(serverPort);
     this.setTicMode(ticMode);
     this.setTicPortNames(ticPortNames);
-
-    this.checkAndUpdate();
   }
 
-  /**
-   * Returns the configured server port number.
-   *
-   * @return the server port
-   */
-  public Number getServerPort() {
-    return (Number) this.data.get(KEY_SERVER_PORT);
+  public int getServerPort() {
+    return this.serverPort;
   }
 
-  /**
-   * Returns the configured TIC mode.
-   *
-   * @return the TIC mode
-   */
   public TICMode getTicMode() {
-    return (TICMode) this.data.get(KEY_TIC_MODE);
+    return this.ticMode;
   }
 
   /**
    * Returns the list of configured TIC port names.
    *
-   * @return the list of TIC port names
+   * @return an unmodifiable list, or null if not set
    */
-  @SuppressWarnings("unchecked")
   public List<String> getTicPortNames() {
-    return (List<String>) this.data.get(KEY_TIC_PORT_NAMES);
+    return this.ticPortNames;
   }
 
-  /**
-   * Sets the server port value.
-   *
-   * @param serverPort the server port number
-   * @throws DataDictionaryException if validation fails
-   */
-  public void setServerPort(Number serverPort) throws DataDictionaryException {
-    this.setServerPort((Object) serverPort);
+  private void setServerPort(int serverPort) {
+    checkServerPort(serverPort);
+    this.serverPort = serverPort;
   }
 
-  /**
-   * Sets the TIC mode value.
-   *
-   * @param ticMode the TIC mode
-   * @throws DataDictionaryException if validation fails
-   */
-  public void setTicMode(TICMode ticMode) throws DataDictionaryException {
-    this.setTicMode((Object) ticMode);
+  private void setTicMode(TICMode ticMode) {
+    this.ticMode = (ticMode == null) ? DEFAULT_TIC_MODE : ticMode;
   }
 
-  /**
-   * Sets the list of TIC port names.
-   *
-   * @param ticPortNames the list of TIC port names
-   * @throws DataDictionaryException if validation fails
-   */
-  public void setTicPortNames(List<String> ticPortNames) throws DataDictionaryException {
-    this.setTicPortNames((Object) ticPortNames);
+  private void setTicPortNames(List<String> ticPortNames) {
+    this.ticPortNames = normalizeAndCheckPortNames(ticPortNames);
   }
 
-  /**
-   * Internal setter for server port, with conversion and validation.
-   *
-   * @param serverPort the server port value (Object or Number)
-   * @throws DataDictionaryException if validation fails
-   */
-  protected void setServerPort(Object serverPort) throws DataDictionaryException {
-    this.data.put(KEY_SERVER_PORT, this.kServerPort.convert(serverPort));
+  private static void checkServerPort(int serverPort) {
+    if (serverPort < SERVER_PORT_MIN || serverPort > SERVER_PORT_MAX) {
+      throw new IllegalArgumentException(
+          "Server port must be between " + SERVER_PORT_MIN + " and " + SERVER_PORT_MAX);
+    }
   }
 
-  /**
-   * Internal setter for TIC mode, with conversion and validation.
-   *
-   * @param ticMode the TIC mode value (Object or TICMode)
-   * @throws DataDictionaryException if validation fails
-   */
-  protected void setTicMode(Object ticMode) throws DataDictionaryException {
-    this.data.put(KEY_TIC_MODE, this.kTicMode.convert(ticMode));
-  }
+  private static List<String> normalizeAndCheckPortNames(List<String> ticPortNames) {
+    if (ticPortNames == null || ticPortNames.isEmpty()) {
+      return null;
+    }
 
-  /**
-   * Internal setter for TIC port names, with conversion and validation.
-   *
-   * <p>Checks for null, empty, and duplicate port names.
-   *
-   * @param ticPortNames the list or object representing TIC port names
-   * @throws DataDictionaryException if validation fails
-   */
-  protected void setTicPortNames(Object ticPortNames) throws DataDictionaryException {
-    List<String> portNames = this.kTicPortNames.convert(ticPortNames);
-    for (int i = 0; i < portNames.size(); i++) {
-      String portName = portNames.get(i);
+    List<String> normalized = new ArrayList<>(ticPortNames.size());
+    Set<String> seen = new HashSet<>();
+
+    for (int i = 0; i < ticPortNames.size(); i++) {
+      String portName = ticPortNames.get(i);
       if (portName == null) {
-        throw new DataDictionaryException(
-            "Key "
-                + KEY_TIC_PORT_NAMES
-                + ": value at index "
-                + i
-                + "("
-                + portName
-                + ") cannot be null");
-      } else if (portName.isEmpty()) {
-        throw new DataDictionaryException(
-            "Key "
-                + KEY_TIC_PORT_NAMES
-                + ": value at index "
-                + i
-                + "("
-                + portName
-                + ") cannot be empty");
-      } else if (i != portNames.lastIndexOf(portName)) {
-        throw new DataDictionaryException(
-            "Key "
-                + KEY_TIC_PORT_NAMES
-                + ": value at index "
-                + i
-                + " and "
-                + portNames.lastIndexOf(portName)
-                + "("
-                + portName
-                + ") are identical");
+        throw new IllegalArgumentException(
+            "Key " + KEY_TIC_PORT_NAMES + ": value at index " + i + " cannot be null");
       }
+
+      String trimmed = portName.trim();
+      if (trimmed.isEmpty()) {
+        throw new IllegalArgumentException(
+            "Key " + KEY_TIC_PORT_NAMES + ": value at index " + i + " cannot be empty");
+      }
+
+      if (!seen.add(trimmed)) {
+        throw new IllegalArgumentException(
+            "Key " + KEY_TIC_PORT_NAMES + ": duplicate value '" + trimmed + "'");
+      }
+
+      normalized.add(trimmed);
     }
-    this.data.put(KEY_TIC_PORT_NAMES, portNames);
-  }
 
-  /**
-   * Loads key descriptors for configuration parameters.
-   *
-   * <p>Initializes descriptors for server port, TIC mode, and TIC port names, and adds them to the
-   * configuration.
-   */
-  private void loadKeyDescriptors() {
-    try {
-      this.kServerPort =
-          new KeyDescriptorNumberMinMax(KEY_SERVER_PORT, true, SERVER_PORT_MIN, SERVER_PORT_MAX);
-      this.keys.add(this.kServerPort);
-
-      this.kTicMode = new KeyDescriptorEnum<TICMode>(KEY_TIC_MODE, false, TICMode.class);
-      this.keys.add(this.kTicMode);
-
-      this.kTicPortNames =
-          new KeyDescriptorListMinMaxSize<>(
-              KEY_TIC_PORT_NAMES, false, String.class, TIC_PORT_NAMES_MIN_SIZE, null);
-      this.keys.add(this.kTicPortNames);
-
-      this.addAllKeyDescriptor(this.keys);
-    } catch (DataDictionaryException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
+    return Collections.unmodifiableList(normalized);
   }
 }
