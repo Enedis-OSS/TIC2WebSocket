@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONException;
-import org.json.JSONObject;
 import tic.core.TICIdentifier;
 import tic.service.client.TIC2WebSocketClient;
 import tic.service.client.TIC2WebSocketClientPool;
@@ -249,20 +247,9 @@ public class TIC2WebSocketHandler extends SimpleChannelInboundHandler<WebSocketF
     Message message = null;
     TIC2WebSocketEndPointErrorCode errorCode = TIC2WebSocketEndPointErrorCode.NO_ERROR;
     String errorMessage = "";
-    JSONObject jsonObject = null;
 
     try {
-      jsonObject = new JSONObject(text);
-    } catch (JSONException e) {
-      errorCode = TIC2WebSocketEndPointErrorCode.INVALID_MESSAGE_FORMAT;
-      errorMessage = "Invalid JSON format: " + e.getMessage();
-      logger.error("Error parsing message: " + errorMessage);
-      this.sendErrorMessage(channel, errorCode, errorMessage);
-      return Optional.empty();
-    }
-
-    try {
-      message = messageJsonCodec.decodeFromJsonObject(jsonObject);
+      message = messageJsonCodec.decodeFromJsonString(text);
     } catch (MessageException e) {
       if (e instanceof MessageInvalidFormatException) {
         errorCode = TIC2WebSocketEndPointErrorCode.INVALID_MESSAGE_FORMAT;

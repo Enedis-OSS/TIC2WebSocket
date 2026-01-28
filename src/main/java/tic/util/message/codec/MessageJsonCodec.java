@@ -69,7 +69,19 @@ public class MessageJsonCodec implements JsonObjectCodec<Message>, JsonStringCod
 
   @Override
   public Message decodeFromJsonString(String jsonString, int indentFactor) throws Exception {
-    throw new UnsupportedOperationException("Unimplemented method 'decodeFromJsonString'");
+    if (jsonString == null || jsonString.isEmpty()) {
+      throw new MessageInvalidFormatException("Input JSON string is null or empty");
+    }
+
+    JSONObject jsonObject = null;
+
+    try {
+      jsonObject = new JSONObject(jsonString);
+    } catch (Exception e) {
+      throw new MessageInvalidFormatException("Input is not a valid JSON string", e);
+    }
+
+    return decodeFromJsonObject(jsonObject);
   }
 
   @Override
