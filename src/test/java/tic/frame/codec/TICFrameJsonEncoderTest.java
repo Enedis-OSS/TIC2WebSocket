@@ -7,10 +7,13 @@
 
 package tic.frame.codec;
 
+import static org.junit.Assert.assertNull;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
+
 import org.json.JSONException;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -87,11 +90,18 @@ public class TICFrameJsonEncoderTest {
     // Given
     TICFrame frame = new TICFrame(TICMode.HISTORIC);
     HISTORIC_GROUPS.forEach(group -> frame.addGroup(group));
+    String actualJsonText = null;
+    Exception exception = null;
 
     // When
-    String actualJsonText = TICFrameDetailledEncoder.encodeAsString(frame);
+    try {
+      actualJsonText = TICFrameDetailledCodec.getInstance().encodeToJsonString(frame);
+    } catch (Exception e) {
+      exception = e;
+    }
 
     // Then
+    assertNull("Exception should not be thrown during encoding", exception);
     String expectedJsonText =
         ResourceLoader.readString("/tic/frame/codec/ticFrameHistoric_full_details.json");
     JSONAssert.assertEquals(expectedJsonText, actualJsonText, false);
@@ -102,11 +112,18 @@ public class TICFrameJsonEncoderTest {
     // Given
     TICFrame frame = new TICFrame(TICMode.STANDARD);
     STANDARD_GROUPS.forEach(group -> frame.addGroup(group));
+    String actualJsonText = null;
+    Exception exception = null;
 
     // When
-    String actualJsonText = TICFrameSummarizedEncoder.encodeAsString(frame);
+    try {
+      actualJsonText = TICFrameSummarizedCodec.getInstance().encodeToJsonString(frame);
+    } catch (Exception e) {
+      exception = e;
+    }
 
     // Then
+    assertNull("Exception should not be thrown during encoding", exception);
     String expectedJsonText =
         ResourceLoader.readString("/tic/frame/codec/ticFrameStandard_summarized.json");
     JSONAssert.assertEquals(expectedJsonText, actualJsonText, false);
@@ -118,11 +135,18 @@ public class TICFrameJsonEncoderTest {
     // Given
     TICFrame frame = new TICFrame(TICMode.HISTORIC);
     HISTORIC_GROUPS.forEach(group -> frame.addGroup(group));
+    String actualJsonText = null;
+    Exception exception = null;
 
     // When
-    String actualJsonText = TICFrameDetailledEncoder.encodeAsString(frame, -1);
+    try {
+      actualJsonText = TICFrameDetailledCodec.getInstance().encodeToJsonString(frame, -1);
+    } catch (Exception e) {
+      exception = e;
+    }
 
     // Then
+    assertNull("Exception should not be thrown during encoding", exception);
     String expectedJsonText =
         ResourceLoader.readString("/tic/frame/codec/ticFrameHistoric_full_details.json");
     JSONAssert.assertEquals(expectedJsonText, actualJsonText, false);
@@ -134,11 +158,18 @@ public class TICFrameJsonEncoderTest {
     // Given
     TICFrame frame = new TICFrame(TICMode.STANDARD);
     STANDARD_GROUPS.forEach(group -> frame.addGroup(group));
+    String actualJsonText = null;
+    Exception exception = null;
 
     // When
-    String actualJsonText = TICFrameSummarizedEncoder.encodeAsString(frame, -1);
+    try {
+      actualJsonText = TICFrameSummarizedCodec.getInstance().encodeToJsonString(frame, -1);
+    } catch (Exception e) {
+      exception = e;
+    }
 
     // Then
+    assertNull("Exception should not be thrown during encoding", exception);
     String expectedJsonText =
         ResourceLoader.readString("/tic/frame/codec/ticFrameStandard_summarized.json");
     JSONAssert.assertEquals(expectedJsonText, actualJsonText, false);

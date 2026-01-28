@@ -8,6 +8,9 @@
 package tic.diagnostic.modem;
 
 import java.util.List;
+
+import org.json.JSONArray;
+
 import tic.io.modem.ModemDescriptor;
 import tic.io.modem.ModemFinder;
 import tic.io.modem.ModemFinderBase;
@@ -28,7 +31,7 @@ public class ModemFinderApp {
           ModemFinderBase.create(
               SerialPortFinderBase.getInstance(), UsbPortFinderBase.getInstance());
       List<ModemDescriptor> descriptors = modemFinder.findAll();
-      System.out.println(ModemJsonCodec.encode(descriptors));
+      System.out.println((JSONArray) ModemJsonCodec.getInstance().encodeToJsonArray(descriptors));
     } catch (Exception exception) {
       System.err.println(exception.getMessage());
     }

@@ -29,14 +29,25 @@ public final class TICCorePrintingSubscriber implements TICCoreSubscriber {
   public void onData(TICCoreFrame frame) {
     this.frameCount++;
     System.out.println("--- Frame #" + this.frameCount + " ---");
-    System.out.println(frame == null ? "null" : TICCoreFrameCodec.encode(frame, this.indent));
+    try {
+      System.out.println(frame == null ? "null" : TICCoreFrameCodec.getInstance().encodeToJsonString(frame, this.indent));
+    } catch (Exception e) {
+      System.err.println("[ERROR] Failed to encode frame to JSON string: " + e.getMessage());
+    }
   }
 
   @Override
   public void onError(TICCoreError error) {
     this.lastError = error;
     System.err.println("--- Error ---");
-    System.err.println(error == null ? "null" : TICCoreErrorCodec.encode(error, this.indent));
+    try {
+      System.err.println(
+          error == null
+              ? "null"
+              : TICCoreErrorCodec.getInstance().encodeToJsonString(error, this.indent));
+    } catch (Exception e) {
+      System.err.println("[ERROR] Failed to encode error to JSON string: " + e.getMessage());
+    }
   }
 
   public long getFrameCount() {

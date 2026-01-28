@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 import tic.frame.TICFrame;
 import tic.frame.TICMode;
 import tic.frame.codec.TICFrameCodec;
-import tic.frame.codec.TICFrameSummarizedEncoder;
+import tic.frame.codec.TICFrameSummarizedCodec;
 import tic.io.serialport.SerialPortDescriptor;
 import tic.io.serialport.SerialPortFinder;
 import tic.io.serialport.SerialPortFinderBase;
@@ -58,8 +58,14 @@ public class TICStream extends TaskPeriodicWithSubscribers<TICStreamListener> {
             @Override
             public void onFrame(TICFrame frame) {
 
-              logger.debug(
-                  "TIC stream frame:\n" + TICFrameSummarizedEncoder.encodeAsString(frame) + "\n");
+              try {
+                logger.debug(
+                  "TIC stream frame:\n"
+                      + TICFrameSummarizedCodec.getInstance().encodeToJsonString(frame)
+                      + "\n");
+              } catch (Exception e) {
+                logger.error("Failed to encode TIC frame to JSON: " + e.getMessage());
+              }
             }
 
             @Override

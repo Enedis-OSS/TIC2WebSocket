@@ -9,8 +9,6 @@ package tic.service.client;
 
 import io.netty.channel.Channel;
 import java.time.LocalDateTime;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import tic.core.TICCoreError;
 import tic.core.TICCoreFrame;
 import tic.core.TICCoreSubscriber;
@@ -39,8 +37,6 @@ import tic.util.message.Event;
  * @see Channel
  */
 public class TIC2WebSocketClient implements TICCoreSubscriber {
-  /** Logger for client events and errors. */
-  private final Logger logger;
 
   /** Associated Netty WebSocket channel for communication. */
   private final Channel channel;
@@ -58,7 +54,6 @@ public class TIC2WebSocketClient implements TICCoreSubscriber {
    */
   public TIC2WebSocketClient(Channel channel, EventSender eventSender) {
     super();
-    this.logger = LogManager.getLogger(this.getClass());
     this.channel = channel;
     this.eventSender = eventSender;
   }

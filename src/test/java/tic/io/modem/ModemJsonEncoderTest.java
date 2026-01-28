@@ -7,12 +7,7 @@
 
 package tic.io.modem;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import org.json.JSONException;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import tic.ResourceLoader;
@@ -20,7 +15,7 @@ import tic.ResourceLoader;
 public class ModemJsonEncoderTest {
 
   @Test
-  public void test_encode_AllFields() throws JSONException, IOException, URISyntaxException {
+  public void test_encode_AllFields() throws Exception {
     // Given
     ModemDescriptor descriptor =
         new ModemDescriptor.Builder<>()
@@ -34,7 +29,9 @@ public class ModemJsonEncoderTest {
             .build();
 
     // When
-    String actualJsonText = ModemJsonCodec.encode(Arrays.asList(descriptor), -1);
+    String actualJsonText =
+        ModemJsonCodec.getInstance()
+            .encodeToJsonObject(descriptor).toString();
 
     // Then
     String expectedJsonText = ResourceLoader.readString("/tic/io/modem/AllFields.json");
@@ -42,7 +39,7 @@ public class ModemJsonEncoderTest {
   }
 
   @Test
-  public void test_encode_Descriptor() throws JSONException, IOException, URISyntaxException {
+  public void test_encode_Descriptor() throws Exception {
     // Given
     ModemDescriptor descriptor =
         new ModemDescriptor.Builder<>()
@@ -56,7 +53,7 @@ public class ModemJsonEncoderTest {
             .build();
 
     // When
-    String actualJsonText = ModemJsonCodec.encode(descriptor);
+    String actualJsonText = ModemJsonCodec.getInstance().encodeToJsonString(descriptor);
 
     // Then
     String expectedJsonText = ResourceLoader.readString("/tic/io/modem/Descriptor.json");
@@ -64,8 +61,7 @@ public class ModemJsonEncoderTest {
   }
 
   @Test
-  public void encodeShouldHandleNullModemType()
-      throws JSONException, IOException, URISyntaxException {
+  public void encodeShouldHandleNullModemType() throws Exception {
     // Given
     ModemDescriptor descriptor =
         new ModemDescriptor.Builder<>()
@@ -75,7 +71,9 @@ public class ModemJsonEncoderTest {
             .build();
 
     // When
-    String actualJsonText = ModemJsonCodec.encode(Collections.singletonList(descriptor), 1);
+    String actualJsonText =
+        ModemJsonCodec.getInstance()
+            .encodeToJsonString(descriptor);
 
     // Then
     String expectedJsonText = ResourceLoader.readString("/tic/io/modem/NullModemType.json");
@@ -83,12 +81,13 @@ public class ModemJsonEncoderTest {
   }
 
   @Test
-  public void encodeHandlesNullList() throws IOException, URISyntaxException, JSONException {
+  public void encodeHandlesNullList() throws Exception {
     // Given
     List<ModemDescriptor> descriptors = null;
 
     // When
-    String actualJsonText = ModemJsonCodec.encode(descriptors);
+    String actualJsonText =
+        ModemJsonCodec.getInstance().encodeToJsonArray(descriptors).toString();
 
     // Then
     String expectedJsonText = ResourceLoader.readString("/tic/io/modem/NullList.json");

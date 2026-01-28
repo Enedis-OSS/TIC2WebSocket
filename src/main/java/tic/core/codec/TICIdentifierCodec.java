@@ -57,7 +57,7 @@ public final class TICIdentifierCodec
   @Override
   public TICIdentifier decodeFromJsonObject(Object object) {
     if (object == null || object instanceof JSONObject == false) {
-      throw new IllegalArgumentException("Input is not a valid JSON object"); 
+      throw new IllegalArgumentException("Input is not a valid JSON object");
     }
 
     JSONObject jsonObject = (JSONObject) object;

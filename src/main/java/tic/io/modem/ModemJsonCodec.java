@@ -11,71 +11,51 @@ import java.util.Collections;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import tic.util.codec.JsonArrayCodec;
+import tic.util.codec.JsonObjectCodec;
+import tic.util.codec.JsonStringCodec;
 
 /** Utility class to convert modem descriptors to their JSON representation. */
-public final class ModemJsonCodec {
-  private static final int DEFAULT_INDENT = 2;
+public final class ModemJsonCodec
+    implements JsonArrayCodec<List<ModemDescriptor>>,
+        JsonObjectCodec<ModemDescriptor>,
+        JsonStringCodec<ModemDescriptor> {
+
+  private static ModemJsonCodec instance = new ModemJsonCodec();
+
+  public static ModemJsonCodec getInstance() {
+    if (instance == null) {
+      instance = new ModemJsonCodec();
+    }
+    return instance;
+  }
 
   private ModemJsonCodec() {}
 
-  /**
-   * Encodes the provided modem descriptor list into a JSON string using the default indentation
-   * factor (2 spaces).
-   *
-   * @param descriptors descriptors to encode; {@code null} is treated as an empty list
-   * @return the JSON string
-   */
-  public static String encode(List<ModemDescriptor> descriptors) {
-    return encode(descriptors, DEFAULT_INDENT);
-  }
-
-  /**
-   * Encodes the provided modem descriptor list into a JSON string.
-   *
-   * @param descriptors descriptors to encode; {@code null} is treated as an empty list
-   * @param indentFactor indentation factor forwarded to {@link JSONArray#toString(int)}. If the
-   *     value is negative the compact form is returned
-   * @return the JSON string
-   */
-  public static String encode(List<ModemDescriptor> descriptors, int indentFactor) {
-    List<ModemDescriptor> safeList =
-        descriptors == null ? Collections.emptyList() : descriptors;
+  @Override
+  public Object encodeToJsonArray(List<ModemDescriptor> descriptors) throws Exception {
+    List<ModemDescriptor> safeList = descriptors == null ? Collections.emptyList() : descriptors;
 
     JSONArray array = new JSONArray();
     safeList.forEach(
-        descriptor -> array.put(new JSONObject(encode(descriptor, indentFactor))));
-
-    return indentFactor < 0 ? array.toString() : array.toString(indentFactor);
-  }
-
-  /**
-   * Encodes a single modem descriptor into a JSON string using the default indentation factor (2
-   * spaces).
-   *
-   * @param descriptor descriptor to encode
-   * @return the JSON string
-   */
-  public static String encode(ModemDescriptor descriptor) {
-    return encode(descriptor, DEFAULT_INDENT);
-  }
-
-  public static JSONArray encodeAsArray(List<ModemDescriptor> descriptors) {
-    List<ModemDescriptor> safeList =
-        descriptors == null ? Collections.emptyList() : descriptors;
-
-    JSONArray array = new JSONArray();
-    safeList.forEach(descriptor -> array.put(encodeAsObject(descriptor)));
+        descriptor -> {
+          try {
+            array.put(encodeToJsonObject(descriptor));
+          } catch (Exception e) {
+            array.put(JSONObject.NULL);
+          }
+        });
 
     return array;
   }
 
-  /**
-   * Encodes a single modem descriptor into a JSON object.
-   *
-   * @param descriptor descriptor to encode
-   * @return the JSON object
-   */
-  public static JSONObject encodeAsObject(ModemDescriptor descriptor) {
+  @Override
+  public List<ModemDescriptor> decodeFromJsonArray(Object jsonArray) throws Exception {
+    throw new UnsupportedOperationException("Unimplemented method 'decodeFromJsonArray'");
+  }
+
+  @Override
+  public Object encodeToJsonObject(ModemDescriptor descriptor) throws Exception {
     JSONObject jsonObject = new JSONObject();
     jsonObject.put("portId", descriptor.portId());
     jsonObject.put("portName", descriptor.portName());
@@ -91,16 +71,24 @@ public final class ModemJsonCodec {
     return jsonObject;
   }
 
-  /**
-   * Encodes a single modem descriptor into a JSON string.
-   *
-   * @param descriptor descriptor to encode
-   * @param indentFactor indentation factor forwarded to {@link JSONObject#toString(int)}. If the
-   *     value is negative the compact form is returned
-   * @return the JSON string
-   */
-  public static String encode(ModemDescriptor descriptor, int indentFactor) {
-    JSONObject jsonObject = encodeAsObject(descriptor);
-    return indentFactor < 0 ? jsonObject.toString() : jsonObject.toString(indentFactor);
+  @Override
+  public ModemDescriptor decodeFromJsonObject(Object jsonObject) throws Exception {
+    throw new UnsupportedOperationException("Unimplemented method 'decodeFromJsonObject'");
+  }
+
+  @Override
+  public String encodeToJsonString(ModemDescriptor descriptor, int indentFactor) throws Exception {
+    if (descriptor == null) {
+      throw new IllegalArgumentException("descriptor cannot be null");
+    }
+
+    JSONObject json = (JSONObject) encodeToJsonObject(descriptor);
+    return indentFactor < 0 ? json.toString() : json.toString(indentFactor);
+  }
+
+  @Override
+  public ModemDescriptor decodeFromJsonString(String jsonString, int indentFactor)
+      throws Exception {
+    throw new UnsupportedOperationException("Unimplemented method 'decodeFromJsonString'");
   }
 }

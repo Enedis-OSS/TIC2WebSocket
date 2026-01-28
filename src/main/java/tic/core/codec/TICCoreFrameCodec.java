@@ -9,34 +9,31 @@ package tic.core.codec;
 
 import org.json.JSONObject;
 import tic.core.TICCoreFrame;
-import tic.frame.TICFrame;
-import tic.frame.codec.TICFrameDetailledEncoder;
-import tic.frame.codec.TICFrameSummarizedEncoder;
+import tic.frame.codec.TICFrameSummarizedCodec;
+import tic.util.codec.JsonObjectCodec;
+import tic.util.codec.JsonStringCodec;
 
 /**
  * Codec utilities for {@link tic.core.TICCoreFrame}.
  *
  * <p>Currently focuses on JSON encoding (pretty-printed) for diagnostics and logging.
  */
-public final class TICCoreFrameCodec {
+public final class TICCoreFrameCodec
+    implements JsonStringCodec<TICCoreFrame>, JsonObjectCodec<TICCoreFrame> {
 
-  private static final int DEFAULT_INDENT = 2;
-  private static final boolean DEFAULT_SUMMARIZED_FRAME = true;
+  public static TICCoreFrameCodec instance = new TICCoreFrameCodec();
 
   private TICCoreFrameCodec() {}
 
-  /**
-   * Encodes a {@link tic.core.TICCoreFrame} into a {@link org.json.JSONObject}.
-   *
-   * <p>Unlike {@link #encode(TICCoreFrame)}, this method does not pretty-print nor stringify the
-   * JSON. It is intended for embedding frame data inside larger JSON documents (e.g. WebSocket
-   * responses) without double-encoding.
-   */
-  public static JSONObject encodeAsJsonObject(TICCoreFrame frame) {
-    return encodeAsJsonObject(frame, DEFAULT_SUMMARIZED_FRAME);
+  public static TICCoreFrameCodec getInstance() {
+    if (instance == null) {
+      instance = new TICCoreFrameCodec();
+    }
+    return instance;
   }
 
-  public static JSONObject encodeAsJsonObject(TICCoreFrame frame, boolean summarizedFrame) {
+  @Override
+  public Object encodeToJsonObject(TICCoreFrame frame) throws Exception {
     if (frame == null) {
       throw new IllegalArgumentException("frame cannot be null");
     }
@@ -46,30 +43,24 @@ public final class TICCoreFrameCodec {
         "identifier", TICIdentifierCodec.getInstance().encodeToJsonObject(frame.getIdentifier()));
     json.put("mode", frame.getMode().name());
     json.put("captureDateTime", frame.getCaptureDateTime().toString());
-    json.put("frame", toJson(frame.getFrame(), summarizedFrame));
+    json.put("frame", TICFrameSummarizedCodec.getInstance().encodeToJsonObject(frame.getFrame()));
 
     return json;
   }
 
-  public static String encode(TICCoreFrame frame) {
-    return encode(frame, DEFAULT_INDENT, DEFAULT_SUMMARIZED_FRAME);
+  @Override
+  public TICCoreFrame decodeFromJsonObject(Object jsonObject) throws Exception {
+    throw new UnsupportedOperationException("Unimplemented method 'decodeFromJsonObject'");
   }
 
-  public static String encode(TICCoreFrame frame, int indentFactor) {
-    return encode(frame, indentFactor, DEFAULT_SUMMARIZED_FRAME);
-  }
-
-  public static String encode(TICCoreFrame frame, int indentFactor, boolean summarizedFrame) {
-    JSONObject json = encodeAsJsonObject(frame, summarizedFrame);
+  @Override
+  public String encodeToJsonString(TICCoreFrame frame, int indentFactor) throws Exception {
+    JSONObject json = (JSONObject) encodeToJsonObject(frame);
     return indentFactor < 0 ? json.toString() : json.toString(indentFactor);
   }
 
-  private static JSONObject toJson(TICFrame frame, boolean summarized) {
-    if (frame == null) {
-      return new JSONObject();
-    }
-    return summarized
-        ? TICFrameSummarizedEncoder.encodeAsObject(frame)
-        : TICFrameDetailledEncoder.encodeAsObject(frame);
+  @Override
+  public TICCoreFrame decodeFromJsonString(String jsonString, int indentFactor) throws Exception {
+    throw new UnsupportedOperationException("Unimplemented method 'decodeFromJsonString'");
   }
 }

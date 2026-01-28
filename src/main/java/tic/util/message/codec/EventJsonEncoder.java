@@ -11,13 +11,14 @@ import org.json.JSONObject;
 import tic.core.TICCoreError;
 import tic.core.TICCoreFrame;
 import tic.core.codec.TICIdentifierCodec;
-import tic.frame.codec.TICFrameSummarizedEncoder;
+import tic.frame.codec.TICFrameSummarizedCodec;
 import tic.service.message.EventOnError;
 import tic.service.message.EventOnTICData;
 import tic.util.message.Event;
 
 public class EventJsonEncoder {
   private static TICIdentifierCodec ticIdentifierCodec = TICIdentifierCodec.getInstance();
+  private static TICFrameSummarizedCodec ticFrameSummarizedCodec = TICFrameSummarizedCodec.getInstance();
 
   private EventJsonEncoder() {}
 
@@ -39,7 +40,11 @@ public class EventJsonEncoder {
     jsonMessage.put("identifier", ticIdentifierCodec.encodeToJsonObject(error.getIdentifier()));
     jsonMessage.put("errorCode", error.getErrorCode());
     jsonMessage.put("errorMessage", error.getErrorMessage());
-    jsonMessage.put("frame", TICFrameSummarizedEncoder.encodeAsObject(error.getFrame()));
+    try {
+      jsonMessage.put("frame", ticFrameSummarizedCodec.encodeToJsonObject(error.getFrame()));
+    } catch (Exception e) {
+      jsonMessage.put("frame", JSONObject.NULL);
+    }
     return jsonMessage;
   }
 
@@ -48,7 +53,11 @@ public class EventJsonEncoder {
     jsonMessage.put("identifier", ticIdentifierCodec.encodeToJsonObject(frame.getIdentifier()));
     jsonMessage.put("mode", frame.getMode().toString());
     jsonMessage.put("captureDateTime", frame.getCaptureDateTime().toString());
-    jsonMessage.put("frame", TICFrameSummarizedEncoder.encodeAsObject(frame.getFrame()));
+    try {
+      jsonMessage.put("frame", ticFrameSummarizedCodec.encodeToJsonObject(frame.getFrame()));
+    } catch (Exception e) {
+      jsonMessage.put("frame", JSONObject.NULL);
+    }
     return jsonMessage;
   }
 }

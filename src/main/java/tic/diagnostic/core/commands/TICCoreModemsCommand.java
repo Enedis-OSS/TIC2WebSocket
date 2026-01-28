@@ -34,7 +34,7 @@ public final class TICCoreModemsCommand implements Callable<Integer> {
       System.out.println("Modems (" + count + "):");
       if (modems != null) {
         for (ModemDescriptor modem : modems) {
-          System.out.println("- " + (modem == null ? "null" : ModemJsonCodec.encode(modem)));
+          System.out.println("- " + (modem == null ? "null" : ModemJsonCodec.getInstance().encodeToJsonString(modem)));
         }
       }
       return ExitCode.OK;

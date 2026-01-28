@@ -62,12 +62,21 @@ public class ResponseJsonEncoder {
 
   private static JSONObject encodeGetModemsInfoResponse(
       ResponseGetModemsInfo message, JSONObject jsonMessage) {
-    jsonMessage.put("data", ModemJsonCodec.encodeAsArray(message.getData()));
+    try {
+      jsonMessage.put("data", ModemJsonCodec.getInstance().encodeToJsonArray(message.getData()));
+    } catch (Exception e) {
+      jsonMessage.put("data", JSONObject.NULL);
+    }
     return jsonMessage;
   }
 
   private static JSONObject encodeReadTICResponse(ResponseReadTIC message, JSONObject jsonMessage) {
-    jsonMessage.put("data", TICCoreFrameCodec.encodeAsJsonObject(message.getData()));
+    try {
+      jsonMessage.put(
+          "data", TICCoreFrameCodec.getInstance().encodeToJsonObject(message.getData()));
+    } catch (Exception e) {
+      jsonMessage.put("data", JSONObject.NULL);
+    }
     return jsonMessage;
   }
 }

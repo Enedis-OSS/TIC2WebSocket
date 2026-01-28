@@ -8,6 +8,10 @@
 package tic.diagnostic.modem;
 
 import java.util.Arrays;
+import java.util.List;
+
+import org.json.JSONArray;
+
 import tic.io.PlugSubscriber;
 import tic.io.PortPlugNotifier;
 import tic.io.modem.ModemDescriptor;
@@ -35,15 +39,27 @@ public class ModemPlugNotifierApp {
         new PlugSubscriber<ModemDescriptor>() {
           @Override
           public void onPlugged(ModemDescriptor descriptor) {
-            String payload =
-                ModemJsonCodec.encode(new java.util.ArrayList<>(Arrays.asList(descriptor)));
+            List<ModemDescriptor> list = new java.util.ArrayList<>(Arrays.asList(descriptor));
+            JSONArray array;
+            try {
+              array = (JSONArray) ModemJsonCodec.getInstance().encodeToJsonArray(list);
+            } catch (Exception e) {
+              array = new JSONArray();
+            }
+            String payload = array.toString(2);
             System.out.println("onPlugged event:\n" + payload + "\n");
           }
 
           @Override
           public void onUnplugged(ModemDescriptor descriptor) {
-            String payload =
-                ModemJsonCodec.encode(new java.util.ArrayList<>(Arrays.asList(descriptor)));
+            List<ModemDescriptor> list = new java.util.ArrayList<>(Arrays.asList(descriptor));
+            JSONArray array;
+            try {
+              array = (JSONArray) ModemJsonCodec.getInstance().encodeToJsonArray(list);
+            } catch (Exception e) {
+              array = new JSONArray();
+            }
+            String payload = array.toString(2);
             System.out.println("onUnplugged event:\n" + payload + "\n");
           }
         };
