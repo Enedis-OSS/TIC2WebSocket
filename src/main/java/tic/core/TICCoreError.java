@@ -9,7 +9,6 @@ package tic.core;
 
 import java.util.Objects;
 
-import enedis.lab.types.DataDictionaryException;
 import tic.frame.TICFrame;
 
 /**
@@ -42,7 +41,6 @@ public class TICCoreError {
    * @param identifier
    * @param errorCode
    * @param errorMessage
-   * @throws DataDictionaryException
    */
   public TICCoreError(TICIdentifier identifier, Number errorCode, String errorMessage) {
     this(identifier, errorCode, errorMessage, null);
@@ -54,8 +52,7 @@ public class TICCoreError {
    * @param identifier
    * @param errorCode
    * @param errorMessage
-   * @param data
-   * @throws DataDictionaryException
+   * @param frame
    */
   public TICCoreError(
       TICIdentifier identifier, Number errorCode, String errorMessage, TICFrame frame) {
@@ -93,9 +90,9 @@ public class TICCoreError {
   }
 
   /**
-   * Get data
+   * Get frame
    *
-   * @return the data
+   * @return the frame
    */
   public TICFrame getFrame() {
     return this.frame;

@@ -1,13 +1,11 @@
-[
-    {
-        "modemType": "MICHAUD",
-        "serialNumber": "SN123",
-        "productId": 24577,
-        "description": "USB Serial Port",
-        "vendorId": 1027,
-        "portName": "COM7",
-        "portId": "ABCD1",
-        "productName": "test_product",
-        "manufacturer": "test_manufacturer"
-    }
-]
+{
+    "modemType": "MICHAUD",
+    "serialNumber": "SN123",
+    "productId": 24577,
+    "description": "USB Serial Port",
+    "vendorId": 1027,
+    "portName": "COM7",
+    "portId": "ABCD1",
+    "productName": "test_product",
+    "manufacturer": "test_manufacturer"
+}

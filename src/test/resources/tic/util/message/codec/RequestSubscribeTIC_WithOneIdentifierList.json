@@ -1,0 +1,9 @@
+{
+    "type": "REQUEST",
+    "name": "SubscribeTIC",
+    "data": [
+        {
+            "portName": "COM7"
+        }
+    ]
+}

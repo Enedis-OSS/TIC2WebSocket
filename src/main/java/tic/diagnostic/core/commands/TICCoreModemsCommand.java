@@ -15,7 +15,7 @@ import picocli.CommandLine.ExitCode;
 import tic.core.TICCoreBase;
 import tic.diagnostic.core.TICCoreCli;
 import tic.io.modem.ModemDescriptor;
-import tic.io.modem.ModemJsonEncoder;
+import tic.io.modem.ModemJsonCodec;
 
 @Command(
     name = "modems",
@@ -34,7 +34,7 @@ public final class TICCoreModemsCommand implements Callable<Integer> {
       System.out.println("Modems (" + count + "):");
       if (modems != null) {
         for (ModemDescriptor modem : modems) {
-          System.out.println("- " + (modem == null ? "null" : ModemJsonEncoder.encode(modem)));
+          System.out.println("- " + (modem == null ? "null" : ModemJsonCodec.getInstance().encodeToJsonString(modem)));
         }
       }
       return ExitCode.OK;

@@ -37,6 +37,11 @@ public class ResourceLoader {
 
   public static Path getPath(String resourcePath) throws URISyntaxException {
     URL url = ResourceLoader.class.getResource(resourcePath);
+
+    if (url == null) {
+      throw new IllegalArgumentException("Resource not found: " + resourcePath);
+    }
+
     URI uri = url.toURI();
     Path path = Paths.get(uri);
 

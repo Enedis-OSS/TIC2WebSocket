@@ -1,0 +1,9 @@
+{
+    "type": "REQUEST",
+    "name": "ReadTIC",
+    "data": {
+        "serialNumber": "010203040506",
+        "portName": "/dev/ttyUSB0",
+        "portId": "1-1"
+    }
+}

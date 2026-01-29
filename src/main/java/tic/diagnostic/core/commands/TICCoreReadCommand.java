@@ -51,7 +51,10 @@ public final class TICCoreReadCommand implements Callable<Integer> {
       TICIdentifier identifier = parent.resolveIdentifier(ticCore, identifierOptions);
       System.out.println("Reading next frame from " + identifier + " ...");
       TICCoreFrame frame = ticCore.readNextFrame(identifier, timeoutMs);
-      System.out.println(frame == null ? "null" : TICCoreFrameCodec.encode(frame, indent));
+      System.out.println(
+          frame == null
+              ? "null"
+              : TICCoreFrameCodec.getInstance().encodeToJsonString(frame, indent));
       return ExitCode.OK;
     } catch (IllegalArgumentException e) {
       System.err.println("[ERROR] " + e.getMessage());

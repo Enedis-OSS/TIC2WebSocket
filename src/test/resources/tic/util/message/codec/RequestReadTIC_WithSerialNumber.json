@@ -1,0 +1,7 @@
+{
+    "type": "REQUEST",
+    "name": "ReadTIC",
+    "data": {
+        "serialNumber": "010203040506"
+    }
+}

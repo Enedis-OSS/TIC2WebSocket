@@ -1,0 +1,9 @@
+{
+    "type": "REQUEST",
+    "name": "UnsubscribeTIC",
+    "data": [
+        {
+            "portName": "COM7"
+        }
+    ]
+}
