@@ -16,6 +16,7 @@ import tic.util.message.Request;
 import tic.util.message.Response;
 import tic.util.message.exception.MessageException;
 import tic.util.message.exception.MessageInvalidFormatException;
+import tic.util.message.exception.UnsupportedMessageException;
 
 /**
  * Codec for encoding and decoding Message objects to and from JSON format.
@@ -93,7 +94,7 @@ public class MessageJsonCodec implements JsonObjectCodec<Message>, JsonStringCod
     try {
       return RequestJsonDecoder.decode(object);
     } catch (Exception e) {
-      throw new MessageException("Failed to decode Message from JSON object", e);
+      throw new UnsupportedMessageException("Failed to decode Message from JSON object", e);
     }
   }
 }
