@@ -1,0 +1,1179 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TIC2WebSocket — WS Tester</title>
+    <style>
+        @font-face {
+            font-family: "Enedis";
+            font-style: normal;
+            font-weight: 100;
+            font-display: swap;
+            src:
+                url("assets/fonts/Enedis-Thin.woff2") format("woff2"),
+                url("assets/fonts/Enedis-Thin.woff") format("woff");
+        }
+
+        @font-face {
+            font-family: "Enedis";
+            font-style: normal;
+            font-weight: 300;
+            font-display: swap;
+            src:
+                url("assets/fonts/Enedis-Light.woff2") format("woff2"),
+                url("assets/fonts/Enedis-Light.woff") format("woff");
+        }
+
+        @font-face {
+            font-family: "Enedis";
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src:
+                url("assets/fonts/Enedis-Regular.woff2") format("woff2"),
+                url("assets/fonts/Enedis-Regular.woff") format("woff");
+        }
+
+        @font-face {
+            font-family: "Enedis";
+            font-style: normal;
+            font-weight: 500;
+            font-display: swap;
+            src:
+                url("assets/fonts/Enedis-Medium.woff2") format("woff2"),
+                url("assets/fonts/Enedis-Medium.woff") format("woff");
+        }
+
+        @font-face {
+            font-family: "Enedis";
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+            src:
+                url("assets/fonts/Enedis-Bold.woff2") format("woff2"),
+                url("assets/fonts/Enedis-Bold.woff") format("woff");
+        }
+
+        @font-face {
+            font-family: "Enedis";
+            font-style: normal;
+            font-weight: 900;
+            font-display: swap;
+            src:
+                url("assets/fonts/Enedis-Black.woff2") format("woff2"),
+                url("assets/fonts/Enedis-Black.woff") format("woff");
+        }
+
+        :root {
+            /* Enedis palette */
+            color-scheme: light;
+            --brand: #1423dc;
+            /* Bleu */
+            --brand2: #96cd32;
+            /* Vert */
+            --turquoise: #4bc3c3;
+            --greenDark: #41a57d;
+            --yellowSolar: #ffc328;
+            --blueMedium: #2382d2;
+            --orange: #eb6e3c;
+            --plum: #af2891;
+            --violet: #8755c8;
+            --bg: #f6faf9;
+            --panel: #ffffff;
+            --muted: rgba(11, 31, 38, 0.7);
+            --text: #0b1f26;
+            --ok: var(--greenDark);
+            --warn: var(--yellowSolar);
+            --bad: var(--orange);
+            --info: var(--blueMedium);
+            --btn: var(--brand);
+            --btn2: #0f1aa8;
+            --border: rgba(11, 31, 38, 0.12);
+            --shadow: 0 10px 30px rgba(11, 31, 38, 0.08);
+            --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Enedis", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background:
+                radial-gradient(900px 600px at 10% 10%, rgba(20, 35, 220, 0.14), transparent 65%),
+                radial-gradient(700px 500px at 90% 0%, rgba(75, 195, 195, 0.16), transparent 55%),
+                var(--bg);
+            color: var(--text);
+        }
+
+        header {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(8px);
+        }
+
+        .headerBar {
+            height: 4px;
+            margin: -18px -20px 14px -20px;
+            background: linear-gradient(90deg, var(--brand), var(--brand2));
+        }
+
+        .headerInner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brandBlock {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .brandLogo {
+            height: 30px;
+            width: auto;
+            flex: 0 0 auto;
+        }
+
+        .brandText {
+            min-width: 0;
+        }
+
+        header h1 {
+            margin: 0 0 6px 0;
+            font-size: 18px;
+            font-weight: 650;
+        }
+
+        header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 16px;
+            padding: 16px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .card h2 {
+            margin: 0;
+            padding: 12px 14px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(20, 35, 220, 0.10), rgba(20, 35, 220, 0.00));
+        }
+
+        .card .content {
+            padding: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--text);
+            padding: 10px 12px;
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: rgba(20, 35, 220, 0.55);
+            box-shadow: 0 0 0 3px rgba(20, 35, 220, 0.18);
+        }
+
+        /* Explicit option styling: some browsers ignore this, but it improves readability where supported. */
+        select option {
+            background: #ffffff;
+            color: #0b1f26;
+        }
+
+        textarea {
+            font-family: var(--mono);
+            min-height: 160px;
+            resize: vertical;
+        }
+
+        input:disabled,
+        textarea:disabled,
+        select:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .help {
+            margin: 8px 0 0 0;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .help strong {
+            color: var(--text);
+            font-weight: 650;
+        }
+
+        .filterLines {
+            display: grid;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .filterLine {
+            display: grid;
+            grid-template-columns: 20px 150px 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .prio {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            background: rgba(20, 35, 220, 0.10);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .checkLabel {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+            font-size: 12px;
+            color: var(--muted);
+            user-select: none;
+        }
+
+        .checkLabel input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .row3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            border: 1px solid var(--border);
+            background: linear-gradient(90deg, var(--btn), var(--btn2));
+            color: #ffffff;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        button.secondary {
+            background: rgba(11, 31, 38, 0.06);
+            color: var(--text);
+        }
+
+        button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 10px;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 999px;
+            background: var(--warn);
+            box-shadow: 0 0 0 3px rgba(255, 195, 40, 0.22);
+        }
+
+        .dot.ok {
+            background: var(--ok);
+            box-shadow: 0 0 0 3px rgba(65, 165, 125, 0.20);
+        }
+
+        .dot.bad {
+            background: var(--bad);
+            box-shadow: 0 0 0 3px rgba(235, 110, 60, 0.20);
+        }
+
+        pre {
+            margin: 0;
+            padding: 14px;
+            font-family: var(--mono);
+            font-size: 12px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .logLine {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--mono);
+            font-size: 12px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .logLine .tag {
+            display: inline-block;
+            min-width: 82px;
+            color: var(--muted);
+        }
+
+        .logLine.in {
+            background: rgba(65, 165, 125, 0.10);
+        }
+
+        .logLine.out {
+            background: rgba(35, 130, 210, 0.12);
+        }
+
+        .logLine.err {
+            background: rgba(235, 110, 60, 0.12);
+        }
+
+        /* Grouped EVENT blocks (by event name + identifier) */
+        .logGroup {
+            border-bottom: 1px solid var(--border);
+            background: rgba(65, 165, 125, 0.08);
+        }
+
+        .logGroup summary {
+            cursor: pointer;
+        }
+
+        .logGroup summary::marker {
+            color: var(--muted);
+        }
+
+        .logGroupHeader {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 14px 0 14px;
+        }
+
+        .logGroupTitle {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .logGroupMeta {
+            flex: 0 0 auto;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .logGroupLast {
+            padding: 10px 14px 12px 14px;
+            background: rgba(255, 255, 255, 0.70);
+            border-top: 1px dashed var(--border);
+        }
+
+        .logGroup[open] .logGroupLast {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logGroupHistory {
+            background: rgba(11, 31, 38, 0.02);
+        }
+
+        .logGroupHistoryItem {
+            border-top: 1px solid var(--border);
+        }
+
+        .logGroupHistoryMeta {
+            padding: 8px 14px 0 14px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .logGroupHistoryItem pre {
+            padding: 8px 14px 12px 14px;
+        }
+
+        @media (max-width: 980px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="headerBar"></div>
+        <div class="headerInner">
+            <div class="brandBlock">
+                <img class="brandLogo" src="assets/enedis-logo.svg" alt="Enedis" onerror="this.style.display='none'" />
+                <div class="brandText">
+                    <h1>TIC2WebSocket — WebSocket tester</h1>
+                    <p>Connect to <code>ws://localhost:19584/</code> then pick a request (e.g.
+                        <code>GetModemsInfo</code>,
+                        <code>GetAvailableTICs</code>, <code>ReadTIC</code>, <code>SubscribeTIC</code>...).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Connection</h2>
+            <div class="content">
+                <label for="url">WebSocket URL</label>
+                <input id="url" value="ws://localhost:19584/" />
+
+                <div class="row" style="margin-top: 10px;">
+                    <div>
+                        <label for="host">Host</label>
+                        <input id="host" value="localhost" />
+                    </div>
+                    <div>
+                        <label for="port">Port</label>
+                        <input id="port" value="19584" inputmode="numeric" />
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                    <div>
+                        <label for="preset">Request</label>
+                        <select id="preset">
+                            <option value="getModemsInfo">GetModemsInfo</option>
+                            <option value="getAvailableTICs">GetAvailableTICs</option>
+                            <option value="readTIC">ReadTIC</option>
+                            <option value="subscribeTIC">SubscribeTIC</option>
+                            <option value="unsubscribeTIC">UnsubscribeTIC</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="indent">JSON indent</label>
+                        <select id="indent">
+                            <option value="0">0</option>
+                            <option value="2" selected>2</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row3" style="margin-top: 10px;">
+                    <div id="identifierPanel" style="grid-column: 1 / -1;">
+                        <label>Identifier filters (optional)</label>
+                        <p class="help">
+                            Select 0 to 3 fields. If none is selected, the request is sent as the <strong>all</strong>
+                            variant (except <strong>ReadTIC</strong> which requires one identifier).
+                            Priority: <strong>SerialNumber</strong> &gt; <strong>PortId</strong> &gt;
+                            <strong>PortName</strong>.
+                            Lower-priority fields are disabled when a higher-priority one is active.
+                        </p>
+
+                        <div class="filterLines">
+                            <div class="filterLine">
+                                <span class="prio">1</span>
+                                <label class="checkLabel" for="useSerialNumber">
+                                    <input id="useSerialNumber" type="checkbox" />
+                                    SerialNumber
+                                </label>
+                                <input id="serialNumber" value="" placeholder="" />
+                            </div>
+                            <div class="filterLine">
+                                <span class="prio">2</span>
+                                <label class="checkLabel" for="usePortId">
+                                    <input id="usePortId" type="checkbox" />
+                                    PortId
+                                </label>
+                                <input id="portId" value="" placeholder="" />
+                            </div>
+                            <div class="filterLine">
+                                <span class="prio">3</span>
+                                <label class="checkLabel" for="usePortName">
+                                    <input id="usePortName" type="checkbox" />
+                                    PortName
+                                </label>
+                                <input id="portName" value="" placeholder="" />
+                            </div>
+                        </div>
+
+                        <p id="identifierState" class="help"></p>
+                    </div>
+                </div>
+
+                <label for="payload" style="margin-top: 10px;">Payload to send</label>
+                <textarea id="payload"></textarea>
+
+                <div class="actions">
+                    <button id="btnConnect">Connect</button>
+                    <button id="btnDisconnect" class="secondary" disabled>Disconnect</button>
+                    <button id="btnSend" disabled>Send</button>
+                    <button id="btnClear" class="secondary">Clear logs</button>
+                </div>
+
+                <div class="status">
+                    <span id="dot" class="dot"></span>
+                    <span id="statusText">Disconnected</span>
+                </div>
+
+                <p style="margin: 10px 0 0 0; color: var(--muted); font-size: 12px;">
+                    Tip: open your browser console to see JS errors.
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Logs</h2>
+            <div id="log"></div>
+        </section>
+    </main>
+
+    <script>
+        const el = (id) => document.getElementById(id);
+
+        const urlEl = el('url');
+        const hostEl = el('host');
+        const portEl = el('port');
+        const useSerialNumberEl = el('useSerialNumber');
+        const usePortIdEl = el('usePortId');
+        const usePortNameEl = el('usePortName');
+        const serialNumberEl = el('serialNumber');
+        const portNameEl = el('portName');
+        const portIdEl = el('portId');
+        const payloadEl = el('payload');
+        const presetEl = el('preset');
+        const indentEl = el('indent');
+        const btnConnect = el('btnConnect');
+        const btnDisconnect = el('btnDisconnect');
+        const btnSend = el('btnSend');
+        const btnClear = el('btnClear');
+        const dot = el('dot');
+        const statusText = el('statusText');
+        const log = el('log');
+        const identifierStateEl = el('identifierState');
+        const identifierPanelEl = el('identifierPanel');
+
+        const DEFAULT_HOST = 'localhost';
+        const DEFAULT_PORT = '19584';
+
+        const FIXED_PROTOCOL = 'ws';
+        const FIXED_PATH = '/';
+
+        /** @type {WebSocket | null} */
+        let socket = null;
+
+        function buildWebSocketUrl({ host, port }) {
+            const safeProtocol = FIXED_PROTOCOL;
+            const safeHost = host && String(host).trim() ? String(host).trim() : DEFAULT_HOST;
+            const safePort = port && String(port).trim() ? String(port).trim() : DEFAULT_PORT;
+            return `${safeProtocol}://${safeHost}:${safePort}${FIXED_PATH}`;
+        }
+
+        function syncUrlFromParts() {
+            urlEl.value = buildWebSocketUrl({
+                host: hostEl.value,
+                port: portEl.value,
+            });
+        }
+
+        function trySyncPartsFromUrl() {
+            try {
+                const raw = (urlEl.value || '').trim();
+                if (!raw) return;
+
+                const parsed = new URL(raw);
+                if (parsed.protocol !== 'ws:' && parsed.protocol !== 'wss:') return;
+
+                hostEl.value = parsed.hostname || DEFAULT_HOST;
+                portEl.value = parsed.port || DEFAULT_PORT;
+            } catch {
+                // ignore invalid url
+            }
+        }
+
+        function initUrlFromQueryParams() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+
+                // Highest priority: full URL
+                const urlParam = params.get('url') || params.get('wsUrl') || params.get('ws');
+                if (urlParam && urlParam.trim()) {
+                    urlEl.value = urlParam.trim();
+                    trySyncPartsFromUrl();
+                    syncUrlFromParts();
+                    return;
+                }
+
+                // Otherwise: host/port/path/proto
+                const host = params.get('host') || params.get('address') || params.get('addr') || DEFAULT_HOST;
+                const port = params.get('port') || DEFAULT_PORT;
+                hostEl.value = host;
+                portEl.value = port;
+                syncUrlFromParts();
+            } catch {
+                // If anything goes wrong (e.g. older browser), keep the default HTML value.
+            }
+        }
+
+        const presets = {
+            getModemsInfo: { type: 'REQUEST', name: 'GetModemsInfo' },
+            getAvailableTICs: { type: 'REQUEST', name: 'GetAvailableTICs' },
+        };
+
+        function isObject(value) {
+            return value !== null && typeof value === 'object' && !Array.isArray(value);
+        }
+
+        function trimOrEmpty(value) {
+            return (value || '').toString().trim();
+        }
+
+        function getActiveIdentifierFilter() {
+            const serial = trimOrEmpty(serialNumberEl.value);
+            const portId = trimOrEmpty(portIdEl.value);
+            const portName = trimOrEmpty(portNameEl.value);
+
+            if (useSerialNumberEl.checked && serial) {
+                return { key: 'serialNumber', value: serial };
+            }
+            if (usePortIdEl.checked && portId) {
+                return { key: 'portId', value: portId };
+            }
+            if (usePortNameEl.checked && portName) {
+                return { key: 'portName', value: portName };
+            }
+            return null;
+        }
+
+        function buildIdentifierForPayload() {
+            const active = getActiveIdentifierFilter();
+            if (!active) return null;
+
+            if (active.key === 'serialNumber') return { serialNumber: active.value };
+            if (active.key === 'portId') return { portId: active.value };
+            if (active.key === 'portName') return { portName: active.value };
+            return null;
+        }
+
+        function setEnabled(checkboxEl, inputEl, enabled) {
+            checkboxEl.disabled = !enabled;
+            inputEl.disabled = !enabled;
+        }
+
+        function updateIdentifierUiState() {
+            const key = presetEl.value;
+
+            // Hide filters for requests that do not use identifier selection.
+            const showIdentifierFilters = key !== 'getModemsInfo' && key !== 'getAvailableTICs';
+            identifierPanelEl.style.display = showIdentifierFilters ? '' : 'none';
+
+            const active = getActiveIdentifierFilter();
+            const activeKey = active ? active.key : null;
+
+            // When SerialNumber is active, PortId/PortName are ignored.
+            // When PortId is active, PortName is ignored.
+            const disablePortId = activeKey === 'serialNumber';
+            const disablePortName = activeKey === 'serialNumber' || activeKey === 'portId';
+
+            if (disablePortId) {
+                usePortIdEl.checked = false;
+            }
+            if (disablePortName) {
+                usePortNameEl.checked = false;
+            }
+
+            setEnabled(useSerialNumberEl, serialNumberEl, true);
+            setEnabled(usePortIdEl, portIdEl, !disablePortId);
+            setEnabled(usePortNameEl, portNameEl, !disablePortName);
+
+            const activeText = activeKey ? activeKey : 'none';
+        }
+
+        function syncCheckboxWithValue(checkboxEl, inputEl) {
+            const value = trimOrEmpty(inputEl.value);
+            checkboxEl.checked = Boolean(value);
+        }
+
+        function buildPayloadObject() {
+            const key = presetEl.value;
+            const identifier = buildIdentifierForPayload();
+
+            if (key === 'readTIC') {
+                return { type: 'REQUEST', name: 'ReadTIC', data: identifier };
+            }
+
+            if (key === 'subscribeTIC') {
+                if (!identifier) return { type: 'REQUEST', name: 'SubscribeTIC' };
+                return { type: 'REQUEST', name: 'SubscribeTIC', data: [identifier] };
+            }
+
+            if (key === 'unsubscribeTIC') {
+                if (!identifier) return { type: 'REQUEST', name: 'UnsubscribeTIC' };
+                return { type: 'REQUEST', name: 'UnsubscribeTIC', data: [identifier] };
+            }
+
+            const obj = presets[key] ?? presets.getModemsInfo;
+            return obj;
+        }
+
+        function renderPayload() {
+            const indent = parseInt(indentEl.value, 10) || 0;
+            const obj = buildPayloadObject();
+            payloadEl.value = JSON.stringify(obj, null, indent);
+            updateSendAvailability();
+        }
+
+        function updateSendAvailability() {
+            const connected = Boolean(socket && socket.readyState === WebSocket.OPEN);
+
+            // For ReadTIC, an identifier is mandatory.
+            const key = presetEl.value;
+            const identifier = buildIdentifierForPayload();
+            const valid = key !== 'readTIC' || Boolean(identifier);
+
+            btnSend.disabled = !connected || !valid;
+        }
+
+        function updateIdentifierFieldsFromIncomingMessage(message) {
+            if (!isObject(message)) return;
+
+            if (message.type !== 'RESPONSE' || message.name !== 'GetAvailableTICs') return;
+
+            const data = message.data;
+            const identifier = Array.isArray(data) ? data.find(isObject) : isObject(data) ? data : null;
+            if (!identifier) return;
+
+            portNameEl.value = identifier.portName ?? '';
+            portIdEl.value = identifier.portId ?? '';
+            serialNumberEl.value = identifier.serialNumber ?? '';
+
+            // If nothing is selected yet, auto-select the best available one (priority).
+            if (!useSerialNumberEl.checked && !usePortIdEl.checked && !usePortNameEl.checked) {
+                if (trimOrEmpty(serialNumberEl.value)) {
+                    useSerialNumberEl.checked = true;
+                } else if (trimOrEmpty(portIdEl.value)) {
+                    usePortIdEl.checked = true;
+                } else if (trimOrEmpty(portNameEl.value)) {
+                    usePortNameEl.checked = true;
+                }
+            }
+
+            updateIdentifierUiState();
+            renderPayload();
+        }
+
+        function setStatus(state, text) {
+            statusText.textContent = text;
+            dot.classList.remove('ok', 'bad');
+            if (state === 'ok') dot.classList.add('ok');
+            if (state === 'bad') dot.classList.add('bad');
+        }
+
+        function appendLog(kind, message) {
+            const div = document.createElement('div');
+            div.className = `logLine ${kind}`;
+            const tag = document.createElement('span');
+            tag.className = 'tag';
+            tag.textContent = kind === 'in' ? '<- IN' : kind === 'out' ? '-> OUT' : '!! ERR';
+            const body = document.createElement('span');
+            body.textContent = message;
+            div.appendChild(tag);
+            div.appendChild(document.createElement('br'));
+            div.appendChild(body);
+            log.prepend(div);
+        }
+
+        const groupedEventBlocks = new Map();
+        const MAX_EVENT_HISTORY = 200;
+
+        function safeJsonParse(text) {
+            try {
+                return JSON.parse(text);
+            } catch {
+                return null;
+            }
+        }
+
+        function formatTime() {
+            try {
+                return new Date().toLocaleTimeString();
+            } catch {
+                return '';
+            }
+        }
+
+        function identifierToParts(identifier) {
+            if (!isObject(identifier)) return [];
+
+            const fields = ['serialNumber', 'portId', 'portName'];
+            const parts = [];
+
+            for (const key of fields) {
+                const value = trimOrEmpty(identifier[key]);
+                if (value) parts.push(`${key}=${value}`);
+            }
+
+            // Keep any extra keys (stable ordering) for better uniqueness.
+            const extraKeys = Object.keys(identifier)
+                .filter((k) => !fields.includes(k))
+                .sort();
+            for (const key of extraKeys) {
+                const raw = identifier[key];
+                if (raw === null || raw === undefined) continue;
+                const value = typeof raw === 'string' || typeof raw === 'number' || typeof raw === 'boolean'
+                    ? String(raw)
+                    : '';
+                if (value) parts.push(`${key}=${value}`);
+            }
+
+            return parts;
+        }
+
+        function getEventGroupingInfo(msg) {
+            if (!isObject(msg)) return null;
+            if (msg.type !== 'EVENT') return null;
+            if (!trimOrEmpty(msg.name)) return null;
+            if (!isObject(msg.identifier)) return null;
+
+            const parts = identifierToParts(msg.identifier);
+            if (!parts.length) return null;
+
+            const identifierKey = parts.join('|');
+            const identifierLabel = parts.join(' ');
+            const groupKey = `${msg.name}::${identifierKey}`;
+            const title = `${msg.name} — ${identifierLabel}`;
+            return { groupKey, title };
+        }
+
+        function ensureGroupedEventBlock(groupKey, title) {
+            const existing = groupedEventBlocks.get(groupKey);
+            if (existing) return existing;
+
+            const detailsEl = document.createElement('details');
+            detailsEl.className = 'logGroup';
+
+            const summaryEl = document.createElement('summary');
+
+            const headerEl = document.createElement('div');
+            headerEl.className = 'logGroupHeader';
+
+            const titleEl = document.createElement('span');
+            titleEl.className = 'logGroupTitle';
+            titleEl.textContent = title;
+
+            const metaEl = document.createElement('span');
+            metaEl.className = 'logGroupMeta';
+
+            const countEl = document.createElement('span');
+            countEl.textContent = '×1';
+
+            const timeEl = document.createElement('span');
+            timeEl.style.marginLeft = '10px';
+            timeEl.textContent = formatTime();
+
+            metaEl.appendChild(countEl);
+            metaEl.appendChild(timeEl);
+
+            headerEl.appendChild(titleEl);
+            headerEl.appendChild(metaEl);
+
+            const lastPreEl = document.createElement('pre');
+            lastPreEl.className = 'logGroupLast';
+
+            summaryEl.appendChild(headerEl);
+            summaryEl.appendChild(lastPreEl);
+
+            const historyEl = document.createElement('div');
+            historyEl.className = 'logGroupHistory';
+
+            detailsEl.appendChild(summaryEl);
+            detailsEl.appendChild(historyEl);
+
+            const entry = {
+                detailsEl,
+                lastPreEl,
+                historyEl,
+                countEl,
+                timeEl,
+                count: 1,
+                lastText: '',
+                lastTime: '',
+            };
+
+            groupedEventBlocks.set(groupKey, entry);
+            log.prepend(detailsEl);
+            return entry;
+        }
+
+        function appendGroupedEvent(msg, prettyText) {
+            const info = getEventGroupingInfo(msg);
+            if (!info) {
+                appendLog('in', prettyText);
+                return;
+            }
+
+            const entry = groupedEventBlocks.get(info.groupKey);
+            const now = formatTime();
+
+            if (!entry) {
+                const created = ensureGroupedEventBlock(info.groupKey, info.title);
+                created.lastText = prettyText;
+                created.lastTime = now;
+                created.lastPreEl.textContent = prettyText;
+                created.timeEl.textContent = now;
+                return;
+            }
+
+            // Push the previous "last" into history, then replace visually.
+            if (entry.lastText) {
+                const historyItemEl = document.createElement('div');
+                historyItemEl.className = 'logGroupHistoryItem';
+
+                const metaEl = document.createElement('div');
+                metaEl.className = 'logGroupHistoryMeta';
+                metaEl.textContent = entry.lastTime ? `previous @ ${entry.lastTime}` : 'previous';
+
+                const preEl = document.createElement('pre');
+                preEl.textContent = entry.lastText;
+
+                historyItemEl.appendChild(metaEl);
+                historyItemEl.appendChild(preEl);
+                entry.historyEl.prepend(historyItemEl);
+
+                while (entry.historyEl.childElementCount > MAX_EVENT_HISTORY) {
+                    entry.historyEl.removeChild(entry.historyEl.lastElementChild);
+                }
+            }
+
+            entry.count += 1;
+            entry.countEl.textContent = `×${entry.count}`;
+            entry.timeEl.textContent = now;
+            entry.lastTime = now;
+            entry.lastText = prettyText;
+            entry.lastPreEl.textContent = prettyText;
+
+            // Move the updated group to the top.
+            log.prepend(entry.detailsEl);
+        }
+
+        function appendIncomingMessage(raw) {
+            const msg = safeJsonParse(raw);
+            const prettyText = prettyJson(raw);
+
+            if (msg && msg.type === 'EVENT') {
+                appendGroupedEvent(msg, prettyText);
+            } else {
+                appendLog('in', prettyText);
+            }
+
+            if (msg) {
+                updateIdentifierFieldsFromIncomingMessage(msg);
+                try {
+                    refreshPayloadIfUsingIdentifier();
+                } catch {
+                    // ignore
+                }
+            }
+        }
+
+        function prettyJson(text) {
+            const indent = parseInt(indentEl.value, 10) || 0;
+            try {
+                const obj = JSON.parse(text);
+                return JSON.stringify(obj, null, indent);
+            } catch {
+                return text;
+            }
+        }
+
+        function loadPreset() {
+            updateIdentifierUiState();
+            renderPayload();
+        }
+
+        function setUiConnected(connected) {
+            btnConnect.disabled = connected;
+            btnDisconnect.disabled = !connected;
+            updateSendAvailability();
+        }
+
+        btnClear.addEventListener('click', () => {
+            log.innerHTML = '';
+            groupedEventBlocks.clear();
+        });
+        presetEl.addEventListener('change', loadPreset);
+        indentEl.addEventListener('change', loadPreset);
+
+        // Keep checkbox selection in sync with typed values (and show priority/disabled state).
+        serialNumberEl.addEventListener('input', () => {
+            syncCheckboxWithValue(useSerialNumberEl, serialNumberEl);
+            updateIdentifierUiState();
+            renderPayload();
+        });
+        portIdEl.addEventListener('input', () => {
+            syncCheckboxWithValue(usePortIdEl, portIdEl);
+            updateIdentifierUiState();
+            renderPayload();
+        });
+        portNameEl.addEventListener('input', () => {
+            syncCheckboxWithValue(usePortNameEl, portNameEl);
+            updateIdentifierUiState();
+            renderPayload();
+        });
+
+        useSerialNumberEl.addEventListener('change', () => {
+            updateIdentifierUiState();
+            renderPayload();
+        });
+        usePortIdEl.addEventListener('change', () => {
+            updateIdentifierUiState();
+            renderPayload();
+        });
+        usePortNameEl.addEventListener('change', () => {
+            updateIdentifierUiState();
+            renderPayload();
+        });
+
+        hostEl.addEventListener('input', syncUrlFromParts);
+        portEl.addEventListener('input', syncUrlFromParts);
+        urlEl.addEventListener('change', () => {
+            trySyncPartsFromUrl();
+            syncUrlFromParts();
+        });
+
+        btnConnect.addEventListener('click', () => {
+            const url = urlEl.value.trim();
+            if (!url) return;
+
+            try {
+                setStatus('warn', 'Connecting...');
+                socket = new WebSocket(url);
+
+                socket.onopen = () => {
+                    setStatus('ok', 'Connected');
+                    setUiConnected(true);
+                    appendLog('in', '[socket] open');
+                };
+
+                socket.onmessage = (evt) => {
+                    const raw = String(evt.data);
+                    appendIncomingMessage(raw);
+                };
+
+                socket.onerror = () => {
+                    setStatus('bad', 'Error');
+                    appendLog('err', '[socket] error');
+                };
+
+                socket.onclose = (evt) => {
+                    setUiConnected(false);
+                    socket = null;
+                    setStatus('warn', `Disconnected (code=${evt.code})`);
+                    appendLog('in', `[socket] close code=${evt.code} reason=${evt.reason || ''}`);
+                };
+            } catch (e) {
+                setStatus('bad', 'Error');
+                appendLog('err', String(e));
+            }
+        });
+
+        btnDisconnect.addEventListener('click', () => {
+            if (!socket) return;
+            socket.close(1000, 'client disconnect');
+        });
+
+        btnSend.addEventListener('click', () => {
+            if (!socket || socket.readyState !== WebSocket.OPEN) {
+                appendLog('err', 'Socket is not connected');
+                return;
+            }
+
+            // Extra guard for ReadTIC
+            if (presetEl.value === 'readTIC' && !buildIdentifierForPayload()) {
+                appendLog('err', 'ReadTIC requires one identifier (SerialNumber, PortId, or PortName).');
+                return;
+            }
+
+            const raw = payloadEl.value;
+            let toSend = raw;
+
+            // Validate JSON before sending
+            try {
+                JSON.parse(raw);
+            } catch (e) {
+                appendLog('err', `Invalid JSON: ${e}`);
+                return;
+            }
+
+            appendLog('out', prettyJson(toSend));
+            socket.send(toSend);
+        });
+
+        // init
+        initUrlFromQueryParams();
+        // Ensure URL reflects editable host/port fields
+        syncUrlFromParts();
+        updateIdentifierUiState();
+        loadPreset();
+        setUiConnected(false);
+        setStatus('warn', 'Disconnected');
+    </script>
+</body>
+
+</html>
