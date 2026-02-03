@@ -6,11 +6,15 @@
 
 version = 1
 
-# A simple glob of all .txt and .json files in the project
+# A simple glob of all excluded file types in the project
 [[annotations]]
 path = [
     "**/*.txt",
-    "**/*.json"
+    "**/*.json",
+    "**/*.woff",
+    "**/*.woff2",
+    "**/*.html",
+    "**/*.svg"
 ]
 SPDX-FileCopyrightText = "2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>"
 SPDX-License-Identifier = "Apache-2.0"
