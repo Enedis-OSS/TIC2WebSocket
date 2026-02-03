@@ -91,7 +91,20 @@ Add `--help` option to get basic information on how to use the launcher.
 
 ## <a name="documentation"></a> Documentation
 
-[TODO]
+### WebSocket tester (HTML)
+
+A small, self-contained HTML page is available to quickly test the WebSocket API:
+
+- File: [docs/ws-tester.html](docs/ws-tester.html)
+- Default URL: `ws://localhost:19584/`
+
+How it works:
+
+- Open the page in a browser (optionally serve the `docs/` folder with any static server).
+- Set the WebSocket URL (or host/port), click `Connect`.
+- Pick a request preset (`GetModemsInfo`, `GetAvailableTICs`, `ReadTIC`, `SubscribeTIC`, `UnsubscribeTIC`) and click `Send`.
+- Optional identifier filters (SerialNumber / PortId / PortName) help target a specific TIC.
+- Incoming messages are displayed in the Logs panel; `EVENT` messages are grouped by `(event name + identifier)` for readability.
 
 ## <a name="contrib"></a> Contributing ?
 
