@@ -9,6 +9,16 @@
 
 [🇫🇷 Français](CHANGELOG.fr.md) | [🇺🇸 English](CHANGELOG.md)
 
+## [v2.0.0](https://github.com/Enedis-OSS/TIC2WebSocket/tree/v2.0.0)
+### ✨ New features:
+- Added macOS serial port discovery (`SerialPortFinderForMacOsX`)
+- New diagnostic CLI utilities (core, modem, serial port, USB)
+- Added a test interface via an HTML page
+
+### 🔧 Improvements & fixes:
+- Refactored project architecture and simplified code structure
+- Fixed logger warnings
+
 ## [v1.0.0](https://github.com/Enedis-OSS/TIC2WebSocket/tree/v1.0.0)
 ### ✨ New features:
 - Serial port connection and reading of TIC (Télé-Information Client) frames
