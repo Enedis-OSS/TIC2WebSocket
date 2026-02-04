@@ -1,0 +1,26 @@
+{
+  "package": "enedis.tic.service.message",
+  "name": "EventOnError",
+  "extends" : "Event",
+  "type": "DataDictionaryBase",
+  "superAttributes": [
+    {
+      "name": "name",
+      "type": "String",
+      "acceptedValues": "\"OnError\"",
+      "removeFromConstructor" : true
+    },
+    {
+      "name": "dateTime",
+      "type": "LocalDateTime"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "data",
+      "mandatory" : false,
+      "type": "DataDictionary",
+      "dataDictionaryType": "TICCoreError"
+    }
+  ]
+}
