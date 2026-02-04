@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
+# SPDX-FileContributor: Jehan BOUSCH
+# SPDX-FileContributor: Mathieu SABARTHES
+#
+# SPDX-License-Identifier: Apache-2.0
+
+version = 1
+
+# A simple glob of all excluded file types in the project
+[[annotations]]
+path = [
+    "**/*.txt",
+    "**/*.json",
+    "**/*.woff",
+    "**/*.woff2",
+    "**/*.html",
+    "**/*.svg"
+]
+SPDX-FileCopyrightText = "2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>"
+SPDX-License-Identifier = "Apache-2.0"

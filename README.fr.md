@@ -91,7 +91,20 @@ Ajoutez l'option `--help` pour obtenir des informations de base sur l'utilisatio
 
 ## <a name="documentation"></a> Documentation
 
-[TODO]
+### Page HTML de test WebSocket
+
+Une page HTML autonome est disponible pour tester rapidement l’API WebSocket :
+
+- Fichier : [docs/ws-tester.html](docs/ws-tester.html)
+- URL par défaut : `ws://localhost:19584/`
+
+Fonctionnement :
+
+- Ouvrez la page dans un navigateur (optionnel : servez le dossier `docs/` via un serveur HTTP statique).
+- Renseignez l’URL WebSocket (ou host/port), puis cliquez sur `Connect`.
+- Choisissez une requête prédéfinie (`GetModemsInfo`, `GetAvailableTICs`, `ReadTIC`, `SubscribeTIC`, `UnsubscribeTIC`) puis cliquez sur `Send`.
+- Les filtres d’identifiant (SerialNumber / PortId / PortName) permettent de cibler un TIC.
+- Les messages entrants s’affichent dans Logs ; les messages de type `EVENT` sont regroupés par `(nom d’événement + identifiant)`.
 
 ## <a name="contrib"></a> Contribuer ?
 

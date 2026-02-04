@@ -6,5 +6,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 .vscode/
+.DS_Store
 src/main/resources/TIC2WebSocket.properties
 target/
+var/
