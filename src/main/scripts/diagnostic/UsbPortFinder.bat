@@ -10,5 +10,12 @@ REM SPDX-License-Identifier: Apache-2.0
 REM Get script directory
 set SCRIPT_DIRECTORY=%~dp0
 
+REM Get distribution root directory (parent of script directory)
+for %%I in ("%SCRIPT_DIRECTORY%..") do set ROOT_DIRECTORY=%%~fI\
+
+REM Define classpath and main class
+set CLASSPATH=%ROOT_DIRECTORY%lib\*
+set MAIN_CLASS=tic.diagnostic.usb.UsbPortFinderApp
+
 REM Run executable
-java -DlogDir="%SCRIPT_DIRECTORY%var\log" -DconfigFile="%SCRIPT_DIRECTORY%var\config\TIC2WebSocketConfiguration.json" -cp "%SCRIPT_DIRECTORY%/lib/*" enedis.tic.service.TIC2WebSocketApplication %*
+java -cp "%CLASSPATH%" %MAIN_CLASS% %*

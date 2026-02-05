@@ -10,5 +10,12 @@
 # Get script directory
 SCRIPT_DIRECTORY=$(dirname $(realpath "$0"))
 
+# Get distribution root directory (parent of script directory)
+ROOT_DIRECTORY=$(realpath "$SCRIPT_DIRECTORY/..")
+
+# Define classpath and main class
+CLASSPATH="$ROOT_DIRECTORY/lib/*"
+MAIN_CLASS=tic.diagnostic.modem.ModemPlugNotifierApp
+
 # Run executable
-java -DlogDir="$SCRIPT_DIRECTORY/var/log" -DconfigFile="$SCRIPT_DIRECTORY/var/config/TIC2WebSocketConfiguration.json" -cp "$SCRIPT_DIRECTORY/lib/*" enedis.tic.service.TIC2WebSocketApplication $*
+java -cp "$CLASSPATH" $MAIN_CLASS $*
