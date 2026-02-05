@@ -119,6 +119,11 @@ SPDX-License-Identifier: Apache-2.0
       <useDefaultExcludes>true</useDefaultExcludes>
     </fileSet>
     <fileSet>
+      <directory>${basedir}/docs</directory>
+      <outputDirectory>tester</outputDirectory>
+      <useDefaultExcludes>true</useDefaultExcludes>
+    </fileSet>
+    <fileSet>
       <directory>${basedir}/LICENSES</directory>
     </fileSet>
   </fileSets>

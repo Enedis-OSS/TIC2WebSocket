@@ -126,9 +126,15 @@ SPDX-License-Identifier: Apache-2.0
       <excludes>
         <exclude>**/*.log</exclude>
         <exclude>**/.settings/**</exclude>
+        <exclude>docs/**</exclude>
         <exclude>**/var/**</exclude>
         <exclude>**/${project.build.directory}/**</exclude>
       </excludes>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/docs</directory>
+      <outputDirectory>tester</outputDirectory>
+      <useDefaultExcludes>true</useDefaultExcludes>
     </fileSet>
     <fileSet>
       <directory>${project.build.directory}/site</directory>
