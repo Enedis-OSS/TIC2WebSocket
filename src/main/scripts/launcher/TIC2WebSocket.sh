@@ -10,11 +10,8 @@
 # Get script directory
 SCRIPT_DIRECTORY=$(dirname $(realpath "$0"))
 
-# Get distribution root directory (parent of script directory)
-ROOT_DIRECTORY=$(realpath "$SCRIPT_DIRECTORY/..")
-
-# Define app directory
-APP_DIRECTORY="$ROOT_DIRECTORY/app"
+# App directory is the script directory
+APP_DIRECTORY="$SCRIPT_DIRECTORY"
 
 # Define log directory and config file
 LOG_DIRECTORY="$APP_DIRECTORY/var/log"

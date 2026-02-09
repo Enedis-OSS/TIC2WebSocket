@@ -36,11 +36,11 @@ SPDX-License-Identifier: Apache-2.0
     <!-- launcher -->
     <file>
       <source>${project.build.scriptSourceDirectory}/launcher/${project.name}.bat</source>
-      <destName>launcher/${project.name}.bat</destName>
+      <destName>app/${project.name}.bat</destName>
     </file>
     <file>
       <source>${project.build.scriptSourceDirectory}/launcher/${project.name}.sh</source>
-      <destName>launcher/${project.name}.sh</destName>
+      <destName>app/${project.name}.sh</destName>
       <fileMode>0755</fileMode>
     </file>
 

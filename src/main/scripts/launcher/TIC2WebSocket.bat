@@ -10,11 +10,8 @@ REM SPDX-License-Identifier: Apache-2.0
 REM Get script directory
 set SCRIPT_DIRECTORY=%~dp0
 
-REM Get distribution root directory (parent of script directory)
-for %%I in ("%SCRIPT_DIRECTORY%..") do set ROOT_DIRECTORY=%%~fI\
-
-REM Define app directory
-set APP_DIRECTORY=%ROOT_DIRECTORY%app\
+REM App directory is the script directory
+set APP_DIRECTORY=%SCRIPT_DIRECTORY%
 
 REM Define log directory and config file
 set LOG_DIRECTORY=%APP_DIRECTORY%var\log
