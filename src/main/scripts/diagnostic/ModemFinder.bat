@@ -13,8 +13,11 @@ set SCRIPT_DIRECTORY=%~dp0
 REM Get distribution root directory (parent of script directory)
 for %%I in ("%SCRIPT_DIRECTORY%..") do set ROOT_DIRECTORY=%%~fI\
 
+REM Define app directory
+set APP_DIRECTORY=%ROOT_DIRECTORY%app\
+
 REM Define classpath and main class
-set CLASSPATH=%ROOT_DIRECTORY%lib\*
+set CLASSPATH=%APP_DIRECTORY%lib\*
 set MAIN_CLASS=tic.diagnostic.modem.ModemFinderApp
 
 REM Run executable

@@ -13,10 +13,13 @@ SCRIPT_DIRECTORY=$(dirname $(realpath "$0"))
 # Get distribution root directory (parent of script directory)
 ROOT_DIRECTORY=$(realpath "$SCRIPT_DIRECTORY/..")
 
+# Define app directory
+APP_DIRECTORY="$ROOT_DIRECTORY/app"
+
 # Define log directory and config file
-LOG_DIRECTORY="$ROOT_DIRECTORY/var/log"
-CONFIG_FILE="$ROOT_DIRECTORY/var/config/TIC2WebSocketConfiguration.json"
-CLASSPATH="$ROOT_DIRECTORY/lib/*"
+LOG_DIRECTORY="$APP_DIRECTORY/var/log"
+CONFIG_FILE="$APP_DIRECTORY/var/config/TIC2WebSocketConfiguration.json"
+CLASSPATH="$APP_DIRECTORY/lib/*"
 MAIN_CLASS=tic.service.TIC2WebSocketApplication
 
 # Run executable

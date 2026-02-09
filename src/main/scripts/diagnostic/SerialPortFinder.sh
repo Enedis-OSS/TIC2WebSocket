@@ -13,8 +13,11 @@ SCRIPT_DIRECTORY=$(dirname $(realpath "$0"))
 # Get distribution root directory (parent of script directory)
 ROOT_DIRECTORY=$(realpath "$SCRIPT_DIRECTORY/..")
 
+# Define app directory
+APP_DIRECTORY="$ROOT_DIRECTORY/app"
+
 # Define classpath and main class
-CLASSPATH="$ROOT_DIRECTORY/lib/*"
+CLASSPATH="$APP_DIRECTORY/lib/*"
 MAIN_CLASS=tic.diagnostic.serialport.SerialPortFinderApp
 
 # Run executable

@@ -22,7 +22,7 @@ SPDX-License-Identifier: Apache-2.0
   <dependencySets>
     <dependencySet>
       <useProjectArtifact>true</useProjectArtifact>
-      <outputDirectory>lib</outputDirectory>
+      <outputDirectory>app/lib</outputDirectory>
       <unpack>false</unpack>
     </dependencySet>
   </dependencySets>
@@ -30,7 +30,7 @@ SPDX-License-Identifier: Apache-2.0
   <files>
     <file>
       <source>CHANGELOG.md</source>
-      <destName>CHANGELOG.md</destName>
+      <destName>app/CHANGELOG.md</destName>
     </file>
 
     <!-- launcher -->
@@ -115,7 +115,7 @@ SPDX-License-Identifier: Apache-2.0
   <fileSets>
     <fileSet>
       <directory>${basedir}/src/main/resources/config</directory>
-      <outputDirectory>var/config</outputDirectory>
+      <outputDirectory>app/var/config</outputDirectory>
       <useDefaultExcludes>true</useDefaultExcludes>
     </fileSet>
     <fileSet>
@@ -125,6 +125,7 @@ SPDX-License-Identifier: Apache-2.0
     </fileSet>
     <fileSet>
       <directory>${basedir}/LICENSES</directory>
+      <outputDirectory>app/LICENSES</outputDirectory>
     </fileSet>
   </fileSets>
 </assembly>

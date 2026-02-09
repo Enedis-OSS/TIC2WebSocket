@@ -13,10 +13,13 @@ set SCRIPT_DIRECTORY=%~dp0
 REM Get distribution root directory (parent of script directory)
 for %%I in ("%SCRIPT_DIRECTORY%..") do set ROOT_DIRECTORY=%%~fI\
 
+REM Define app directory
+set APP_DIRECTORY=%ROOT_DIRECTORY%app\
+
 REM Define log directory and config file
-set LOG_DIRECTORY=%ROOT_DIRECTORY%var\log
-set CONFIG_FILE=%ROOT_DIRECTORY%var\config\TIC2WebSocketConfiguration.json
-set CLASSPATH=%ROOT_DIRECTORY%lib\*
+set LOG_DIRECTORY=%APP_DIRECTORY%var\log
+set CONFIG_FILE=%APP_DIRECTORY%var\config\TIC2WebSocketConfiguration.json
+set CLASSPATH=%APP_DIRECTORY%lib\*
 set MAIN_CLASS=tic.service.TIC2WebSocketApplication
 
 REM Run executable
