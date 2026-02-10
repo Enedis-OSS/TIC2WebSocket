@@ -1,0 +1,8 @@
+{
+  "ticMode":"HISTORIC",
+  "timeout":25,
+  "identifier": {
+     "type":"PORT_NAME",
+     "value":"COM7"
+    }
+}

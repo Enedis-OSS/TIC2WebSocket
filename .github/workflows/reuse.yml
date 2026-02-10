@@ -1,6 +1,5 @@
-# SPDX-FileCopyrightText: 2022 Free Software Foundation Europe e.V. <https://fsfe.org>
-#
-# SPDX-License-Identifier: CC0-1.0
+#SPDX-FileCopyrightText: 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
+#SPDX-License-Identifier: Apache-2.0
 ---
 name: REUSE Compliance Check
 

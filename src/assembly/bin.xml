@@ -8,9 +8,8 @@ SPDX-License-Identifier: Apache-2.0
 -->
 
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3
-		                      http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
 
   <!-- Specifies that our binary distribution is a zip package -->
   <id>bin</id>
@@ -19,67 +18,114 @@ SPDX-License-Identifier: Apache-2.0
     <format>tar.gz</format>
   </formats>
   <includeBaseDirectory>false</includeBaseDirectory>
+
   <dependencySets>
     <dependencySet>
       <useProjectArtifact>true</useProjectArtifact>
-      <outputDirectory>lib</outputDirectory>
+      <outputDirectory>app/lib</outputDirectory>
       <unpack>false</unpack>
     </dependencySet>
   </dependencySets>
+
   <files>
     <file>
       <source>CHANGELOG.md</source>
-      <destName>CHANGELOG.md</destName>
+      <destName>app/CHANGELOG.md</destName>
     </file>
-   <file>
-      <source>${project.build.scriptSourceDirectory}/${project.name}.bat</source>
-      <destName>${project.name}.bat</destName>
+
+    <!-- launcher -->
+    <file>
+      <source>${project.build.scriptSourceDirectory}/launcher/${project.name}.bat</source>
+      <destName>app/${project.name}.bat</destName>
     </file>
     <file>
-      <source>${project.build.scriptSourceDirectory}/${project.name}.sh</source>
-      <destName>${project.name}.sh</destName>
+      <source>${project.build.scriptSourceDirectory}/launcher/${project.name}.sh</source>
+      <destName>app/${project.name}.sh</destName>
+      <fileMode>0755</fileMode>
+    </file>
+
+    <!-- debug -->
+    <file>
+      <source>${project.build.scriptSourceDirectory}/debug/${project.name}_remote_debug.sh</source>
+      <destName>debug/${project.name}_remote_debug.sh</destName>
+      <fileMode>0755</fileMode>
+    </file>
+
+    <!-- diagnostic -->
+    <file>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/SerialPortFinder.bat</source>
+      <destName>diagnostic/SerialPortFinder.bat</destName>
+    </file>
+    <file>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/SerialPortFinder.sh</source>
+      <destName>diagnostic/SerialPortFinder.sh</destName>
       <fileMode>0755</fileMode>
     </file>
     <file>
-      <source>${project.build.scriptSourceDirectory}/SerialPortPlugNotifier.bat</source>
-      <destName>SerialPortPlugNotifier.bat</destName>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/UsbPortFinder.bat</source>
+      <destName>diagnostic/UsbPortFinder.bat</destName>
     </file>
     <file>
-      <source>${project.build.scriptSourceDirectory}/SerialPortPlugNotifier.sh</source>
-      <destName>SerialPortPlugNotifier.sh</destName>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/UsbPortFinder.sh</source>
+      <destName>diagnostic/UsbPortFinder.sh</destName>
       <fileMode>0755</fileMode>
     </file>
     <file>
-      <source>${project.build.scriptSourceDirectory}/TICPortPlugNotifier.bat</source>
-      <destName>TICPortPlugNotifier.bat</destName>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/ModemFinder.bat</source>
+      <destName>diagnostic/ModemFinder.bat</destName>
     </file>
     <file>
-      <source>${project.build.scriptSourceDirectory}/TICPortPlugNotifier.sh</source>
-      <destName>TICPortPlugNotifier.sh</destName>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/ModemFinder.sh</source>
+      <destName>diagnostic/ModemFinder.sh</destName>
       <fileMode>0755</fileMode>
     </file>
     <file>
-      <source>${project.build.scriptSourceDirectory}/TICPortDump.bat</source>
-      <destName>TICPortDump.bat</destName>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/ModemPlugNotifier.bat</source>
+      <destName>diagnostic/ModemPlugNotifier.bat</destName>
     </file>
     <file>
-      <source>${project.build.scriptSourceDirectory}/TICPortDump.ps1</source>
-      <destName>TICPortDump.ps1</destName>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/ModemPlugNotifier.sh</source>
+      <destName>diagnostic/ModemPlugNotifier.sh</destName>
+      <fileMode>0755</fileMode>
     </file>
     <file>
-      <source>${project.build.scriptSourceDirectory}/TICPortDump.sh</source>
-      <destName>TICPortDump.sh</destName>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/TICCore.bat</source>
+      <destName>diagnostic/TICCore.bat</destName>
+    </file>
+    <file>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/TICCore.sh</source>
+      <destName>diagnostic/TICCore.sh</destName>
+      <fileMode>0755</fileMode>
+    </file>
+    <file>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/TICPortDump.bat</source>
+      <destName>diagnostic/TICPortDump.bat</destName>
+    </file>
+    <file>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/TICPortDump.ps1</source>
+      <destName>diagnostic/TICPortDump.ps1</destName>
+    </file>
+    <file>
+      <source>${project.build.scriptSourceDirectory}/diagnostic/TICPortDump.sh</source>
+      <destName>diagnostic/TICPortDump.sh</destName>
       <fileMode>0755</fileMode>
     </file>
   </files>
+
   <fileSets>
     <fileSet>
       <directory>${basedir}/src/main/resources/config</directory>
-      <outputDirectory>var/config</outputDirectory>
+      <outputDirectory>app/var/config</outputDirectory>
+      <useDefaultExcludes>true</useDefaultExcludes>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/docs</directory>
+      <outputDirectory>tester</outputDirectory>
       <useDefaultExcludes>true</useDefaultExcludes>
     </fileSet>
     <fileSet>
       <directory>${basedir}/LICENSES</directory>
+      <outputDirectory>app/LICENSES</outputDirectory>
     </fileSet>
   </fileSets>
 </assembly>

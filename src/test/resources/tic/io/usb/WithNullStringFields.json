@@ -1,0 +1,18 @@
+[
+    {
+        "bcdDevice": 1,
+        "bcdUSB": 2,
+        "bDescriptorType": 3,
+        "bDeviceClass": 4,
+        "bDeviceProtocol": 5,
+        "bDeviceSubClass": 6,
+        "bLength": 7,
+        "bMaxPacketSize0": 8,
+        "bNumConfigurations": 9,
+        "idProduct": 10,
+        "idVendor": 11,
+        "iManufacturer": 12,
+        "iProduct": 13,
+        "iSerialNumber": 14
+    }
+]
