@@ -1,0 +1,16 @@
+services:
+  plantuml:
+    image: plantuml/plantuml-server:tomcat
+    ports:
+      - "8080:8080"
+
+  mkdocs:
+    build: .
+    working_dir: /docs
+    volumes:
+      - ./:/docs
+    ports:
+      - "8000:8000"
+    command: mkdocs serve --config-file mkdocs.yml --dev-addr 0.0.0.0:8000
+    depends_on:
+      - plantuml

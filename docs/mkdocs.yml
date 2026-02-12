@@ -1,0 +1,23 @@
+site_name: TIC2WebSocket
+site_url: ""
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+
+nav:
+  - Français: fr/index.md
+  - English: en/index.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - plantuml_markdown:
+      server: "http://plantuml:8080/plantuml"
+      format: svg
+
+plugins:
+  - search

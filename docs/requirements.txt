@@ -1,0 +1,2 @@
+# Extra MkDocs extensions beyond squidfunk/mkdocs-material
+plantuml-markdown
