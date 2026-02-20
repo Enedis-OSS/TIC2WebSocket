@@ -4,7 +4,7 @@
 
 Depuis le dossier `docs` à la racine du projet :
 
-- Démarrer (serveur PlantUML + serveur MkDocs) : `docker-compose up --build`
+- Démarrer (serveur PlantUML + serveur MkDocs) : `docker-compose up --build` (ou `docker compose up --build`)
 - Arrêter : `docker-compose down`
 
-Puis visiter : http://localhost:8000/
+Puis visiter : http://localhost:8000/tic2websocket/ (la racine `/` redirige vers ce chemin)

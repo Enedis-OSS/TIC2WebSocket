@@ -1,2 +1,4 @@
 # Extra MkDocs extensions beyond squidfunk/mkdocs-material
 plantuml-markdown
+mkdocs-puml
+mkdocs-static-i18n

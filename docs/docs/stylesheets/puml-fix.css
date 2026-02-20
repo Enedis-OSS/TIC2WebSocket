@@ -1,0 +1,25 @@
+/*
+ * PlantUML (mkdocs-puml / plantuml plugin) renders both light and dark SVGs.
+ * The upstream puml.css only hides variants when Material palette attributes
+ * (data-md-color-scheme) exist or when prefers-color-scheme is dark.
+ *
+ * When neither applies (common on fresh load or when no palette is configured),
+ * both variants become visible. This file enforces a sane default.
+ */
+
+/* Default: show light, hide dark */
+body .puml.light { display: block; }
+body .puml.dark { display: none; }
+
+/* OS/browser dark mode */
+@media (prefers-color-scheme: dark) {
+  body .puml.light { display: none; }
+  body .puml.dark { display: block; }
+}
+
+/* MkDocs Material explicit palette (if enabled) */
+body[data-md-color-scheme="default"] .puml.light { display: block; }
+body[data-md-color-scheme="default"] .puml.dark { display: none; }
+
+body[data-md-color-scheme="slate"] .puml.light { display: none; }
+body[data-md-color-scheme="slate"] .puml.dark { display: block; }
