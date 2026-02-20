@@ -30,7 +30,7 @@ TIC2WebSocket fournit une API basée sur WebSocket pour gérer les données TIC,
 
 ## <a name="documentation"></a> Documentation
 
-Pour plus d'informations sur le fonctionnement de TIC2WebSocket, consultez la [documentation officielle](https://enedis-oss.github.io/tic2websocket/).
+Pour plus d'informations sur le fonctionnement de TIC2WebSocket, consultez la [documentation officielle](https://enedis-oss.github.io/TIC2WebSocket/).
 
 ## <a name="contributors"></a> Contributeurs
 
