@@ -16,9 +16,11 @@
 
 ## Summary
 
-- [Introduction](#introduction)
-- [Documentation](#documentation)
-- [Contributors](#contributors)
+- [TIC2WebSocket](#tic2websocket)
+  - [Summary](#summary)
+  - [ Introduction](#-introduction)
+  - [ Documentation](#-documentation)
+  - [ Contributors](#-contributors)
 
 ## <a name="introduction"></a> Introduction
 
