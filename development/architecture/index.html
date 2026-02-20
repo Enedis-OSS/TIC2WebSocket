@@ -1,0 +1,1145 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation TIC2WebSocket">
+      
+      
+        <meta name="author" content="Enedis OSS">
+      
+      
+        <link rel="canonical" href="https://enedis-oss.github.io/tic2websocket/development/architecture/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../contributing/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="fr">
+        
+          <link rel="alternate" href="../../en/development/architecture/" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Architecture - TIC2WebSocket</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/puml-fix.css">
+    
+      <link rel="stylesheet" href="../../assets/mkdocs_puml/puml.css">
+    
+      <link rel="stylesheet" href="../../assets/mkdocs_puml/interaction.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#architecture" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../.." title="TIC2WebSocket" class="md-header__button md-logo" aria-label="TIC2WebSocket" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TIC2WebSocket
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Sélectionner la langue">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../en/development/architecture/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Enedis-OSS/TIC2WebSocket" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Enedis-OSS/tic2websocket
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="TIC2WebSocket" class="md-nav__button md-logo" aria-label="TIC2WebSocket" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TIC2WebSocket
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Enedis-OSS/TIC2WebSocket" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Enedis-OSS/tic2websocket
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vue d'ensemble
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../getting-started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Démarrage
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Démarrage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prérequis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/launch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lancement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/ws-tester/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WS Tester
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../usage/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilisation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilisation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Référence API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Développement
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Développement
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objectif-du-systeme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objectif du système
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vue-contexte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vue contexte
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#composants-principaux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composants principaux
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Composants principaux">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#package-diagnostic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package diagnostic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-utilitaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package utilitaire
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package io
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package frame
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package stream
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package core
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flux-dexecution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flux d’exécution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flux d’exécution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demarrage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Démarrage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traitement-dune-requete-websocket" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traitement d’une requête WebSocket
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diffusion-devenements-tic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diffusion d’événements TIC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sequence-abonnement-puis-evenements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Séquence : abonnement puis événements
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contribuer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="architecture">Architecture</h1>
+<p>Cette page décrit l’architecture technique de <strong>TIC2WebSocket</strong> : ses composants, ses flux d’exécution, ses responsabilités et ses points d’extension.</p>
+<h2 id="objectif-du-systeme">Objectif du système</h2>
+<p><code>TIC2WebSocket</code> expose une interface WebSocket JSON pour :</p>
+<ul>
+<li>découvrir les TIC disponibles ;</li>
+<li>lire une trame TIC à la demande ;</li>
+<li>s’abonner à un ou plusieurs flux TIC ;</li>
+<li>recevoir des événements temps réel (<code>OnTICData</code>, <code>OnError</code>).</li>
+</ul>
+<p>Le service fait le pont entre le monde <strong>matériel/port série</strong> (modems TIC) et des clients applicatifs <strong>WebSocket</strong>.</p>
+<h2 id="vue-contexte">Vue contexte</h2>
+<div class='puml-container'><div class="puml light" style=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="235px" preserveAspectRatio="xMidYMid meet" style="width:1021px;height:235px;background:#FFFFFF;" version="1.1" viewBox="0 0 1021 235" width="1021px" zoomAndPan="magnify" class="diagram"><title>TIC2WebSocket - Vue contexte</title><defs/><g><g class="title" data-source-line="2"><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="243.25" x="382.3055" y="22.9951">TIC2WebSocket - Vue contexte</text></g><g class="cluster" data-qualified-name="App" data-source-line="13" id="ent0005"><rect fill="none" height="97" rx="6" ry="6" style="stroke:#181818;stroke-width:1;" width="372.42" x="306.98" y="77.9469"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="123.2314" x="309.98" y="92.942">TIC2WebSocket</text></g><g class="entity" data-qualified-name="App.WS" data-source-line="14" id="ent0006"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="184.2588" x="322.98" y="112.7969"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="487.2388" y="117.7969"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="485.2388" y="119.7969"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="485.2388" y="123.7969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="144.2588" x="337.98" y="145.792">API WebSocket JSON</text></g><g class="entity" data-qualified-name="App.Core" data-source-line="15" id="ent0007"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95.166" x="568.24" y="112.7969"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="643.406" y="117.7969"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="641.406" y="119.7969"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="641.406" y="123.7969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="55.166" x="583.24" y="145.792">TICCore</text></g><g class="entity" data-qualified-name="Client" data-source-line="9" id="ent0002"><ellipse cx="51.4897" cy="99.1469" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M51.4897,107.1469 L51.4897,134.1469 M38.4897,115.1469 L64.4897,115.1469 M51.4897,134.1469 L38.4897,149.1469 M51.4897,134.1469 L64.4897,149.1469" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="90.9795" x="6" y="163.642">Client métier</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.626" x="6" y="179.9389">(WebSocket)</text></g><g class="entity" data-qualified-name="OS" data-source-line="10" id="ent0003"><ellipse cx="933.1387" cy="51.2969" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M933.1387,59.2969 L933.1387,86.2969 M920.1387,67.2969 L946.1387,67.2969 M933.1387,86.2969 L920.1387,101.2969 M933.1387,86.2969 L946.1387,101.2969" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="55.8975" x="905.19" y="115.792">OS hôte</text></g><g class="entity" data-qualified-name="Meter" data-source-line="11" id="ent0004"><ellipse cx="933.1305" cy="162.2969" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M933.1305,170.2969 L933.1305,197.2969 M920.1305,178.2969 L946.1305,178.2969 M933.1305,197.2969 L920.1305,212.2969 M933.1305,197.2969 L946.1305,212.2969" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="163.4609" x="851.4" y="226.792">Compteur / modem TIC</text></g><g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="dependency" data-source-line="18" id="lnk8"><path d="M97.19,136.8269 C153.22,136.6669 244.64,136.4135 316.72,136.2135" fill="none" id="Client-to-WS" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="322.72,136.1969,313.7089,132.2219,317.72,136.2107,313.7311,140.2218,322.72,136.1969" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="61.3882" x="178.48" y="132.3638">Requêtes</text></g><g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="dependency" data-source-line="19" id="lnk9"><path d="M322.66,157.4469 C312.03,159.2969 301.3,160.8669 290.98,161.9469 C218.48,169.5169 198.92,173.6969 126.98,161.9469 C117.15,160.3469 112.5887,159.4324 102.9187,156.3624" fill="none" id="WS-to-Client" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="97.2,154.5469,104.5677,161.0827,101.9656,156.0598,106.9885,153.4577,97.2,154.5469" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="162.8745" x="127.98" y="158.0138">Réponses + événements</text></g><g class="link" data-entity-1="ent0007" data-entity-2="ent0003" data-link-type="dependency" data-source-line="21" id="lnk10"><path d="M663.69,127.7769 C730.59,116.1069 845.4194,96.0785 899.1594,86.6985" fill="none" id="Core-to-OS" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="905.07,85.6669,895.5163,83.2739,900.1445,86.5266,896.8918,91.1548,905.07,85.6669" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="100.7056" x="708.4" y="81.3738">Détection ports</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="76.8193" x="720.3431" y="96.5066">(USB, série)</text></g><g class="link" data-entity-1="ent0007" data-entity-2="ent0004" data-link-type="dependency" data-source-line="22" id="lnk11"><path d="M663.69,144.2669 C713.01,153.0269 785.6724,165.9382 845.1024,176.4882" fill="none" id="Core-to-Meter" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="851.01,177.5369,842.8477,172.0254,846.087,176.6629,841.4494,179.9022,851.01,177.5369" style="stroke:#181818;stroke-width:1;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="124.0269" x="696.4" y="147.0338">Lecture trames TIC</text></g><g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" data-source-line="23" id="lnk12"><path d="M513.61,135.9469 C534.49,135.9469 543.84,135.9469 561.93,135.9469" fill="none" id="WS-Core" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="507.61,135.9469,516.61,139.9469,512.61,135.9469,516.61,131.9469,507.61,135.9469" style="stroke:#181818;stroke-width:1;"/><polygon fill="#181818" points="567.93,135.9469,558.93,131.9469,562.93,135.9469,558.93,139.9469,567.93,135.9469" style="stroke:#181818;stroke-width:1;"/></g><?plantuml-src LP5DJiCm48NN-1H3Lo1eBLWYX0HbmsyH0Rf1GYQPDbRz4-mn824E5DRS81TZd0A5NUBv_EQzvtNjIfCgX9geYNjI1lKocckgqsEA64hl21sDIc_bXLxKIfkpe9wHehIBofVneKdMIAiYOP1KeyKeAvofP4WQFQzfb051cWp2pSbuTugFXIyNI324kuJGRtWb576XNQE2iX1hLVaNxUOmKoQYC3WZ80yXwq6b0vQalVjp8vyeD-SLRsBjsYTNZNrm661dLxmBeKho0GPZepaBsAubZU7URVnwsHo0Yh2S_z2J0khkax0VJOfV4MyRmXH0WlKLsXogHowGAn1YPMNmBsxF73PDTiXjDjvbBuF3gnDOLN9QJ2vxS5hyerY90osjv8ySwZlDS7Z0DEp1DJwbxeCm2lxDfzy0JxgMXI96s8AkVUvQny_aAB86Q_Ni92iSSp7BQg7nWI8tT5iSRKFisg1nSqNtKVd2ETE9puZVWDNPPTwztozdzWi0?></g></svg></div><div class="puml dark" style=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="235px" preserveAspectRatio="xMidYMid meet" style="width:1021px;height:235px;background:#1B1B1B;" version="1.1" viewBox="0 0 1021 235" width="1021px" zoomAndPan="magnify" class="diagram"><title>TIC2WebSocket - Vue contexte</title><defs/><g><rect fill="#1B1B1B" height="235" style="stroke:none;stroke-width:1;" width="1021" x="0" y="0"/><g class="title" data-source-line="2"><text fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="243.25" x="382.3055" y="22.9951">TIC2WebSocket - Vue contexte</text></g><g class="cluster" data-qualified-name="App" data-source-line="13" id="ent0005"><rect fill="none" height="97" rx="6" ry="6" style="stroke:#E7E7E7;stroke-width:1;" width="372.42" x="306.98" y="77.9469"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="123.2314" x="309.98" y="92.942">TIC2WebSocket</text></g><g class="entity" data-qualified-name="App.WS" data-source-line="14" id="ent0006"><rect fill="#313139" height="46.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="184.2588" x="322.98" y="112.7969"/><rect fill="#313139" height="10" style="stroke:#E7E7E7;stroke-width:0.5;" width="15" x="487.2388" y="117.7969"/><rect fill="#313139" height="2" style="stroke:#E7E7E7;stroke-width:0.5;" width="4" x="485.2388" y="119.7969"/><rect fill="#313139" height="2" style="stroke:#E7E7E7;stroke-width:0.5;" width="4" x="485.2388" y="123.7969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="144.2588" x="337.98" y="145.792">API WebSocket JSON</text></g><g class="entity" data-qualified-name="App.Core" data-source-line="15" id="ent0007"><rect fill="#313139" height="46.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="95.166" x="568.24" y="112.7969"/><rect fill="#313139" height="10" style="stroke:#E7E7E7;stroke-width:0.5;" width="15" x="643.406" y="117.7969"/><rect fill="#313139" height="2" style="stroke:#E7E7E7;stroke-width:0.5;" width="4" x="641.406" y="119.7969"/><rect fill="#313139" height="2" style="stroke:#E7E7E7;stroke-width:0.5;" width="4" x="641.406" y="123.7969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="55.166" x="583.24" y="145.792">TICCore</text></g><g class="entity" data-qualified-name="Client" data-source-line="9" id="ent0002"><ellipse cx="51.4897" cy="99.1469" fill="#313139" rx="8" ry="8" style="stroke:#E7E7E7;stroke-width:0.5;"/><path d="M51.4897,107.1469 L51.4897,134.1469 M38.4897,115.1469 L64.4897,115.1469 M51.4897,134.1469 L38.4897,149.1469 M51.4897,134.1469 L64.4897,149.1469" fill="none" style="stroke:#E7E7E7;stroke-width:0.5;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="90.9795" x="6" y="163.642">Client métier</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.626" x="6" y="179.9389">(WebSocket)</text></g><g class="entity" data-qualified-name="OS" data-source-line="10" id="ent0003"><ellipse cx="933.1387" cy="51.2969" fill="#313139" rx="8" ry="8" style="stroke:#E7E7E7;stroke-width:0.5;"/><path d="M933.1387,59.2969 L933.1387,86.2969 M920.1387,67.2969 L946.1387,67.2969 M933.1387,86.2969 L920.1387,101.2969 M933.1387,86.2969 L946.1387,101.2969" fill="none" style="stroke:#E7E7E7;stroke-width:0.5;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="55.8975" x="905.19" y="115.792">OS hôte</text></g><g class="entity" data-qualified-name="Meter" data-source-line="11" id="ent0004"><ellipse cx="933.1305" cy="162.2969" fill="#313139" rx="8" ry="8" style="stroke:#E7E7E7;stroke-width:0.5;"/><path d="M933.1305,170.2969 L933.1305,197.2969 M920.1305,178.2969 L946.1305,178.2969 M933.1305,197.2969 L920.1305,212.2969 M933.1305,197.2969 L946.1305,212.2969" fill="none" style="stroke:#E7E7E7;stroke-width:0.5;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="163.4609" x="851.4" y="226.792">Compteur / modem TIC</text></g><g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="dependency" data-source-line="18" id="lnk8"><path d="M97.19,136.8269 C153.22,136.6669 244.64,136.4135 316.72,136.2135" fill="none" id="Client-to-WS" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="322.72,136.1969,313.7089,132.2219,317.72,136.2107,313.7311,140.2218,322.72,136.1969" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="61.3882" x="178.48" y="132.3638">Requêtes</text></g><g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="dependency" data-source-line="19" id="lnk9"><path d="M322.66,157.4469 C312.03,159.2969 301.3,160.8669 290.98,161.9469 C218.48,169.5169 198.92,173.6969 126.98,161.9469 C117.15,160.3469 112.5887,159.4324 102.9187,156.3624" fill="none" id="WS-to-Client" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="97.2,154.5469,104.5677,161.0827,101.9656,156.0598,106.9885,153.4577,97.2,154.5469" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="162.8745" x="127.98" y="158.0138">Réponses + événements</text></g><g class="link" data-entity-1="ent0007" data-entity-2="ent0003" data-link-type="dependency" data-source-line="21" id="lnk10"><path d="M663.69,127.7769 C730.59,116.1069 845.4194,96.0785 899.1594,86.6985" fill="none" id="Core-to-OS" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="905.07,85.6669,895.5163,83.2739,900.1445,86.5266,896.8918,91.1548,905.07,85.6669" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="100.7056" x="708.4" y="81.3738">Détection ports</text><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="76.8193" x="720.3431" y="96.5066">(USB, série)</text></g><g class="link" data-entity-1="ent0007" data-entity-2="ent0004" data-link-type="dependency" data-source-line="22" id="lnk11"><path d="M663.69,144.2669 C713.01,153.0269 785.6724,165.9382 845.1024,176.4882" fill="none" id="Core-to-Meter" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="851.01,177.5369,842.8477,172.0254,846.087,176.6629,841.4494,179.9022,851.01,177.5369" style="stroke:#E7E7E7;stroke-width:1;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="124.0269" x="696.4" y="147.0338">Lecture trames TIC</text></g><g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" data-source-line="23" id="lnk12"><path d="M513.61,135.9469 C534.49,135.9469 543.84,135.9469 561.93,135.9469" fill="none" id="WS-Core" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="507.61,135.9469,516.61,139.9469,512.61,135.9469,516.61,131.9469,507.61,135.9469" style="stroke:#E7E7E7;stroke-width:1;"/><polygon fill="#E7E7E7" points="567.93,135.9469,558.93,131.9469,562.93,135.9469,558.93,139.9469,567.93,135.9469" style="stroke:#E7E7E7;stroke-width:1;"/></g><?plantuml-src LP5DJiCm48NN-1H3Lo1eBLWYX0HbK_wA2D0D4ZB9jB4Isy4U0nBYG67D3N8nnYcqi4iydz-yzxofRLx70g4aQiA1b5wzZXQQolWK0_hSMK9BezmPUQchKkdwtAiNf21DLRWyF3RHrDAeGEWbbMWmo0BdAjOa2-MhKPeBqbGZt4x6-pDyobnU8S4GxYD2l-2DK8HAsqPvPI2Kgd2lsYvWhkg0eiOv0JdmUb4I5DfZJjhPFpVIYR8BNl4kDcvSjCNOUOiUzlR5Xn0g9-TXCAurHm7JjQJHFzYjbPVj0QW0o_alFSsWxBu8-z4qMuauqn163nACAz2aK3roYTo046ihWtznU-QuQP93BhDnDdaP75zFO5t9MJQzwi5PzezY9Gwqj98-KgYVDCFX4TDm03Vu7BjFmY3uDvt-03pfMXOA6607klQbQos_agN06gpLizEaSCh5BAk5ndaAtD1TTh8BeMkznkqrtKVb2nTCHpuZVWDMPvTfzs6_dDbl?></g></svg></div></div>
+
+<h2 id="composants-principaux">Composants principaux</h2>
+<p>L'application est organisée en plusieurs packages Java, chacun avec des responsabilités claires.</p>
+<h3 id="package-diagnostic">Package diagnostic</h3>
+<ul>
+<li><strong>TICCoreApp</strong> : application pour tests et diagnostics globaux du core TIC</li>
+<li><strong>ModemFinderApp</strong> : application de test de détection de modems</li>
+<li><strong>ModemPlugNotifierApp</strong> : application de test de notification de plug/unplug</li>
+<li><strong>SerialPortFinderApp</strong> : application de test de détection de ports série</li>
+<li><strong>UsbPortFinderApp</strong> : application de test de détection de ports USB</li>
+</ul>
+<h3 id="package-utilitaire">Package utilitaire</h3>
+<ul>
+<li><strong>Codec</strong> : encodage/décodage JSON, trames TIC, etc</li>
+<li><strong>Message</strong> : modèles de messages génériques (Request, Response, Event)</li>
+<li><strong>Task</strong> : gestion de tâches asynchrones</li>
+<li><strong>Time</strong> : utilitaires de temps et de date</li>
+</ul>
+<h3 id="package-io">Package io</h3>
+<ul>
+<li><strong>Modem</strong> : gestion d’un modem TIC (port série, USB)</li>
+<li><strong>ModemFinder</strong> : détection dynamique des modems connectés</li>
+<li><strong>PlugNotifier</strong> : notification des événements de plug/unplug</li>
+</ul>
+<h3 id="package-frame">Package frame</h3>
+<ul>
+<li><strong>TICFrame</strong> : représentation d’une trame TIC décodée</li>
+<li><strong>TICFrameCodec</strong> : encodage/décodage de trames TIC</li>
+</ul>
+<h3 id="package-stream">Package stream</h3>
+<ul>
+<li><strong>TICCoreStream</strong> : gestion d’un flux de données TIC (lecture, décodage)</li>
+<li><strong>TICStreamReader</strong> : lecture d’un flux TIC à partir d’un modem</li>
+<li><strong>TICStreamModeDetector</strong> : détection du mode TIC (historique, standard)</li>
+</ul>
+<h3 id="package-core">Package core</h3>
+<ul>
+<li><strong>TICCoreBase</strong> : cœur de l’application, gestion des abonnements, notifications</li>
+</ul>
+<h3 id="package-service">Package service</h3>
+<ul>
+<li><strong>TIC2WebSocketApplication</strong> : point d’entrée de l’application TIC2WebSocket</li>
+<li><strong>TIC2WebSocketServer</strong> : serveur WebSocket (Netty)</li>
+<li><strong>TIC2WebSocketHandler</strong> : handler principal des requêtes WebSocket</li>
+<li><strong>TIC2WebSocketRequestHandlerBase</strong> : base pour les handlers de requêtes métier</li>
+<li><strong>TIC2WebSocketClientPool</strong> : gestion des clients WebSocket connectés</li>
+</ul>
+<h2 id="flux-dexecution">Flux d’exécution</h2>
+<h3 id="demarrage">Démarrage</h3>
+<ol>
+<li>La CLI est parsée (<code>picocli</code>) et la configuration est chargée.</li>
+<li><code>TICCoreBase</code> est instancié avec le mode TIC et les ports éventuels.</li>
+<li>Le serveur Netty WebSocket démarre.</li>
+<li>Le core active la surveillance de plug/unplug modem.</li>
+</ol>
+<h3 id="traitement-dune-requete-websocket">Traitement d’une requête WebSocket</h3>
+<ol>
+<li>Le handler reçoit une trame texte WebSocket.</li>
+<li>Le JSON est décodé en <code>Message</code> puis transformé en <code>Request</code>.</li>
+<li><code>TIC2WebSocketRequestHandlerBase</code> exécute l’opération métier.</li>
+<li>La réponse JSON est renvoyée au client.</li>
+</ol>
+<h3 id="diffusion-devenements-tic">Diffusion d’événements TIC</h3>
+<ol>
+<li>Un stream lit et décode une nouvelle trame TIC.</li>
+<li><code>TICCoreBase</code> reçoit <code>onData</code> / <code>onError</code>.</li>
+<li>Les abonnés filtrés par <code>TICIdentifier</code> sont résolus.</li>
+<li>Chaque client reçoit un événement WebSocket.</li>
+</ol>
+<h2 id="sequence-abonnement-puis-evenements">Séquence : abonnement puis événements</h2>
+<div class='puml-container'><div class="puml light" style=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="541px" preserveAspectRatio="xMidYMid meet" style="width:1147px;height:541px;background:#FFFFFF;" version="1.1" viewBox="0 0 1147 541" width="1147px" zoomAndPan="magnify" class="diagram"><title>SubscribeTIC + diffusion OnTICData</title><defs/><g><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="283.1035" x="433.9395" y="27.9951">SubscribeTIC + diffusion OnTICData</text><rect fill="none" height="133.6641" style="stroke:#000000;stroke-width:1.5;" width="1131.9824" x="10" y="310.3906"/><g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="C" id="part1-lifeline"><g><title>Client WS</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="52.855" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="56" x2="56" y1="118.5938" y2="461.0547"/></g></g><g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="H" id="part2-lifeline"><g><title>TIC2WebSocketHandler</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="295.5952" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="299" x2="299" y1="118.5938" y2="461.0547"/></g></g><g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="RH" id="part3-lifeline"><g><title>RequestHandlerBase</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="572.7842" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="576.4277" x2="576.4277" y1="118.5938" y2="461.0547"/></g></g><g class="participant-lifeline" data-entity-uid="part4" data-qualified-name="Core" id="part4-lifeline"><g><title>TICCoreBase</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="771.6304" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="775.002" x2="775.002" y1="118.5938" y2="461.0547"/></g></g><g class="participant-lifeline" data-entity-uid="part5" data-qualified-name="Stream" id="part5-lifeline"><g><title>TICCoreStream</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="893.3228" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="897.2588" x2="897.2588" y1="118.5938" y2="461.0547"/></g></g><g class="participant-lifeline" data-entity-uid="part6" data-qualified-name="WSC" id="part6-lifeline"><g><title>TIC2WebSocketClient</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="1045.6846" y="118.5938"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="1049.3867" x2="1049.3867" y1="118.5938" y2="461.0547"/></g></g><g class="participant participant-head" data-entity-uid="part1" data-qualified-name="C" id="part1-head"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67.71" x="20" y="115.292">Client WS</text><ellipse cx="56.855" cy="50.7969" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M56.855,58.7969 L56.855,85.7969 M43.855,66.7969 L69.855,66.7969 M56.855,85.7969 L43.855,100.7969 M56.855,85.7969 L69.855,100.7969" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="C" id="part1-tail"><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67.71" x="20" y="473.0498">Client WS</text><ellipse cx="56.855" cy="484.8516" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M56.855,492.8516 L56.855,519.8516 M43.855,500.8516 L69.855,500.8516 M56.855,519.8516 L43.855,534.8516 M56.855,519.8516 L69.855,534.8516" fill="none" style="stroke:#181818;stroke-width:0.5;"/></g><g class="participant participant-head" data-entity-uid="part2" data-qualified-name="H" id="part2-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="179.1904" x="210" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="165.1904" x="217" y="107.292">TIC2WebSocketHandler</text></g><g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="H" id="part2-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="179.1904" x="210" y="460.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="165.1904" x="217" y="480.0498">TIC2WebSocketHandler</text></g><g class="participant participant-head" data-entity-uid="part3" data-qualified-name="RH" id="part3-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="160.7129" x="496.4277" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="146.7129" x="503.4277" y="107.292">RequestHandlerBase</text></g><g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="RH" id="part3-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="160.7129" x="496.4277" y="460.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="146.7129" x="503.4277" y="480.0498">RequestHandlerBase</text></g><g class="participant participant-head" data-entity-uid="part4" data-qualified-name="Core" id="part4-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.2568" x="724.002" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.2568" x="731.002" y="107.292">TICCoreBase</text></g><g class="participant participant-tail" data-entity-uid="part4" data-qualified-name="Core" id="part4-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.2568" x="724.002" y="460.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.2568" x="731.002" y="480.0498">TICCoreBase</text></g><g class="participant participant-head" data-entity-uid="part5" data-qualified-name="Stream" id="part5-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.1279" x="837.2588" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="106.1279" x="844.2588" y="107.292">TICCoreStream</text></g><g class="participant participant-tail" data-entity-uid="part5" data-qualified-name="Stream" id="part5-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.1279" x="837.2588" y="460.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="106.1279" x="844.2588" y="480.0498">TICCoreStream</text></g><g class="participant participant-head" data-entity-uid="part6" data-qualified-name="WSC" id="part6-head"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="164.5957" x="967.3867" y="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="150.5957" x="974.3867" y="107.292">TIC2WebSocketClient</text></g><g class="participant participant-tail" data-entity-uid="part6" data-qualified-name="WSC" id="part6-tail"><rect fill="#E2E2F0" height="30.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="164.5957" x="967.3867" y="460.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="150.5957" x="974.3867" y="480.0498">TIC2WebSocketClient</text></g><g class="message" data-entity-1="part1" data-entity-2="part2" id="msg1"><polygon fill="#181818" points="287.5952,145.7266,297.5952,149.7266,287.5952,153.7266,291.5952,149.7266" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="56.855" x2="293.5952" y1="149.7266" y2="149.7266"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="218.7402" x="63.855" y="144.6606">REQUEST SubscribeTIC(identifier)</text></g><g class="message" data-entity-1="part2" data-entity-2="part3" id="msg2"><polygon fill="#181818" points="564.7842,174.8594,574.7842,178.8594,564.7842,182.8594,568.7842,178.8594" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="299.5952" x2="570.7842" y1="178.8594" y2="178.8594"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="148.1226" x="306.5952" y="173.7935">handle(request, client)</text></g><g class="message" data-entity-1="part3" data-entity-2="part4" id="msg3"><polygon fill="#181818" points="763.6304,203.9922,773.6304,207.9922,763.6304,211.9922,767.6304,207.9922" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="576.7842" x2="769.6304" y1="207.9922" y2="207.9922"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="174.8462" x="583.7842" y="202.9263">subscribe(identifier, client)</text></g><g class="message" data-entity-1="part4" data-entity-2="part3" id="msg4"><polygon fill="#181818" points="587.7842,233.125,577.7842,237.125,587.7842,241.125,583.7842,237.125" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="581.7842" x2="774.6304" y1="237.125" y2="237.125"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="15.4819" x="593.7842" y="232.0591">ok</text></g><g class="message" data-entity-1="part3" data-entity-2="part2" id="msg5"><polygon fill="#181818" points="310.5952,262.2578,300.5952,266.2578,310.5952,270.2578,306.5952,266.2578" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="304.5952" x2="575.7842" y1="266.2578" y2="266.2578"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="253.189" x="316.5952" y="261.1919">RESPONSE SubscribeTIC(errorCode=0)</text></g><g class="message" data-entity-1="part2" data-entity-2="part1" id="msg6"><polygon fill="#181818" points="67.855,291.3906,57.855,295.3906,67.855,299.3906,63.855,295.3906" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="61.855" x2="298.5952" y1="295.3906" y2="295.3906"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="158.6152" x="73.855" y="290.3247">RESPONSE SubscribeTIC</text></g><path d="M10,310.3906 L86.624,310.3906 L86.624,317.5234 L76.624,327.5234 L10,327.5234 L10,310.3906" fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/><rect fill="none" height="133.6641" style="stroke:#000000;stroke-width:1.5;" width="1131.9824" x="10" y="310.3906"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="31.624" x="25" y="323.4575">loop</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="107.105" x="101.624" y="322.6011">[à chaque trame]</text><g class="message" data-entity-1="part5" data-entity-2="part4" id="msg7"><polygon fill="#181818" points="786.6304,344.6563,776.6304,348.6563,786.6304,352.6563,782.6304,348.6563" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="780.6304" x2="896.3228" y1="348.6563" y2="348.6563"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="95.9258" x="792.6304" y="343.5903">onData(frame)</text></g><g class="message" data-entity-1="part4" data-entity-2="part6" id="msg8"><polygon fill="#181818" points="1037.6846,373.7891,1047.6846,377.7891,1037.6846,381.7891,1041.6846,377.7891" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="775.6304" x2="1043.6846" y1="377.7891" y2="377.7891"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="95.9258" x="782.6304" y="372.7231">onData(frame)</text></g><g class="message" data-entity-1="part6" data-entity-2="part2" id="msg9"><polygon fill="#181818" points="310.5952,402.9219,300.5952,406.9219,310.5952,410.9219,306.5952,406.9219" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;" x1="304.5952" x2="1048.6846" y1="406.9219" y2="406.9219"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="149.0112" x="316.5952" y="401.856">sendEvent(OnTICData)</text></g><g class="message" data-entity-1="part2" data-entity-2="part1" id="msg10"><polygon fill="#181818" points="67.855,432.0547,57.855,436.0547,67.855,440.0547,63.855,436.0547" style="stroke:#181818;stroke-width:1;"/><line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="61.855" x2="298.5952" y1="436.0547" y2="436.0547"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="117.4824" x="73.855" y="430.9888">EVENT OnTICData</text></g><?plantuml-src VPB1SjCm48RFrLCiEIK3ZHcEdMaF6C-OwRG5EpH7PYElOurboKZhzdLu5ruCIIPfCWLkzkxdtz-kz4OPgQU6e6CU_LMMENnUxnLtqsxovAGrJ8RNqWxPdUexLFhMuHEnpuQ-iT9_7wT1PmDw9fTnHmFvhA4M9ysPLlkErn4Gh5WJrDFEIwTsjFcSmrjeLDjENba33oPKFY6ZyBqo8peSm7VOs6Tbzj2YzYG4IhOE5hbMmGYszGBGGou2pKgg4KDn4M8-R6bNMzaJbsWQJIvnvJbNqO-9_87uY9uILPMludBhwDYFBtybQdQ4GsBcn_zepGCaTbldGkHmUGCbN45LVFrMr9kpDIrL4s3LAd8hKKQoYcYNn9Tk7kCTo9Iv4bL2eb60_27d9EG5JT3b8T3swTkZIVtbuRukpbN8EUjosz3r--GI__GlM0XjxGY_VeBiC4W2XpCbSJ5lvqJIcdZkopQsL-9Yjhg9ctdTZCK_XfvCKpo5GPR7knE05wdYiRZVdDohWFy6?></g></svg></div><div class="puml dark" style=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="541px" preserveAspectRatio="xMidYMid meet" style="width:1147px;height:541px;background:#1B1B1B;" version="1.1" viewBox="0 0 1147 541" width="1147px" zoomAndPan="magnify" class="diagram"><title>SubscribeTIC + diffusion OnTICData</title><defs/><g><rect fill="#1B1B1B" height="541" style="stroke:none;stroke-width:1;" width="1147" x="0" y="0"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="283.1035" x="433.9395" y="27.9951">SubscribeTIC + diffusion OnTICData</text><rect fill="none" height="133.6641" style="stroke:#FFFFFF;stroke-width:1.5;" width="1131.9824" x="10" y="310.3906"/><g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="C" id="part1-lifeline"><g><title>Client WS</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="52.855" y="118.5938"/><line style="stroke:#E7E7E7;stroke-width:0.5;stroke-dasharray:5,5;" x1="56" x2="56" y1="118.5938" y2="461.0547"/></g></g><g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="H" id="part2-lifeline"><g><title>TIC2WebSocketHandler</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="295.5952" y="118.5938"/><line style="stroke:#E7E7E7;stroke-width:0.5;stroke-dasharray:5,5;" x1="299" x2="299" y1="118.5938" y2="461.0547"/></g></g><g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="RH" id="part3-lifeline"><g><title>RequestHandlerBase</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="572.7842" y="118.5938"/><line style="stroke:#E7E7E7;stroke-width:0.5;stroke-dasharray:5,5;" x1="576.4277" x2="576.4277" y1="118.5938" y2="461.0547"/></g></g><g class="participant-lifeline" data-entity-uid="part4" data-qualified-name="Core" id="part4-lifeline"><g><title>TICCoreBase</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="771.6304" y="118.5938"/><line style="stroke:#E7E7E7;stroke-width:0.5;stroke-dasharray:5,5;" x1="775.002" x2="775.002" y1="118.5938" y2="461.0547"/></g></g><g class="participant-lifeline" data-entity-uid="part5" data-qualified-name="Stream" id="part5-lifeline"><g><title>TICCoreStream</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="893.3228" y="118.5938"/><line style="stroke:#E7E7E7;stroke-width:0.5;stroke-dasharray:5,5;" x1="897.2588" x2="897.2588" y1="118.5938" y2="461.0547"/></g></g><g class="participant-lifeline" data-entity-uid="part6" data-qualified-name="WSC" id="part6-lifeline"><g><title>TIC2WebSocketClient</title><rect fill="#000000" fill-opacity="0.00000" height="342.4609" width="8" x="1045.6846" y="118.5938"/><line style="stroke:#E7E7E7;stroke-width:0.5;stroke-dasharray:5,5;" x1="1049.3867" x2="1049.3867" y1="118.5938" y2="461.0547"/></g></g><g class="participant participant-head" data-entity-uid="part1" data-qualified-name="C" id="part1-head"><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67.71" x="20" y="115.292">Client WS</text><ellipse cx="56.855" cy="50.7969" fill="#222222" rx="8" ry="8" style="stroke:#E7E7E7;stroke-width:0.5;"/><path d="M56.855,58.7969 L56.855,85.7969 M43.855,66.7969 L69.855,66.7969 M56.855,85.7969 L43.855,100.7969 M56.855,85.7969 L69.855,100.7969" fill="none" style="stroke:#E7E7E7;stroke-width:0.5;"/></g><g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="C" id="part1-tail"><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67.71" x="20" y="473.0498">Client WS</text><ellipse cx="56.855" cy="484.8516" fill="#222222" rx="8" ry="8" style="stroke:#E7E7E7;stroke-width:0.5;"/><path d="M56.855,492.8516 L56.855,519.8516 M43.855,500.8516 L69.855,500.8516 M56.855,519.8516 L43.855,534.8516 M56.855,519.8516 L69.855,534.8516" fill="none" style="stroke:#E7E7E7;stroke-width:0.5;"/></g><g class="participant participant-head" data-entity-uid="part2" data-qualified-name="H" id="part2-head"><rect fill="#222222" height="30.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="179.1904" x="210" y="87.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="165.1904" x="217" y="107.292">TIC2WebSocketHandler</text></g><g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="H" id="part2-tail"><rect fill="#222222" height="30.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="179.1904" x="210" y="460.0547"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="165.1904" x="217" y="480.0498">TIC2WebSocketHandler</text></g><g class="participant participant-head" data-entity-uid="part3" data-qualified-name="RH" id="part3-head"><rect fill="#222222" height="30.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="160.7129" x="496.4277" y="87.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="146.7129" x="503.4277" y="107.292">RequestHandlerBase</text></g><g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="RH" id="part3-tail"><rect fill="#222222" height="30.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="160.7129" x="496.4277" y="460.0547"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="146.7129" x="503.4277" y="480.0498">RequestHandlerBase</text></g><g class="participant participant-head" data-entity-uid="part4" data-qualified-name="Core" id="part4-head"><rect fill="#222222" height="30.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="103.2568" x="724.002" y="87.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.2568" x="731.002" y="107.292">TICCoreBase</text></g><g class="participant participant-tail" data-entity-uid="part4" data-qualified-name="Core" id="part4-tail"><rect fill="#222222" height="30.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="103.2568" x="724.002" y="460.0547"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.2568" x="731.002" y="480.0498">TICCoreBase</text></g><g class="participant participant-head" data-entity-uid="part5" data-qualified-name="Stream" id="part5-head"><rect fill="#222222" height="30.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="120.1279" x="837.2588" y="87.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="106.1279" x="844.2588" y="107.292">TICCoreStream</text></g><g class="participant participant-tail" data-entity-uid="part5" data-qualified-name="Stream" id="part5-tail"><rect fill="#222222" height="30.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="120.1279" x="837.2588" y="460.0547"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="106.1279" x="844.2588" y="480.0498">TICCoreStream</text></g><g class="participant participant-head" data-entity-uid="part6" data-qualified-name="WSC" id="part6-head"><rect fill="#222222" height="30.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="164.5957" x="967.3867" y="87.2969"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="150.5957" x="974.3867" y="107.292">TIC2WebSocketClient</text></g><g class="participant participant-tail" data-entity-uid="part6" data-qualified-name="WSC" id="part6-tail"><rect fill="#222222" height="30.2969" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="164.5957" x="967.3867" y="460.0547"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="150.5957" x="974.3867" y="480.0498">TIC2WebSocketClient</text></g><g class="message" data-entity-1="part1" data-entity-2="part2" id="msg1"><polygon fill="#E7E7E7" points="287.5952,145.7266,297.5952,149.7266,287.5952,153.7266,291.5952,149.7266" style="stroke:#E7E7E7;stroke-width:1;"/><line style="stroke:#E7E7E7;stroke-width:1;" x1="56.855" x2="293.5952" y1="149.7266" y2="149.7266"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="218.7402" x="63.855" y="144.6606">REQUEST SubscribeTIC(identifier)</text></g><g class="message" data-entity-1="part2" data-entity-2="part3" id="msg2"><polygon fill="#E7E7E7" points="564.7842,174.8594,574.7842,178.8594,564.7842,182.8594,568.7842,178.8594" style="stroke:#E7E7E7;stroke-width:1;"/><line style="stroke:#E7E7E7;stroke-width:1;" x1="299.5952" x2="570.7842" y1="178.8594" y2="178.8594"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="148.1226" x="306.5952" y="173.7935">handle(request, client)</text></g><g class="message" data-entity-1="part3" data-entity-2="part4" id="msg3"><polygon fill="#E7E7E7" points="763.6304,203.9922,773.6304,207.9922,763.6304,211.9922,767.6304,207.9922" style="stroke:#E7E7E7;stroke-width:1;"/><line style="stroke:#E7E7E7;stroke-width:1;" x1="576.7842" x2="769.6304" y1="207.9922" y2="207.9922"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="174.8462" x="583.7842" y="202.9263">subscribe(identifier, client)</text></g><g class="message" data-entity-1="part4" data-entity-2="part3" id="msg4"><polygon fill="#E7E7E7" points="587.7842,233.125,577.7842,237.125,587.7842,241.125,583.7842,237.125" style="stroke:#E7E7E7;stroke-width:1;"/><line style="stroke:#E7E7E7;stroke-width:1;stroke-dasharray:2,2;" x1="581.7842" x2="774.6304" y1="237.125" y2="237.125"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="15.4819" x="593.7842" y="232.0591">ok</text></g><g class="message" data-entity-1="part3" data-entity-2="part2" id="msg5"><polygon fill="#E7E7E7" points="310.5952,262.2578,300.5952,266.2578,310.5952,270.2578,306.5952,266.2578" style="stroke:#E7E7E7;stroke-width:1;"/><line style="stroke:#E7E7E7;stroke-width:1;stroke-dasharray:2,2;" x1="304.5952" x2="575.7842" y1="266.2578" y2="266.2578"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="253.189" x="316.5952" y="261.1919">RESPONSE SubscribeTIC(errorCode=0)</text></g><g class="message" data-entity-1="part2" data-entity-2="part1" id="msg6"><polygon fill="#E7E7E7" points="67.855,291.3906,57.855,295.3906,67.855,299.3906,63.855,295.3906" style="stroke:#E7E7E7;stroke-width:1;"/><line style="stroke:#E7E7E7;stroke-width:1;stroke-dasharray:2,2;" x1="61.855" x2="298.5952" y1="295.3906" y2="295.3906"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="158.6152" x="73.855" y="290.3247">RESPONSE SubscribeTIC</text></g><path d="M10,310.3906 L86.624,310.3906 L86.624,317.5234 L76.624,327.5234 L10,327.5234 L10,310.3906" fill="#555555" style="stroke:#FFFFFF;stroke-width:1.5;"/><rect fill="none" height="133.6641" style="stroke:#FFFFFF;stroke-width:1.5;" width="1131.9824" x="10" y="310.3906"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="31.624" x="25" y="323.4575">loop</text><text fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="107.105" x="101.624" y="322.6011">[à chaque trame]</text><g class="message" data-entity-1="part5" data-entity-2="part4" id="msg7"><polygon fill="#E7E7E7" points="786.6304,344.6563,776.6304,348.6563,786.6304,352.6563,782.6304,348.6563" style="stroke:#E7E7E7;stroke-width:1;"/><line style="stroke:#E7E7E7;stroke-width:1;" x1="780.6304" x2="896.3228" y1="348.6563" y2="348.6563"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="95.9258" x="792.6304" y="343.5903">onData(frame)</text></g><g class="message" data-entity-1="part4" data-entity-2="part6" id="msg8"><polygon fill="#E7E7E7" points="1037.6846,373.7891,1047.6846,377.7891,1037.6846,381.7891,1041.6846,377.7891" style="stroke:#E7E7E7;stroke-width:1;"/><line style="stroke:#E7E7E7;stroke-width:1;" x1="775.6304" x2="1043.6846" y1="377.7891" y2="377.7891"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="95.9258" x="782.6304" y="372.7231">onData(frame)</text></g><g class="message" data-entity-1="part6" data-entity-2="part2" id="msg9"><polygon fill="#E7E7E7" points="310.5952,402.9219,300.5952,406.9219,310.5952,410.9219,306.5952,406.9219" style="stroke:#E7E7E7;stroke-width:1;"/><line style="stroke:#E7E7E7;stroke-width:1;" x1="304.5952" x2="1048.6846" y1="406.9219" y2="406.9219"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="149.0112" x="316.5952" y="401.856">sendEvent(OnTICData)</text></g><g class="message" data-entity-1="part2" data-entity-2="part1" id="msg10"><polygon fill="#E7E7E7" points="67.855,432.0547,57.855,436.0547,67.855,440.0547,63.855,436.0547" style="stroke:#E7E7E7;stroke-width:1;"/><line style="stroke:#E7E7E7;stroke-width:1;stroke-dasharray:2,2;" x1="61.855" x2="298.5952" y1="436.0547" y2="436.0547"/><text fill="#FFFFFF" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="117.4824" x="73.855" y="430.9888">EVENT OnTICData</text></g><?plantuml-src VPB1JkCm48RF-2c6dbejD8WZ4Xp8HifgjR2R57fSJUq9iUBOmNRWTVPTU35iXvPMBDoIcIz_lXdxM6gkHa7GUZ-uYoop-BnyaBuTDwCZoutsfFsIcpxx9RiMfVffyOcyo_fE6Ex-3cEliXwT9vlvbdfocQ06H-KpWRPRnZxpqYk2UjmuRkM6LZzo-0P2DitefD5mgqFbEtfahfDwG8izk1Q5UPRw0HfKZXX3xes5MQva489rFGDqaBD0UydbWA4u2p7dQzhKXdVaIzH2aKrSUSXLz3YIsnBNw2XHLVaXBZUMTltuyb-YzfQmJypq-8NMD41YrtNEM0wdLr321LJ5dxkYNXsiQIv5W6KZoIvO6SagecqIdzjfZ1FWANF1geH4em2vRSvUo3kQeDDjeEdIjpkJ-lVjJLqSgf2rnkP6qELPSeb_-WncJ1apmCi_u2q6IV3XJ8aTJTlPapGwdlkyYUq5Evgihk9cFZPZyStGaHR5KnXalhix0NYNAkwBczNUlGhuAm00?></g></svg></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../assets/mkdocs_puml/puml.js"></script>
+      
+        <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+      
+        <script src="../../assets/mkdocs_puml/interaction.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/development/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/development/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/development/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/development/architecture/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/development/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/development/architecture/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/development/contributing/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/development/contributing/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/development/contributing/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/getting-started/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/getting-started/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/getting-started/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/getting-started/installation/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/getting-started/installation/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/getting-started/installation/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/getting-started/launch/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/getting-started/launch/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/getting-started/launch/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/getting-started/prerequisites/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/getting-started/prerequisites/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/getting-started/prerequisites/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/getting-started/ws-tester/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/getting-started/ws-tester/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/getting-started/ws-tester/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/usage/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/usage/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/usage/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/usage/api/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/usage/api/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/usage/api/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/usage/configuration/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/usage/configuration/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/usage/configuration/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/development/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/development/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/development/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/development/architecture/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/development/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/development/architecture/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/development/contributing/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/development/contributing/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/development/contributing/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/getting-started/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/getting-started/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/getting-started/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/getting-started/installation/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/getting-started/installation/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/getting-started/installation/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/getting-started/launch/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/getting-started/launch/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/getting-started/launch/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/getting-started/prerequisites/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/getting-started/prerequisites/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/getting-started/prerequisites/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/getting-started/ws-tester/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/getting-started/ws-tester/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/getting-started/ws-tester/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/usage/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/usage/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/usage/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/usage/api/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/usage/api/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/usage/api/"/>
+    </url>
+    <url>
+        <loc>https://enedis-oss.github.io/tic2websocket/en/usage/configuration/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://enedis-oss.github.io/tic2websocket/en/usage/configuration/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://enedis-oss.github.io/tic2websocket/usage/configuration/"/>
+    </url>
+</urlset>
