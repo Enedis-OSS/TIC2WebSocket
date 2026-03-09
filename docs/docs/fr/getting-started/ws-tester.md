@@ -27,12 +27,29 @@ Vous pouvez préremplir la connexion avec des paramètres de requête :
 
 ## Flux d'utilisation principal
 
-1. Cliquez sur **Connect**.
-2. Choisissez un preset de requête.
-3. Renseignez les identifiants si nécessaire.
-4. Vérifiez le payload JSON généré.
-5. Cliquez sur **Send** et surveillez les logs.
-6. Cliquez sur **Disconnect** en fin de test.
+1. Vérifiez l'URL cible par défaut ou ajustez l'hôte et le port si nécessaire.
+
+	![Champs de connexion avec l'URL WebSocket, l'hôte et le port](../../assets/sceenshots_ws-tester/url_port.png)
+
+2. Cliquez sur **Connect** pour ouvrir la session WebSocket.
+
+	![Bouton Connect utilisé pour ouvrir la session WebSocket](../../assets/sceenshots_ws-tester/connect.png)
+
+3. Choisissez un preset de requête dans la liste déroulante.
+
+	![Sélecteur de preset de requête dans le WebSocket tester](../../assets/sceenshots_ws-tester/preset.png)
+
+4. Vérifiez le payload JSON généré avant l'envoi.
+
+	![Payload JSON généré affiché dans l'éditeur](../../assets/sceenshots_ws-tester/payload.png)
+
+5. Cliquez sur **Send** et surveillez le panneau de logs pour suivre les échanges.
+
+	![Panneau de logs affichant la requête envoyée et la réponse reçue](../../assets/sceenshots_ws-tester/send.png)
+
+6. Cliquez sur **Disconnect** lorsque la session de test est terminée.
+
+	![Bouton Disconnect utilisé pour fermer la session WebSocket](../../assets/sceenshots_ws-tester/disconnect.png)
 
 ## Presets de requêtes et identifiants
 

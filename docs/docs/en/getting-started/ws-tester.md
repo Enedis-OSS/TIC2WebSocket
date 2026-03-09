@@ -27,12 +27,29 @@ You can prefill the connection using query parameters:
 
 ## Main usage flow
 
-1. Click **Connect**.
-2. Choose a request preset.
-3. Fill in identifiers if needed.
-4. Check the generated JSON payload.
-5. Click **Send** and watch the logs.
-6. Click **Disconnect** when done.
+1. Check the default target URL or adjust the host/port if needed.
+
+	![Connection fields with the WebSocket URL, host, and port](../../assets/sceenshots_ws-tester/url_port.png)
+
+2. Click **Connect** to open the WebSocket session.
+
+	![Connect button used to open the WebSocket session](../../assets/sceenshots_ws-tester/connect.png)
+
+3. Choose a request preset from the dropdown list.
+
+	![Request preset selector in the WebSocket tester](../../assets/sceenshots_ws-tester/preset.png)
+
+4. Check the generated JSON payload before sending it.
+
+	![Generated JSON payload shown in the payload editor](../../assets/sceenshots_ws-tester/payload.png)
+
+5. Click **Send** and watch the logs panel to inspect the request/response flow.
+
+	![Logs panel showing the sent request and received response](../../assets/sceenshots_ws-tester/send.png)
+
+6. Click **Disconnect** when the test session is finished.
+
+	![Disconnect button used to close the WebSocket session](../../assets/sceenshots_ws-tester/disconnect.png)
 
 ## Request presets and identifiers
 
