@@ -19,7 +19,7 @@ This request returns the list of available TIC streams.
 
 The response contains a list of TIC information objects:
 
-- serial number;
+- Linky meter serial number;
 - serial port name;
 - physical USB port identifier.
 

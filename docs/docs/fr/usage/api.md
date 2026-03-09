@@ -19,7 +19,7 @@ Cette requête permet de récupérer la liste des flux TIC disponibles.
 
 La réponse contient une liste de structures avec les informations TIC :
 
-- numéro de série ;
+- numéro de série du compteur Linky ;
 - nom du port série ;
 - identifiant du port USB physique.
 
