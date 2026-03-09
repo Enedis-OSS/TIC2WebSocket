@@ -1,18 +1,20 @@
 ---
 sidebar_position: 1
-title: Development
+title: Développement
 ---
 
-# Development
+# Développement
 
-This section documents how to work on **TIC2WebSocket** locally, run checks, and contribute safely.
+Cette section explique comment travailler sur **TIC2WebSocket** en local, exécuter les vérifications et contribuer au projet dans de bonnes conditions.
 
 ## Architecture
 
-See the dedicated page for an overview of the architecture and design decisions:
+Consultez la page dédiée pour une vue d’ensemble de l’architecture et des choix de conception :
 
 - [Architecture](architecture.md)
 
-## Contributing 
-See the dedicated page for guidelines on contributing to the project:
-- [Contributing](contributing.md)
+## Contribuer
+
+Consultez la page dédiée pour les bonnes pratiques de contribution au projet :
+
+- [Contribuer](contributing.md)
