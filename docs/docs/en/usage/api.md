@@ -71,7 +71,7 @@ Supported modem types:
 The response contains a list of modem information objects:
 
 - serial port name;
-- modem type;
+- modem type, if available (only the USB modems described above);
 - product identifier (USB PID), if available;
 - vendor identifier (USB VID), if available;
 - product name, if available;

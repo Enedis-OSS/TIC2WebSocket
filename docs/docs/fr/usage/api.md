@@ -71,7 +71,7 @@ Types de modems pris en charge :
 La réponse contient une liste de structures avec les informations des modems :
 
 - nom du port série ;
-- type de modem ;
+- type de modem, si disponible (uniquement les modem USB décrit ci-dessus);
 - identifiant produit (USB PID), si disponible ;
 - identifiant vendeur (USB VID), si disponible ;
 - nom du produit, si disponible ;
