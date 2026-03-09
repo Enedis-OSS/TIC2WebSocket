@@ -136,7 +136,7 @@ The `data` field must contain a TIC identifier defined in [TIC identifier format
     },
     "content": {
       "ADSC": "010203040506",
-      "URMS1": 230
+      "URMS1": "230"
     }
   }
 }
@@ -234,7 +234,7 @@ This event is generated for each new TIC frame and sent to all clients subscribe
     },
     "content": {
       "ADSC": "010203040506",
-      "URMS1": 230
+      "URMS1": "230"
     }
   }
 }

@@ -136,7 +136,7 @@ Le champ `data` doit contenir un identifiant TIC défini dans le [format d'ident
     },
     "content": {
       "ADSC": "010203040506",
-      "URMS1": 230
+      "URMS1": "230"
     }
   }
 }
@@ -234,7 +234,7 @@ Cet évènement est généré à chaque nouvelle trame TIC et envoyé à tous le
     },
     "content": {
       "ADSC": "010203040506",
-      "URMS1": 230
+      "URMS1": "230"
     }
   }
 }
