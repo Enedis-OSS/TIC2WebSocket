@@ -2,7 +2,7 @@
 
 ## Environment
 
-- Java 8
+- Java 8 or higher
 - Maven
 - Docker / Docker Compose (optional, for local documentation)
 
