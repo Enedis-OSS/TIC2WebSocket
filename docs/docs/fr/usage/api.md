@@ -313,9 +313,9 @@ Dans le cas d'un désabonnement ciblé, le champ `data` doit contenir un identif
 
 Un identifiant TIC est un objet contenant un des champs suivants :
 
-- `serialNumber`
-- `portId`
-- `portName`
+- `serialNumber` : numéro de série du compteur Linky ;
+- `portId` : identifiant physique du port série sur lequel le modem est connecté ;
+- `portName` : nom du port série sur lequel le modem est connecté ;
 
 Selon la requête, vous pouvez fournir un identifiant unique ou une liste d'identifiants.
 

@@ -313,9 +313,9 @@ For targeted unsubscription, the `data` field must contain one TIC identifier (o
 
 A TIC identifier is an object containing one of the following fields:
 
-- `serialNumber`
-- `portId`
-- `portName`
+- `serialNumber` : Linky meter serial number;
+- `portId` : physical serial port identifier where the modem is connected;
+- `portName` : serial port name where the modem is connected;
 
 Depending on the request, you can provide a single identifier or a list of identifiers.
 
