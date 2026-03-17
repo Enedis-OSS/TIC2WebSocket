@@ -10,3 +10,4 @@
 src/main/resources/TIC2WebSocket.properties
 target/
 var/
+docs/site/

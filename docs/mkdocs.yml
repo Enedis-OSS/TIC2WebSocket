@@ -1,0 +1,103 @@
+# SPDX-FileCopyrightText: 2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>
+# SPDX-FileContributor: Jehan BOUSCH
+# SPDX-FileContributor: Mathieu SABARTHES
+#
+# SPDX-License-Identifier: Apache-2.0
+
+site_name: TIC2WebSocket
+site_url: "https://enedis-oss.github.io/tic2websocket/"
+site_description: Documentation TIC2WebSocket
+site_author: Enedis OSS
+
+repo_name: Enedis-OSS/tic2websocket
+repo_url: https://github.com/Enedis-OSS/TIC2WebSocket
+
+# Site navigation
+nav:
+  - Overview: index.md
+  - Getting Started:
+      - Overview: getting-started/index.md
+      - Prerequisites: getting-started/prerequisites.md
+      - Installation: getting-started/installation.md
+      - Launch: getting-started/launch.md
+      - WS Tester: getting-started/ws-tester.md
+  - Usage: 
+      - Overview: usage/index.md
+      - API Reference: usage/api.md
+      - Configuration: usage/configuration.md
+  - Development:
+      - Overview: development/index.md
+      - Architecture: development/architecture.md
+      - Contributing: development/contributing.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  # - plantuml_markdown:
+  #     server: "http://plantuml:8080/plantuml"
+  #     format: svg
+
+plugins:
+  - plantuml:
+      puml_url: http://plantuml:8080
+      puml_keyword: plantuml
+      theme:
+        enabled: true
+        light: default/light
+        dark: default/dark
+  - search
+  - i18n:
+      docs_structure: folder
+      fallback_to_default: true
+      reconfigure_material: true
+      reconfigure_search: true
+      languages:
+        - locale: fr
+          default: true
+          name: Français
+          build: true
+          nav_translations:
+            Overview: Vue d'ensemble
+            Getting Started: Démarrage
+            Prerequisites: Prérequis
+            Installation: Installation
+            Configuration: Configuration
+            Usage: Utilisation
+            API Reference: Référence API
+            WS Tester: WS Tester
+            Architecture: Architecture
+            Contributing: Contribuer
+            Launch: Lancement
+            Development: Développement
+
+        - locale: en
+          name: English
+          build: true
+          nav_translations:
+            Overview: Overview
+            Getting Started: Getting Started
+            Prerequisites: Prerequisites
+            Installation: Installation
+            Configuration: Configuration
+            Usage: Usage
+            API Reference: API Reference
+            WS Tester: WS Tester
+            Architecture: Architecture
+            Contributing: Contributing
+            Launch: Launch
+            Development: Development
+
+theme:
+  name: material
+  language: fr
+  font:
+    text: Ubuntu
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - toc.integrate
+
+extra_css:
+  - stylesheets/puml-fix.css

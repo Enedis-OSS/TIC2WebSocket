@@ -18,3 +18,11 @@ path = [
 ]
 SPDX-FileCopyrightText = "2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>"
 SPDX-License-Identifier = "Apache-2.0"
+
+# Documentation files are covered via REUSE annotations (no per-file header)
+[[annotations]]
+path = [
+    "docs/**"
+]
+SPDX-FileCopyrightText = "2025 Enedis Smarties team <dt-dsi-nexus-lab-smarties@enedis.fr>"
+SPDX-License-Identifier = "Apache-2.0"

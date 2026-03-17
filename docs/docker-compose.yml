@@ -1,0 +1,29 @@
+services:
+  plantuml:
+    image: plantuml/plantuml-server:tomcat
+    ports:
+      - "8080:8080"
+
+  mkdocs:
+    build: .
+    # Mount the whole repository so `mkdocs gh-deploy` can find the git worktree (.git)
+    working_dir: /repo/docs
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+          git config --global --add safe.directory /repo >/dev/null 2>&1 || true
+          exec mkdocs "$$@"
+      - --
+    environment:
+      # SSH-based deployment: mount a key and use it for git pushes
+      - GIT_SSH_COMMAND=ssh -i /root/.ssh/id_ed25519_tic2websocket -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/root/.ssh/known_hosts
+    volumes:
+      - ../:/repo
+      # SSH keys for deployment live in ../var/ssh (already ignored by .gitignore)
+      - ../var/ssh:/root/.ssh:ro
+    ports:
+      - "8000:8000"
+    command: serve --config-file /repo/docs/mkdocs.yml --dev-addr 0.0.0.0:8000
+    depends_on:
+      - plantuml
