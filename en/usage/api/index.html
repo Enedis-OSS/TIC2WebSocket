@@ -1070,7 +1070,7 @@
 <h3 id="response">Response</h3>
 <p>The response contains a list of TIC information objects:</p>
 <ul>
-<li>serial number;</li>
+<li>Linky meter serial number;</li>
 <li>serial port name;</li>
 <li>physical USB port identifier.</li>
 </ul>
@@ -1134,7 +1134,7 @@
 <p>The response contains a list of modem information objects:</p>
 <ul>
 <li>serial port name;</li>
-<li>modem type;</li>
+<li>modem type, if available (only the USB modems described above);</li>
 <li>product identifier (USB PID), if available;</li>
 <li>vendor identifier (USB VID), if available;</li>
 <li>product name, if available;</li>
@@ -1189,7 +1189,7 @@
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;ADSC&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;010203040506&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;URMS1&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">230</span>
+<span class="w">      </span><span class="nt">&quot;URMS1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;230&quot;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
@@ -1262,7 +1262,7 @@
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;ADSC&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;010203040506&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;URMS1&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">230</span>
+<span class="w">      </span><span class="nt">&quot;URMS1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;230&quot;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
@@ -1321,9 +1321,9 @@
 <h2 id="tic-identifier-format">TIC identifier format</h2>
 <p>A TIC identifier is an object containing one of the following fields:</p>
 <ul>
-<li><code>serialNumber</code></li>
-<li><code>portId</code></li>
-<li><code>portName</code></li>
+<li><code>serialNumber</code> : Linky meter serial number;</li>
+<li><code>portId</code> : physical serial port identifier where the modem is connected;</li>
+<li><code>portName</code> : serial port name where the modem is connected;</li>
 </ul>
 <p>Depending on the request, you can provide a single identifier or a list of identifiers.</p>
 <h3 id="response_4">Response</h3>
